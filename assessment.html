@@ -1490,16 +1490,42 @@
             statusEl.className = '';
 
             try {
-                const result = await card.tokenize();
+                // Step 1: Tokenize the card
+                const tokenResult = await card.tokenize();
 
-                if (result.status === 'OK') {
-                    // In production, send result.token to your backend to complete payment
-                    // For now, simulate successful payment
-                    console.log('Payment token:', result.token);
+                if (tokenResult.status !== 'OK') {
+                    let errorMessage = 'Card validation failed. ';
+                    if (tokenResult.errors) {
+                        errorMessage += tokenResult.errors.map(e => e.message).join(', ');
+                    }
+                    throw new Error(errorMessage);
+                }
 
-                    // Simulate backend processing
+                console.log('Payment token:', tokenResult.token);
+                statusEl.textContent = 'Processing payment...';
+
+                // Step 2: Send token to backend to process payment
+                const email = document.getElementById('emailInput')?.value || '';
+                const response = await fetch('/api/process-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sourceId: tokenResult.token,
+                        email: email,
+                        profileName: currentProfile?.name || 'Unknown'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
                     statusEl.textContent = 'Payment successful!';
                     statusEl.className = 'success';
+
+                    // Store receipt URL if available
+                    if (data.receiptUrl) {
+                        console.log('Receipt:', data.receiptUrl);
+                    }
 
                     setTimeout(() => {
                         closePaymentModal();
@@ -1507,18 +1533,12 @@
                     }, 1500);
 
                 } else {
-                    let errorMessage = 'Payment failed. ';
-                    if (result.errors) {
-                        errorMessage += result.errors.map(e => e.message).join(', ');
-                    }
-                    statusEl.textContent = errorMessage;
-                    statusEl.className = 'error';
-                    button.disabled = false;
-                    button.textContent = 'Pay $9.99';
+                    throw new Error(data.error || 'Payment failed');
                 }
+
             } catch (e) {
                 console.error('Payment error:', e);
-                statusEl.textContent = 'Payment error. Please try again.';
+                statusEl.textContent = e.message || 'Payment error. Please try again.';
                 statusEl.className = 'error';
                 button.disabled = false;
                 button.textContent = 'Pay $9.99';
