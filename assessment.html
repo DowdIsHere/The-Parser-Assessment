@@ -7,6 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <!-- PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Square Web Payments SDK -->
+    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -308,6 +312,78 @@
         footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.8rem; }
         footer a { color: var(--text-secondary); text-decoration: none; }
 
+        /* Payment Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85); z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--bg-card); border-radius: 20px;
+            max-width: 480px; width: 100%; padding: 40px;
+            border: 1px solid var(--border); position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px;
+            background: none; border: none; color: var(--text-muted);
+            font-size: 1.5rem; cursor: pointer; padding: 8px;
+        }
+        .modal-close:hover { color: var(--text-primary); }
+        .modal-header { text-align: center; margin-bottom: 24px; }
+        .modal-header h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 8px; }
+        .modal-header p { color: var(--text-secondary); font-size: 0.95rem; }
+        .modal-price { text-align: center; margin-bottom: 24px; }
+        .modal-price .amount { font-size: 2.5rem; font-weight: 700; }
+        .modal-price .currency { font-size: 1rem; color: var(--text-secondary); }
+        #card-container {
+            min-height: 90px; background: var(--bg-secondary);
+            border-radius: 12px; padding: 16px; margin-bottom: 20px;
+        }
+        #card-button {
+            width: 100%; padding: 16px; background: linear-gradient(135deg, var(--accent-spatial), #00b894);
+            border: none; border-radius: 50px; color: var(--bg-primary);
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: all 0.3s ease;
+        }
+        #card-button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3); }
+        #card-button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        #payment-status { text-align: center; margin-top: 16px; font-size: 0.9rem; }
+        #payment-status.error { color: #ff6b6b; }
+        #payment-status.success { color: var(--accent-spatial); }
+        .secure-badge { text-align: center; margin-top: 16px; font-size: 0.8rem; color: var(--text-muted); }
+        .secure-badge span { margin-left: 6px; }
+
+        /* Unlocked State */
+        .results-card.unlocked { position: relative; }
+        .results-card.unlocked .locked-overlay { display: none; }
+        .results-card.unlocked .locked-content { filter: none; opacity: 1; pointer-events: auto; }
+
+        /* Download Button */
+        .download-section {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(168, 85, 247, 0.15));
+            border: 2px solid var(--accent-spatial); border-radius: 20px;
+            padding: 30px; text-align: center; margin-bottom: 24px; display: none;
+        }
+        .download-section.visible { display: block; }
+        .download-section h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; margin-bottom: 12px; color: var(--accent-spatial); }
+        .download-section p { color: var(--text-secondary); margin-bottom: 20px; }
+        .btn-download {
+            background: linear-gradient(135deg, var(--accent-reference), #9333ea);
+            color: white; border: none; padding: 16px 40px;
+            font-size: 1rem; font-weight: 600; border-radius: 50px;
+            cursor: pointer; font-family: inherit; transition: all 0.3s ease;
+        }
+        .btn-download:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
+
+        /* Test mode banner */
+        .test-mode-banner {
+            background: var(--accent-temporal-dim); border: 1px solid var(--accent-temporal);
+            border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;
+            font-size: 0.85rem; color: var(--accent-temporal); text-align: center;
+        }
+
         @media (max-width: 600px) {
             .container { padding: 16px; }
             .card { padding: 24px; }
@@ -418,6 +494,13 @@
                 <div class="subtitle">Your Parser Profile</div>
                 <h1 class="profile-name" id="profileName">Visionary</h1>
                 <div class="profile-code" id="profileCode">Abstract • Future • Self</div>
+            </div>
+
+            <!-- Download Section (shown after purchase) -->
+            <div class="download-section" id="downloadSection">
+                <h3>🎉 Full Report Unlocked!</h3>
+                <p>Your complete Parser Profile is now available. Download your personalized PDF report.</p>
+                <button class="btn-download" onclick="downloadPDF()">📄 Download Full Report (PDF)</button>
             </div>
 
             <!-- Dimension Scores -->
@@ -683,7 +766,30 @@
                 </div>
                 <div class="price">$9.99 <span>USD</span></div>
                 <div class="price-note">One-time purchase • Instant access • 30-day guarantee</div>
-                <button class="btn-primary" style="width: 100%; max-width: 300px;">Get Full Report</button>
+                <button class="btn-primary" style="width: 100%; max-width: 300px;" onclick="openPaymentModal()">Get Full Report</button>
+                <p style="margin-top: 16px; margin-bottom: 0;"><span class="skip-link" onclick="testUnlock()">[Test Mode: Unlock without payment]</span></p>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal-overlay" id="paymentModal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closePaymentModal()">×</button>
+                <div class="modal-header">
+                    <h3>Complete Your Purchase</h3>
+                    <p>Unlock your full Parser Profile report</p>
+                </div>
+                <div class="modal-price">
+                    <span class="amount">$9.99</span>
+                    <span class="currency">USD</span>
+                </div>
+                <div class="test-mode-banner" id="testModeBanner">
+                    🧪 Sandbox Mode - Use card: 4111 1111 1111 1111, any future date, any CVV
+                </div>
+                <div id="card-container"></div>
+                <button id="card-button" type="button" disabled>Pay $9.99</button>
+                <div id="payment-status"></div>
+                <div class="secure-badge">🔒<span>Secured by Square</span></div>
             </div>
         </div>
 
@@ -1310,6 +1416,493 @@
 
         window.scrollToCTA = function() {
             document.getElementById('ctaCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============================================================================
+        // SQUARE PAYMENT INTEGRATION
+        // ============================================================================
+
+        // IMPORTANT: Replace these with your actual Square credentials
+        const SQUARE_APP_ID = 'sandbox-sq0idb-XXXXXXXXXXXXXXXXXXXXXXXX'; // Replace with your Application ID
+        const SQUARE_LOCATION_ID = 'XXXXXXXXXXXXXXXX'; // Replace with your Location ID
+
+        let card = null;
+        let currentProfile = null; // Store for PDF generation
+
+        // Store profile data when showing results
+        const originalShowResults = window.showResults;
+        window.showResults = function() {
+            originalShowResults();
+            // Store current profile data for later use
+            const scores = calculateScores(false);
+            const key = getProfileKey(scores);
+            const name = profileNames[key] || 'Equanimous';
+            currentProfile = {
+                name: name,
+                code: document.getElementById('profileCode').textContent,
+                profile: getProfileByName(name),
+                scores: scores
+            };
+        }
+
+        // Initialize Square payment form
+        async function initializeSquare() {
+            if (!window.Square) {
+                console.log('Square SDK not loaded yet');
+                return;
+            }
+
+            try {
+                const payments = window.Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+                card = await payments.card();
+                await card.attach('#card-container');
+                document.getElementById('card-button').disabled = false;
+            } catch (e) {
+                console.error('Square initialization failed:', e);
+                document.getElementById('payment-status').textContent = 'Payment system unavailable. Use test mode.';
+                document.getElementById('payment-status').className = 'error';
+            }
+        }
+
+        // Open payment modal
+        window.openPaymentModal = function() {
+            document.getElementById('paymentModal').classList.add('active');
+            if (!card) {
+                initializeSquare();
+            }
+        }
+
+        // Close payment modal
+        window.closePaymentModal = function() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('payment-status').textContent = '';
+            document.getElementById('payment-status').className = '';
+        }
+
+        // Process payment
+        window.processPayment = async function() {
+            const statusEl = document.getElementById('payment-status');
+            const button = document.getElementById('card-button');
+
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            statusEl.textContent = '';
+            statusEl.className = '';
+
+            try {
+                const result = await card.tokenize();
+
+                if (result.status === 'OK') {
+                    // In production, send result.token to your backend to complete payment
+                    // For now, simulate successful payment
+                    console.log('Payment token:', result.token);
+
+                    // Simulate backend processing
+                    statusEl.textContent = 'Payment successful!';
+                    statusEl.className = 'success';
+
+                    setTimeout(() => {
+                        closePaymentModal();
+                        unlockFullReport();
+                    }, 1500);
+
+                } else {
+                    let errorMessage = 'Payment failed. ';
+                    if (result.errors) {
+                        errorMessage += result.errors.map(e => e.message).join(', ');
+                    }
+                    statusEl.textContent = errorMessage;
+                    statusEl.className = 'error';
+                    button.disabled = false;
+                    button.textContent = 'Pay $9.99';
+                }
+            } catch (e) {
+                console.error('Payment error:', e);
+                statusEl.textContent = 'Payment error. Please try again.';
+                statusEl.className = 'error';
+                button.disabled = false;
+                button.textContent = 'Pay $9.99';
+            }
+        }
+
+        // Wire up the pay button
+        document.getElementById('card-button').addEventListener('click', processPayment);
+
+        // ============================================================================
+        // UNLOCK CONTENT
+        // ============================================================================
+
+        window.unlockFullReport = function() {
+            const profile = currentProfile?.profile;
+            if (!profile) {
+                console.error('No profile data available');
+                return;
+            }
+
+            // Show download section
+            document.getElementById('downloadSection').classList.add('visible');
+
+            // Hide CTA card
+            document.getElementById('ctaCard').style.display = 'none';
+
+            // Unlock all locked sections
+            document.querySelectorAll('.locked-section').forEach(section => {
+                section.classList.add('unlocked');
+            });
+
+            // Populate paid tier content
+            populatePaidContent(profile);
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Test unlock (for development)
+        window.testUnlock = function() {
+            if (!currentProfile) {
+                alert('Please complete the assessment first');
+                return;
+            }
+            unlockFullReport();
+        }
+
+        function populatePaidContent(profile) {
+            // The Secret
+            const secretSection = document.querySelector('#secretPreview');
+            if (secretSection && profile.secret) {
+                const secretHtml = profile.secret.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                secretSection.innerHTML = `
+                    <h3>🤫 The Secret You've Carried</h3>
+                    <div class="content-section">${secretHtml}</div>
+                `;
+            }
+
+            // All 6 Challenges
+            const challengesSection = document.querySelectorAll('.locked-section')[1];
+            if (challengesSection && profile.challenges) {
+                const challengesHtml = profile.challenges.map(c => `
+                    <div class="challenge-item">
+                        <h4>🎯 ${c.title}</h4>
+                        <p class="challenge-text">${c.challenge}</p>
+                        <div class="remedy">
+                            <strong>Remedy:</strong>
+                            ${c.remedy}
+                        </div>
+                    </div>
+                `).join('');
+                challengesSection.querySelector('.locked-content').innerHTML = `
+                    <h3>🎯 All 6 Natural Challenges</h3>
+                    ${challengesHtml}
+                `;
+            }
+
+            // What Others Get Wrong
+            const wrongSection = document.querySelectorAll('.locked-section')[2];
+            if (wrongSection && profile.whatOthersGetWrong) {
+                const wrongHtml = profile.whatOthersGetWrong.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                wrongSection.querySelector('.locked-content').innerHTML = `
+                    <h3>🎭 What Others Get Wrong About You</h3>
+                    <div class="content-section">${wrongHtml}</div>
+                `;
+            }
+
+            // Hidden Superpower
+            const superpowerSection = document.querySelectorAll('.locked-section')[3];
+            if (superpowerSection && profile.hiddenSuperpower) {
+                const superpowerHtml = profile.hiddenSuperpower.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                superpowerSection.querySelector('.locked-content').innerHTML = `
+                    <h3>✨ Your Hidden Superpower</h3>
+                    <div class="content-section">${superpowerHtml}</div>
+                `;
+            }
+
+            // Blind Spot
+            const blindSpotSection = document.querySelectorAll('.locked-section')[4];
+            if (blindSpotSection && profile.blindSpot) {
+                const blindSpotHtml = profile.blindSpot.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                blindSpotSection.querySelector('.locked-content').innerHTML = `
+                    <h3>👁️ Your Blind Spot</h3>
+                    <div class="content-section">${blindSpotHtml}</div>
+                `;
+            }
+
+            // Friction Patterns
+            const frictionSection = document.querySelectorAll('.locked-section')[5];
+            if (frictionSection && profile.frictionPatterns) {
+                const frictionHtml = profile.frictionPatterns.map(f => `
+                    <div class="friction-item">
+                        <h4>${f.profile}</h4>
+                        <p>${f.description}</p>
+                    </div>
+                `).join('');
+                frictionSection.querySelector('.locked-content').innerHTML = `
+                    <h3>⚡ Friction Patterns</h3>
+                    ${frictionHtml}
+                `;
+            }
+
+            // Energy Patterns
+            const energySection = document.querySelectorAll('.locked-section')[6];
+            if (energySection && profile.energyPatterns) {
+                const energizesHtml = profile.energyPatterns.energizes?.map(e => `<li>${e}</li>`).join('') || '';
+                const drainsHtml = profile.energyPatterns.drains?.map(d => `<li>${d}</li>`).join('') || '';
+                energySection.querySelector('.locked-content').innerHTML = `
+                    <h3>🔋 What Energizes vs. Drains You</h3>
+                    <div class="energy-grid">
+                        <div class="energy-column energizes">
+                            <h4>⚡ Energizes</h4>
+                            <ul>${energizesHtml}</ul>
+                        </div>
+                        <div class="energy-column drains">
+                            <h4>🔌 Drains</h4>
+                            <ul>${drainsHtml}</ul>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Work Environments
+            const envSection = document.querySelectorAll('.locked-section')[7];
+            if (envSection && profile.workEnvironments) {
+                envSection.querySelector('.locked-content').innerHTML = `
+                    <h3>🏢 Optimal Work Environments</h3>
+                    <div class="environment-section ideal">
+                        <h4>✓ Ideal</h4>
+                        <p>${profile.workEnvironments.ideal || ''}</p>
+                    </div>
+                    <div class="environment-section workable">
+                        <h4>~ Workable</h4>
+                        <p>${profile.workEnvironments.workable || ''}</p>
+                    </div>
+                    <div class="environment-section avoid">
+                        <h4>✗ Avoid</h4>
+                        <p>${profile.workEnvironments.avoid || ''}</p>
+                    </div>
+                `;
+            }
+
+            // Block Indicators
+            const blockSection = document.querySelectorAll('.locked-section')[8];
+            if (blockSection && profile.blockIndicators) {
+                const blockRows = profile.blockIndicators.map(b => {
+                    const strengthClass = b.strength?.toLowerCase() === 'high' ? 'strength-high' :
+                                         b.strength?.toLowerCase() === 'medium' ? 'strength-medium' : 'strength-low';
+                    return `
+                        <tr>
+                            <td class="block-name">${b.block}</td>
+                            <td><span class="strength-indicator ${strengthClass}">${b.strength}</span></td>
+                            <td>${b.integration}</td>
+                        </tr>
+                    `;
+                }).join('');
+                blockSection.querySelector('.locked-content').innerHTML = `
+                    <h3>🧱 Block Strength Indicators</h3>
+                    <table class="block-table">
+                        <thead><tr><th>Block</th><th>Strength</th><th>Integration</th></tr></thead>
+                        <tbody>${blockRows}</tbody>
+                    </table>
+                `;
+            }
+        }
+
+        // ============================================================================
+        // PDF GENERATION
+        // ============================================================================
+
+        window.downloadPDF = function() {
+            if (!currentProfile) {
+                alert('No profile data available');
+                return;
+            }
+
+            // Create a clean version for PDF
+            const pdfContent = document.createElement('div');
+            pdfContent.style.cssText = 'background: white; color: #1a1a24; padding: 40px; font-family: Arial, sans-serif; max-width: 800px;';
+
+            pdfContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 40px; border-bottom: 2px solid #00d4aa; padding-bottom: 20px;">
+                    <h1 style="font-size: 28px; margin-bottom: 8px; color: #1a1a24;">Parser Profile™</h1>
+                    <p style="color: #666; font-size: 14px;">Developed by J.D. Mercer</p>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2 style="font-size: 36px; color: #00d4aa; margin-bottom: 8px;">${currentProfile.name}</h2>
+                    <p style="color: #666; font-size: 16px;">${currentProfile.code}</p>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">📊 Dimension Scores</h3>
+                    <p><strong>Spatial:</strong> ${currentProfile.scores.spatial}% ${currentProfile.scores.spatial >= 50 ? 'Abstract' : 'Concrete'}</p>
+                    <p><strong>Temporal:</strong> ${currentProfile.scores.temporal}% ${currentProfile.scores.temporal >= 50 ? 'Future' : 'Past'}</p>
+                    <p><strong>Reference:</strong> ${currentProfile.scores.reference}% ${currentProfile.scores.reference >= 50 ? 'Self' : 'Other'}</p>
+                </div>
+
+                ${generatePDFSection('🔮 Profile Overview', currentProfile.profile?.overview)}
+                ${generatePDFSection('💡 The Phrase That Hits Home', `"${currentProfile.profile?.phrase}"`)}
+                ${generatePDFStrengths(currentProfile.profile?.strengths)}
+                ${generatePDFSection('📚 How You Learn Best', currentProfile.profile?.howYouLearn)}
+                ${generatePDFSection('💬 How You Communicate', currentProfile.profile?.howYouCommunicate)}
+                ${generatePDFChallenges(currentProfile.profile?.challenges)}
+                ${generatePDFSection('🤫 The Secret You\'ve Carried', currentProfile.profile?.secret)}
+                ${generatePDFSection('🎭 What Others Get Wrong', currentProfile.profile?.whatOthersGetWrong)}
+                ${generatePDFSection('✨ Your Hidden Superpower', currentProfile.profile?.hiddenSuperpower)}
+                ${generatePDFSection('👁️ Your Blind Spot', currentProfile.profile?.blindSpot)}
+                ${generatePDFFriction(currentProfile.profile?.frictionPatterns)}
+                ${generatePDFEnergy(currentProfile.profile?.energyPatterns)}
+                ${generatePDFEnvironments(currentProfile.profile?.workEnvironments)}
+                ${generatePDFBlocks(currentProfile.profile?.blockIndicators)}
+
+                <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 12px;">
+                    <p>Parser Profile™ © 2026 Cognition Blocks LLC. All rights reserved.</p>
+                    <p>Based on the Cognition Blocks Intelligence (CBI) Framework</p>
+                </div>
+            `;
+
+            document.body.appendChild(pdfContent);
+
+            const opt = {
+                margin: 10,
+                filename: `Parser-Profile-${currentProfile.name}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(pdfContent).save().then(() => {
+                document.body.removeChild(pdfContent);
+            });
+        }
+
+        function generatePDFSection(title, content) {
+            if (!content) return '';
+            const paragraphs = content.split('\n\n').filter(p => p.trim()).map(p => `<p style="margin-bottom: 12px; line-height: 1.6;">${p}</p>`).join('');
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">${title}</h3>
+                    ${paragraphs}
+                </div>
+            `;
+        }
+
+        function generatePDFStrengths(strengths) {
+            if (!strengths || !strengths.length) return '';
+            const items = strengths.map(s => `
+                <div style="margin-bottom: 12px; padding: 12px; background: #f5f5f5; border-radius: 8px;">
+                    <strong>${s.title}</strong>
+                    <p style="margin: 4px 0 0 0; color: #666;">${s.description}</p>
+                </div>
+            `).join('');
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">⚡ Cognitive Strengths</h3>
+                    ${items}
+                </div>
+            `;
+        }
+
+        function generatePDFChallenges(challenges) {
+            if (!challenges || !challenges.length) return '';
+            const items = challenges.map(c => `
+                <div style="margin-bottom: 16px; padding: 16px; background: #fff8f0; border-left: 3px solid #ffc857; border-radius: 8px;">
+                    <strong>${c.title}</strong>
+                    <p style="margin: 8px 0; color: #666;">${c.challenge}</p>
+                    <p style="margin: 0; color: #00d4aa;"><strong>Remedy:</strong> ${c.remedy}</p>
+                </div>
+            `).join('');
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🎯 Natural Challenges</h3>
+                    ${items}
+                </div>
+            `;
+        }
+
+        function generatePDFFriction(friction) {
+            if (!friction || !friction.length) return '';
+            const items = friction.map(f => `
+                <div style="margin-bottom: 12px; padding: 12px; background: #f5f5f5; border-radius: 8px;">
+                    <strong>${f.profile}</strong>
+                    <p style="margin: 4px 0 0 0; color: #666;">${f.description}</p>
+                </div>
+            `).join('');
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">⚡ Friction Patterns</h3>
+                    ${items}
+                </div>
+            `;
+        }
+
+        function generatePDFEnergy(energy) {
+            if (!energy) return '';
+            const energizes = energy.energizes?.map(e => `<li style="margin-bottom: 4px;">${e}</li>`).join('') || '';
+            const drains = energy.drains?.map(d => `<li style="margin-bottom: 4px;">${d}</li>`).join('') || '';
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🔋 Energy Patterns</h3>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <h4 style="color: #00d4aa;">⚡ Energizes</h4>
+                            <ul style="padding-left: 20px;">${energizes}</ul>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: #a855f7;">🔌 Drains</h4>
+                            <ul style="padding-left: 20px;">${drains}</ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generatePDFEnvironments(env) {
+            if (!env) return '';
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🏢 Optimal Work Environments</h3>
+                    <p><strong style="color: #00d4aa;">✓ Ideal:</strong> ${env.ideal || ''}</p>
+                    <p><strong style="color: #ffc857;">~ Workable:</strong> ${env.workable || ''}</p>
+                    <p><strong style="color: #a855f7;">✗ Avoid:</strong> ${env.avoid || ''}</p>
+                </div>
+            `;
+        }
+
+        function generatePDFBlocks(blocks) {
+            if (!blocks || !blocks.length) return '';
+            const rows = blocks.map(b => `
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #eee;">${b.block}</td>
+                    <td style="padding: 8px; border-bottom: 1px solid #eee;">${b.strength}</td>
+                    <td style="padding: 8px; border-bottom: 1px solid #eee;">${b.integration}</td>
+                </tr>
+            `).join('');
+            return `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🧱 Block Strength Indicators</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f5f5f5;">
+                                <th style="padding: 8px; text-align: left;">Block</th>
+                                <th style="padding: 8px; text-align: left;">Strength</th>
+                                <th style="padding: 8px; text-align: left;">Integration</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>
+            `;
         }
     </script>
 </body>
