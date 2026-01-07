@@ -805,7 +805,11 @@
         // IMPORT PROFILES
         // ============================================================================
 
+        console.log('Parser Assessment: Loading module...');
+
         import { profiles, getProfileByName } from './index.js';
+
+        console.log('Parser Assessment: Profiles loaded successfully. Count:', Object.keys(profiles).length);
 
         // ============================================================================
         // QUESTIONS DATA
@@ -1121,10 +1125,12 @@
         }
 
         window.startAssessment = function() {
+            console.log('Parser Assessment: Starting assessment...');
             document.getElementById('progressContainer').style.display = 'block';
             showScreen('questionScreen');
             showQuestion(0);
         }
+        console.log('Parser Assessment: startAssessment function registered');
 
         function showQuestion(index) {
             const q = questions[index];
@@ -1424,7 +1430,7 @@
 
         // Square Sandbox Credentials
         const SQUARE_APP_ID = 'sandbox-sq0idb-kXsghxUqcEsz81P8dGx0kg';
-        const SQUARE_LOCATION_ID = 'C48SWGPW8';
+        const SQUARE_LOCATION_ID = 'C48SWGPW8D1T2';
 
         let card = null;
         let currentProfile = null; // Store for PDF generation
@@ -1924,6 +1930,14 @@
                 </div>
             `;
         }
+
+        // Final initialization check
+        console.log('Parser Assessment: Module fully loaded and ready!');
+        console.log('Parser Assessment: Available functions:', {
+            startAssessment: typeof window.startAssessment,
+            showResults: typeof window.showResults,
+            openPaymentModal: typeof window.openPaymentModal
+        });
     </script>
 </body>
 </html>
