@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parser Profile™ | Developed by J.D. Mercer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6a6a7a;
+            --accent-spatial: #00d4aa;
+            --accent-temporal: #ffc857;
+            --accent-reference: #a855f7;
+            --accent-spatial-dim: rgba(0, 212, 170, 0.15);
+            --accent-temporal-dim: rgba(255, 200, 87, 0.15);
+            --accent-reference-dim: rgba(168, 85, 247, 0.15);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 0%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container { max-width: 760px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+        header { text-align: center; padding: 40px 0 30px; }
+        .logo { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; }
+        .logo span {
+            background: linear-gradient(135deg, var(--accent-spatial), var(--accent-temporal), var(--accent-reference));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .tagline { color: var(--text-secondary); font-size: 0.9rem; }
+        .progress-container { margin: 30px 0; }
+        .progress-bar { height: 4px; background: var(--bg-card); border-radius: 2px; overflow: hidden; }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-spatial), var(--accent-temporal), var(--accent-reference));
+            transition: width 0.4s ease; width: 0%;
+        }
+        .progress-text { display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); }
+        .screen { display: none; animation: fadeIn 0.5s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        .card.centered { text-align: center; }
+        .card h1 { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 600; margin-bottom: 16px; }
+        .card h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 16px; }
+        .card p { color: var(--text-secondary); margin-bottom: 20px; font-size: 1.05rem; }
+        .dimensions-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 30px 0; }
+        .dimension-item { padding: 20px 16px; border-radius: 12px; text-align: center; }
+        .dimension-item.spatial { background: var(--accent-spatial-dim); border: 1px solid rgba(0, 212, 170, 0.3); }
+        .dimension-item.temporal { background: var(--accent-temporal-dim); border: 1px solid rgba(255, 200, 87, 0.3); }
+        .dimension-item.reference { background: var(--accent-reference-dim); border: 1px solid rgba(168, 85, 247, 0.3); }
+        .dimension-item .icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .dimension-item .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+        .dimension-item.spatial .label { color: var(--accent-spatial); }
+        .dimension-item.temporal .label { color: var(--accent-temporal); }
+        .dimension-item.reference .label { color: var(--accent-reference); }
+        .dimension-item .dimension-desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-spatial), #00b894);
+            color: var(--bg-primary); border: none;
+            padding: 16px 48px; font-size: 1rem; font-weight: 600;
+            border-radius: 50px; cursor: pointer;
+            transition: all 0.3s ease; font-family: inherit;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3); }
+        .btn-secondary {
+            background: transparent; color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 14px 36px; font-size: 0.95rem; font-weight: 500;
+            border-radius: 50px; cursor: pointer; font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover { background: var(--bg-secondary); color: var(--text-primary); }
+        .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* Question Container */
+        .question-container { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+        .question-badge {
+            display: inline-block; padding: 6px 14px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 20px;
+        }
+        .question-badge.spatial { background: var(--accent-spatial-dim); color: var(--accent-spatial); }
+        .question-badge.temporal { background: var(--accent-temporal-dim); color: var(--accent-temporal); }
+        .question-badge.reference { background: var(--accent-reference-dim); color: var(--accent-reference); }
+        .question-phase { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; }
+        .question-text { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 400; line-height: 1.4; margin-bottom: 32px; }
+
+        /* A/B/C/D/E Options */
+        .answer-options { display: flex; flex-direction: column; gap: 12px; }
+        .answer-option {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 16px 20px; border-radius: 12px;
+            border: 2px solid var(--border);
+            background: transparent;
+            cursor: pointer; transition: all 0.2s ease;
+            text-align: left; font-family: inherit;
+            color: var(--text-primary);
+        }
+        .answer-option:hover { border-color: var(--text-muted); background: var(--bg-secondary); }
+        .answer-option.selected { border-color: var(--accent-spatial); background: var(--accent-spatial-dim); }
+        .answer-option.selected.temporal-q { border-color: var(--accent-temporal); background: var(--accent-temporal-dim); }
+        .answer-option.selected.reference-q { border-color: var(--accent-reference); background: var(--accent-reference-dim); }
+        .answer-letter {
+            flex-shrink: 0; width: 32px; height: 32px;
+            border-radius: 8px; background: var(--bg-secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem; color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+        .answer-option:hover .answer-letter { color: var(--text-primary); }
+        .answer-option.selected .answer-letter { background: var(--accent-spatial); color: var(--bg-primary); }
+        .answer-option.selected.temporal-q .answer-letter { background: var(--accent-temporal); }
+        .answer-option.selected.reference-q .answer-letter { background: var(--accent-reference); }
+        .answer-text { font-size: 1rem; line-height: 1.5; color: var(--text-secondary); }
+        .answer-option.selected .answer-text { color: var(--text-primary); }
+
+        /* Prediction Card */
+        .prediction-card { text-align: center; padding: 50px 40px; }
+        .prediction-icon { font-size: 3rem; margin-bottom: 20px; }
+        .prediction-text {
+            font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 400;
+            line-height: 1.5; color: var(--text-primary); margin-bottom: 30px; font-style: italic;
+        }
+        .prediction-check { color: var(--text-secondary); font-size: 1rem; margin-bottom: 30px; line-height: 1.7; }
+        .prediction-check strong { color: var(--accent-temporal); }
+
+        /* Navigation */
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .btn-nav {
+            background: var(--bg-card); color: var(--text-primary);
+            border: 1px solid var(--border); padding: 12px 28px;
+            font-size: 0.95rem; font-weight: 500; border-radius: 50px;
+            cursor: pointer; font-family: inherit; transition: all 0.2s ease;
+        }
+        .btn-nav:hover:not(:disabled) { background: var(--bg-secondary); }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+        .btn-nav.next { background: var(--text-primary); color: var(--bg-primary); }
+
+        /* Email Input */
+        .input-group { margin-bottom: 20px; }
+        .input-group input {
+            width: 100%; padding: 16px 20px; background: var(--bg-secondary);
+            border: 1px solid var(--border); border-radius: 12px;
+            color: var(--text-primary); font-size: 1rem; font-family: inherit;
+        }
+        .input-group input:focus { outline: none; border-color: var(--accent-spatial); }
+        .input-group input::placeholder { color: var(--text-muted); }
+        .skip-link { display: block; margin-top: 20px; color: var(--text-muted); font-size: 0.9rem; cursor: pointer; }
+        .skip-link:hover { color: var(--text-secondary); }
+
+        /* Results Styles */
+        .results-header { text-align: center; margin-bottom: 40px; }
+        .results-header .subtitle { color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; }
+        .profile-name {
+            font-family: 'Fraunces', serif; font-size: 3.5rem; font-weight: 700; margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--accent-spatial), var(--accent-temporal), var(--accent-reference));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .profile-code { color: var(--text-muted); font-size: 1rem; letter-spacing: 0.05em; }
+        .results-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 24px; }
+        .results-card h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px; }
+
+        /* Gradient Bars */
+        .gradient-row { margin-bottom: 28px; }
+        .gradient-row:last-child { margin-bottom: 0; }
+        .gradient-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .gradient-label { font-weight: 600; font-size: 0.95rem; }
+        .gradient-value { font-size: 0.9rem; padding: 4px 12px; border-radius: 20px; }
+        .gradient-row.spatial .gradient-label { color: var(--accent-spatial); }
+        .gradient-row.spatial .gradient-value { background: var(--accent-spatial-dim); color: var(--accent-spatial); }
+        .gradient-row.temporal .gradient-label { color: var(--accent-temporal); }
+        .gradient-row.temporal .gradient-value { background: var(--accent-temporal-dim); color: var(--accent-temporal); }
+        .gradient-row.reference .gradient-label { color: var(--accent-reference); }
+        .gradient-row.reference .gradient-value { background: var(--accent-reference-dim); color: var(--accent-reference); }
+        .gradient-track { height: 8px; background: var(--bg-secondary); border-radius: 4px; position: relative; margin-bottom: 8px; }
+        .gradient-marker {
+            position: absolute; top: 50%; transform: translate(-50%, -50%);
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 3px solid var(--bg-card); transition: left 1s ease;
+        }
+        .gradient-row.spatial .gradient-marker { background: var(--accent-spatial); }
+        .gradient-row.temporal .gradient-marker { background: var(--accent-temporal); }
+        .gradient-row.reference .gradient-marker { background: var(--accent-reference); }
+        .gradient-poles { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* Profile Content */
+        .profile-description { line-height: 1.85; color: var(--text-secondary); }
+        .profile-description p { margin-bottom: 16px; }
+        .profile-description p:last-child { margin-bottom: 0; }
+        .phrase-highlight {
+            background: linear-gradient(135deg, var(--accent-spatial-dim), var(--accent-temporal-dim));
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: 12px; padding: 24px; margin: 20px 0; text-align: center;
+        }
+        .phrase-highlight p { font-family: 'Fraunces', serif; font-size: 1.15rem; font-style: italic; color: var(--text-primary); margin: 0; line-height: 1.6; }
+
+        /* Traits */
+        .trait-grid { display: grid; gap: 16px; }
+        .trait-item { display: flex; gap: 14px; padding: 16px; background: var(--bg-secondary); border-radius: 12px; }
+        .trait-icon { font-size: 1.4rem; flex-shrink: 0; width: 32px; text-align: center; }
+        .trait-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--text-primary); }
+        .trait-content p { font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+
+        /* Challenge with remedy */
+        .challenge-item { padding: 20px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 16px; }
+        .challenge-item:last-child { margin-bottom: 0; }
+        .challenge-item h4 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+        .challenge-item .challenge-text { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
+        .challenge-item .remedy { font-size: 0.9rem; color: var(--accent-spatial); padding: 12px 16px; background: var(--accent-spatial-dim); border-radius: 8px; border-left: 3px solid var(--accent-spatial); }
+        .challenge-item .remedy strong { display: block; margin-bottom: 4px; }
+
+        /* Learning and Communication sections */
+        .content-section { line-height: 1.85; color: var(--text-secondary); }
+        .content-section p { margin-bottom: 16px; }
+        .content-section p:last-child { margin-bottom: 0; }
+
+        /* Locked Section */
+        .locked-section { position: relative; overflow: hidden; }
+        .locked-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, var(--bg-card) 50%);
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 40px;
+        }
+        .locked-overlay .lock-icon { font-size: 2rem; margin-bottom: 16px; opacity: 0.6; }
+        .locked-overlay p { color: var(--text-secondary); margin-bottom: 16px; }
+        .locked-content { filter: blur(6px); opacity: 0.4; pointer-events: none; }
+        .locked-teaser { color: var(--text-primary); font-size: 1rem; margin-bottom: 8px; font-weight: 500; }
+
+        /* Energy patterns */
+        .energy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .energy-column h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .energy-column.energizes h4 { color: var(--accent-spatial); }
+        .energy-column.drains h4 { color: var(--accent-reference); }
+        .energy-column ul { list-style: none; }
+        .energy-column li { font-size: 0.9rem; color: var(--text-secondary); padding: 8px 0; border-bottom: 1px solid var(--border); }
+        .energy-column li:last-child { border-bottom: none; }
+
+        /* Work environments */
+        .environment-section { margin-bottom: 20px; }
+        .environment-section:last-child { margin-bottom: 0; }
+        .environment-section h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 10px; }
+        .environment-section.ideal h4 { color: var(--accent-spatial); }
+        .environment-section.workable h4 { color: var(--accent-temporal); }
+        .environment-section.avoid h4 { color: var(--accent-reference); }
+        .environment-section p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+        /* Block indicators table */
+        .block-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .block-table th { text-align: left; padding: 12px 8px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+        .block-table td { padding: 12px 8px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+        .block-table tr:last-child td { border-bottom: none; }
+        .block-table .block-name { color: var(--text-primary); font-weight: 500; }
+        .block-table .strength-indicator { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .block-table .strength-high { background: var(--accent-spatial-dim); color: var(--accent-spatial); }
+        .block-table .strength-medium { background: var(--accent-temporal-dim); color: var(--accent-temporal); }
+        .block-table .strength-low { background: var(--accent-reference-dim); color: var(--accent-reference); }
+
+        /* Friction patterns */
+        .friction-item { padding: 16px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 12px; }
+        .friction-item:last-child { margin-bottom: 0; }
+        .friction-item h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+        .friction-item p { font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+
+        /* CTA */
+        .cta-card {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 40px; text-align: center; margin-top: 30px;
+        }
+        .cta-card h3 { font-family: 'Fraunces', serif; font-size: 1.6rem; margin-bottom: 12px; }
+        .cta-card > p { color: var(--text-secondary); margin-bottom: 24px; }
+        .cta-card .price { font-size: 3rem; font-weight: 700; margin-bottom: 8px; }
+        .cta-card .price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
+        .cta-card .price-note { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; }
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: left; margin: 24px 0; }
+        .feature-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .feature-item .check { color: var(--accent-spatial); font-weight: bold; flex-shrink: 0; }
+        .feature-item span { font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.8rem; }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .container { padding: 16px; }
+            .card { padding: 24px; }
+            .card h1 { font-size: 1.8rem; }
+            .question-text { font-size: 1.25rem; }
+            .profile-name { font-size: 2.5rem; }
+            .prediction-text { font-size: 1.2rem; }
+            .btn-group { flex-direction: column; }
+            .btn-group .btn-primary, .btn-group .btn-secondary { width: 100%; }
+            .features-grid { grid-template-columns: 1fr; }
+            .answer-option { padding: 14px 16px; }
+            .answer-text { font-size: 0.95rem; }
+            .energy-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+    <div class="container">
+        <header>
+            <div class="logo"><span>Parser Profile</span>™</div>
+            <div class="tagline">Developed by J.D. Mercer</div>
+        </header>
+
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text">
+                <span id="progressLabel">Question 1 of 15</span>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="screen active" id="introScreen">
+            <div class="card centered">
+                <h1>Parser Profile™ Assessment</h1>
+                <p style="font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px;">Right now, your brain is doing something remarkable.</p>
+                <p>It's not just existing in space and time—it's <em style="color: var(--accent-spatial);">parsing</em> reality through three cognitive systems that determine what you notice, how you think, and why some things click instantly while others feel like work.</p>
+                <div class="dimensions-preview">
+                    <div class="dimension-item spatial">
+                        <div class="icon">◈</div>
+                        <div class="label">Spatial</div>
+                        <div class="dimension-desc">Concrete ↔ Abstract</div>
+                    </div>
+                    <div class="dimension-item temporal">
+                        <div class="icon">◷</div>
+                        <div class="label">Temporal</div>
+                        <div class="dimension-desc">Past ↔ Future</div>
+                    </div>
+                    <div class="dimension-item reference">
+                        <div class="icon">◉</div>
+                        <div class="label">Reference</div>
+                        <div class="dimension-desc">Self ↔ Other</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.95rem;">Two people can look at the same situation and experience completely different realities—not because one is smarter, but because their brains <strong style="color: var(--accent-temporal);">filter reality differently</strong>.</p>
+                <p style="font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--text-primary); margin-bottom: 8px;">Discover your unique cognitive signature.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px;">15 questions • 5 minutes • Free results</p>
+                <button class="btn-primary" onclick="startAssessment()">Begin Assessment</button>
+            </div>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="screen" id="questionScreen">
+            <div class="question-container">
+                <div class="question-phase" id="questionPhase">Calibration · Question 1 of 3</div>
+                <span class="question-badge" id="questionBadge">Spatial</span>
+                <h2 class="question-text" id="questionText">Loading...</h2>
+                <div class="answer-options" id="answerOptions"></div>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-nav prev" id="prevBtn" onclick="prevQuestion()" disabled>← Previous</button>
+                <button class="btn-nav next" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+            </div>
+        </div>
+
+        <!-- PREDICTION -->
+        <div class="screen" id="predictionScreen">
+            <div class="card prediction-card">
+                <div class="prediction-icon">👁️</div>
+                <p class="prediction-text" id="predictionText">"You probably skim instructions and figure it out as you go."</p>
+                <div class="prediction-check">
+                    <p><strong>If that landed</strong>, your answers were honest—keep going.</p>
+                    <p><strong>If it missed</strong>, consider whether you answered who you <em>are</em> or who you <em>want to be</em>.</p>
+                    <p style="margin-top: 16px; font-size: 0.9rem;">Your actual profile reveals the path to growth.<br>Your desired profile assumes you don't need the guidance.</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="continuePastPrediction()">That Landed — Continue</button>
+                    <button class="btn-secondary" onclick="redoCalibration()">Let Me Redo Those</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="screen" id="emailScreen">
+            <div class="card centered">
+                <h2>One Last Step</h2>
+                <p>Enter your email to save your results and track how your profile evolves over time.</p>
+                <div class="input-group"><input type="email" id="emailInput" placeholder="your@email.com"></div>
+                <button class="btn-primary" onclick="showResults()">See My Results</button>
+                <span class="skip-link" onclick="showResults()">Skip for now</span>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="screen" id="resultsScreen">
+            <div class="results-header">
+                <div class="subtitle">Your Parser Profile</div>
+                <h1 class="profile-name" id="profileName">Visionary</h1>
+                <div class="profile-code" id="profileCode">Abstract • Future • Self</div>
+            </div>
+
+            <!-- Dimension Scores -->
+            <div class="results-card">
+                <div class="section-label">Your Cognitive Coordinates</div>
+                <h3>📊 Dimension Scores</h3>
+                <div class="gradient-row spatial">
+                    <div class="gradient-header">
+                        <span class="gradient-label">Spatial Processing</span>
+                        <span class="gradient-value" id="spatialValue">72% Abstract</span>
+                    </div>
+                    <div class="gradient-track"><div class="gradient-marker" id="spatialMarker" style="left: 50%"></div></div>
+                    <div class="gradient-poles"><span>Concrete</span><span>Abstract</span></div>
+                </div>
+                <div class="gradient-row temporal">
+                    <div class="gradient-header">
+                        <span class="gradient-label">Temporal Processing</span>
+                        <span class="gradient-value" id="temporalValue">65% Future</span>
+                    </div>
+                    <div class="gradient-track"><div class="gradient-marker" id="temporalMarker" style="left: 50%"></div></div>
+                    <div class="gradient-poles"><span>Past</span><span>Future</span></div>
+                </div>
+                <div class="gradient-row reference">
+                    <div class="gradient-header">
+                        <span class="gradient-label">Reference Processing</span>
+                        <span class="gradient-value" id="referenceValue">58% Self</span>
+                    </div>
+                    <div class="gradient-track"><div class="gradient-marker" id="referenceMarker" style="left: 50%"></div></div>
+                    <div class="gradient-poles"><span>Other</span><span>Self</span></div>
+                </div>
+            </div>
+
+            <!-- FREE TIER: Profile Overview -->
+            <div class="results-card">
+                <div class="section-label">Who You Are</div>
+                <h3>🔮 Your Profile</h3>
+                <div class="profile-description" id="profileDescription"></div>
+            </div>
+
+            <!-- FREE TIER: The Phrase -->
+            <div class="results-card">
+                <div class="section-label">The Phrase That Hits Home</div>
+                <div class="phrase-highlight">
+                    <p id="phraseContent">"Your phrase will appear here."</p>
+                </div>
+            </div>
+
+            <!-- FREE TIER: Cognitive Strengths (6) -->
+            <div class="results-card">
+                <div class="section-label">What Comes Naturally</div>
+                <h3>⚡ Your Cognitive Strengths</h3>
+                <div class="trait-grid" id="strengthsGrid"></div>
+            </div>
+
+            <!-- FREE TIER: How You Learn -->
+            <div class="results-card">
+                <div class="section-label">Your Learning Style</div>
+                <h3>📚 How You Learn Best</h3>
+                <div class="content-section" id="howYouLearnContent"></div>
+            </div>
+
+            <!-- FREE TIER: How You Communicate -->
+            <div class="results-card">
+                <div class="section-label">Your Communication Style</div>
+                <h3>💬 How You Communicate</h3>
+                <div class="content-section" id="howYouCommunicateContent"></div>
+            </div>
+
+            <!-- FREE TIER: 1 Challenge with Remedy -->
+            <div class="results-card">
+                <div class="section-label">Growth Edge</div>
+                <h3>🎯 Your Primary Challenge</h3>
+                <div id="primaryChallengeContent"></div>
+            </div>
+
+            <!-- PAID TIER LOCKED: The Secret -->
+            <div class="results-card locked-section">
+                <div class="locked-content" id="secretPreview">
+                    <h3>🤫 The Secret You've Carried</h3>
+                    <div class="content-section">
+                        <p>There's something you've known about yourself for years—maybe decades—that you've never quite been able to name or explain to others...</p>
+                        <p>This section reveals the unnamed truth about your cognitive pattern that you've always sensed but couldn't articulate...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">The Secret You've Carried</p>
+                    <p>Finally name what you've always known about yourself.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: All 6 Challenges -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>🎯 All 6 Natural Challenges</h3>
+                    <div class="challenge-item">
+                        <h4>Challenge with detailed remedy...</h4>
+                        <p class="challenge-text">Full challenge description with specific remedy...</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h4>Another challenge...</h4>
+                        <p class="challenge-text">Additional challenges and remedies...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">All 6 Challenges + Remedies</p>
+                    <p>Get the complete picture of your growth edges with actionable remedies.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: What Others Get Wrong -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>🎭 What Others Get Wrong About You</h3>
+                    <div class="content-section">
+                        <p>People consistently misread something fundamental about you...</p>
+                        <p>This section validates what you've always felt but couldn't prove...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">What Others Get Wrong About You</p>
+                    <p>Validation for what you've always felt but couldn't explain.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: Hidden Superpower -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>✨ Your Hidden Superpower</h3>
+                    <div class="content-section">
+                        <p>There's something you do that others genuinely cannot...</p>
+                        <p>This ability comes so naturally you might not even recognize it as special...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Your Hidden Superpower</p>
+                    <p>Discover what you do that others simply cannot.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: Blind Spot -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>👁️ Your Blind Spot</h3>
+                    <div class="content-section">
+                        <p>There's something your cognitive architecture makes nearly impossible to see on your own...</p>
+                        <p>This isn't a flaw—it's the natural shadow of your strengths...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Your Blind Spot</p>
+                    <p>See what your mind can't see on its own.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: Friction Patterns -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>⚡ Friction Patterns</h3>
+                    <div class="friction-item">
+                        <h4>Profile Type You Clash With</h4>
+                        <p>Why this specific cognitive pattern creates friction with yours...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Friction Patterns</p>
+                    <p>Understand who you clash with and why.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: Energy Patterns -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>🔋 What Energizes vs. Drains You</h3>
+                    <div class="energy-grid">
+                        <div class="energy-column energizes">
+                            <h4>⚡ Energizes</h4>
+                            <ul><li>Activity that fills your tank...</li><li>Another energizing pattern...</li></ul>
+                        </div>
+                        <div class="energy-column drains">
+                            <h4>🔌 Drains</h4>
+                            <ul><li>Activity that depletes you...</li><li>Another draining pattern...</li></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Energy Patterns</p>
+                    <p>Learn what fills your tank and what drains it.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: Work Environments -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>🏢 Optimal Work Environments</h3>
+                    <div class="environment-section ideal">
+                        <h4>✓ Ideal</h4>
+                        <p>Environment description...</p>
+                    </div>
+                    <div class="environment-section workable">
+                        <h4>~ Workable</h4>
+                        <p>Environment description...</p>
+                    </div>
+                    <div class="environment-section avoid">
+                        <h4>✗ Avoid</h4>
+                        <p>Environment description...</p>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Optimal Work Environments</p>
+                    <p>Find where you'll thrive vs. struggle.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- PAID TIER LOCKED: Block Indicators -->
+            <div class="results-card locked-section">
+                <div class="locked-content">
+                    <h3>🧱 Block Strength Indicators</h3>
+                    <table class="block-table">
+                        <thead><tr><th>Block</th><th>Strength</th><th>Integration</th></tr></thead>
+                        <tbody>
+                            <tr><td class="block-name">Block Name</td><td><span class="strength-indicator strength-high">High</span></td><td>Integration note...</td></tr>
+                            <tr><td class="block-name">Another Block</td><td><span class="strength-indicator strength-medium">Medium</span></td><td>Integration note...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">8-Block Integration Table</p>
+                    <p>See how your cognitive blocks work together.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-card" id="ctaCard">
+                <h3>Unlock Your Complete Profile</h3>
+                <p>You've seen your architecture. Now see what you can't see yourself.</p>
+                <div class="features-grid">
+                    <div class="feature-item"><span class="check">✓</span><span>The Secret You've Carried</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>What Others Get Wrong</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>Your Hidden Superpower</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>Your Blind Spot</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>All 6 Challenges + Remedies</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>Friction Patterns</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>Energy Patterns</span></div>
+                    <div class="feature-item"><span class="check">✓</span><span>Optimal Environments</span></div>
+                </div>
+                <div class="price">$9.99 <span>USD</span></div>
+                <div class="price-note">One-time purchase • Instant access • 30-day guarantee</div>
+                <button class="btn-primary" style="width: 100%; max-width: 300px;">Get Full Report</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Parser Profile™ developed by J.D. Mercer</p>
+            <p style="margin-top: 4px; font-size: 0.75rem;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
+            <p style="margin-top: 12px;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        // ============================================================================
+        // IMPORT PROFILES
+        // ============================================================================
+
+        import { profiles, getProfileByName } from './index.js';
+
+        // ============================================================================
+        // QUESTIONS DATA
+        // ============================================================================
+
+        const questions = [
+            // DDCoT CALIBRATION (Q1-3)
+            {
+                id: 'ddcot_spatial',
+                dimension: 'spatial',
+                phase: 'calibration',
+                text: 'When someone explains a new idea to you, what do you find yourself wanting first?',
+                poleDirection: 'abstract-to-concrete',
+                options: [
+                    { letter: 'A', text: 'The underlying principle or framework behind it', value: 5 },
+                    { letter: 'B', text: 'The principle first, but I\'ll want a concrete example soon after', value: 4 },
+                    { letter: 'C', text: 'It depends on the idea—sometimes I need to see it, sometimes I need to understand it conceptually', value: 3 },
+                    { letter: 'D', text: 'A specific example first, but I want to understand the principle too', value: 2 },
+                    { letter: 'E', text: 'A specific example I can picture clearly', value: 1 }
+                ]
+            },
+            {
+                id: 'ddcot_temporal',
+                dimension: 'temporal',
+                phase: 'calibration',
+                text: 'When facing a decision you\'ve never encountered before, what do you instinctively reach for?',
+                poleDirection: 'past-to-future',
+                options: [
+                    { letter: 'A', text: 'What\'s worked in similar situations before', value: 1 },
+                    { letter: 'B', text: 'Past experience primarily, while staying open to new approaches', value: 2 },
+                    { letter: 'C', text: 'Both equally—I weigh what\'s worked against what might work depending on the situation', value: 3 },
+                    { letter: 'D', text: 'New possibilities primarily, while considering what\'s worked before', value: 4 },
+                    { letter: 'E', text: 'What could work given current possibilities', value: 5 }
+                ]
+            },
+            {
+                id: 'ddcot_reference',
+                dimension: 'reference',
+                phase: 'calibration',
+                text: 'When you hear about a major change coming to your workplace or community, what\'s your first internal question?',
+                poleDirection: 'self-to-other',
+                options: [
+                    { letter: 'A', text: 'How will this affect me personally?', value: 5 },
+                    { letter: 'B', text: 'How this affects me, while considering the broader impact', value: 4 },
+                    { letter: 'C', text: 'Both my situation and everyone else\'s—I naturally track both', value: 3 },
+                    { letter: 'D', text: 'How this affects everyone, while noting my own situation', value: 2 },
+                    { letter: 'E', text: 'How will this affect everyone involved?', value: 1 }
+                ]
+            },
+
+            // MAIN ASSESSMENT (Q4-15)
+            // SPATIAL QUESTIONS
+            {
+                id: 'spatial_2',
+                dimension: 'spatial',
+                phase: 'assessment',
+                text: 'You\'re assembling something with written instructions. What\'s your natural approach?',
+                poleDirection: 'abstract-to-concrete',
+                options: [
+                    { letter: 'A', text: 'Skim for the overall concept, then figure out the details as I go', value: 5 },
+                    { letter: 'B', text: 'Glance at the big picture first, then loosely follow the steps', value: 4 },
+                    { letter: 'C', text: 'Depends on complexity—sometimes I need every step, sometimes I can improvise', value: 3 },
+                    { letter: 'D', text: 'Follow the steps but skip ahead if I see where it\'s going', value: 2 },
+                    { letter: 'E', text: 'Follow each step precisely in order', value: 1 }
+                ]
+            },
+            {
+                id: 'spatial_3',
+                dimension: 'spatial',
+                phase: 'assessment',
+                text: 'A friend comes to you with a problem. What do you naturally offer first?',
+                poleDirection: 'concrete-to-abstract',
+                options: [
+                    { letter: 'A', text: 'Practical steps they can take right now', value: 1 },
+                    { letter: 'B', text: 'Practical suggestions with some context about why they might help', value: 2 },
+                    { letter: 'C', text: 'It depends on the friend and problem—sometimes they need steps, sometimes perspective', value: 3 },
+                    { letter: 'D', text: 'Perspective on the bigger picture with some practical implications', value: 4 },
+                    { letter: 'E', text: 'A reframe or bigger-picture perspective on the situation', value: 5 }
+                ]
+            },
+            {
+                id: 'spatial_4',
+                dimension: 'spatial',
+                phase: 'assessment',
+                text: 'When you recall a meaningful experience, what comes back most vividly?',
+                poleDirection: 'concrete-to-abstract',
+                options: [
+                    { letter: 'A', text: 'Specific sensory details—what I saw, heard, felt physically', value: 1 },
+                    { letter: 'B', text: 'Details primarily, with some sense of what it meant', value: 2 },
+                    { letter: 'C', text: 'Both the concrete details and the abstract significance interweave', value: 3 },
+                    { letter: 'D', text: 'The meaning primarily, with some sensory fragments', value: 4 },
+                    { letter: 'E', text: 'The feeling or significance of it—the meaning more than the specifics', value: 5 }
+                ]
+            },
+            {
+                id: 'spatial_5',
+                dimension: 'spatial',
+                phase: 'assessment',
+                text: 'What frustrates you more when learning something new?',
+                poleDirection: 'concrete-to-abstract',
+                options: [
+                    { letter: 'A', text: 'Being given frameworks without concrete examples to ground them', value: 1 },
+                    { letter: 'B', text: 'Too much abstraction, though I can tolerate some theory', value: 2 },
+                    { letter: 'C', text: 'Either extreme—I need both concept and example in balance', value: 3 },
+                    { letter: 'D', text: 'Too many details, though I can work through them if needed', value: 4 },
+                    { letter: 'E', text: 'Being walked through details without understanding the underlying concept', value: 5 }
+                ]
+            },
+
+            // TEMPORAL QUESTIONS
+            {
+                id: 'temporal_2',
+                dimension: 'temporal',
+                phase: 'assessment',
+                text: 'After a project doesn\'t go as planned, where does your mind naturally go first?',
+                poleDirection: 'future-to-past',
+                options: [
+                    { letter: 'A', text: 'What to try differently next time', value: 5 },
+                    { letter: 'B', text: 'Forward mostly—what\'s next—with some reflection on what happened', value: 4 },
+                    { letter: 'C', text: 'Both backward and forward roughly equally, extracting lessons for future use', value: 3 },
+                    { letter: 'D', text: 'Backward mostly—what happened—while starting to consider next steps', value: 2 },
+                    { letter: 'E', text: 'What went wrong and why', value: 1 }
+                ]
+            },
+            {
+                id: 'temporal_3',
+                dimension: 'temporal',
+                phase: 'assessment',
+                text: 'When planning something you\'re looking forward to, what energizes you more?',
+                poleDirection: 'past-to-future',
+                options: [
+                    { letter: 'A', text: 'Researching and preparing based on what\'s worked before', value: 1 },
+                    { letter: 'B', text: 'Preparation grounded in experience, with some room for new possibilities', value: 2 },
+                    { letter: 'C', text: 'Both equally—I like being prepared AND imagining new possibilities', value: 3 },
+                    { letter: 'D', text: 'Imagining possibilities while drawing on some past experience', value: 4 },
+                    { letter: 'E', text: 'Imagining all the possibilities of what it could be', value: 5 }
+                ]
+            },
+            {
+                id: 'temporal_4',
+                dimension: 'temporal',
+                phase: 'assessment',
+                text: 'In conversations with close friends, what do you find yourself referencing more?',
+                poleDirection: 'past-to-future',
+                options: [
+                    { letter: 'A', text: 'Shared memories and experiences you\'ve had together', value: 1 },
+                    { letter: 'B', text: 'The past mostly, with some talk about what\'s ahead', value: 2 },
+                    { letter: 'C', text: 'A natural mix of both—memories and future plans flow together', value: 3 },
+                    { letter: 'D', text: 'What\'s coming up mostly, with some callback to shared history', value: 4 },
+                    { letter: 'E', text: 'Future plans and possibilities you\'re excited about', value: 5 }
+                ]
+            },
+            {
+                id: 'temporal_5',
+                dimension: 'temporal',
+                phase: 'assessment',
+                text: 'When do you feel most confident about a decision?',
+                poleDirection: 'future-to-past',
+                options: [
+                    { letter: 'A', text: 'When I can envision multiple positive future scenarios', value: 5 },
+                    { letter: 'B', text: 'When the future looks promising, even if it\'s uncharted territory', value: 4 },
+                    { letter: 'C', text: 'When I have both evidence it\'s worked AND reason to believe it will work again', value: 3 },
+                    { letter: 'D', text: 'When it has a track record, even if the future is uncertain', value: 2 },
+                    { letter: 'E', text: 'When I have evidence that this approach has worked before', value: 1 }
+                ]
+            },
+
+            // REFERENCE QUESTIONS
+            {
+                id: 'reference_2',
+                dimension: 'reference',
+                phase: 'assessment',
+                text: 'After a meaningful conversation, what do you find yourself replaying?',
+                poleDirection: 'self-to-other',
+                options: [
+                    { letter: 'A', text: 'What I said and how I came across', value: 5 },
+                    { letter: 'B', text: 'My own contributions mostly, with some thought about the other person', value: 4 },
+                    { letter: 'C', text: 'Both—what I said AND what they seemed to experience', value: 3 },
+                    { letter: 'D', text: 'What they seemed to feel mostly, with some reflection on my part', value: 2 },
+                    { letter: 'E', text: 'What the other person seemed to feel or experience', value: 1 }
+                ]
+            },
+            {
+                id: 'reference_3',
+                dimension: 'reference',
+                phase: 'assessment',
+                text: 'When making a choice that affects both you and others, what\'s your natural sequence?',
+                poleDirection: 'other-to-self',
+                options: [
+                    { letter: 'A', text: 'Consider what others need first, then factor in my own needs', value: 1 },
+                    { letter: 'B', text: 'Others first, then myself—but I do get to my own needs', value: 2 },
+                    { letter: 'C', text: 'Genuinely simultaneous—I can\'t separate individual and collective impact', value: 3 },
+                    { letter: 'D', text: 'Myself first, then others—but I do consider them', value: 4 },
+                    { letter: 'E', text: 'Clarify what I want first, then consider others\' needs', value: 5 }
+                ]
+            },
+            {
+                id: 'reference_4',
+                dimension: 'reference',
+                phase: 'assessment',
+                text: 'When you\'ve done good work, what matters more for your sense of satisfaction?',
+                poleDirection: 'other-to-self',
+                options: [
+                    { letter: 'A', text: 'Others\' recognition and positive response', value: 1 },
+                    { letter: 'B', text: 'External validation primarily, though internal satisfaction helps', value: 2 },
+                    { letter: 'C', text: 'Both equally—I need to feel good about it AND have others recognize it', value: 3 },
+                    { letter: 'D', text: 'My internal assessment primarily, though recognition is nice', value: 4 },
+                    { letter: 'E', text: 'My own internal assessment of the quality', value: 5 }
+                ]
+            },
+            {
+                id: 'reference_5',
+                dimension: 'reference',
+                phase: 'assessment',
+                text: 'In a group working on a task, what do you naturally track most closely?',
+                poleDirection: 'self-to-other',
+                options: [
+                    { letter: 'A', text: 'My own contribution and whether I\'m pulling my weight', value: 5 },
+                    { letter: 'B', text: 'My contribution mostly, with awareness of group dynamics', value: 4 },
+                    { letter: 'C', text: 'Both my role AND the group\'s overall functioning—they\'re inseparable', value: 3 },
+                    { letter: 'D', text: 'Group dynamics mostly, while staying aware of my own contribution', value: 2 },
+                    { letter: 'E', text: 'How the group is functioning overall and whether people are aligned', value: 1 }
+                ]
+            }
+        ];
+
+        // ============================================================================
+        // PREDICTIONS
+        // ============================================================================
+
+        const predictions = {
+            'concrete-past-self': "You probably know exactly where you put things—and get frustrated when others move them.",
+            'concrete-past-balanced': "You probably have a 'right way' to do most things—not because you're rigid, but because you've tested alternatives.",
+            'concrete-past-other': "You probably remember who helped build things long after everyone else has forgotten their names.",
+            'concrete-present-self': "You probably know when something's wrong with your body before any test would catch it.",
+            'concrete-present-balanced': "You probably get frustrated when people overcomplicate things that are actually simple.",
+            'concrete-present-other': "You probably notice when someone's energy shifts before they've said a word.",
+            'concrete-future-self': "You probably have a plan for something at least a year away—and you've already started working on it.",
+            'concrete-future-balanced': "You probably run scenarios in your head—not anxiously, but practically. You want to be ready.",
+            'concrete-future-other': "You probably remember what you promised people long after they've forgotten they asked.",
+            'balanced-past-self': "You probably learn more from reflecting on your own experience than from any book or course.",
+            'balanced-past-balanced': "You probably see how things connect to what came before—even when others don't notice the thread.",
+            'balanced-past-other': "You probably remember group histories—who contributed what, how decisions were made.",
+            'balanced-present-self': "You probably know what you need to function, and you've learned to provide it for yourself.",
+            'balanced-present-balanced': "You've probably been called 'calm' and 'even-keeled' more times than you can count.",
+            'balanced-present-other': "You probably notice when the group mood shifts before anyone acknowledges it.",
+            'balanced-future-self': "You probably have a vision of who you're becoming that feels more real than who you are now.",
+            'balanced-future-balanced': "You probably see how things could work better—and it's obvious to you even when no one else sees it.",
+            'balanced-future-other': "You probably get excited about what groups could accomplish if they actually worked together.",
+            'abstract-past-self': "You probably remember feelings more than facts—and those feelings are still vivid.",
+            'abstract-past-balanced': "You probably understand things better after they've happened—hindsight is where you do your best thinking.",
+            'abstract-past-other': "You probably hold certain traditions or principles as standards—not blindly, but because you see what they represent.",
+            'abstract-present-self': "You've probably been told you 'think too much'—and wondered what everyone else does with all that unexamined experience.",
+            'abstract-present-balanced': "You probably notice the texture of your own experience more than most people notice anything.",
+            'abstract-present-other': "You probably know how people feel about each other before they've said anything.",
+            'abstract-future-self': "You probably skim instructions and figure it out as you go—and you're usually right.",
+            'abstract-future-balanced': "You probably see where things are heading long before most people notice anything is changing.",
+            'abstract-future-other': "You probably think about systems more than individuals—and you've felt guilty about that even though it's how you actually help."
+        };
+
+        // ============================================================================
+        // PROFILE NAME MAPPING
+        // ============================================================================
+
+        const profileNames = {
+            'concrete-past-self': 'Sharp',
+            'concrete-past-balanced': 'Seasoned',
+            'concrete-past-other': 'Legacy',
+            'concrete-present-self': 'Embodied',
+            'concrete-present-balanced': 'Grounded',
+            'concrete-present-other': 'Attuned',
+            'concrete-future-self': 'Intentional',
+            'concrete-future-balanced': 'Resilient',
+            'concrete-future-other': 'Reliable',
+            'balanced-past-self': 'Integrated',
+            'balanced-past-balanced': 'Coherent',
+            'balanced-past-other': 'Reconciled',
+            'balanced-present-self': 'Centered',
+            'balanced-present-balanced': 'Equanimous',
+            'balanced-present-other': 'Empathetic',
+            'balanced-future-self': 'Actualized',
+            'balanced-future-balanced': 'Harmonious',
+            'balanced-future-other': 'Collaborative',
+            'abstract-past-self': 'Sentimental',
+            'abstract-past-balanced': 'Reflective',
+            'abstract-past-other': 'Idealized',
+            'abstract-present-self': 'Introspective',
+            'abstract-present-balanced': 'Mindful',
+            'abstract-present-other': 'Intuitive',
+            'abstract-future-self': 'Visionary',
+            'abstract-future-balanced': 'Foresighted',
+            'abstract-future-other': 'Altruistic'
+        };
+
+        // Strength icons
+        const strengthIcons = ['⚡', '🎯', '🔮', '💡', '🌟', '✨'];
+
+        // ============================================================================
+        // STATE
+        // ============================================================================
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        // ============================================================================
+        // FUNCTIONS
+        // ============================================================================
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.startAssessment = function() {
+            document.getElementById('progressContainer').style.display = 'block';
+            showScreen('questionScreen');
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            const q = questions[index];
+            const isCalibration = q.phase === 'calibration';
+            const calNum = isCalibration ? index + 1 : null;
+            const assessNum = isCalibration ? null : index - 2;
+
+            if (isCalibration) {
+                document.getElementById('questionPhase').textContent = `Calibration · Question ${calNum} of 3`;
+            } else {
+                document.getElementById('questionPhase').textContent = `Assessment · Question ${assessNum} of 12`;
+            }
+
+            const badge = document.getElementById('questionBadge');
+            badge.textContent = q.dimension.charAt(0).toUpperCase() + q.dimension.slice(1);
+            badge.className = 'question-badge ' + q.dimension;
+
+            document.getElementById('questionText').textContent = q.text;
+
+            const optionsContainer = document.getElementById('answerOptions');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-option';
+                if (q.dimension === 'temporal') btn.classList.add('temporal-q');
+                if (q.dimension === 'reference') btn.classList.add('reference-q');
+                if (answers[q.id] === opt.value) btn.classList.add('selected');
+
+                btn.innerHTML = `
+                    <span class="answer-letter">${opt.letter}</span>
+                    <span class="answer-text">${opt.text}</span>
+                `;
+                btn.onclick = () => selectAnswer(q.id, opt.value, btn, q.dimension);
+                optionsContainer.appendChild(btn);
+            });
+
+            const progress = ((index + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressLabel').textContent = `Question ${index + 1} of ${questions.length}`;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = !answers[q.id];
+            document.getElementById('nextBtn').textContent = index === questions.length - 1 ? 'See Results →' : 'Next →';
+        }
+
+        function selectAnswer(questionId, value, btn, dimension) {
+            answers[questionId] = value;
+
+            document.querySelectorAll('.answer-option').forEach(o => o.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            document.getElementById('nextBtn').disabled = false;
+
+            if (currentQuestion < questions.length - 1) {
+                setTimeout(() => window.nextQuestion(), 300);
+            }
+        }
+
+        window.nextQuestion = function() {
+            if (currentQuestion === 2) {
+                showPrediction();
+                return;
+            }
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showScreen('emailScreen');
+                document.getElementById('progressContainer').style.display = 'none';
+            }
+        }
+
+        window.prevQuestion = function() {
+            if (currentQuestion > 0) {
+                if (currentQuestion === 3) {
+                    currentQuestion = 2;
+                } else {
+                    currentQuestion--;
+                }
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function showPrediction() {
+            const scores = calculateScores(true);
+            const key = getProfileKey(scores);
+            const prediction = predictions[key] || predictions['balanced-present-balanced'];
+
+            document.getElementById('predictionText').textContent = `"${prediction}"`;
+            showScreen('predictionScreen');
+        }
+
+        window.continuePastPrediction = function() {
+            currentQuestion = 3;
+            showScreen('questionScreen');
+            showQuestion(currentQuestion);
+        }
+
+        window.redoCalibration = function() {
+            answers = {};
+            currentQuestion = 0;
+            showScreen('questionScreen');
+            showQuestion(0);
+        }
+
+        function calculateScores(ddcotOnly = false) {
+            const relevantQuestions = ddcotOnly
+                ? questions.filter(q => q.phase === 'calibration')
+                : questions;
+
+            let spatial = { total: 0, count: 0 };
+            let temporal = { total: 0, count: 0 };
+            let reference = { total: 0, count: 0 };
+
+            relevantQuestions.forEach(q => {
+                const answer = answers[q.id];
+                if (answer === undefined) return;
+
+                if (q.dimension === 'spatial') {
+                    spatial.total += answer;
+                    spatial.count++;
+                } else if (q.dimension === 'temporal') {
+                    temporal.total += answer;
+                    temporal.count++;
+                } else if (q.dimension === 'reference') {
+                    reference.total += answer;
+                    reference.count++;
+                }
+            });
+
+            const toPercent = (dim) => dim.count > 0 ? Math.round(((dim.total / dim.count) - 1) / 4 * 100) : 50;
+
+            return {
+                spatial: toPercent(spatial),
+                temporal: toPercent(temporal),
+                reference: toPercent(reference)
+            };
+        }
+
+        function getProfileKey(scores) {
+            const spatial = scores.spatial < 35 ? 'concrete' : scores.spatial > 65 ? 'abstract' : 'balanced';
+            const temporal = scores.temporal < 35 ? 'past' : scores.temporal > 65 ? 'future' : 'present';
+            const reference = scores.reference < 35 ? 'other' : scores.reference > 65 ? 'self' : 'balanced';
+            return `${spatial}-${temporal}-${reference}`;
+        }
+
+        function getCategoryLabel(dimension, score) {
+            const labels = {
+                spatial: { low: 'Concrete', high: 'Abstract', mid: 'Balanced' },
+                temporal: { low: 'Past', high: 'Future', mid: 'Present' },
+                reference: { low: 'Other', high: 'Self', mid: 'Balanced' }
+            };
+            const cat = score < 35 ? 'low' : score > 65 ? 'high' : 'mid';
+            return labels[dimension][cat];
+        }
+
+        window.showResults = function() {
+            showScreen('resultsScreen');
+
+            const scores = calculateScores(false);
+            const key = getProfileKey(scores);
+            const name = profileNames[key] || 'Equanimous';
+
+            // Get the actual profile data
+            const profile = getProfileByName(name);
+
+            // Header
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileCode').textContent =
+                `${getCategoryLabel('spatial', scores.spatial)} • ${getCategoryLabel('temporal', scores.temporal)} • ${getCategoryLabel('reference', scores.reference)}`;
+
+            // Gradient markers
+            setTimeout(() => {
+                document.getElementById('spatialMarker').style.left = scores.spatial + '%';
+                document.getElementById('temporalMarker').style.left = scores.temporal + '%';
+                document.getElementById('referenceMarker').style.left = scores.reference + '%';
+            }, 100);
+
+            // Gradient values
+            const spatialDir = scores.spatial >= 50 ? 'Abstract' : 'Concrete';
+            const temporalDir = scores.temporal >= 50 ? 'Future' : 'Past';
+            const referenceDir = scores.reference >= 50 ? 'Self' : 'Other';
+
+            document.getElementById('spatialValue').textContent =
+                `${scores.spatial >= 50 ? scores.spatial : 100 - scores.spatial}% ${spatialDir}`;
+            document.getElementById('temporalValue').textContent =
+                `${scores.temporal >= 50 ? scores.temporal : 100 - scores.temporal}% ${temporalDir}`;
+            document.getElementById('referenceValue').textContent =
+                `${scores.reference >= 50 ? scores.reference : 100 - scores.reference}% ${referenceDir}`;
+
+            // Load profile content
+            if (profile) {
+                loadProfileContent(profile, key);
+            } else {
+                loadFallbackContent(name, key);
+            }
+        }
+
+        function loadProfileContent(profile, key) {
+            // FREE TIER: Profile Overview
+            if (profile.overview) {
+                const overviewHtml = profile.overview.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                document.getElementById('profileDescription').innerHTML = overviewHtml;
+            }
+
+            // FREE TIER: The Phrase
+            if (profile.phrase) {
+                document.getElementById('phraseContent').textContent = `"${profile.phrase}"`;
+            }
+
+            // FREE TIER: 6 Strengths
+            if (profile.strengths && profile.strengths.length > 0) {
+                const strengthsHtml = profile.strengths.slice(0, 6).map((s, i) => `
+                    <div class="trait-item">
+                        <div class="trait-icon">${strengthIcons[i % strengthIcons.length]}</div>
+                        <div class="trait-content">
+                            <h4>${s.title}</h4>
+                            <p>${s.description}</p>
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('strengthsGrid').innerHTML = strengthsHtml;
+            }
+
+            // FREE TIER: How You Learn
+            if (profile.howYouLearn) {
+                const learnHtml = profile.howYouLearn.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                document.getElementById('howYouLearnContent').innerHTML = learnHtml;
+            }
+
+            // FREE TIER: How You Communicate
+            if (profile.howYouCommunicate) {
+                const commHtml = profile.howYouCommunicate.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+                document.getElementById('howYouCommunicateContent').innerHTML = commHtml;
+            }
+
+            // FREE TIER: 1 Challenge with Remedy
+            if (profile.challenges && profile.challenges.length > 0) {
+                const challenge = profile.challenges[0];
+                document.getElementById('primaryChallengeContent').innerHTML = `
+                    <div class="challenge-item">
+                        <h4>🎯 ${challenge.title}</h4>
+                        <p class="challenge-text">${challenge.challenge}</p>
+                        <div class="remedy">
+                            <strong>Remedy:</strong>
+                            ${challenge.remedy}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function loadFallbackContent(name, key) {
+            // Fallback content if profile data is not found
+            document.getElementById('profileDescription').innerHTML = `
+                <p>Your Parser Profile is <strong>${name}</strong>. This profile represents your unique cognitive architecture—the way your brain naturally parses reality across spatial, temporal, and reference dimensions.</p>
+                <p>Your cognitive signature shapes how you process information, make decisions, and interact with the world around you.</p>
+            `;
+
+            document.getElementById('phraseContent').textContent =
+                `"${predictions[key] || 'Your cognitive architecture shapes how you experience reality.'}"`;
+
+            document.getElementById('strengthsGrid').innerHTML = `
+                <div class="trait-item">
+                    <div class="trait-icon">⚡</div>
+                    <div class="trait-content">
+                        <h4>Profile Loading</h4>
+                        <p>Full profile content will be available when properly connected.</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('howYouLearnContent').innerHTML = '<p>Learning style content loading...</p>';
+            document.getElementById('howYouCommunicateContent').innerHTML = '<p>Communication style content loading...</p>';
+            document.getElementById('primaryChallengeContent').innerHTML = '<p>Challenge content loading...</p>';
+        }
+
+        window.scrollToCTA = function() {
+            document.getElementById('ctaCard').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
