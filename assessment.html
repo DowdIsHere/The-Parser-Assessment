@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
     <!-- PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- Square Web Payments SDK -->
-    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    <!-- Square Web Payments SDK (Production) -->
+    <script src="https://web.squarecdn.com/v1/square.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -826,7 +826,6 @@
                 <div class="price">$9.99 <span>USD</span></div>
                 <div class="price-note">One-time purchase • Instant access • 30-day guarantee</div>
                 <button class="btn-primary" style="width: 100%; max-width: 300px;" onclick="openPaymentModal()">Get Full Report</button>
-                <p style="margin-top: 16px; margin-bottom: 0;"><span class="skip-link" onclick="testUnlock()">[Test Mode: Unlock without payment]</span></p>
             </div>
         </div>
 
@@ -841,9 +840,6 @@
                 <div class="modal-price">
                     <span class="amount">$9.99</span>
                     <span class="currency">USD</span>
-                </div>
-                <div class="test-mode-banner" id="testModeBanner">
-                    🧪 Sandbox Mode - Use card: 4111 1111 1111 1111, any future date, any CVV
                 </div>
                 <div id="card-container"></div>
                 <button id="card-button" type="button" disabled>Pay $9.99</button>
@@ -1541,8 +1537,8 @@
         // SQUARE PAYMENT INTEGRATION
         // ============================================================================
 
-        // Square Sandbox Credentials
-        const SQUARE_APP_ID = 'sandbox-sq0idb-kXsghxUqcEsz81P8dGx0kg';
+        // Square Production Credentials
+        const SQUARE_APP_ID = 'sq0idp-F40bcaFHPPDO8Q_fsIa_eA';
         const SQUARE_LOCATION_ID = 'C48SWGPW8D1T2';
 
         let card = null;
