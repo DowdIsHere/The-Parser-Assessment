@@ -1667,23 +1667,34 @@
             // Friction Patterns
             const frictionSection = document.querySelectorAll('.locked-section')[5];
             if (frictionSection && profile.frictionPatterns) {
-                const frictionHtml = profile.frictionPatterns.map(f => `
-                    <div class="friction-item">
-                        <h4>${f.profile}</h4>
-                        <p>${f.description}</p>
-                    </div>
-                `).join('');
+                const frictionHtml = profile.frictionPatterns.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
                 frictionSection.querySelector('.locked-content').innerHTML = `
                     <h3>⚡ Friction Patterns</h3>
-                    ${frictionHtml}
+                    <div class="content-section">${frictionHtml}</div>
                 `;
             }
 
             // Energy Patterns
             const energySection = document.querySelectorAll('.locked-section')[6];
             if (energySection && profile.energyPatterns) {
-                const energizesHtml = profile.energyPatterns.energizes?.map(e => `<li>${e}</li>`).join('') || '';
-                const drainsHtml = profile.energyPatterns.drains?.map(d => `<li>${d}</li>`).join('') || '';
+                // Parse the string format: "Energizes:\n\n• item\n\n• item\n\nDrains:\n\n• item"
+                const energyText = profile.energyPatterns;
+                const parts = energyText.split(/Drains:/i);
+                const energizesPart = parts[0].replace(/Energizes:/i, '').trim();
+                const drainsPart = parts[1] ? parts[1].trim() : '';
+
+                const parseItems = (text) => text.split('•')
+                    .map(item => item.trim())
+                    .filter(item => item.length > 0)
+                    .map(item => `<li>${item}</li>`)
+                    .join('');
+
+                const energizesHtml = parseItems(energizesPart);
+                const drainsHtml = parseItems(drainsPart);
+
                 energySection.querySelector('.locked-content').innerHTML = `
                     <h3>🔋 What Energizes vs. Drains You</h3>
                     <div class="energy-grid">
@@ -1702,43 +1713,37 @@
             // Work Environments
             const envSection = document.querySelectorAll('.locked-section')[7];
             if (envSection && profile.workEnvironments) {
+                // Parse string format into paragraphs
+                const envHtml = profile.workEnvironments.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
                 envSection.querySelector('.locked-content').innerHTML = `
                     <h3>🏢 Optimal Work Environments</h3>
-                    <div class="environment-section ideal">
-                        <h4>✓ Ideal</h4>
-                        <p>${profile.workEnvironments.ideal || ''}</p>
-                    </div>
-                    <div class="environment-section workable">
-                        <h4>~ Workable</h4>
-                        <p>${profile.workEnvironments.workable || ''}</p>
-                    </div>
-                    <div class="environment-section avoid">
-                        <h4>✗ Avoid</h4>
-                        <p>${profile.workEnvironments.avoid || ''}</p>
-                    </div>
+                    <div class="content-section">${envHtml}</div>
                 `;
             }
 
             // Block Indicators
             const blockSection = document.querySelectorAll('.locked-section')[8];
             if (blockSection && profile.blockIndicators) {
-                const blockRows = profile.blockIndicators.map(b => {
-                    const strengthClass = b.strength?.toLowerCase() === 'high' ? 'strength-high' :
-                                         b.strength?.toLowerCase() === 'medium' ? 'strength-medium' : 'strength-low';
-                    return `
-                        <tr>
-                            <td class="block-name">${b.block}</td>
-                            <td><span class="strength-indicator ${strengthClass}">${b.strength}</span></td>
-                            <td>${b.integration}</td>
-                        </tr>
-                    `;
-                }).join('');
+                // Parse string format into paragraphs with bullet points
+                const blockHtml = profile.blockIndicators.split('\n\n')
+                    .filter(p => p.trim())
+                    .map(p => {
+                        // Handle bullet points
+                        if (p.includes('•')) {
+                            const lines = p.split('•').filter(l => l.trim());
+                            if (lines.length > 1) {
+                                return `<ul>${lines.map(l => `<li>${l.trim()}</li>`).join('')}</ul>`;
+                            }
+                        }
+                        return `<p>${p}</p>`;
+                    })
+                    .join('');
                 blockSection.querySelector('.locked-content').innerHTML = `
-                    <h3>🧱 Block Strength Indicators</h3>
-                    <table class="block-table">
-                        <thead><tr><th>Block</th><th>Strength</th><th>Integration</th></tr></thead>
-                        <tbody>${blockRows}</tbody>
-                    </table>
+                    <h3>🧱 Cognitive Block Indicators</h3>
+                    <div class="content-section">${blockHtml}</div>
                 `;
             }
         }
@@ -1857,36 +1862,43 @@
         }
 
         function generatePDFFriction(friction) {
-            if (!friction || !friction.length) return '';
-            const items = friction.map(f => `
-                <div style="margin-bottom: 12px; padding: 12px; background: #f5f5f5; border-radius: 8px;">
-                    <strong>${f.profile}</strong>
-                    <p style="margin: 4px 0 0 0; color: #666;">${f.description}</p>
-                </div>
-            `).join('');
+            if (!friction) return '';
+            const paragraphs = friction.split('\n\n')
+                .filter(p => p.trim())
+                .map(p => `<p style="margin-bottom: 8px; color: #333;">${p}</p>`)
+                .join('');
             return `
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">⚡ Friction Patterns</h3>
-                    ${items}
+                    ${paragraphs}
                 </div>
             `;
         }
 
         function generatePDFEnergy(energy) {
             if (!energy) return '';
-            const energizes = energy.energizes?.map(e => `<li style="margin-bottom: 4px;">${e}</li>`).join('') || '';
-            const drains = energy.drains?.map(d => `<li style="margin-bottom: 4px;">${d}</li>`).join('') || '';
+            // Parse string format: "Energizes:\n\n• item\n\nDrains:\n\n• item"
+            const parts = energy.split(/Drains:/i);
+            const energizesPart = parts[0].replace(/Energizes:/i, '').trim();
+            const drainsPart = parts[1] ? parts[1].trim() : '';
+
+            const parseItems = (text) => text.split('•')
+                .map(item => item.trim())
+                .filter(item => item.length > 0)
+                .map(item => `<li style="margin-bottom: 4px;">${item}</li>`)
+                .join('');
+
             return `
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🔋 Energy Patterns</h3>
                     <div style="display: flex; gap: 20px;">
                         <div style="flex: 1;">
                             <h4 style="color: #00d4aa;">⚡ Energizes</h4>
-                            <ul style="padding-left: 20px;">${energizes}</ul>
+                            <ul style="padding-left: 20px;">${parseItems(energizesPart)}</ul>
                         </div>
                         <div style="flex: 1;">
                             <h4 style="color: #a855f7;">🔌 Drains</h4>
-                            <ul style="padding-left: 20px;">${drains}</ul>
+                            <ul style="padding-left: 20px;">${parseItems(drainsPart)}</ul>
                         </div>
                     </div>
                 </div>
@@ -1895,38 +1907,38 @@
 
         function generatePDFEnvironments(env) {
             if (!env) return '';
+            const paragraphs = env.split('\n\n')
+                .filter(p => p.trim())
+                .map(p => `<p style="margin-bottom: 8px; color: #333;">${p}</p>`)
+                .join('');
             return `
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🏢 Optimal Work Environments</h3>
-                    <p><strong style="color: #00d4aa;">✓ Ideal:</strong> ${env.ideal || ''}</p>
-                    <p><strong style="color: #ffc857;">~ Workable:</strong> ${env.workable || ''}</p>
-                    <p><strong style="color: #a855f7;">✗ Avoid:</strong> ${env.avoid || ''}</p>
+                    ${paragraphs}
                 </div>
             `;
         }
 
         function generatePDFBlocks(blocks) {
-            if (!blocks || !blocks.length) return '';
-            const rows = blocks.map(b => `
-                <tr>
-                    <td style="padding: 8px; border-bottom: 1px solid #eee;">${b.block}</td>
-                    <td style="padding: 8px; border-bottom: 1px solid #eee;">${b.strength}</td>
-                    <td style="padding: 8px; border-bottom: 1px solid #eee;">${b.integration}</td>
-                </tr>
-            `).join('');
+            if (!blocks) return '';
+            // Parse string with bullet points into formatted sections
+            const sections = blocks.split('\n\n').filter(p => p.trim());
+            let html = '';
+            sections.forEach(section => {
+                if (section.includes('•')) {
+                    const items = section.split('•')
+                        .filter(l => l.trim())
+                        .map(l => `<li style="margin-bottom: 4px;">${l.trim()}</li>`)
+                        .join('');
+                    html += `<ul style="padding-left: 20px; margin-bottom: 12px;">${items}</ul>`;
+                } else {
+                    html += `<p style="margin-bottom: 8px; color: #333; font-weight: ${section.includes(':') ? 'bold' : 'normal'};">${section}</p>`;
+                }
+            });
             return `
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🧱 Block Strength Indicators</h3>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: #f5f5f5;">
-                                <th style="padding: 8px; text-align: left;">Block</th>
-                                <th style="padding: 8px; text-align: left;">Strength</th>
-                                <th style="padding: 8px; text-align: left;">Integration</th>
-                            </tr>
-                        </thead>
-                        <tbody>${rows}</tbody>
-                    </table>
+                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🧱 Cognitive Block Indicators</h3>
+                    ${html}
                 </div>
             `;
         }
