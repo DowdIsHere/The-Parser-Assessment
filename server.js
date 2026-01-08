@@ -1,4 +1,8 @@
-require('dotenv').config();
+// Only load .env in development (not on Railway)
+if (!process.env.RAILWAY_ENVIRONMENT_NAME) {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const cors = require('cors');
 
@@ -61,7 +65,6 @@ app.post('/api/process-payment', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-    console.log(`Open http://localhost:${PORT}/assessment.html to test`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
 });
