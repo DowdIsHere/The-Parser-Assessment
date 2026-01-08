@@ -220,9 +220,9 @@ app.post('/api/send-results', async (req, res) => {
     if (transporter) {
         try {
             await transporter.sendMail({
-                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocks.com',
+                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
                 to: email,
-                bcc: 'Profile.library@cognitionblocks.com',
+                bcc: 'Profile.library@cognitionblocksllc.com',
                 subject: `Your Parser Profile™ Results: ${profileName}`,
                 html: emailHtml
             });
@@ -267,8 +267,8 @@ app.post('/api/notify-completion', async (req, res) => {
 
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocks.com',
-            to: 'Profile.library@cognitionblocks.com',
+            from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+            to: 'Profile.library@cognitionblocksllc.com',
             subject: `New Parser Profile Completion: ${profileName} (${tier})`,
             html: `
                 <h2>New Assessment Completed</h2>
