@@ -2,7 +2,7 @@
 node_modules/
 
 # Environment variables (contains secrets)
-# .env  # Temporarily allowing .env for testing sync
+.env
 
 # OS files
 .DS_Store
