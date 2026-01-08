@@ -540,10 +540,15 @@
         <div class="screen" id="emailScreen">
             <div class="card centered">
                 <h2>One Last Step</h2>
-                <p>Enter your email to save your results and track how your profile evolves over time.</p>
-                <div class="input-group"><input type="email" id="emailInput" placeholder="your@email.com"></div>
-                <button class="btn-primary" onclick="showResults()">See My Results</button>
-                <span class="skip-link" onclick="showResults()">Skip for now</span>
+                <p>Get your FREE results emailed to you with your unique Customer ID.</p>
+                <div class="input-group">
+                    <input type="text" id="nameInput" placeholder="Your name (optional)" style="margin-bottom: 12px;">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="emailInput" placeholder="your@email.com">
+                </div>
+                <button class="btn-primary" onclick="submitEmailAndShowResults()">Email My Results</button>
+                <span class="skip-link" onclick="showResults()">Skip — just show results</span>
             </div>
         </div>
 
@@ -553,6 +558,10 @@
                 <div class="subtitle">Your Parser Profile</div>
                 <h1 class="profile-name" id="profileName">Visionary</h1>
                 <div class="profile-code" id="profileCode">Abstract • Future • Self</div>
+                <div id="customerIdDisplay" style="display: none; margin-top: 16px; padding: 12px 24px; background: var(--accent-spatial-dim); border: 1px solid rgba(0, 212, 170, 0.3); border-radius: 8px;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Your Customer ID</span>
+                    <span id="customerIdValue" style="font-weight: 700; letter-spacing: 0.05em; color: var(--accent-spatial);"></span>
+                </div>
             </div>
 
             <!-- Download Section (shown after purchase) -->
@@ -1397,6 +1406,65 @@
             };
             const cat = score < 35 ? 'low' : score > 65 ? 'high' : 'mid';
             return labels[dimension][cat];
+        }
+
+        // Store user info for email
+        let userInfo = { name: '', email: '', customerId: '' };
+
+        // Submit email and show results
+        window.submitEmailAndShowResults = async function() {
+            const email = document.getElementById('emailInput').value.trim();
+            const name = document.getElementById('nameInput').value.trim();
+
+            if (!email) {
+                alert('Please enter your email to receive your results.');
+                return;
+            }
+
+            // Store user info
+            userInfo.email = email;
+            userInfo.name = name;
+
+            // Show results first
+            window.showResults();
+
+            // Then send email in background
+            const scores = calculateScores(false);
+            const key = getProfileKey(scores);
+            const profileName = profileNames[key] || 'Equanimous';
+            const profile = getProfileByName(profileName);
+
+            try {
+                const response = await fetch('/api/send-results', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        name: name,
+                        profileName: profileName,
+                        profileCode: document.getElementById('profileCode').textContent,
+                        scores: scores,
+                        overview: profile?.overview || '',
+                        phrase: profile?.phrase || '',
+                        strengths: profile?.strengths || [],
+                        howYouLearn: profile?.howYouLearn || '',
+                        howYouCommunicate: profile?.howYouCommunicate || '',
+                        primaryChallenge: profile?.challenges?.[0] || null
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.customerId) {
+                    userInfo.customerId = data.customerId;
+                    // Display customer ID
+                    document.getElementById('customerIdValue').textContent = data.customerId;
+                    document.getElementById('customerIdDisplay').style.display = 'inline-block';
+                    console.log('Email sent! Customer ID:', data.customerId);
+                }
+            } catch (error) {
+                console.error('Email error:', error);
+            }
         }
 
         window.showResults = function() {
