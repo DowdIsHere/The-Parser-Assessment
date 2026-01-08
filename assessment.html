@@ -27,6 +27,26 @@
             --accent-reference-dim: rgba(168, 85, 247, 0.15);
             --border: rgba(255, 255, 255, 0.08);
         }
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #e8e8ec;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a24;
+            --text-secondary: #4a4a5a;
+            --text-muted: #7a7a8a;
+            --accent-spatial: #00b894;
+            --accent-temporal: #e6a800;
+            --accent-reference: #9333ea;
+            --accent-spatial-dim: rgba(0, 184, 148, 0.15);
+            --accent-temporal-dim: rgba(230, 168, 0, 0.15);
+            --accent-reference-dim: rgba(147, 51, 234, 0.15);
+            --border: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="light"] .mesh-bg {
+            background: radial-gradient(ellipse at 20% 0%, rgba(0, 184, 148, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 100%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'DM Sans', sans-serif;
@@ -44,13 +64,36 @@
             z-index: 0;
         }
         .container { max-width: 760px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
-        header { text-align: center; padding: 40px 0 30px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 30px; }
+        .header-left { text-align: left; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
         .logo { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; }
         .logo span {
             background: linear-gradient(135deg, var(--accent-spatial), var(--accent-temporal), var(--accent-reference));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .tagline { color: var(--text-secondary); font-size: 0.9rem; }
+        .theme-toggle {
+            background: transparent; border: none; cursor: pointer;
+            font-size: 1.2rem; padding: 8px; border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+        .theme-toggle:hover { background: var(--bg-secondary); }
+        .explore-link {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.9rem; font-weight: 500; transition: color 0.2s ease;
+        }
+        .explore-link:hover { color: var(--accent-spatial); }
+        .explore-cta {
+            display: inline-block; margin-bottom: 20px;
+            padding: 12px 32px; border: 2px solid var(--accent-spatial);
+            border-radius: 50px; color: var(--accent-spatial);
+            text-decoration: none; font-weight: 600; font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .explore-cta:hover {
+            background: var(--accent-spatial); color: var(--bg-primary);
+        }
         .progress-container { margin: 30px 0; }
         .progress-bar { height: 4px; background: var(--bg-card); border-radius: 2px; overflow: hidden; }
         .progress-fill {
@@ -404,8 +447,16 @@
     <div class="mesh-bg"></div>
     <div class="container">
         <header>
-            <div class="logo"><span>Parser Profile</span>™</div>
-            <div class="tagline">Developed by J.D. Mercer</div>
+            <div class="header-left">
+                <div class="logo"><span>Parser Profile</span>™</div>
+                <div class="tagline">Developed by J.D. Mercer</div>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">
+                    <span class="theme-icon">☀️</span>
+                </button>
+                <a href="https://cognitionblocksllc.com/cbi_overview" class="explore-link" target="_blank">Explore CBI →</a>
+            </div>
         </header>
 
         <div class="progress-container" id="progressContainer" style="display: none;">
@@ -470,7 +521,15 @@
                     <p><strong>If it missed</strong>, consider whether you answered who you <em>are</em> or who you <em>want to be</em>.</p>
                     <p style="margin-top: 16px; font-size: 0.9rem;">Your actual profile reveals the path to growth.<br>Your desired profile assumes you don't need the guidance.</p>
                 </div>
-                <div class="btn-group">
+                <div style="margin-top: 24px; padding: 20px; background: var(--accent-temporal-dim); border: 1px solid rgba(255, 200, 87, 0.3); border-radius: 12px; text-align: left;">
+                    <p style="font-weight: 700; color: var(--accent-temporal); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em;">⚠️ Please Read All Selections</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px;">During testing, when scores changed drastically:</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 4px;"><strong>#1 answer:</strong> "I didn't read all of the options because this one sounded like me."</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;"><strong>#2 answer:</strong> "I didn't understand the question."</p>
+                    <p style="font-size: 0.9rem; font-style: italic;">The first three questions map your filters, optimized for reader engagement.</p>
+                    <p style="font-size: 0.95rem; margin-top: 12px; font-weight: 500; color: var(--text-primary);">Enjoy identifying your 4D Parser.</p>
+                </div>
+                <div class="btn-group" style="margin-top: 24px;">
                     <button class="btn-primary" onclick="continuePastPrediction()">That Landed — Continue</button>
                     <button class="btn-secondary" onclick="redoCalibration()">Let Me Redo Those</button>
                 </div>
@@ -794,6 +853,7 @@
         </div>
 
         <footer>
+            <a href="https://cognitionblocksllc.com/cbi_overview" class="explore-cta" target="_blank">Explore CBI</a>
             <p>Parser Profile™ developed by J.D. Mercer</p>
             <p style="margin-top: 4px; font-size: 0.75rem;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
             <p style="margin-top: 12px;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
@@ -810,6 +870,39 @@
         import { profiles, getProfileByName } from './index.js';
 
         console.log('Parser Assessment: Profiles loaded successfully. Count:', Object.keys(profiles).length);
+
+        // ============================================================================
+        // THEME MANAGEMENT
+        // ============================================================================
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('parserTheme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                // Auto-set based on time: 6AM-6PM = light, 6PM-6AM = dark
+                const hour = new Date().getHours();
+                const isDay = hour >= 6 && hour < 18;
+                setTheme(isDay ? 'light' : 'dark');
+            }
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.querySelector('.theme-icon');
+            if (icon) {
+                icon.textContent = theme === 'light' ? '🌙' : '☀️';
+            }
+            localStorage.setItem('parserTheme', theme);
+        }
+
+        window.toggleTheme = function() {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'light' ? 'dark' : 'light');
+        }
+
+        // Initialize theme on load
+        initTheme();
 
         // ============================================================================
         // QUESTIONS DATA
@@ -1132,6 +1225,19 @@
         }
         console.log('Parser Assessment: startAssessment function registered');
 
+        // Shuffle array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Store shuffled options per question to maintain consistency when navigating back
+        const shuffledOptionsCache = {};
+
         function showQuestion(index) {
             const q = questions[index];
             const isCalibration = q.phase === 'calibration';
@@ -1153,7 +1259,14 @@
             const optionsContainer = document.getElementById('answerOptions');
             optionsContainer.innerHTML = '';
 
-            q.options.forEach(opt => {
+            // Shuffle options (cache to maintain consistency when navigating back)
+            if (!shuffledOptionsCache[q.id]) {
+                shuffledOptionsCache[q.id] = shuffleArray(q.options);
+            }
+            const shuffledOptions = shuffledOptionsCache[q.id];
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+
+            shuffledOptions.forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'answer-option';
                 if (q.dimension === 'temporal') btn.classList.add('temporal-q');
@@ -1161,7 +1274,7 @@
                 if (answers[q.id] === opt.value) btn.classList.add('selected');
 
                 btn.innerHTML = `
-                    <span class="answer-letter">${opt.letter}</span>
+                    <span class="answer-letter">${letters[i]}</span>
                     <span class="answer-text">${opt.text}</span>
                 `;
                 btn.onclick = () => selectAnswer(q.id, opt.value, btn, q.dimension);
