@@ -209,7 +209,7 @@ app.post('/api/send-results', async (req, res) => {
         <div style="padding: 40px 30px; text-align: center; background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));">
             <h3 style="color: #1a1a24; font-size: 20px; margin: 0 0 12px 0;">Unlock Your Complete Profile</h3>
             <p style="color: #4a4a5a; font-size: 14px; margin: 0 0 24px 0;">Get The Secret, Hidden Superpower, Blind Spot, and more.</p>
-            <a href="https://the-parser-assessment-production.up.railway.app/assessment.html" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Get Full Report - $9.99</a>
+            <a href="https://the-parser-assessment-production.up.railway.app/assessment.html" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Get Full Report - $5.99</a>
         </div>
 
         <!-- Footer -->
