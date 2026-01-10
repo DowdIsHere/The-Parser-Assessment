@@ -321,7 +321,7 @@ app.post('/api/process-payment', async (req, res) => {
                 source_id: sourceId,
                 idempotency_key: idempotencyKey,
                 location_id: process.env.SQUARE_LOCATION_ID,
-                amount_money: { amount: 999, currency: 'USD' },
+                amount_money: { amount: 599, currency: 'USD' }, // 599 cents == $5.99
                 note: `Parser Profile Full Report - ${profileName || 'Unknown'}`,
                 buyer_email_address: email || undefined
             })
