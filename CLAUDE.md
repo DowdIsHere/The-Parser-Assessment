@@ -89,9 +89,9 @@ The framework uses a 3x3x3 matrix (27 combinations) based on:
 | LEGACY | Concrete - Past - Other |
 | EMBODIED | Concrete - Present - Self |
 | INTENTIONAL | Concrete - Future - Self |
-| RESILIENT | Concrete - Future - Other |
-| RELIABLE | Concrete - Past - Balanced |
-| INTEGRATED | Concrete - Future - Balanced |
+| RESILIENT | Concrete - Future - Balanced |
+| RELIABLE | Concrete - Future - Other |
+| INTEGRATED | Balanced - Past - Self |
 | COHERENT | Balanced - Past - Balanced |
 | RECONCILED | Balanced - Past - Other |
 | CENTERED | Balanced - Present - Self |
@@ -100,14 +100,14 @@ The framework uses a 3x3x3 matrix (27 combinations) based on:
 | ACTUALIZED | Balanced - Future - Self |
 | HARMONIOUS | Balanced - Future - Balanced |
 | COLLABORATIVE | Balanced - Future - Other |
-| SENTIMENTAL | Balanced - Past - Self |
-| REFLECTIVE | Balanced - Past - Other |
-| IDEALIZED | Abstract - Past - Self |
+| SENTIMENTAL | Abstract - Past - Self |
+| REFLECTIVE | Abstract - Past - Balanced |
+| IDEALIZED | Abstract - Past - Other |
 | MINDFUL | Abstract - Present - Balanced |
-| INTUITIVE | Abstract - Present - Self |
+| INTUITIVE | Abstract - Present - Other |
+| INTROSPECTIVE | Abstract - Present - Self |
 | FORESIGHTED | Abstract - Future - Balanced |
-| SEASONED | Abstract - Past - Other |
-| INTROSPECTIVE | Abstract - Past - Self |
+| SEASONED | Concrete - Past - Balanced |
 | ALTRUISTIC | Abstract - Future - Other |
 
 ## API Reference
