@@ -78,38 +78,6 @@ The framework uses a 3x3x3 matrix (27 combinations) based on:
 | 33-66 | Balanced | Balanced self and other consideration |
 | 66-100 | Self | Focuses on personal meaning and goals |
 
-## Complete Profile Matrix
-
-| Profile | Code (Spatial - Temporal - Reference) |
-|---------|---------------------------------------|
-| VISIONARY | Abstract - Future - Self |
-| SHARP | Concrete - Past - Self |
-| GROUNDED | Concrete - Present - Balanced |
-| ATTUNED | Concrete - Present - Other |
-| LEGACY | Concrete - Past - Other |
-| EMBODIED | Concrete - Present - Self |
-| INTENTIONAL | Concrete - Future - Self |
-| RESILIENT | Concrete - Future - Balanced |
-| RELIABLE | Concrete - Future - Other |
-| INTEGRATED | Balanced - Past - Self |
-| COHERENT | Balanced - Past - Balanced |
-| RECONCILED | Balanced - Past - Other |
-| CENTERED | Balanced - Present - Self |
-| EQUANIMOUS | Balanced - Present - Balanced |
-| EMPATHETIC | Balanced - Present - Other |
-| ACTUALIZED | Balanced - Future - Self |
-| HARMONIOUS | Balanced - Future - Balanced |
-| COLLABORATIVE | Balanced - Future - Other |
-| SENTIMENTAL | Abstract - Past - Self |
-| REFLECTIVE | Abstract - Past - Balanced |
-| IDEALIZED | Abstract - Past - Other |
-| MINDFUL | Abstract - Present - Balanced |
-| INTUITIVE | Abstract - Present - Other |
-| INTROSPECTIVE | Abstract - Present - Self |
-| FORESIGHTED | Abstract - Future - Balanced |
-| SEASONED | Concrete - Past - Balanced |
-| ALTRUISTIC | Abstract - Future - Other |
-
 ## API Reference
 
 ### Main Entry Point (`index.js`)
