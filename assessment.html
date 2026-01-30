@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
     <!-- PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- Stripe.js SDK -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Square Web Payments SDK (Production) -->
+    <script src="https://web.squarecdn.com/v1/square.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -397,30 +397,6 @@
         #payment-status.success { color: var(--accent-spatial); }
         .secure-badge { text-align: center; margin-top: 16px; font-size: 0.8rem; color: var(--text-muted); }
         .secure-badge span { margin-left: 6px; }
-
-        /* Stripe Card Element */
-        #card-element {
-            padding: 16px;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--text-muted);
-            border-radius: 8px;
-        }
-        #card-element.StripeElement--focus {
-            border-color: var(--accent-spatial);
-            box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.2);
-        }
-        #card-element.StripeElement--invalid {
-            border-color: #ff6b6b;
-        }
-        #card-errors {
-            color: #ff6b6b;
-            font-size: 0.85rem;
-            margin-top: 8px;
-            text-align: center;
-        }
-        #payment-form {
-            width: 100%;
-        }
 
         /* Unlocked State */
         .results-card.unlocked { position: relative; }
@@ -874,15 +850,10 @@
                     <span class="amount">$9.99</span>
                     <span class="currency">USD</span>
                 </div>
-                <form id="payment-form">
-                    <div id="card-element"></div>
-                    <div id="card-errors" role="alert"></div>
-                    <button type="submit" id="card-button" class="btn-primary" style="width: 100%; margin-top: 16px;">
-                        Pay $9.99
-                    </button>
-                </form>
+                <div id="card-container"></div>
+                <button id="card-button" type="button" disabled>Pay $9.99</button>
                 <div id="payment-status"></div>
-                <div class="secure-badge">🔒<span>Secured by Stripe</span></div>
+                <div class="secure-badge">🔒<span>Secured by Square</span></div>
             </div>
         </div>
 
@@ -1631,13 +1602,15 @@ const questions = [
         }
 
         // ============================================================================
-        // STRIPE PAYMENT INTEGRATION
+        // SQUARE PAYMENT INTEGRATION
         // ============================================================================
 
+        // Square Production Credentials
+        const SQUARE_APP_ID = 'sq0idp-uhu5Byuseh3qyc_pJsJuZw';
+        const SQUARE_LOCATION_ID = 'LAW8S7N8DJ85C';
+
+        let card = null;
         let currentProfile = null; // Store for PDF generation
-        let stripe = null;
-        let cardElement = null;
-        let stripeInitialized = false;
 
         // Store profile data when showing results
         const originalShowResults = window.showResults;
@@ -1655,106 +1628,30 @@ const questions = [
             };
         }
 
-        // Initialize Stripe
-        async function initializeStripe() {
-            if (stripeInitialized || !window.Stripe) {
+        // Initialize Square payment form
+        async function initializeSquare() {
+            if (!window.Square) {
+                console.log('Square SDK not loaded yet');
                 return;
             }
 
-            // Fetch publishable key from server
-            const configResponse = await fetch('/api/config');
-            const config = await configResponse.json();
-            stripe = Stripe(config.stripePublishableKey);
-
-            const elements = stripe.elements();
-            cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        color: '#f0f0f5',
-                        fontFamily: '"DM Sans", sans-serif',
-                        fontSize: '16px',
-                        '::placeholder': { color: '#6a6a7a' }
-                    },
-                    invalid: { color: '#ff6b6b' }
-                }
-            });
-            cardElement.mount('#card-element');
-
-            cardElement.on('change', function(event) {
-                const displayError = document.getElementById('card-errors');
-                displayError.textContent = event.error ? event.error.message : '';
-            });
-
-            // Handle form submission
-            const form = document.getElementById('payment-form');
-            form.addEventListener('submit', handlePayment);
-
-            stripeInitialized = true;
-        }
-
-        // Handle Stripe payment
-        async function handlePayment(event) {
-            event.preventDefault();
-
-            const submitButton = document.getElementById('card-button');
-            const statusEl = document.getElementById('payment-status');
-
-            submitButton.disabled = true;
-            submitButton.textContent = 'Processing...';
-            statusEl.textContent = '';
-            statusEl.className = '';
-
             try {
-                // Create PaymentIntent on the server
-                const email = document.getElementById('emailInput')?.value || '';
-                const response = await fetch('/api/create-payment-intent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        profileName: currentProfile?.name || 'Unknown',
-                        email: email
-                    })
-                });
-
-                const { success, clientSecret, error } = await response.json();
-
-                if (!success) {
-                    throw new Error(error || 'Failed to create payment');
-                }
-
-                // Confirm the payment with Stripe.js
-                const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-                    payment_method: { card: cardElement }
-                });
-
-                if (stripeError) {
-                    throw new Error(stripeError.message);
-                }
-
-                if (paymentIntent.status === 'succeeded') {
-                    statusEl.textContent = 'Payment successful!';
-                    statusEl.className = 'success';
-
-                    setTimeout(() => {
-                        closePaymentModal();
-                        unlockFullReport();
-                    }, 1500);
-                }
+                const payments = window.Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+                card = await payments.card();
+                await card.attach('#card-container');
+                document.getElementById('card-button').disabled = false;
             } catch (e) {
-                console.error('Payment error:', e);
-                statusEl.textContent = e.message || 'Payment failed. Please try again.';
-                statusEl.className = 'error';
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Pay $9.99';
+                console.error('Square initialization failed:', e);
+                document.getElementById('payment-status').textContent = 'Payment system unavailable. Use test mode.';
+                document.getElementById('payment-status').className = 'error';
             }
         }
 
         // Open payment modal
         window.openPaymentModal = function() {
             document.getElementById('paymentModal').classList.add('active');
-            if (!stripeInitialized) {
-                initializeStripe();
+            if (!card) {
+                initializeSquare();
             }
         }
 
@@ -1764,6 +1661,75 @@ const questions = [
             document.getElementById('payment-status').textContent = '';
             document.getElementById('payment-status').className = '';
         }
+
+        // Process payment
+        window.processPayment = async function() {
+            const statusEl = document.getElementById('payment-status');
+            const button = document.getElementById('card-button');
+
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            statusEl.textContent = '';
+            statusEl.className = '';
+
+            try {
+                // Step 1: Tokenize the card
+                const tokenResult = await card.tokenize();
+
+                if (tokenResult.status !== 'OK') {
+                    let errorMessage = 'Card validation failed. ';
+                    if (tokenResult.errors) {
+                        errorMessage += tokenResult.errors.map(e => e.message).join(', ');
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                console.log('Payment token:', tokenResult.token);
+                statusEl.textContent = 'Processing payment...';
+
+                // Step 2: Send token to backend to process payment
+                const email = document.getElementById('emailInput')?.value || '';
+                const response = await fetch('/api/process-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sourceId: tokenResult.token,
+                        email: email,
+                        profileName: currentProfile?.name || 'Unknown'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    statusEl.textContent = 'Payment successful!';
+                    statusEl.className = 'success';
+
+                    // Store receipt URL if available
+                    if (data.receiptUrl) {
+                        console.log('Receipt:', data.receiptUrl);
+                    }
+
+                    setTimeout(() => {
+                        closePaymentModal();
+                        unlockFullReport();
+                    }, 1500);
+
+                } else {
+                    throw new Error(data.error || 'Payment failed');
+                }
+
+            } catch (e) {
+                console.error('Payment error:', e);
+                statusEl.textContent = e.message || 'Payment error. Please try again.';
+                statusEl.className = 'error';
+                button.disabled = false;
+                button.textContent = 'Pay $9.99';
+            }
+        }
+
+        // Wire up the pay button
+        document.getElementById('card-button').addEventListener('click', processPayment);
 
         // ============================================================================
         // UNLOCK CONTENT
