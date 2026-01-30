@@ -1656,14 +1656,15 @@ const questions = [
         }
 
         // Initialize Stripe
-        function initializeStripe() {
+        async function initializeStripe() {
             if (stripeInitialized || !window.Stripe) {
                 return;
             }
 
-            // Use publishable key from data attribute or environment
-            const publishableKey = document.body.dataset.stripeKey || 'pk_test_YOUR_PUBLISHABLE_KEY';
-            stripe = Stripe(publishableKey);
+            // Fetch publishable key from server
+            const configResponse = await fetch('/api/config');
+            const config = await configResponse.json();
+            stripe = Stripe(config.stripePublishableKey);
 
             const elements = stripe.elements();
             cardElement = elements.create('card', {

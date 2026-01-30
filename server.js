@@ -90,6 +90,13 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// Serve Stripe publishable key to frontend
+app.get('/api/config', (req, res) => {
+    res.json({
+        stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY
+    });
+});
+
 // ============================================================================
 // EMAIL ENDPOINTS
 // ============================================================================
