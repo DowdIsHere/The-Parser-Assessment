@@ -17,8 +17,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Initialize Stripe lazily (env vars not available during Railway build)
+let stripe;
+function getStripe() {
+    if (!stripe) {
+        stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    }
+    return stripe;
+}
 
 // ============================================================================
 // CUSTOMER ID GENERATION
@@ -316,7 +322,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
     const { email, profileName } = req.body;
 
     try {
-        const paymentIntent = await stripe.paymentIntents.create({
+        const paymentIntent = await getStripe().paymentIntents.create({
             amount: 999, // $9.99 in cents
             currency: 'usd',
             automatic_payment_methods: {
@@ -352,7 +358,7 @@ async function handleStripeWebhook(req, res) {
     }
 
     try {
-        const event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+        const event = getStripe().webhooks.constructEvent(req.body, sig, webhookSecret);
 
         switch (event.type) {
             case 'payment_intent.succeeded':
