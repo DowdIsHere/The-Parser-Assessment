@@ -6,15 +6,25 @@ if (!process.env.RAILWAY_ENVIRONMENT_NAME) {
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const Stripe = require('stripe');
 
 const app = express();
+
+// Stripe webhook needs raw body, so set it up before express.json()
+app.post('/api/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-const SQUARE_BASE_URL = process.env.SQUARE_ENVIRONMENT === 'production'
-    ? 'https://connect.squareup.com'
-    : 'https://connect.squareupsandbox.com';
+// Initialize Stripe lazily (env vars not available during Railway build)
+let stripe;
+function getStripe() {
+    if (!stripe) {
+        stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    }
+    return stripe;
+}
 
 // ============================================================================
 // CUSTOMER ID GENERATION
@@ -81,8 +91,15 @@ app.get('/api/health', (req, res) => {
     const transporter = createTransporter();
     res.json({
         status: 'ok',
-        environment: process.env.SQUARE_ENVIRONMENT,
+        environment: process.env.STRIPE_ENVIRONMENT || 'test',
         emailConfigured: !!transporter
+    });
+});
+
+// Serve Stripe publishable key to frontend
+app.get('/api/config', (req, res) => {
+    res.json({
+        stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY
     });
 });
 
@@ -297,53 +314,71 @@ app.post('/api/notify-completion', async (req, res) => {
 });
 
 // ============================================================================
-// PAYMENT ENDPOINT
+// PAYMENT ENDPOINTS (Stripe)
 // ============================================================================
 
-app.post('/api/process-payment', async (req, res) => {
-    const { sourceId, email, profileName } = req.body;
-
-    if (!sourceId) {
-        return res.status(400).json({ success: false, error: 'Missing payment source token' });
-    }
+// Create Stripe PaymentIntent
+app.post('/api/create-payment-intent', async (req, res) => {
+    const { email, profileName } = req.body;
 
     try {
-        const idempotencyKey = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
-        const response = await fetch(`${SQUARE_BASE_URL}/v2/payments`, {
-            method: 'POST',
-            headers: {
-                'Square-Version': '2024-01-18',
-                'Authorization': `Bearer ${process.env.SQUARE_ACCESS_TOKEN}`,
-                'Content-Type': 'application/json'
+        const paymentIntent = await getStripe().paymentIntents.create({
+            amount: 999, // $9.99 in cents
+            currency: 'usd',
+            automatic_payment_methods: {
+                enabled: true,
             },
-            body: JSON.stringify({
-                source_id: sourceId,
-                idempotency_key: idempotencyKey,
-                location_id: process.env.SQUARE_LOCATION_ID,
-                amount_money: { amount: 999, currency: 'USD' },
-                note: `Parser Profile Full Report - ${profileName || 'Unknown'}`,
-                buyer_email_address: email || undefined
-            })
+            metadata: {
+                profileName: profileName || 'Unknown',
+                email: email || ''
+            },
+            receipt_email: email || undefined,
+            description: `Parser Profile Full Report - ${profileName || 'Assessment'}`
         });
 
-        const data = await response.json();
-
-        if (data.payment) {
-            console.log('Payment successful:', data.payment.id);
-            res.json({
-                success: true,
-                paymentId: data.payment.id,
-                receiptUrl: data.payment.receipt_url
-            });
-        } else {
-            throw new Error(data.errors?.[0]?.detail || 'Payment failed');
-        }
+        res.json({
+            success: true,
+            clientSecret: paymentIntent.client_secret
+        });
     } catch (error) {
-        console.error('Payment error:', error);
+        console.error('Payment intent error:', error);
         res.status(400).json({ success: false, error: error.message });
     }
 });
+
+// Stripe webhook handler
+async function handleStripeWebhook(req, res) {
+    const sig = req.headers['stripe-signature'];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    // If no webhook secret configured, skip validation (for development)
+    if (!webhookSecret) {
+        console.log('Stripe webhook received (no signature validation)');
+        return res.json({ received: true });
+    }
+
+    try {
+        const event = getStripe().webhooks.constructEvent(req.body, sig, webhookSecret);
+
+        switch (event.type) {
+            case 'payment_intent.succeeded':
+                const paymentIntent = event.data.object;
+                console.log('Payment succeeded:', paymentIntent.id, paymentIntent.metadata);
+                break;
+            case 'payment_intent.payment_failed':
+                const failedPayment = event.data.object;
+                console.log('Payment failed:', failedPayment.id, failedPayment.last_payment_error?.message);
+                break;
+            default:
+                console.log(`Unhandled event type: ${event.type}`);
+        }
+
+        res.json({ received: true });
+    } catch (error) {
+        console.error('Webhook error:', error.message);
+        res.status(400).send(`Webhook Error: ${error.message}`);
+    }
+}
 
 // ============================================================================
 // START SERVER
