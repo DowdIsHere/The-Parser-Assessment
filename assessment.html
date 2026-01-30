@@ -1706,12 +1706,13 @@ const questions = [
 
             try {
                 // Create PaymentIntent on the server
+                const email = document.getElementById('emailInput')?.value || '';
                 const response = await fetch('/api/create-payment-intent', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         profileName: currentProfile?.name || 'Unknown',
-                        email: '' // Could collect email if needed
+                        email: email
                     })
                 });
 
@@ -1734,12 +1735,9 @@ const questions = [
                     statusEl.textContent = 'Payment successful!';
                     statusEl.className = 'success';
 
-                    // Unlock the full report
-                    unlockFullReport();
-
-                    // Close modal after a short delay
                     setTimeout(() => {
                         closePaymentModal();
+                        unlockFullReport();
                     }, 1500);
                 }
             } catch (e) {
