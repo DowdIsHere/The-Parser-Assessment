@@ -143,7 +143,7 @@ app.post('/api/send-results', async (req, res) => {
         <!-- Profile Name -->
         <div style="padding: 40px 30px; text-align: center; border-bottom: 1px solid #e0e0e5;">
             ${name ? `<p style="color: #6a6a7a; font-size: 14px; margin: 0 0 8px 0;">Hi ${name},</p>` : ''}
-            <p style="color: #6a6a7a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 12px 0;">Your Parser Profile</p>
+            <p style="color: #6a6a7a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 12px 0;">Your Parser Profile™</p>
             <h2 style="color: #00d4aa; font-size: 42px; margin: 0 0 8px 0;">${profileName}</h2>
             <p style="color: #6a6a7a; font-size: 14px; margin: 0;">${profileCode}</p>
         </div>
@@ -294,7 +294,7 @@ app.post('/api/notify-completion', async (req, res) => {
         await transporter.sendMail({
             from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
             to: 'Profile.library@cognitionblocksllc.com',
-            subject: `New Parser Profile Completion: ${profileName} (${tier})`,
+            subject: `New Parser Profile™ Completion: ${profileName} (${tier})`,
             html: `
                 <h2>New Assessment Completed</h2>
                 <p><strong>Customer ID:</strong> ${customerId}</p>
@@ -333,7 +333,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
                 email: email || ''
             },
             receipt_email: email || undefined,
-            description: `Parser Profile Full Report - ${profileName || 'Assessment'}`
+            description: `Parser Profile™ Full Report - ${profileName || 'Assessment'}`
         });
 
         res.json({
