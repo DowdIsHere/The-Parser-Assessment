@@ -2052,7 +2052,7 @@ const questions = [
         // PDF GENERATION
         // ============================================================================
 
-        window.downloadPDF = function() {
+        window.downloadPDF = async function() {
             if (!currentProfile) {
                 alert('No profile data available');
                 return;
@@ -2103,18 +2103,32 @@ const questions = [
 
             document.body.appendChild(pdfContent);
 
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
             const opt = {
                 margin: 10,
                 filename: `Parser-Profile-${currentProfile.name}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
+                html2canvas: { scale: isMobile ? 1 : 2, useCORS: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
 
-            html2pdf().set(opt).from(pdfContent).save().then(() => {
+            try {
+                if (isMobile) {
+                    // On mobile, open PDF in new tab instead of triggering download
+                    const pdfBlob = await html2pdf().set(opt).from(pdfContent).output('blob');
+                    const blobUrl = URL.createObjectURL(pdfBlob);
+                    window.open(blobUrl, '_blank');
+                } else {
+                    await html2pdf().set(opt).from(pdfContent).save();
+                }
+            } catch (e) {
+                console.error('PDF generation error:', e);
+                alert('PDF generation failed. Please try again or use a desktop browser.');
+            } finally {
                 document.body.removeChild(pdfContent);
-            });
+            }
         }
 
         function generatePDFSection(title, content) {
