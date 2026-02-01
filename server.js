@@ -314,23 +314,68 @@ app.post('/api/notify-completion', async (req, res) => {
 });
 
 // ============================================================================
+// PROMO CODE VALIDATION
+// ============================================================================
+
+app.post('/api/validate-promo', (req, res) => {
+    const { code } = req.body;
+
+    if (!code) {
+        return res.status(400).json({ success: false, error: 'No promo code provided' });
+    }
+
+    const promoFree = process.env.PROMO_FREE || '';
+    const promoDiscount = process.env.PROMO_DISCOUNT || '';
+    const upperCode = code.trim().toUpperCase();
+
+    if (promoFree && upperCode === promoFree.toUpperCase()) {
+        return res.json({ success: true, type: 'free', discount: 100, newAmount: 0 });
+    }
+
+    if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
+        const newAmount = Math.round(999 * 0.85); // 15% off $9.99
+        return res.json({ success: true, type: 'discount', discount: 15, newAmount });
+    }
+
+    res.json({ success: false, error: 'Invalid promo code' });
+});
+
+// ============================================================================
 // PAYMENT ENDPOINTS (Stripe)
 // ============================================================================
 
 // Create Stripe PaymentIntent
 app.post('/api/create-payment-intent', async (req, res) => {
-    const { email, profileName } = req.body;
+    const { email, profileName, promoCode } = req.body;
 
     try {
+        // Validate promo code if provided
+        let amount = 999; // $9.99 in cents
+        if (promoCode) {
+            const promoFree = process.env.PROMO_FREE || '';
+            const promoDiscount = process.env.PROMO_DISCOUNT || '';
+            const upperCode = promoCode.trim().toUpperCase();
+
+            if (promoFree && upperCode === promoFree.toUpperCase()) {
+                // Free promo should not create a payment intent
+                return res.json({ success: true, free: true });
+            }
+
+            if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
+                amount = Math.round(999 * 0.85); // 15% off
+            }
+        }
+
         const paymentIntent = await getStripe().paymentIntents.create({
-            amount: 999, // $9.99 in cents
+            amount,
             currency: 'usd',
             automatic_payment_methods: {
                 enabled: true,
             },
             metadata: {
                 profileName: profileName || 'Unknown',
-                email: email || ''
+                email: email || '',
+                promoCode: promoCode || ''
             },
             receipt_email: email || undefined,
             description: `Parser Profile™ Full Report - ${profileName || 'Assessment'}`

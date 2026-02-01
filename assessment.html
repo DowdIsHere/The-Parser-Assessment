@@ -871,8 +871,16 @@
                     <p>Unlock your full Parser Profile™ report</p>
                 </div>
                 <div class="modal-price">
-                    <span class="amount">$9.99</span>
+                    <span class="amount" id="display-price">$9.99</span>
                     <span class="currency">USD</span>
+                    <div id="discount-badge" style="display: none; margin-top: 8px; font-size: 0.8rem; color: var(--accent-spatial); background: var(--accent-spatial-dim); padding: 4px 12px; border-radius: 12px; display: inline-block;"></div>
+                </div>
+                <div id="promo-section" style="margin-bottom: 16px;">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="text" id="promoInput" placeholder="Promo code" style="flex: 1; padding: 10px 14px; background: var(--bg-primary); border: 1px solid var(--text-muted); border-radius: 8px; color: var(--text-primary); font-size: 0.9rem; font-family: inherit;">
+                        <button type="button" id="applyPromoBtn" onclick="applyPromoCode()" style="padding: 10px 18px; background: var(--bg-card); border: 1px solid var(--text-muted); border-radius: 8px; color: var(--text-primary); cursor: pointer; font-size: 0.9rem; font-family: inherit;">Apply</button>
+                    </div>
+                    <div id="promo-status" style="font-size: 0.8rem; margin-top: 6px;"></div>
                 </div>
                 <form id="payment-form">
                     <div id="card-element"></div>
@@ -1638,6 +1646,64 @@ const questions = [
         let stripe = null;
         let cardElement = null;
         let stripeInitialized = false;
+        let activePromo = null; // { type: 'free'|'discount', code: string, discount: number, newAmount: number }
+
+        // Apply promo code
+        window.applyPromoCode = async function() {
+            const input = document.getElementById('promoInput');
+            const statusEl = document.getElementById('promo-status');
+            const code = input.value.trim();
+
+            if (!code) {
+                statusEl.textContent = 'Please enter a promo code.';
+                statusEl.style.color = '#ff6b6b';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/validate-promo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    activePromo = { type: data.type, code: code, discount: data.discount, newAmount: data.newAmount };
+                    statusEl.style.color = 'var(--accent-spatial)';
+
+                    if (data.type === 'free') {
+                        statusEl.textContent = 'Promo applied — Full report is free!';
+                        document.getElementById('display-price').textContent = '$0.00';
+                        document.getElementById('discount-badge').textContent = '100% OFF';
+                        document.getElementById('discount-badge').style.display = 'inline-block';
+                        // Hide card form, change button to unlock
+                        document.getElementById('card-element').style.display = 'none';
+                        document.getElementById('card-errors').style.display = 'none';
+                        document.getElementById('card-button').textContent = 'Unlock Full Report';
+                    } else {
+                        const newPrice = (data.newAmount / 100).toFixed(2);
+                        statusEl.textContent = `Promo applied — ${data.discount}% off!`;
+                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$9.99</s> $${newPrice}`;
+                        document.getElementById('discount-badge').textContent = `${data.discount}% OFF`;
+                        document.getElementById('discount-badge').style.display = 'inline-block';
+                        document.getElementById('card-button').textContent = `Pay $${newPrice}`;
+                    }
+
+                    // Disable promo input after successful apply
+                    input.disabled = true;
+                    document.getElementById('applyPromoBtn').disabled = true;
+                    document.getElementById('applyPromoBtn').style.opacity = '0.5';
+                } else {
+                    activePromo = null;
+                    statusEl.textContent = data.error || 'Invalid promo code.';
+                    statusEl.style.color = '#ff6b6b';
+                }
+            } catch (e) {
+                statusEl.textContent = 'Error validating code. Try again.';
+                statusEl.style.color = '#ff6b6b';
+            }
+        }
 
         // Store profile data when showing results
         const originalShowResults = window.showResults;
@@ -1705,6 +1771,17 @@ const questions = [
             statusEl.className = '';
 
             try {
+                // If free promo, skip payment entirely
+                if (activePromo && activePromo.type === 'free') {
+                    statusEl.textContent = 'Unlocking your full report...';
+                    statusEl.className = 'success';
+                    setTimeout(() => {
+                        closePaymentModal();
+                        unlockFullReport();
+                    }, 1000);
+                    return;
+                }
+
                 // Create PaymentIntent on the server
                 const email = document.getElementById('emailInput')?.value || '';
                 const response = await fetch('/api/create-payment-intent', {
@@ -1712,18 +1789,19 @@ const questions = [
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         profileName: currentProfile?.name || 'Unknown',
-                        email: email
+                        email: email,
+                        promoCode: activePromo?.code || ''
                     })
                 });
 
-                const { success, clientSecret, error } = await response.json();
+                const result = await response.json();
 
-                if (!success) {
-                    throw new Error(error || 'Failed to create payment');
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to create payment');
                 }
 
                 // Confirm the payment with Stripe.js
-                const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(result.clientSecret, {
                     payment_method: { card: cardElement }
                 });
 
@@ -1746,7 +1824,8 @@ const questions = [
                 statusEl.className = 'error';
             } finally {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Pay $9.99';
+                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$9.99';
+                submitButton.textContent = activePromo?.type === 'free' ? 'Unlock Full Report' : `Pay ${btnPrice}`;
             }
         }
 
@@ -1763,6 +1842,18 @@ const questions = [
             document.getElementById('paymentModal').classList.remove('active');
             document.getElementById('payment-status').textContent = '';
             document.getElementById('payment-status').className = '';
+            // Reset promo state
+            activePromo = null;
+            document.getElementById('promoInput').value = '';
+            document.getElementById('promoInput').disabled = false;
+            document.getElementById('applyPromoBtn').disabled = false;
+            document.getElementById('applyPromoBtn').style.opacity = '1';
+            document.getElementById('promo-status').textContent = '';
+            document.getElementById('display-price').textContent = '$9.99';
+            document.getElementById('discount-badge').style.display = 'none';
+            document.getElementById('card-element').style.display = '';
+            document.getElementById('card-errors').style.display = '';
+            document.getElementById('card-button').textContent = 'Pay $9.99';
         }
 
         // ============================================================================
