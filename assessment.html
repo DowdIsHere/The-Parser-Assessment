@@ -2060,7 +2060,7 @@ const questions = [
 
             // Create a clean version for PDF
             const pdfContent = document.createElement('div');
-            pdfContent.style.cssText = 'background: white; color: #1a1a24; padding: 40px; font-family: Arial, sans-serif; max-width: 800px; position: absolute; left: -9999px; top: 0;';
+            pdfContent.style.cssText = 'background: white; color: #1a1a24; padding: 40px; font-family: Arial, sans-serif; width: 800px; position: fixed; left: 0; top: 0; z-index: -1; opacity: 0;';
 
             pdfContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 40px; border-bottom: 2px solid #00d4aa; padding-bottom: 20px;">
@@ -2103,13 +2103,16 @@ const questions = [
 
             document.body.appendChild(pdfContent);
 
+            // Make visible for html2canvas capture, then hide after
+            pdfContent.style.opacity = '1';
+
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
             const opt = {
                 margin: 10,
                 filename: `Parser-Profile-${currentProfile.name}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: isMobile ? 1 : 2, useCORS: true },
+                html2canvas: { scale: isMobile ? 1 : 2, useCORS: true, scrollY: 0, windowWidth: 800 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
