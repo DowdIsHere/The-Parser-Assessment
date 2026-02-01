@@ -2060,7 +2060,7 @@ const questions = [
 
             // Create a clean version for PDF
             const pdfContent = document.createElement('div');
-            pdfContent.style.cssText = 'background: white; color: #1a1a24; padding: 40px; font-family: Arial, sans-serif; width: 800px; position: fixed; left: 0; top: 0; z-index: -1; opacity: 0;';
+            pdfContent.style.cssText = 'background: white; color: #1a1a24; padding: 40px; font-family: Arial, sans-serif; width: 800px; position: fixed; left: 0; top: 0; z-index: 99999; overflow: auto;';
 
             pdfContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 40px; border-bottom: 2px solid #00d4aa; padding-bottom: 20px;">
@@ -2103,8 +2103,8 @@ const questions = [
 
             document.body.appendChild(pdfContent);
 
-            // Make visible for html2canvas capture, then hide after
-            pdfContent.style.opacity = '1';
+            // Allow DOM to render the content before capturing
+            await new Promise(resolve => setTimeout(resolve, 500));
 
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -2112,25 +2112,39 @@ const questions = [
                 margin: 10,
                 filename: `Parser-Profile-${currentProfile.name}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: isMobile ? 1 : 2, useCORS: true, scrollY: 0, windowWidth: 800 },
+                html2canvas: { scale: isMobile ? 1 : 2, useCORS: true, scrollY: 0, windowWidth: 800, logging: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
 
             try {
+                const pdfBlob = await html2pdf().set(opt).from(pdfContent).output('blob');
+                document.body.removeChild(pdfContent);
+
                 if (isMobile) {
-                    // On mobile, open PDF in new tab instead of triggering download
-                    const pdfBlob = await html2pdf().set(opt).from(pdfContent).output('blob');
+                    // On mobile, create a download link with blob
                     const blobUrl = URL.createObjectURL(pdfBlob);
-                    window.open(blobUrl, '_blank');
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = opt.filename;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    // Fallback: also try opening in new tab
+                    setTimeout(() => window.open(blobUrl, '_blank'), 500);
                 } else {
-                    await html2pdf().set(opt).from(pdfContent).save();
+                    const blobUrl = URL.createObjectURL(pdfBlob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = opt.filename;
+                    a.click();
+                    URL.revokeObjectURL(blobUrl);
                 }
             } catch (e) {
                 console.error('PDF generation error:', e);
-                alert('PDF generation failed. Please try again or use a desktop browser.');
-            } finally {
                 document.body.removeChild(pdfContent);
+                alert('PDF generation failed. Please try again or use a desktop browser.');
             }
         }
 
