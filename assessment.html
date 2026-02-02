@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
     <!-- PDF Generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- Stripe.js SDK -->
     <script src="https://js.stripe.com/v3/"></script>
     <style>
@@ -2052,227 +2052,331 @@ const questions = [
         // PDF GENERATION
         // ============================================================================
 
-        window.downloadPDF = async function() {
+        window.downloadPDF = function() {
             if (!currentProfile) {
                 alert('No profile data available');
                 return;
             }
 
-            // Create a clean version for PDF
-            const pdfContent = document.createElement('div');
-            pdfContent.style.cssText = 'background: white; color: #1a1a24; padding: 40px; font-family: Arial, sans-serif; width: 800px; position: fixed; left: 0; top: 0; z-index: 99999; overflow: auto;';
-
-            pdfContent.innerHTML = `
-                <div style="text-align: center; margin-bottom: 40px; border-bottom: 2px solid #00d4aa; padding-bottom: 20px;">
-                    <h1 style="font-size: 28px; margin-bottom: 8px; color: #1a1a24;">Parser Profile™</h1>
-                    <p style="color: #666; font-size: 14px;">Developed by J.D. Mercer</p>
-                </div>
-
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <h2 style="font-size: 36px; color: #00d4aa; margin-bottom: 8px;">${currentProfile.name}</h2>
-                    <p style="color: #666; font-size: 16px;">${currentProfile.code}</p>
-                </div>
-
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">📊 Dimension Scores</h3>
-                    <p><strong>Spatial:</strong> ${currentProfile.scores.spatial}% ${currentProfile.scores.spatial >= 50 ? 'Abstract' : 'Concrete'}</p>
-                    <p><strong>Temporal:</strong> ${currentProfile.scores.temporal}% ${currentProfile.scores.temporal >= 50 ? 'Future' : 'Past'}</p>
-                    <p><strong>Reference:</strong> ${currentProfile.scores.reference}% ${currentProfile.scores.reference >= 50 ? 'Self' : 'Other'}</p>
-                </div>
-
-                ${generatePDFSection('🔮 Profile Overview', currentProfile.profile?.overview)}
-                ${generatePDFSection('💡 The Phrase That Hits Home', `"${currentProfile.profile?.phrase}"`)}
-                ${generatePDFStrengths(currentProfile.profile?.strengths)}
-                ${generatePDFSection('📚 How You Learn Best', currentProfile.profile?.howYouLearn)}
-                ${generatePDFSection('💬 How You Communicate', currentProfile.profile?.howYouCommunicate)}
-                ${generatePDFChallenges(currentProfile.profile?.challenges)}
-                ${generatePDFSection('🤫 The Secret You\'ve Carried', currentProfile.profile?.secret)}
-                ${generatePDFSection('🎭 What Others Get Wrong', currentProfile.profile?.whatOthersGetWrong)}
-                ${generatePDFSection('✨ Your Hidden Superpower', currentProfile.profile?.hiddenSuperpower)}
-                ${generatePDFSection('👁️ Your Blind Spot', currentProfile.profile?.blindSpot)}
-                ${generatePDFFriction(currentProfile.profile?.frictionPatterns)}
-                ${generatePDFEnergy(currentProfile.profile?.energyPatterns)}
-                ${generatePDFEnvironments(currentProfile.profile?.workEnvironments)}
-                ${generatePDFBlocks(currentProfile.profile?.blockIndicators)}
-
-                <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 12px;">
-                    <p>Parser Profile™ © 2026 Cognition Blocks LLC. All rights reserved.</p>
-                    <p>Based on the Cognition Blocks Intelligence (CBI) Framework</p>
-                </div>
-            `;
-
-            document.body.appendChild(pdfContent);
-
-            // Allow DOM to render the content before capturing
-            await new Promise(resolve => setTimeout(resolve, 500));
-
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-            const opt = {
-                margin: 10,
-                filename: `Parser-Profile-${currentProfile.name}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: isMobile ? 1 : 2, useCORS: true, scrollY: 0, windowWidth: 800, logging: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            };
-
             try {
-                const pdfBlob = await html2pdf().set(opt).from(pdfContent).output('blob');
-                document.body.removeChild(pdfContent);
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                const margin = 20;
+                const contentWidth = pageWidth - margin * 2;
+                let y = margin;
 
-                if (isMobile) {
-                    // On mobile, create a download link with blob
-                    const blobUrl = URL.createObjectURL(pdfBlob);
-                    const a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = opt.filename;
-                    a.style.display = 'none';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    // Fallback: also try opening in new tab
-                    setTimeout(() => window.open(blobUrl, '_blank'), 500);
-                } else {
-                    const blobUrl = URL.createObjectURL(pdfBlob);
-                    const a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = opt.filename;
-                    a.click();
-                    URL.revokeObjectURL(blobUrl);
+                function checkPage(needed) {
+                    if (y + needed > pageHeight - margin) {
+                        doc.addPage();
+                        y = margin;
+                    }
                 }
+
+                function addTitle(text, size, r, g, b) {
+                    checkPage(size * 0.8);
+                    doc.setFontSize(size);
+                    doc.setTextColor(r || 26, g || 26, b || 36);
+                    doc.setFont('helvetica', 'bold');
+                    const lines = doc.splitTextToSize(text, contentWidth);
+                    doc.text(lines, pageWidth / 2, y, { align: 'center' });
+                    y += lines.length * size * 0.45 + 4;
+                }
+
+                function addSectionHeader(text) {
+                    checkPage(14);
+                    y += 4;
+                    doc.setFontSize(13);
+                    doc.setTextColor(26, 26, 36);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(text, margin, y);
+                    y += 5;
+                    doc.setDrawColor(200, 200, 200);
+                    doc.line(margin, y, pageWidth - margin, y);
+                    y += 6;
+                }
+
+                function addParagraph(text, indent) {
+                    if (!text) return;
+                    doc.setFontSize(10);
+                    doc.setTextColor(70, 70, 90);
+                    doc.setFont('helvetica', 'normal');
+                    const x = margin + (indent || 0);
+                    const w = contentWidth - (indent || 0);
+                    const lines = doc.splitTextToSize(text.trim(), w);
+                    lines.forEach(line => {
+                        checkPage(5);
+                        doc.text(line, x, y);
+                        y += 4.5;
+                    });
+                    y += 3;
+                }
+
+                function addLongText(text) {
+                    if (!text) return;
+                    const paragraphs = text.split('\n\n').filter(p => p.trim());
+                    paragraphs.forEach(p => addParagraph(p));
+                }
+
+                function addBulletItem(text) {
+                    doc.setFontSize(10);
+                    doc.setTextColor(70, 70, 90);
+                    doc.setFont('helvetica', 'normal');
+                    const lines = doc.splitTextToSize(text.trim(), contentWidth - 8);
+                    checkPage(lines.length * 4.5 + 2);
+                    doc.text('•', margin + 2, y);
+                    lines.forEach((line, i) => {
+                        doc.text(line, margin + 8, y);
+                        y += 4.5;
+                    });
+                    y += 1;
+                }
+
+                // === HEADER ===
+                addTitle('Parser Profile\u2122', 24, 26, 26, 36);
+                doc.setFontSize(10);
+                doc.setTextColor(120, 120, 140);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Developed by J.D. Mercer', pageWidth / 2, y, { align: 'center' });
+                y += 8;
+                doc.setDrawColor(0, 212, 170);
+                doc.setLineWidth(0.5);
+                doc.line(margin + 30, y, pageWidth - margin - 30, y);
+                y += 10;
+
+                // === PROFILE NAME ===
+                addTitle(currentProfile.name, 28, 0, 180, 145);
+                doc.setFontSize(12);
+                doc.setTextColor(120, 120, 140);
+                doc.text(currentProfile.code, pageWidth / 2, y, { align: 'center' });
+                y += 12;
+
+                // === DIMENSION SCORES ===
+                addSectionHeader('Dimension Scores');
+                const scores = currentProfile.scores;
+                const scoreLines = [
+                    `Spatial: ${scores.spatial}% ${scores.spatial >= 50 ? 'Abstract' : 'Concrete'}`,
+                    `Temporal: ${scores.temporal}% ${scores.temporal >= 50 ? 'Future' : 'Past'}`,
+                    `Reference: ${scores.reference}% ${scores.reference >= 50 ? 'Self' : 'Other'}`
+                ];
+                scoreLines.forEach(line => {
+                    doc.setFontSize(11);
+                    doc.setTextColor(50, 50, 70);
+                    doc.setFont('helvetica', 'normal');
+                    checkPage(6);
+                    doc.text(line, margin + 4, y);
+                    y += 6;
+                });
+                y += 4;
+
+                // === PROFILE SECTIONS ===
+                const profile = currentProfile.profile;
+                if (!profile) {
+                    addParagraph('Profile data not available.');
+                } else {
+                    // Overview
+                    if (profile.overview) {
+                        addSectionHeader('Profile Overview');
+                        addLongText(profile.overview);
+                    }
+
+                    // Phrase
+                    if (profile.phrase) {
+                        addSectionHeader('The Phrase That Hits Home');
+                        doc.setFontSize(11);
+                        doc.setTextColor(50, 50, 70);
+                        doc.setFont('helvetica', 'italic');
+                        const phraseLines = doc.splitTextToSize('"' + profile.phrase + '"', contentWidth - 10);
+                        phraseLines.forEach(line => {
+                            checkPage(5);
+                            doc.text(line, pageWidth / 2, y, { align: 'center' });
+                            y += 5;
+                        });
+                        y += 4;
+                    }
+
+                    // Strengths
+                    if (profile.strengths && profile.strengths.length) {
+                        addSectionHeader('Cognitive Strengths');
+                        profile.strengths.forEach(s => {
+                            checkPage(10);
+                            doc.setFontSize(10);
+                            doc.setTextColor(26, 26, 36);
+                            doc.setFont('helvetica', 'bold');
+                            const titleLines = doc.splitTextToSize(s.title, contentWidth);
+                            titleLines.forEach(line => {
+                                checkPage(5);
+                                doc.text(line, margin, y);
+                                y += 4.5;
+                            });
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(70, 70, 90);
+                            addParagraph(s.description);
+                        });
+                    }
+
+                    // How You Learn
+                    if (profile.howYouLearn) {
+                        addSectionHeader('How You Learn Best');
+                        addLongText(profile.howYouLearn);
+                    }
+
+                    // How You Communicate
+                    if (profile.howYouCommunicate) {
+                        addSectionHeader('How You Communicate');
+                        addLongText(profile.howYouCommunicate);
+                    }
+
+                    // Challenges
+                    if (profile.challenges && profile.challenges.length) {
+                        addSectionHeader('Natural Challenges');
+                        profile.challenges.forEach(c => {
+                            checkPage(12);
+                            doc.setFontSize(10);
+                            doc.setTextColor(26, 26, 36);
+                            doc.setFont('helvetica', 'bold');
+                            const titleLines = doc.splitTextToSize(c.title, contentWidth);
+                            titleLines.forEach(line => {
+                                checkPage(5);
+                                doc.text(line, margin, y);
+                                y += 4.5;
+                            });
+                            addParagraph(c.challenge);
+                            doc.setFontSize(10);
+                            doc.setTextColor(0, 160, 130);
+                            doc.setFont('helvetica', 'bold');
+                            checkPage(5);
+                            doc.text('Remedy:', margin, y);
+                            y += 4.5;
+                            doc.setFont('helvetica', 'normal');
+                            addParagraph(c.remedy);
+                        });
+                    }
+
+                    // Secret
+                    if (profile.secret) {
+                        addSectionHeader('The Secret You\'ve Carried');
+                        addLongText(profile.secret);
+                    }
+
+                    // What Others Get Wrong
+                    if (profile.whatOthersGetWrong) {
+                        addSectionHeader('What Others Get Wrong');
+                        addLongText(profile.whatOthersGetWrong);
+                    }
+
+                    // Hidden Superpower
+                    if (profile.hiddenSuperpower) {
+                        addSectionHeader('Your Hidden Superpower');
+                        addLongText(profile.hiddenSuperpower);
+                    }
+
+                    // Blind Spot
+                    if (profile.blindSpot) {
+                        addSectionHeader('Your Blind Spot');
+                        addLongText(profile.blindSpot);
+                    }
+
+                    // Friction Patterns
+                    if (profile.frictionPatterns) {
+                        addSectionHeader('Friction Patterns');
+                        addLongText(profile.frictionPatterns);
+                    }
+
+                    // Energy Patterns
+                    if (profile.energyPatterns) {
+                        addSectionHeader('Energy Patterns');
+                        const parts = profile.energyPatterns.split(/Drains:/i);
+                        const energizes = parts[0].replace(/Energizes:/i, '').trim();
+                        const drains = parts[1] ? parts[1].trim() : '';
+                        if (energizes) {
+                            checkPage(8);
+                            doc.setFontSize(11);
+                            doc.setTextColor(0, 180, 145);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text('Energizes:', margin, y);
+                            y += 6;
+                            energizes.split('•').filter(i => i.trim()).forEach(item => addBulletItem(item));
+                            y += 2;
+                        }
+                        if (drains) {
+                            checkPage(8);
+                            doc.setFontSize(11);
+                            doc.setTextColor(168, 85, 247);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text('Drains:', margin, y);
+                            y += 6;
+                            drains.split('•').filter(i => i.trim()).forEach(item => addBulletItem(item));
+                        }
+                    }
+
+                    // Work Environments
+                    if (profile.workEnvironments) {
+                        addSectionHeader('Optimal Work Environments');
+                        addLongText(profile.workEnvironments);
+                    }
+
+                    // Block Indicators
+                    if (profile.blockIndicators) {
+                        addSectionHeader('Cognitive Block Indicators');
+                        const sections = profile.blockIndicators.split('\n\n').filter(p => p.trim());
+                        sections.forEach(section => {
+                            if (section.includes('•')) {
+                                section.split('•').filter(l => l.trim()).forEach(item => addBulletItem(item));
+                            } else {
+                                const isBold = section.includes(':');
+                                if (isBold) {
+                                    checkPage(6);
+                                    doc.setFontSize(10);
+                                    doc.setTextColor(26, 26, 36);
+                                    doc.setFont('helvetica', 'bold');
+                                    const lines = doc.splitTextToSize(section, contentWidth);
+                                    lines.forEach(line => {
+                                        checkPage(5);
+                                        doc.text(line, margin, y);
+                                        y += 4.5;
+                                    });
+                                    y += 2;
+                                } else {
+                                    addParagraph(section);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                // === FOOTER ===
+                checkPage(20);
+                y += 6;
+                doc.setDrawColor(200, 200, 200);
+                doc.line(margin + 20, y, pageWidth - margin - 20, y);
+                y += 8;
+                doc.setFontSize(9);
+                doc.setTextColor(150, 150, 160);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Parser Profile\u2122 \u00A9 2026 Cognition Blocks LLC. All rights reserved.', pageWidth / 2, y, { align: 'center' });
+                y += 4;
+                doc.text('Based on the Cognition Blocks Intelligence (CBI) Framework', pageWidth / 2, y, { align: 'center' });
+
+                // Save/download
+                const filename = `Parser-Profile-${currentProfile.name}.pdf`;
+                doc.save(filename);
+
             } catch (e) {
                 console.error('PDF generation error:', e);
-                document.body.removeChild(pdfContent);
-                alert('PDF generation failed. Please try again or use a desktop browser.');
+                alert('PDF generation failed: ' + e.message);
             }
         }
 
-        function generatePDFSection(title, content) {
-            if (!content) return '';
-            const paragraphs = content.split('\n\n').filter(p => p.trim()).map(p => `<p style="margin-bottom: 12px; line-height: 1.6;">${p}</p>`).join('');
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">${title}</h3>
-                    ${paragraphs}
-                </div>
-            `;
-        }
-
-        function generatePDFStrengths(strengths) {
-            if (!strengths || !strengths.length) return '';
-            const items = strengths.map(s => `
-                <div style="margin-bottom: 12px; padding: 12px; background: #f5f5f5; border-radius: 8px;">
-                    <strong>${s.title}</strong>
-                    <p style="margin: 4px 0 0 0; color: #666;">${s.description}</p>
-                </div>
-            `).join('');
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">⚡ Cognitive Strengths</h3>
-                    ${items}
-                </div>
-            `;
-        }
-
-        function generatePDFChallenges(challenges) {
-            if (!challenges || !challenges.length) return '';
-            const items = challenges.map(c => `
-                <div style="margin-bottom: 16px; padding: 16px; background: #fff8f0; border-left: 3px solid #ffc857; border-radius: 8px;">
-                    <strong>${c.title}</strong>
-                    <p style="margin: 8px 0; color: #666;">${c.challenge}</p>
-                    <p style="margin: 0; color: #00d4aa;"><strong>Remedy:</strong> ${c.remedy}</p>
-                </div>
-            `).join('');
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🎯 Natural Challenges</h3>
-                    ${items}
-                </div>
-            `;
-        }
-
-        function generatePDFFriction(friction) {
-            if (!friction) return '';
-            const paragraphs = friction.split('\n\n')
-                .filter(p => p.trim())
-                .map(p => `<p style="margin-bottom: 8px; color: #333;">${p}</p>`)
-                .join('');
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">⚡ Friction Patterns</h3>
-                    ${paragraphs}
-                </div>
-            `;
-        }
-
-        function generatePDFEnergy(energy) {
-            if (!energy) return '';
-            // Parse string format: "Energizes:\n\n• item\n\nDrains:\n\n• item"
-            const parts = energy.split(/Drains:/i);
-            const energizesPart = parts[0].replace(/Energizes:/i, '').trim();
-            const drainsPart = parts[1] ? parts[1].trim() : '';
-
-            const parseItems = (text) => text.split('•')
-                .map(item => item.trim())
-                .filter(item => item.length > 0)
-                .map(item => `<li style="margin-bottom: 4px;">${item}</li>`)
-                .join('');
-
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🔋 Energy Patterns</h3>
-                    <div style="display: flex; gap: 20px;">
-                        <div style="flex: 1;">
-                            <h4 style="color: #00d4aa;">⚡ Energizes</h4>
-                            <ul style="padding-left: 20px;">${parseItems(energizesPart)}</ul>
-                        </div>
-                        <div style="flex: 1;">
-                            <h4 style="color: #a855f7;">🔌 Drains</h4>
-                            <ul style="padding-left: 20px;">${parseItems(drainsPart)}</ul>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function generatePDFEnvironments(env) {
-            if (!env) return '';
-            const paragraphs = env.split('\n\n')
-                .filter(p => p.trim())
-                .map(p => `<p style="margin-bottom: 8px; color: #333;">${p}</p>`)
-                .join('');
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🏢 Optimal Work Environments</h3>
-                    ${paragraphs}
-                </div>
-            `;
-        }
-
-        function generatePDFBlocks(blocks) {
-            if (!blocks) return '';
-            // Parse string with bullet points into formatted sections
-            const sections = blocks.split('\n\n').filter(p => p.trim());
-            let html = '';
-            sections.forEach(section => {
-                if (section.includes('•')) {
-                    const items = section.split('•')
-                        .filter(l => l.trim())
-                        .map(l => `<li style="margin-bottom: 4px;">${l.trim()}</li>`)
-                        .join('');
-                    html += `<ul style="padding-left: 20px; margin-bottom: 12px;">${items}</ul>`;
-                } else {
-                    html += `<p style="margin-bottom: 8px; color: #333; font-weight: ${section.includes(':') ? 'bold' : 'normal'};">${section}</p>`;
-                }
-            });
-            return `
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #1a1a24; border-bottom: 1px solid #ddd; padding-bottom: 8px;">🧱 Cognitive Block Indicators</h3>
-                    ${html}
-                </div>
-            `;
-        }
+        // Legacy helper stubs (no longer used, kept for compatibility)
+        function generatePDFSection() { return ''; }
+        function generatePDFStrengths() { return ''; }
+        function generatePDFChallenges() { return ''; }
+        function generatePDFFriction() { return ''; }
+        function generatePDFEnergy() { return ''; }
+        function generatePDFEnvironments() { return ''; }
+        function generatePDFBlocks() { return ''; }
 
         // Final initialization check
         console.log('Parser Assessment: Module fully loaded and ready!');
