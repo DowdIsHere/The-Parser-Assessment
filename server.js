@@ -222,12 +222,11 @@ app.post('/api/send-results', async (req, res) => {
         </div>
         ` : ''}
 
-        <!-- Unlock Full Report CTA -->
+        <!-- Learn More CTA -->
         <div style="padding: 40px 30px; text-align: center; background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));">
-            <h3 style="color: #1a1a24; font-size: 20px; margin: 0 0 12px 0;">Want Your Complete Profile?</h3>
-            <p style="color: #4a4a5a; font-size: 14px; margin: 0 0 12px 0;">Unlock The Secret, Hidden Superpower, Blind Spot, and more.</p>
-            <p style="color: #1a1a24; font-size: 14px; font-weight: bold; margin: 0 0 8px 0;">Purchase the Full Report ($9.99) from your results page.</p>
-            <p style="color: #6a6a7a; font-size: 13px; margin: 0;">Return to your open browser tab with your results to unlock the full profile.</p>
+            <h3 style="color: #1a1a24; font-size: 20px; margin: 0 0 12px 0;">Want to Learn More?</h3>
+            <p style="color: #4a4a5a; font-size: 14px; margin: 0 0 24px 0;">Discover the framework behind your Parser Profile™ and explore the full CBI model.</p>
+            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
         </div>
 
         <!-- Footer -->
