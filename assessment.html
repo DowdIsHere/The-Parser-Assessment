@@ -2147,28 +2147,44 @@ const questions = [
 
                 // === PROFILE NAME ===
                 addTitle(currentProfile.name, 28, 0, 180, 145);
-                doc.setFontSize(12);
-                doc.setTextColor(120, 120, 140);
-                doc.text(currentProfile.code, pageWidth / 2, y, { align: 'center' });
-                y += 12;
+                y += 4;
 
                 // === DIMENSION SCORES ===
                 addSectionHeader('Dimension Scores');
                 const scores = currentProfile.scores;
-                const scoreLines = [
-                    `Spatial: ${scores.spatial}% ${scores.spatial >= 50 ? 'Abstract' : 'Concrete'}`,
-                    `Temporal: ${scores.temporal}% ${scores.temporal >= 50 ? 'Future' : 'Past'}`,
-                    `Reference: ${scores.reference}% ${scores.reference >= 50 ? 'Self' : 'Other'}`
+                const dimensionData = [
+                    {
+                        label: `Spatial: ${scores.spatial}% ${scores.spatial >= 50 ? 'Abstract' : 'Concrete'}`,
+                        definition: 'How you organize and interpret information — from hands-on and detail-oriented (Concrete) to big-picture and conceptual (Abstract).'
+                    },
+                    {
+                        label: `Temporal: ${scores.temporal}% ${scores.temporal >= 50 ? 'Future' : 'Past'}`,
+                        definition: 'Where your mind naturally anchors in time — drawing from experience and precedent (Past) or anticipating what\'s next (Future).'
+                    },
+                    {
+                        label: `Reference: ${scores.reference}% ${scores.reference >= 50 ? 'Self' : 'Other'}`,
+                        definition: 'How you make decisions and evaluate situations — guided by others\' needs and perspectives (Other) or by your own internal compass (Self).'
+                    }
                 ];
-                scoreLines.forEach(line => {
+                dimensionData.forEach(dim => {
                     doc.setFontSize(11);
                     doc.setTextColor(50, 50, 70);
+                    doc.setFont('helvetica', 'bold');
+                    checkPage(14);
+                    doc.text(dim.label, margin + 4, y);
+                    y += 5;
+                    doc.setFontSize(9);
+                    doc.setTextColor(100, 100, 120);
                     doc.setFont('helvetica', 'normal');
-                    checkPage(6);
-                    doc.text(line, margin + 4, y);
-                    y += 6;
+                    const defLines = doc.splitTextToSize(dim.definition, contentWidth - 8);
+                    defLines.forEach(line => {
+                        checkPage(4);
+                        doc.text(line, margin + 4, y);
+                        y += 4;
+                    });
+                    y += 3;
                 });
-                y += 4;
+                y += 2;
 
                 // === PROFILE SECTIONS ===
                 const profile = currentProfile.profile;
