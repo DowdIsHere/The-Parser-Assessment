@@ -579,7 +579,6 @@
             <div class="results-header">
                 <div class="subtitle">Your Parser Profile™</div>
                 <h1 class="profile-name" id="profileName">Visionary</h1>
-                <div class="profile-code" id="profileCode">Abstract • Future • Self</div>
                 <div id="customerIdDisplay" style="display: none; margin-top: 16px; padding: 12px 24px; background: var(--accent-spatial-dim); border: 1px solid rgba(0, 212, 170, 0.3); border-radius: 8px;">
                     <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Your Customer ID</span>
                     <span id="customerIdValue" style="font-weight: 700; letter-spacing: 0.05em; color: var(--accent-spatial);"></span>
@@ -602,6 +601,7 @@
                         <span class="gradient-label">Spatial Processing</span>
                         <span class="gradient-value" id="spatialValue">72% Abstract</span>
                     </div>
+                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">How you organize and interpret information — from hands-on and detail-oriented (Concrete) to big-picture and conceptual (Abstract).</p>
                     <div class="gradient-track"><div class="gradient-marker" id="spatialMarker" style="left: 50%"></div></div>
                     <div class="gradient-poles"><span>Concrete</span><span>Abstract</span></div>
                 </div>
@@ -610,6 +610,7 @@
                         <span class="gradient-label">Temporal Processing</span>
                         <span class="gradient-value" id="temporalValue">65% Future</span>
                     </div>
+                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">Where your mind naturally anchors in time — drawing from experience and precedent (Past) or anticipating what's next (Future).</p>
                     <div class="gradient-track"><div class="gradient-marker" id="temporalMarker" style="left: 50%"></div></div>
                     <div class="gradient-poles"><span>Past</span><span>Future</span></div>
                 </div>
@@ -618,6 +619,7 @@
                         <span class="gradient-label">Reference Processing</span>
                         <span class="gradient-value" id="referenceValue">58% Self</span>
                     </div>
+                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">How you make decisions and evaluate situations — guided by others' needs and perspectives (Other) or by your own internal compass (Self).</p>
                     <div class="gradient-track"><div class="gradient-marker" id="referenceMarker" style="left: 50%"></div></div>
                     <div class="gradient-poles"><span>Other</span><span>Self</span></div>
                 </div>
@@ -1477,7 +1479,7 @@ const questions = [
                         email: email,
                         name: name,
                         profileName: profileName,
-                        profileCode: document.getElementById('profileCode').textContent,
+                        profileCode: `${getCategoryLabel('spatial', scores.spatial)} • ${getCategoryLabel('temporal', scores.temporal)} • ${getCategoryLabel('reference', scores.reference)}`,
                         scores: scores,
                         overview: profile?.overview || '',
                         phrase: profile?.phrase || '',
@@ -1514,8 +1516,6 @@ const questions = [
 
             // Header
             document.getElementById('profileName').textContent = name;
-            document.getElementById('profileCode').textContent =
-                `${getCategoryLabel('spatial', scores.spatial)} • ${getCategoryLabel('temporal', scores.temporal)} • ${getCategoryLabel('reference', scores.reference)}`;
 
             // Gradient markers
             setTimeout(() => {
@@ -1713,7 +1713,7 @@ const questions = [
             const name = profileNames[key] || 'Equanimous';
             currentProfile = {
                 name: name,
-                code: document.getElementById('profileCode').textContent,
+                code: `${getCategoryLabel('spatial', scores.spatial)} • ${getCategoryLabel('temporal', scores.temporal)} • ${getCategoryLabel('reference', scores.reference)}`,
                 profile: getProfileByName(name),
                 scores: scores
             };
