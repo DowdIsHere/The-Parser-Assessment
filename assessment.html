@@ -2249,12 +2249,14 @@ const questions = [
 
                 function addParagraph(text, indent) {
                     if (!text) return;
+                    // Normalize single newlines to spaces (profile data has hard line breaks from source formatting)
+                    const normalized = text.trim().replace(/\n/g, ' ').replace(/  +/g, ' ');
                     doc.setFontSize(10.5);
                     doc.setTextColor(...colors.textBody);
                     doc.setFont('helvetica', 'normal');
                     const x = margin + (indent || 0);
                     const w = contentWidth - (indent || 0);
-                    const lines = doc.splitTextToSize(text.trim(), w);
+                    const lines = doc.splitTextToSize(normalized, w);
                     lines.forEach(line => {
                         checkPage(6);
                         doc.text(line, x, y);
@@ -2270,10 +2272,11 @@ const questions = [
                 }
 
                 function addBulletItem(text) {
+                    const normalized = text.trim().replace(/\n/g, ' ').replace(/  +/g, ' ');
                     doc.setFontSize(10.5);
                     doc.setTextColor(...colors.textBody);
                     doc.setFont('helvetica', 'normal');
-                    const lines = doc.splitTextToSize(text.trim(), contentWidth - 10);
+                    const lines = doc.splitTextToSize(normalized, contentWidth - 10);
                     checkPage(lines.length * 5.2 + 2);
                     doc.setTextColor(...colors.accent);
                     doc.text('\u2022', margin + 2, y);
@@ -2300,7 +2303,7 @@ const questions = [
                     if (profile.phrase) {
                         addSectionHeader('The Phrase That Hits Home');
                         checkPage(18);
-                        const phraseText = '\u201C' + profile.phrase + '\u201D';
+                        const phraseText = '\u201C' + profile.phrase.replace(/\n/g, ' ').replace(/  +/g, ' ') + '\u201D';
                         doc.setFontSize(11);
                         doc.setFont('helvetica', 'italic');
                         const phraseLines = doc.splitTextToSize(phraseText, contentWidth - 20);
@@ -2321,6 +2324,7 @@ const questions = [
                         addSectionHeader('Cognitive Strengths');
                         profile.strengths.forEach((s, i) => {
                             checkPage(16);
+                            const sTitle = s.title.replace(/\n/g, ' ').replace(/  +/g, ' ');
                             // Strength title with number badge
                             doc.setFillColor(...colors.accent);
                             doc.circle(margin + 4, y - 1.5, 3, 'F');
@@ -2332,8 +2336,11 @@ const questions = [
                             doc.setFontSize(10.5);
                             doc.setTextColor(...colors.textDark);
                             doc.setFont('helvetica', 'bold');
-                            doc.text(s.title, margin + 10, y);
-                            y += 5;
+                            const sTitleLines = doc.splitTextToSize(sTitle, contentWidth - 12);
+                            sTitleLines.forEach(line => {
+                                doc.text(line, margin + 10, y);
+                                y += 5;
+                            });
                             doc.setFont('helvetica', 'normal');
                             doc.setTextColor(...colors.textBody);
                             addParagraph(s.description, 10);
@@ -2360,7 +2367,7 @@ const questions = [
                             doc.setFontSize(10.5);
                             doc.setTextColor(...colors.textDark);
                             doc.setFont('helvetica', 'bold');
-                            const titleLines = doc.splitTextToSize(c.title, contentWidth);
+                            const titleLines = doc.splitTextToSize(c.title.replace(/\n/g, ' ').replace(/  +/g, ' '), contentWidth);
                             titleLines.forEach(line => {
                                 checkPage(5);
                                 doc.text(line, margin, y);
@@ -2455,7 +2462,7 @@ const questions = [
                                     doc.setFontSize(10);
                                     doc.setTextColor(...colors.textDark);
                                     doc.setFont('helvetica', 'bold');
-                                    const lines = doc.splitTextToSize(section, contentWidth);
+                                    const lines = doc.splitTextToSize(section.replace(/\n/g, ' ').replace(/  +/g, ' '), contentWidth);
                                     lines.forEach(line => {
                                         checkPage(5);
                                         doc.text(line, margin, y);
