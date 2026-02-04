@@ -2107,33 +2107,43 @@ const questions = [
                 }
 
                 // === COVER HEADER ===
-                // Dark background banner
-                doc.setFillColor(...colors.darkBg);
-                doc.rect(0, 0, pageWidth, 58, 'F');
-
-                // Accent line under banner
-                doc.setFillColor(...colors.accent);
-                doc.rect(0, 58, pageWidth, 1.5, 'F');
+                // Clean white header with accent accents
+                doc.setDrawColor(...colors.accent);
+                doc.setLineWidth(1);
+                doc.line(0, 0, pageWidth, 0);
 
                 // Title
-                doc.setFontSize(26);
+                doc.setFontSize(28);
                 doc.setTextColor(...colors.accent);
                 doc.setFont('helvetica', 'bold');
-                doc.text('Parser Profile\u2122', pageWidth / 2, 22, { align: 'center' });
+                doc.text('Parser Profile\u2122', pageWidth / 2, 20, { align: 'center' });
 
                 // Subtitle
-                doc.setFontSize(10);
-                doc.setTextColor(...colors.textLight);
+                doc.setFontSize(9);
+                doc.setTextColor(...colors.textMuted);
                 doc.setFont('helvetica', 'normal');
-                doc.text('Developed by J.D. Mercer  |  Cognition Blocks Intelligence Framework', pageWidth / 2, 30, { align: 'center' });
+                doc.text('Developed by J.D. Mercer  |  Cognition Blocks Intelligence Framework', pageWidth / 2, 27, { align: 'center' });
 
-                // Profile name in banner
-                doc.setFontSize(22);
-                doc.setTextColor(...colors.white);
+                // Divider
+                y = 33;
+                doc.setDrawColor(...colors.divider);
+                doc.setLineWidth(0.3);
+                doc.line(margin + 40, y, pageWidth - margin - 40, y);
+                y += 10;
+
+                // Profile name
+                doc.setFontSize(24);
+                doc.setTextColor(...colors.textDark);
                 doc.setFont('helvetica', 'bold');
-                doc.text(currentProfile.name, pageWidth / 2, 46, { align: 'center' });
+                doc.text(currentProfile.name, pageWidth / 2, y, { align: 'center' });
+                y += 4;
 
-                y = 68;
+                // Accent underline beneath profile name
+                const nameWidth = doc.getTextWidth(currentProfile.name);
+                doc.setDrawColor(...colors.accent);
+                doc.setLineWidth(0.8);
+                doc.line((pageWidth - nameWidth) / 2, y, (pageWidth + nameWidth) / 2, y);
+                y += 12;
 
                 // === DIMENSION SCORES WITH VISUAL BARS ===
                 doc.setFontSize(14);
@@ -2239,16 +2249,16 @@ const questions = [
 
                 function addParagraph(text, indent) {
                     if (!text) return;
-                    doc.setFontSize(10);
+                    doc.setFontSize(10.5);
                     doc.setTextColor(...colors.textBody);
                     doc.setFont('helvetica', 'normal');
                     const x = margin + (indent || 0);
                     const w = contentWidth - (indent || 0);
                     const lines = doc.splitTextToSize(text.trim(), w);
                     lines.forEach(line => {
-                        checkPage(5);
+                        checkPage(6);
                         doc.text(line, x, y);
-                        y += 4.8;
+                        y += 5.2;
                     });
                     y += 3;
                 }
@@ -2260,19 +2270,19 @@ const questions = [
                 }
 
                 function addBulletItem(text) {
-                    doc.setFontSize(10);
+                    doc.setFontSize(10.5);
                     doc.setTextColor(...colors.textBody);
                     doc.setFont('helvetica', 'normal');
                     const lines = doc.splitTextToSize(text.trim(), contentWidth - 10);
-                    checkPage(lines.length * 4.8 + 2);
+                    checkPage(lines.length * 5.2 + 2);
                     doc.setTextColor(...colors.accent);
                     doc.text('\u2022', margin + 2, y);
                     doc.setTextColor(...colors.textBody);
                     lines.forEach((line, i) => {
                         doc.text(line, margin + 8, y);
-                        y += 4.8;
+                        y += 5.2;
                     });
-                    y += 1.5;
+                    y += 2;
                 }
 
                 // === PROFILE SECTIONS ===
