@@ -104,6 +104,26 @@ app.get('/api/config', (req, res) => {
 });
 
 // ============================================================================
+// COMPLETION LOGGING
+// ============================================================================
+
+// Log every assessment completion (email or skip)
+app.post('/api/log-completion', (req, res) => {
+    const { profileName, scores, emailProvided } = req.body;
+    const timestamp = new Date().toISOString();
+    const spatial = scores?.spatial || 0;
+    const temporal = scores?.temporal || 0;
+    const reference = scores?.reference || 0;
+    const spatialLabel = spatial >= 50 ? 'Abstract' : 'Concrete';
+    const temporalLabel = temporal >= 50 ? 'Future' : 'Past';
+    const referenceLabel = reference >= 50 ? 'Self' : 'Other';
+
+    console.log(`[COMPLETION] ${timestamp} | Profile: ${profileName} | Spatial: ${spatial}% ${spatialLabel} | Temporal: ${temporal}% ${temporalLabel} | Reference: ${reference}% ${referenceLabel} | Email: ${emailProvided ? 'Yes' : 'Skipped'}`);
+
+    res.json({ success: true });
+});
+
+// ============================================================================
 // EMAIL ENDPOINTS
 // ============================================================================
 

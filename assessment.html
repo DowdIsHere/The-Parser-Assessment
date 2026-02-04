@@ -1511,6 +1511,17 @@ const questions = [
             const key = getProfileKey(scores);
             const name = profileNames[key] || 'Equanimous';
 
+            // Log completion to server
+            fetch('/api/log-completion', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    profileName: name,
+                    scores: scores,
+                    emailProvided: !!userInfo.email
+                })
+            }).catch(() => {});
+
             // Get the actual profile data
             const profile = getProfileByName(name);
 
