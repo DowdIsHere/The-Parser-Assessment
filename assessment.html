@@ -570,7 +570,7 @@
                     <input type="email" id="emailInput" placeholder="your@email.com">
                 </div>
                 <button class="btn-primary" onclick="submitEmailAndShowResults()">Email My Results</button>
-                <span class="skip-link" onclick="showResults()">Skip — just show results</span>
+                <span class="skip-link" onclick="showResults(true)">Skip — just show results</span>
             </div>
         </div>
 
@@ -1504,7 +1504,7 @@ const questions = [
             }
         }
 
-        window.showResults = function() {
+        window.showResults = function(skippedEmail) {
             showScreen('resultsScreen');
 
             const scores = calculateScores(false);
@@ -1518,7 +1518,7 @@ const questions = [
                 body: JSON.stringify({
                     profileName: name,
                     scores: scores,
-                    emailProvided: !!userInfo.email
+                    emailProvided: !skippedEmail
                 })
             }).catch(() => {});
 
