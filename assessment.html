@@ -2362,7 +2362,7 @@ const questions = [
                     }
                 }
 
-                // === FOOTER ===
+               // === FOOTER ===
                 checkPage(20);
                 y += 6;
                 doc.setDrawColor(200, 200, 200);
@@ -2370,10 +2370,15 @@ const questions = [
                 y += 8;
                 doc.setFontSize(9);
                 doc.setTextColor(150, 150, 160);
-                doc.setFont('helvetica', 'normal');
+                doc.setFont('helvetica', 'bold');
                 doc.text('Parser Profile\u2122 \u00A9 2026 Cognition Blocks LLC. All rights reserved.', pageWidth / 2, y, { align: 'center' });
                 y += 4;
-                doc.text('Based on the Cognition Blocks Intelligence (CBI) Framework', pageWidth / 2, y, { align: 'center' });
+                doc.setFont('helvetica', 'normal');
+                doc.text('U.S. Copyright TXu 2-497-721', pageWidth / 2, y, { align: 'center' });
+                y += 4;
+                doc.text('For personal use only. Reproduction or redistribution prohibited without written permission.', pageWidth / 2, y, { align: 'center' });
+                y += 4;
+                doc.text('cognitionblocksllc.com/terms', pageWidth / 2, y, { align: 'center' });
 
                 // Save/download
                 const filename = `Parser-Profile-${currentProfile.name}.pdf`;
