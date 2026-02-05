@@ -987,42 +987,42 @@ const questions = [
                 id: 'ddcot_spatial',
                 dimension: 'spatial',
                 phase: 'calibration',
-                text: 'You\'re learning something new and it\'s not clicking yet — what do you need to get unstuck?',
+                text: 'When learning something new, what helps you understand it?',
                 poleDirection: 'abstract-to-concrete',
                 options: [
-                    { letter: 'A', text: 'Just tell me why it works — I\'ll figure out the how', value: 5 },
-                    { letter: 'B', text: 'Give me the reasoning first, then walk me through one example', value: 4 },
+                    { letter: 'A', text: 'Knowing the reason behind the process', value: 5 },
+                    { letter: 'B', text: 'Knowing the reason behind the process first, followed by an example', value: 4 },
                     { letter: 'C', text: 'I honestly can\'t start with one without immediately needing the other — I stall until I have both in front of me', value: 3 },
-                    { letter: 'D', text: 'Show me how it\'s done first, then explain why it works', value: 2 },
-                    { letter: 'E', text: 'Show me exactly how it\'s done — step by step, start to finish', value: 1 }
+                    { letter: 'D', text: 'To see an example first, followed by the reason for the process', value: 2 },
+                    { letter: 'E', text: 'To see an example, exactly how it\'s done, step by step instructions', value: 1 }
                 ]
             },
             {
                 id: 'ddcot_temporal',
                 dimension: 'temporal',
                 phase: 'calibration',
-                text: 'A problem just landed in front of you — where does your mind go first?',
+                text: 'Solving problems, you naturally think about...',
                 poleDirection: 'past-to-future',
                 options: [
-                    { letter: 'A', text: 'I\'m already thinking about what worked last time', value: 1 },
-                    { letter: 'B', text: 'I\'m reaching for past experience first, but I\'m open to trying something new', value: 2 },
+                    { letter: 'A', text: 'What\'s worked in similar situations before', value: 1 },
+                    { letter: 'B', text: 'Past experience primarily, while staying open to new approaches', value: 2 },
                     { letter: 'C', text: 'My mind bounces between what worked before and what could work now — I can\'t settle on one starting point', value: 3 },
-                    { letter: 'D', text: 'I\'m scanning for new options first, but checking them against what I\'ve seen before', value: 4 },
-                    { letter: 'E', text: 'I\'m already looking at what\'s possible right now, regardless of what\'s been tried', value: 5 }
+                    { letter: 'D', text: 'New possibilities primarily, while considering what\'s worked before', value: 4 },
+                    { letter: 'E', text: 'What could work given current possibilities', value: 5 }
                 ]
             },
             {
                 id: 'ddcot_reference',
                 dimension: 'reference',
                 phase: 'calibration',
-                text: 'A major change was just announced at your workplace — what\'s already going through your mind?',
+                text: 'When you hear about a major change coming to your workplace or community, what\'s a thought that comes to mind?',
                 poleDirection: 'self-to-other',
                 options: [
-                    { letter: 'A', text: 'What does this mean for me?', value: 5 },
-                    { letter: 'B', text: 'I\'m thinking about my situation first, but I\'m aware others are affected too', value: 4 },
+                    { letter: 'A', text: 'How will this affect me personally?', value: 5 },
+                    { letter: 'B', text: 'How this affects me, while considering how it will affect everyone else', value: 4 },
                     { letter: 'C', text: 'I notice I\'m thinking about my situation and everyone else\'s at the same time, and it\'s hard to separate the two', value: 3 },
-                    { letter: 'D', text: 'I\'m thinking about how everyone\'s affected, while noting what it means for me', value: 2 },
-                    { letter: 'E', text: 'I\'m already thinking about how this hits the people around me — I almost forget I\'m part of it', value: 1 }
+                    { letter: 'D', text: 'How this affects everyone, while considering my own situation', value: 2 },
+                    { letter: 'E', text: 'How will this affect everyone (forgetting that it affects me too)?', value: 1 }
                 ]
             },
 
@@ -1032,56 +1032,56 @@ const questions = [
                 id: 'spatial_2',
                 dimension: 'spatial',
                 phase: 'assessment',
-                text: 'You just opened the box — parts everywhere, instructions in hand. What are you already doing?',
+                text: 'You\'re assembling something with written instructions. What\'s your natural approach?',
                 poleDirection: 'abstract-to-concrete',
                 options: [
-                    { letter: 'A', text: 'I skimmed the overview and I\'m already winging it', value: 5 },
-                    { letter: 'B', text: 'I glanced at the big picture and I\'m loosely following along', value: 4 },
-                    { letter: 'C', text: 'I\'m reading the instructions AND trying to figure it out — then getting annoyed that I\'m doing both at once', value: 3 },
-                    { letter: 'D', text: 'I\'m following the steps, but I\'m skipping ahead where I can see what\'s coming', value: 2 },
-                    { letter: 'E', text: 'I\'m on step one, doing exactly what it says before I move to step two', value: 1 }
+                    { letter: 'A', text: 'Skim for the overall concept, then figure out the details as I go', value: 5 },
+                    { letter: 'B', text: 'Glance at the big picture first, then loosely follow the steps', value: 4 },
+                    { letter: 'C', text: 'I read the instructions AND try to figure it out — then get annoyed that I\'m doing both at once', value: 3 },
+                    { letter: 'D', text: 'Follow the steps but skip ahead if I see where it\'s going', value: 2 },
+                    { letter: 'E', text: 'Follow each step precisely in order', value: 1 }
                 ]
             },
             {
                 id: 'spatial_3',
                 dimension: 'spatial',
                 phase: 'assessment',
-                text: 'A friend just told you something is wrong — what\'s already coming out of your mouth?',
+                text: 'A friend comes to you with a problem. What do you naturally offer first?',
                 poleDirection: 'concrete-to-abstract',
                 options: [
-                    { letter: 'A', text: 'I\'m already listing things they can do right now', value: 1 },
-                    { letter: 'B', text: 'I\'m offering practical suggestions and explaining why they might help', value: 2 },
-                    { letter: 'C', text: 'I\'m starting with practical advice and shifting to perspective mid-sentence — or the reverse — without deciding to', value: 3 },
-                    { letter: 'D', text: 'I\'m offering a bigger-picture take with some practical suggestions woven in', value: 4 },
-                    { letter: 'E', text: 'I\'m reframing the whole situation before I suggest anything specific', value: 5 }
+                    { letter: 'A', text: 'Practical steps they can take right now', value: 1 },
+                    { letter: 'B', text: 'Practical suggestions with some context about why they might help', value: 2 },
+                    { letter: 'C', text: 'I start giving practical advice and shift to perspective mid-sentence — or the reverse — without deciding to', value: 3 },
+                    { letter: 'D', text: 'Perspective on the bigger picture with some practical implications', value: 4 },
+                    { letter: 'E', text: 'A reframe or bigger-picture perspective on the situation', value: 5 }
                 ]
             },
             {
                 id: 'spatial_4',
                 dimension: 'spatial',
                 phase: 'assessment',
-                text: 'Someone just brought up a meaningful experience you shared — what hits you first?',
+                text: 'When you recall a meaningful experience, what comes back most vividly?',
                 poleDirection: 'concrete-to-abstract',
                 options: [
-                    { letter: 'A', text: 'Specific details flood back — what I saw, heard, felt physically', value: 1 },
-                    { letter: 'B', text: 'The details come first, with a sense of what it all meant trailing behind', value: 2 },
+                    { letter: 'A', text: 'Specific sensory details—what I saw, heard, felt physically', value: 1 },
+                    { letter: 'B', text: 'Details primarily, with some sense of what it meant', value: 2 },
                     { letter: 'C', text: 'The details and the meaning arrive together — I couldn\'t tell you which one I noticed first', value: 3 },
-                    { letter: 'D', text: 'The meaning hits me first, with a few sensory fragments attached', value: 4 },
-                    { letter: 'E', text: 'The feeling and significance of it — the meaning lands before any specifics', value: 5 }
+                    { letter: 'D', text: 'The meaning primarily, with some sensory fragments', value: 4 },
+                    { letter: 'E', text: 'The feeling or significance of it—the meaning more than the specifics', value: 5 }
                 ]
             },
             {
                 id: 'spatial_5',
                 dimension: 'spatial',
                 phase: 'assessment',
-                text: 'You\'re sitting through an explanation and getting frustrated — what\'s going wrong?',
+                text: 'What frustrates you more when learning something new?',
                 poleDirection: 'concrete-to-abstract',
                 options: [
-                    { letter: 'A', text: 'It\'s all theory with nothing concrete to grab onto', value: 1 },
-                    { letter: 'B', text: 'It\'s too abstract, though I\'m hanging in there', value: 2 },
-                    { letter: 'C', text: 'I can\'t tell whether I\'m missing the concept or the example — it just feels incomplete', value: 3 },
-                    { letter: 'D', text: 'It\'s too detailed, though I\'m pushing through it', value: 4 },
-                    { letter: 'E', text: 'I\'m drowning in steps without understanding why any of this matters', value: 5 }
+                    { letter: 'A', text: 'Being given frameworks without concrete examples to ground them', value: 1 },
+                    { letter: 'B', text: 'Too much abstraction, though I can tolerate some theory', value: 2 },
+                    { letter: 'C', text: 'I get frustrated when I can\'t tell whether I\'m missing the concept or the example — it just feels incomplete', value: 3 },
+                    { letter: 'D', text: 'Too many details, though I can work through them if needed', value: 4 },
+                    { letter: 'E', text: 'Being walked through details without understanding the underlying concept', value: 5 }
                 ]
             },
 
@@ -1090,56 +1090,56 @@ const questions = [
                 id: 'temporal_2',
                 dimension: 'temporal',
                 phase: 'assessment',
-                text: 'A project just fell apart — where is your mind already going?',
+                text: 'After a project doesn\'t go as planned, where does your mind naturally go first?',
                 poleDirection: 'future-to-past',
                 options: [
-                    { letter: 'A', text: 'I\'m already thinking about what to try differently next time', value: 5 },
-                    { letter: 'B', text: 'I\'m focused on what\'s next, with a quick glance back at what happened', value: 4 },
+                    { letter: 'A', text: 'What to try differently next time', value: 5 },
+                    { letter: 'B', text: 'Forward mostly—what\'s next—with some reflection on what happened', value: 4 },
                     { letter: 'C', text: 'My mind keeps flipping between what happened and what\'s next — I have to force myself to focus on one', value: 3 },
-                    { letter: 'D', text: 'I\'m piecing together what went wrong, while starting to think about next steps', value: 2 },
-                    { letter: 'E', text: 'I\'m retracing what went wrong and why', value: 1 }
+                    { letter: 'D', text: 'Backward mostly—what happened—while starting to consider next steps', value: 2 },
+                    { letter: 'E', text: 'What went wrong and why', value: 1 }
                 ]
             },
             {
                 id: 'temporal_3',
                 dimension: 'temporal',
                 phase: 'assessment',
-                text: 'You just committed to something you\'re excited about — what are you doing with that energy right now?',
+                text: 'When planning something you\'re looking forward to, what energizes you more?',
                 poleDirection: 'past-to-future',
                 options: [
-                    { letter: 'A', text: 'I\'m already researching how to prepare based on what\'s worked before', value: 1 },
-                    { letter: 'B', text: 'I\'m building a plan grounded in experience, with some room for surprises', value: 2 },
-                    { letter: 'C', text: 'I\'m researching and daydreaming in the same sitting — neither one feels complete without the other', value: 3 },
-                    { letter: 'D', text: 'I\'m imagining the possibilities, while pulling from some past experience', value: 4 },
-                    { letter: 'E', text: 'I\'m imagining everything it could be — the possibilities are the energy', value: 5 }
+                    { letter: 'A', text: 'Researching and preparing based on what\'s worked before', value: 1 },
+                    { letter: 'B', text: 'Preparation grounded in experience, with some room for new possibilities', value: 2 },
+                    { letter: 'C', text: 'I catch myself researching and daydreaming in the same sitting — neither one feels complete without the other', value: 3 },
+                    { letter: 'D', text: 'Imagining possibilities while drawing on some past experience', value: 4 },
+                    { letter: 'E', text: 'Imagining all the possibilities of what it could be', value: 5 }
                 ]
             },
             {
                 id: 'temporal_4',
                 dimension: 'temporal',
                 phase: 'assessment',
-                text: 'You\'re catching up with a close friend right now — what are you naturally bringing up?',
+                text: 'In conversations with close friends, what do you find yourself referencing more?',
                 poleDirection: 'past-to-future',
                 options: [
-                    { letter: 'A', text: 'I\'m bringing up things we\'ve been through together', value: 1 },
-                    { letter: 'B', text: 'I\'m mostly in the memories, with some mention of what\'s coming up', value: 2 },
-                    { letter: 'C', text: 'I\'m bringing up a memory and immediately connecting it to something ahead — they\'re always linked for me', value: 3 },
-                    { letter: 'D', text: 'I\'m talking about what\'s coming up, with some callbacks to things we\'ve shared', value: 4 },
-                    { letter: 'E', text: 'I\'m talking about what\'s ahead — plans, ideas, things I\'m excited about', value: 5 }
+                    { letter: 'A', text: 'Shared memories and experiences you\'ve had together', value: 1 },
+                    { letter: 'B', text: 'The past mostly, with some talk about what\'s ahead', value: 2 },
+                    { letter: 'C', text: 'I\'ll bring up a memory and immediately connect it to something ahead — they\'re always linked for me', value: 3 },
+                    { letter: 'D', text: 'What\'s coming up mostly, with some callback to shared history', value: 4 },
+                    { letter: 'E', text: 'Future plans and possibilities you\'re excited about', value: 5 }
                 ]
             },
             {
                 id: 'temporal_5',
                 dimension: 'temporal',
                 phase: 'assessment',
-                text: 'You\'re about to commit to a decision — what would make you pull the trigger?',
+                text: 'When do you feel most confident about a decision?',
                 poleDirection: 'future-to-past',
                 options: [
-                    { letter: 'A', text: 'I can see multiple ways this plays out well', value: 5 },
-                    { letter: 'B', text: 'The future looks promising, even without a roadmap', value: 4 },
-                    { letter: 'C', text: 'I rarely feel fully ready — there\'s always a past datapoint or future uncertainty giving me pause', value: 3 },
-                    { letter: 'D', text: 'It has a track record, even if I\'m not sure what comes next', value: 2 },
-                    { letter: 'E', text: 'I\'ve seen this work before — that\'s what I need', value: 1 }
+                    { letter: 'A', text: 'When I can envision multiple positive future scenarios', value: 5 },
+                    { letter: 'B', text: 'When the future looks promising, even if it\'s uncharted territory', value: 4 },
+                    { letter: 'C', text: 'I rarely feel fully confident — there\'s always a past datapoint or future uncertainty that gives me pause', value: 3 },
+                    { letter: 'D', text: 'When it has a track record, even if the future is uncertain', value: 2 },
+                    { letter: 'E', text: 'When I have evidence that this approach has worked before', value: 1 }
                 ]
             },
 
@@ -1148,13 +1148,13 @@ const questions = [
                 id: 'reference_2',
                 dimension: 'reference',
                 phase: 'assessment',
-                text: 'You just walked away from a meaningful conversation — what\'s already replaying?',
+                text: 'After a meaningful conversation, what do you find yourself replaying?',
                 poleDirection: 'self-to-other',
                 options: [
                     { letter: 'A', text: 'What I said and how I came across', value: 5 },
-                    { letter: 'B', text: 'Mostly my own words, with some thought about how they landed', value: 4 },
-                    { letter: 'C', text: 'I\'m replaying it from my perspective, then theirs, then mine again — I can\'t settle on one viewpoint', value: 3 },
-                    { letter: 'D', text: 'Mostly what they seemed to feel, with some reflection on what I said', value: 2 },
+                    { letter: 'B', text: 'My own contributions mostly, with some thought about the other person', value: 4 },
+                    { letter: 'C', text: 'I replay the conversation from my perspective, then from theirs, then mine again — I can\'t settle on one viewpoint', value: 3 },
+                    { letter: 'D', text: 'What they seemed to feel mostly, with some reflection on my part', value: 2 },
                     { letter: 'E', text: 'What the other person seemed to feel or experience', value: 1 }
                 ]
             },
@@ -1162,42 +1162,42 @@ const questions = [
                 id: 'reference_3',
                 dimension: 'reference',
                 phase: 'assessment',
-                text: 'You\'re about to make a choice that affects you and others — what\'s hitting you first?',
+                text: 'When making a choice that affects both you and others, what\'s your natural sequence?',
                 poleDirection: 'other-to-self',
                 options: [
-                    { letter: 'A', text: 'I\'m already thinking about what others need', value: 1 },
-                    { letter: 'B', text: 'Others\' needs are leading, but I\'m getting to my own', value: 2 },
+                    { letter: 'A', text: 'Consider what others need first, then factor in my own needs', value: 1 },
+                    { letter: 'B', text: 'Others first, then myself—but I do get to my own needs', value: 2 },
                     { letter: 'C', text: 'There\'s no sequence — my needs and theirs hit me as one tangled thing I have to sort through', value: 3 },
-                    { letter: 'D', text: 'My needs are leading, but I\'m factoring others in', value: 4 },
-                    { letter: 'E', text: 'I\'m clarifying what I want first', value: 5 }
+                    { letter: 'D', text: 'Myself first, then others—but I do consider them', value: 4 },
+                    { letter: 'E', text: 'Clarify what I want first, then consider others\' needs', value: 5 }
                 ]
             },
             {
                 id: 'reference_4',
                 dimension: 'reference',
                 phase: 'assessment',
-                text: 'You just finished something you\'re proud of — what would make it feel complete?',
+                text: 'When you\'ve done good work, what matters more for your sense of satisfaction?',
                 poleDirection: 'other-to-self',
                 options: [
-                    { letter: 'A', text: 'Someone noticing and saying it\'s good', value: 1 },
-                    { letter: 'B', text: 'External recognition mainly, though my own satisfaction matters too', value: 2 },
+                    { letter: 'A', text: 'Others\' recognition and positive response', value: 1 },
+                    { letter: 'B', text: 'External validation primarily, though internal satisfaction helps', value: 2 },
                     { letter: 'C', text: 'Neither one is enough on its own — if either piece is missing, the satisfaction feels hollow', value: 3 },
-                    { letter: 'D', text: 'My own sense that it\'s good, though recognition would be nice', value: 4 },
-                    { letter: 'E', text: 'My own assessment — I already know whether it\'s good', value: 5 }
+                    { letter: 'D', text: 'My internal assessment primarily, though recognition is nice', value: 4 },
+                    { letter: 'E', text: 'My own internal assessment of the quality', value: 5 }
                 ]
             },
             {
                 id: 'reference_5',
                 dimension: 'reference',
                 phase: 'assessment',
-                text: 'You\'re in the middle of a group task right now — what are you paying attention to?',
+                text: 'In a group working on a task, what do you naturally track most closely?',
                 poleDirection: 'self-to-other',
                 options: [
-                    { letter: 'A', text: 'Whether I\'m pulling my weight', value: 5 },
-                    { letter: 'B', text: 'Mostly my own contribution, with some awareness of the group', value: 4 },
+                    { letter: 'A', text: 'My own contribution and whether I\'m pulling my weight', value: 5 },
+                    { letter: 'B', text: 'My contribution mostly, with awareness of group dynamics', value: 4 },
                     { letter: 'C', text: 'I\'m tracking my role and the group simultaneously, which means I sometimes miss things in both', value: 3 },
-                    { letter: 'D', text: 'Mostly the group dynamics, while staying aware of my own part', value: 2 },
-                    { letter: 'E', text: 'How the group is functioning and whether people are aligned', value: 1 }
+                    { letter: 'D', text: 'Group dynamics mostly, while staying aware of my own contribution', value: 2 },
+                    { letter: 'E', text: 'How the group is functioning overall and whether people are aligned', value: 1 }
                 ]
             }
         ];
