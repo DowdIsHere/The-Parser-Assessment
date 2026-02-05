@@ -12,6 +12,21 @@
     <!-- Stripe.js SDK -->
     <script src="https://js.stripe.com/v3/"></script>
     <style>
+        /* Disable text selection */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* Allow selection in input fields */
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
         :root {
             --bg-primary: #0a0a0f;
             --bg-secondary: #12121a;
@@ -912,6 +927,22 @@
         import { profiles, getProfileByName } from './index.js';
 
         console.log('Parser Assessment: Profiles loaded successfully. Count:', Object.keys(profiles).length);
+
+        // ============================================================================
+        // COPY PROTECTION
+        // ============================================================================
+
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Disable copy keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U')) {
+                // Allow in input/textarea fields
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                e.preventDefault();
+            }
+        });
 
         // ============================================================================
         // THEME MANAGEMENT
