@@ -120,32 +120,33 @@ app.post('/api/log-completion', async (req, res) => {
 
     console.log(`[COMPLETION] ${timestamp} | Profile: ${profileName} | Spatial: ${spatial}% ${spatialLabel} | Temporal: ${temporal}% ${temporalLabel} | Reference: ${reference}% ${referenceLabel} | Email: ${emailProvided ? 'Yes' : 'Skipped'}`);
 
-    // If they skipped email, notify the library
-    if (!emailProvided) {
-        const transporter = createTransporter();
-        if (transporter) {
-            try {
-                await transporter.sendMail({
-                    from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
-                    to: 'Profile.library@cognitionblocksllc.com',
-                    subject: `Parser Profile™ Completion (Email Skipped): ${profileName}`,
-                    html: `
+    // Notify the library of every completion
+    const transporter = createTransporter();
+    if (transporter) {
+        const emailStatus = emailProvided ? 'Email Provided' : 'Email Skipped';
+        const statusColor = emailProvided ? '#2e7d32' : '#c62828';
+        try {
+            await transporter.sendMail({
+                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+                to: 'Profile.library@cognitionblocksllc.com',
+                subject: `Parser Profile™ Completion: ${profileName} (${emailStatus})`,
+                html: `
 <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px;">
-    <h2 style="color: #1a1a24;">Assessment Completed — Email Skipped</h2>
-    <p style="color: #4a4a5a;">Someone completed the Parser Profile™ assessment but chose not to provide their email.</p>
+    <h2 style="color: #1a1a24;">Assessment Completed</h2>
+    <p style="color: #4a4a5a;">Someone completed the Parser Profile™ assessment.</p>
     <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
         <tr><td style="padding: 8px; color: #6a6a7a;">Profile</td><td style="padding: 8px; font-weight: bold;">${profileName}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Spatial</td><td style="padding: 8px;">${spatial}% ${spatialLabel}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Temporal</td><td style="padding: 8px;">${temporal}% ${temporalLabel}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Reference</td><td style="padding: 8px;">${reference}% ${referenceLabel}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Completed</td><td style="padding: 8px;">${timestamp}</td></tr>
+        <tr><td style="padding: 8px; color: #6a6a7a;">Email Status</td><td style="padding: 8px; font-weight: bold; color: ${statusColor};">${emailStatus}</td></tr>
     </table>
 </div>`
-                });
-                console.log(`[SKIP-NOTIFY] Email sent to library for skipped completion: ${profileName}`);
-            } catch (err) {
-                console.error('[SKIP-NOTIFY] Failed to send skip notification:', err.message);
-            }
+            });
+            console.log(`[COMPLETION-NOTIFY] Email sent to library: ${profileName} (${emailStatus})`);
+        } catch (err) {
+            console.error('[COMPLETION-NOTIFY] Failed to send notification:', err.message);
         }
     }
 
