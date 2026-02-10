@@ -87,12 +87,24 @@ app.get('/', (req, res) => {
 // HEALTH CHECK
 // ============================================================================
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
     const transporter = createTransporter();
+    let emailStatus = 'not configured';
+
+    if (transporter) {
+        try {
+            await transporter.verify();
+            emailStatus = 'connected';
+        } catch (err) {
+            emailStatus = `error: ${err.message}`;
+        }
+    }
+
     res.json({
         status: 'ok',
         environment: process.env.STRIPE_ENVIRONMENT || 'test',
-        emailConfigured: !!transporter
+        emailConfigured: !!transporter,
+        emailStatus: emailStatus
     });
 });
 
