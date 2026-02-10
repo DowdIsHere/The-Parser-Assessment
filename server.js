@@ -140,7 +140,7 @@ app.post('/api/log-completion', async (req, res) => {
         try {
             await transporter.sendMail({
                 from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
-                to: 'Profile.library@cognitionblocksllc.com',
+                to: 'profile.library@cognitionblocksllc.com',
                 subject: `Parser Profile™ Completion: ${profileName} (${emailStatus})`,
                 html: `
 <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px;">
@@ -309,7 +309,7 @@ app.post('/api/send-results', async (req, res) => {
             await transporter.sendMail({
                 from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
                 to: email,
-                bcc: 'Profile.library@cognitionblocksllc.com',
+                bcc: 'profile.library@cognitionblocksllc.com',
                 subject: `Your Parser Profile™ Results: ${profileName}`,
                 html: emailHtml
             });
@@ -355,7 +355,7 @@ app.post('/api/notify-completion', async (req, res) => {
     try {
         await transporter.sendMail({
             from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
-            to: 'Profile.library@cognitionblocksllc.com',
+            to: 'profile.library@cognitionblocksllc.com',
             subject: `New Parser Profile™ Completion: ${profileName} (${tier})`,
             html: `
                 <h2>New Assessment Completed</h2>
