@@ -575,6 +575,27 @@
             <div class="card centered">
                 <h2>One Last Step</h2>
                 <p>See your FREE results and receive a copy and your unique Customer ID.</p>
+
+                <div class="life-stage-select" style="margin-bottom: 20px;">
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Select your life stage for personalized results:</p>
+                    <div style="display: flex; gap: 12px; justify-content: center;">
+                        <label style="flex: 1; max-width: 160px; cursor: pointer;">
+                            <input type="radio" name="lifeStage" value="early" style="display: none;">
+                            <div class="life-stage-option" style="padding: 16px 12px; border: 2px solid var(--text-muted); border-radius: 10px; text-align: center; transition: all 0.2s;">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Early Career</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">18 – 29</div>
+                            </div>
+                        </label>
+                        <label style="flex: 1; max-width: 160px; cursor: pointer;">
+                            <input type="radio" name="lifeStage" value="established" checked style="display: none;">
+                            <div class="life-stage-option selected" style="padding: 16px 12px; border: 2px solid var(--accent-spatial); border-radius: 10px; text-align: center; transition: all 0.2s; background: var(--accent-spatial-dim);">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Established</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">30+</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="input-group">
                     <input type="text" id="nameInput" placeholder="Your name (optional)" style="margin-bottom: 12px;">
                 </div>
@@ -582,7 +603,7 @@
                     <input type="email" id="emailInput" placeholder="your@email.com">
                 </div>
                 <button class="btn-primary" onclick="submitEmailAndShowResults()">Email My Results</button>
-                <span class="skip-link" onclick="showResults(true)">Skip — just show results</span>
+                <span class="skip-link" onclick="showResults(true, getSelectedLifeStage())">Skip — just show results</span>
             </div>
         </div>
 
@@ -1474,12 +1495,35 @@ const questions = [
         }
 
         // Store user info for email
-        let userInfo = { name: '', email: '', customerId: '' };
+        let userInfo = { name: '', email: '', customerId: '', lifeStage: 'established' };
+
+        // Life stage selection handler
+        document.querySelectorAll('input[name="lifeStage"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.life-stage-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.style.border = '2px solid var(--text-muted)';
+                    opt.style.background = 'transparent';
+                });
+                const selected = this.closest('label').querySelector('.life-stage-option');
+                selected.classList.add('selected');
+                selected.style.border = '2px solid var(--accent-spatial)';
+                selected.style.background = 'var(--accent-spatial-dim)';
+                userInfo.lifeStage = this.value;
+            });
+        });
+
+        // Get selected life stage
+        function getSelectedLifeStage() {
+            const selected = document.querySelector('input[name="lifeStage"]:checked');
+            return selected ? selected.value : 'established';
+        }
 
         // Submit email and show results
         window.submitEmailAndShowResults = async function() {
             const email = document.getElementById('emailInput').value.trim();
             const name = document.getElementById('nameInput').value.trim();
+            const lifeStage = getSelectedLifeStage();
 
             if (!email) {
                 alert('Please enter your email to receive your results.');
@@ -1489,9 +1533,10 @@ const questions = [
             // Store user info
             userInfo.email = email;
             userInfo.name = name;
+            userInfo.lifeStage = lifeStage;
 
             // Show results first
-            window.showResults();
+            window.showResults(false, lifeStage);
 
             // Then send email in background
             const scores = calculateScores(false);
@@ -1532,8 +1577,12 @@ const questions = [
             }
         }
 
-        window.showResults = function(skippedEmail) {
+        window.showResults = function(skippedEmail, lifeStage) {
             showScreen('resultsScreen');
+
+            // Use passed lifeStage or get from selection
+            const selectedLifeStage = lifeStage || getSelectedLifeStage();
+            userInfo.lifeStage = selectedLifeStage;
 
             const scores = calculateScores(false);
             const key = getProfileKey(scores);
@@ -1546,12 +1595,17 @@ const questions = [
                 body: JSON.stringify({
                     profileName: name,
                     scores: scores,
-                    emailProvided: !skippedEmail
+                    emailProvided: !skippedEmail,
+                    lifeStage: selectedLifeStage
                 })
             }).catch(() => {});
 
             // Get the actual profile data
             const profile = getProfileByName(name);
+
+            // TODO: Once life-stage variants are added to profiles, use:
+            // const profileContent = selectedLifeStage === 'early' ? profile.earlyCareer : profile.established;
+            // For now, use the default profile content
 
             // Header
             document.getElementById('profileName').textContent = name;
