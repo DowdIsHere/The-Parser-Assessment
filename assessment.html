@@ -1514,7 +1514,7 @@ const questions = [
         });
 
         // Get selected life stage
-        function getSelectedLifeStage() {
+        window.getSelectedLifeStage = function() {
             const selected = document.querySelector('input[name="lifeStage"]:checked');
             return selected ? selected.value : 'established';
         }
