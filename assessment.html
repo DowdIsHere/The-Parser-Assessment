@@ -889,7 +889,7 @@
                     <div class="feature-item"><span class="check">✓</span><span>Energy Patterns</span></div>
                     <div class="feature-item"><span class="check">✓</span><span>Optimal Environments</span></div>
                 </div>
-                <div class="price">$1.99 <span>USD</span></div>
+                <div class="price">$9.99 <span>USD</span></div>
                 <div class="price-note">One-time purchase • Instant access </div>
                 <button class="btn-primary" style="width: 100%; max-width: 300px;" onclick="openPaymentModal()">Get Full Report</button>
             </div>
@@ -904,7 +904,7 @@
                     <p>Unlock your full Parser Profile™ report</p>
                 </div>
                 <div class="modal-price">
-                    <span class="amount" id="display-price">$1.99</span>
+                    <span class="amount" id="display-price">$9.99</span>
                     <span class="currency">USD</span>
                     <div id="discount-badge" style="display: none; margin-top: 8px; font-size: 0.8rem; color: var(--accent-spatial); background: var(--accent-spatial-dim); padding: 4px 12px; border-radius: 12px; display: inline-block;"></div>
                 </div>
@@ -919,7 +919,7 @@
                     <div id="card-element"></div>
                     <div id="card-errors" role="alert"></div>
                     <button type="submit" id="card-button" class="btn-primary" style="width: 100%; margin-top: 16px;">
-                        Pay $1.99
+                        Pay $9.99
                     </button>
                 </form>
                 <div id="payment-status"></div>
@@ -1666,35 +1666,29 @@ const questions = [
                 document.getElementById('strengthsGrid').innerHTML = strengthsHtml;
             }
 
-            // FREE TIER: How You Learn
+            // FREE TIER: How You Learn (first paragraph only)
             if (profile.howYouLearn) {
-                const learnHtml = profile.howYouLearn.split('\n\n')
-                    .filter(p => p.trim())
-                    .map(p => `<p>${p}</p>`)
-                    .join('');
+                const learnParagraphs = profile.howYouLearn.split('\n\n').filter(p => p.trim());
+                const learnHtml = learnParagraphs.length > 0 ? `<p>${learnParagraphs[0]}</p>` : '';
                 document.getElementById('howYouLearnContent').innerHTML = learnHtml;
             }
 
-            // FREE TIER: How You Communicate
+            // FREE TIER: How You Communicate (first paragraph only)
             if (profile.howYouCommunicate) {
-                const commHtml = profile.howYouCommunicate.split('\n\n')
-                    .filter(p => p.trim())
-                    .map(p => `<p>${p}</p>`)
-                    .join('');
+                const commParagraphs = profile.howYouCommunicate.split('\n\n').filter(p => p.trim());
+                const commHtml = commParagraphs.length > 0 ? `<p>${commParagraphs[0]}</p>` : '';
                 document.getElementById('howYouCommunicateContent').innerHTML = commHtml;
             }
 
-            // FREE TIER: 1 Challenge with Remedy
+            // FREE TIER: 1 Challenge (first paragraph only)
             if (profile.challenges && profile.challenges.length > 0) {
                 const challenge = profile.challenges[0];
+                const challengeParagraphs = challenge.challenge.split('\n\n').filter(p => p.trim());
+                const challengeText = challengeParagraphs.length > 0 ? challengeParagraphs[0] : challenge.challenge;
                 document.getElementById('primaryChallengeContent').innerHTML = `
                     <div class="challenge-item">
                         <h4>🎯 ${challenge.title}</h4>
-                        <p class="challenge-text">${challenge.challenge}</p>
-                        <div class="remedy">
-                            <strong>Remedy:</strong>
-                            ${challenge.remedy}
-                        </div>
+                        <p class="challenge-text">${challengeText}</p>
                     </div>
                 `;
             }
@@ -1775,7 +1769,7 @@ const questions = [
                     } else {
                         const newPrice = (data.newAmount / 100).toFixed(2);
                         statusEl.textContent = `Promo applied — ${data.discount}% off!`;
-                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$1.99</s> $${newPrice}`;
+                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$9.99</s> $${newPrice}`;
                         document.getElementById('discount-badge').textContent = `${data.discount}% OFF`;
                         document.getElementById('discount-badge').style.display = 'inline-block';
                         document.getElementById('card-button').textContent = `Pay $${newPrice}`;
@@ -1915,7 +1909,7 @@ const questions = [
                 statusEl.className = 'error';
             } finally {
                 submitButton.disabled = false;
-                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$1.99';
+                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$9.99';
                 submitButton.textContent = activePromo?.type === 'free' ? 'Unlock Full Report' : `Pay ${btnPrice}`;
             }
         }
@@ -1940,11 +1934,11 @@ const questions = [
             document.getElementById('applyPromoBtn').disabled = false;
             document.getElementById('applyPromoBtn').style.opacity = '1';
             document.getElementById('promo-status').textContent = '';
-            document.getElementById('display-price').textContent = '$1.99';
+            document.getElementById('display-price').textContent = '$9.99';
             document.getElementById('discount-badge').style.display = 'none';
             document.getElementById('card-element').style.display = '';
             document.getElementById('card-errors').style.display = '';
-            document.getElementById('card-button').textContent = 'Pay $1.99';
+            document.getElementById('card-button').textContent = 'Pay $9.99';
         }
 
         // ============================================================================
