@@ -586,7 +586,7 @@
                     <p style="margin-top: 16px; font-size: 0.9rem;">Your actual profile reveals a path.<br>Your desired profile assumes you're at the end of it.</p>
                 </div>
                 <div style="margin-top: 24px; padding: 20px; background: var(--accent-temporal-dim); border: 1px solid rgba(255, 200, 87, 0.3); border-radius: 12px; text-align: center;">
-                    <p style="font-weight: 700; color: var(--accent-temporal); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;">⚠️ Please Read All Selections ⚠️</p>
+                    <p style="font-weight: 700; color: var(--accent-temporal); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;">⚠️ Please Read All Selections</p>
                 </div>
                 <div class="btn-group" style="margin-top: 24px;">
                     <button class="btn-primary" onclick="continuePastPrediction()">That Landed — Continue</button>
@@ -732,7 +732,7 @@
                     <h3>🤫 The Secret You've Carried</h3>
                     <div class="content-section">
                         <p>There's something you've known about yourself for years—maybe decades—that you've never quite been able to name or explain to others...</p>
-                        <p>This section reveals the unnamed truth about your cognitive pattern that you've always sensed but couldn't articulate...</p>
+                        <p style="color: var(--accent-spatial); font-style: italic; margin-top: 12px;">Continue reading in your full Parser Profile™...</p>
                     </div>
                 </div>
                 <div class="locked-overlay">
@@ -1947,12 +1947,16 @@ const questions = [
             cardElement = elements.create('card', {
                 style: {
                     base: {
-                        color: '#f0f0f5',
+                        color: '#1a1a2e',
                         fontFamily: '"DM Sans", sans-serif',
                         fontSize: '16px',
+                        iconColor: '#6a6a7a',
                         '::placeholder': { color: '#6a6a7a' }
                     },
-                    invalid: { color: '#ff6b6b' }
+                    invalid: {
+                        color: '#ff6b6b',
+                        iconColor: '#ff6b6b'
+                    }
                 }
             });
             cardElement.mount('#card-element');
