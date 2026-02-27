@@ -436,6 +436,31 @@
         #payment-form {
             width: 100%;
         }
+        /* Payment Request Button (Apple Pay / Google Pay) */
+        #payment-request-button {
+            margin-bottom: 16px;
+        }
+        #payment-request-button.hidden {
+            display: none;
+        }
+        .payment-divider {
+            display: flex;
+            align-items: center;
+            margin: 16px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .payment-divider::before,
+        .payment-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--text-muted);
+            opacity: 0.3;
+        }
+        .payment-divider::before { margin-right: 12px; }
+        .payment-divider::after { margin-left: 12px; }
+        .payment-divider.hidden { display: none; }
 
         /* Unlocked State */
         .results-card.unlocked { position: relative; }
@@ -916,6 +941,8 @@
                     <div id="promo-status" style="font-size: 0.8rem; margin-top: 6px;"></div>
                 </div>
                 <form id="payment-form">
+                    <div id="payment-request-button" class="hidden"></div>
+                    <div id="payment-divider" class="payment-divider hidden">or pay with card</div>
                     <div id="card-element"></div>
                     <div id="card-errors" role="alert"></div>
                     <button type="submit" id="card-button" class="btn-primary" style="width: 100%; margin-top: 16px;">
@@ -1762,7 +1789,9 @@ const questions = [
                         document.getElementById('display-price').textContent = '$0.00';
                         document.getElementById('discount-badge').textContent = '100% OFF';
                         document.getElementById('discount-badge').style.display = 'inline-block';
-                        // Hide card form, change button to unlock
+                        // Hide payment options, change button to unlock
+                        document.getElementById('payment-request-button').style.display = 'none';
+                        document.getElementById('payment-divider').style.display = 'none';
                         document.getElementById('card-element').style.display = 'none';
                         document.getElementById('card-errors').style.display = 'none';
                         document.getElementById('card-button').textContent = 'Unlock Full Report';
@@ -1773,6 +1802,8 @@ const questions = [
                         document.getElementById('discount-badge').textContent = `${data.discount}% OFF`;
                         document.getElementById('discount-badge').style.display = 'inline-block';
                         document.getElementById('card-button').textContent = `Pay $${newPrice}`;
+                        // Update Payment Request amount for Apple Pay / Google Pay
+                        updatePaymentRequestAmount(data.newAmount);
                     }
 
                     // Disable promo input after successful apply
@@ -1807,6 +1838,8 @@ const questions = [
         }
 
         // Initialize Stripe
+        let paymentRequest = null;
+
         async function initializeStripe() {
             if (stripeInitialized || !window.Stripe) {
                 return;
@@ -1818,6 +1851,99 @@ const questions = [
             stripe = Stripe(config.stripePublishableKey);
 
             const elements = stripe.elements();
+
+            // Create Payment Request for Apple Pay / Google Pay
+            paymentRequest = stripe.paymentRequest({
+                country: 'US',
+                currency: 'usd',
+                total: {
+                    label: 'Parser Profile™ Full Report',
+                    amount: activePromo?.newAmount || 999,
+                },
+                requestPayerEmail: true,
+            });
+
+            // Check if Apple Pay / Google Pay is available
+            const prButton = elements.create('paymentRequestButton', {
+                paymentRequest: paymentRequest,
+                style: {
+                    paymentRequestButton: {
+                        type: 'default',
+                        theme: 'dark',
+                        height: '48px',
+                    },
+                },
+            });
+
+            paymentRequest.canMakePayment().then(function(result) {
+                if (result) {
+                    prButton.mount('#payment-request-button');
+                    document.getElementById('payment-request-button').classList.remove('hidden');
+                    document.getElementById('payment-divider').classList.remove('hidden');
+                }
+            });
+
+            // Handle Payment Request payment
+            paymentRequest.on('paymentmethod', async function(ev) {
+                const statusEl = document.getElementById('payment-status');
+                statusEl.textContent = 'Processing...';
+                statusEl.className = '';
+
+                try {
+                    // Create PaymentIntent on the server
+                    const email = ev.payerEmail || document.getElementById('emailInput')?.value || '';
+                    const response = await fetch('/api/create-payment-intent', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            profileName: currentProfile?.name || 'Unknown',
+                            email: email,
+                            promoCode: activePromo?.code || ''
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        ev.complete('fail');
+                        throw new Error(result.error || 'Failed to create payment');
+                    }
+
+                    // Confirm the payment
+                    const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
+                        result.clientSecret,
+                        { payment_method: ev.paymentMethod.id },
+                        { handleActions: false }
+                    );
+
+                    if (confirmError) {
+                        ev.complete('fail');
+                        throw new Error(confirmError.message);
+                    }
+
+                    ev.complete('success');
+
+                    if (paymentIntent.status === 'requires_action') {
+                        const { error } = await stripe.confirmCardPayment(result.clientSecret);
+                        if (error) {
+                            throw new Error(error.message);
+                        }
+                    }
+
+                    statusEl.textContent = 'Payment successful!';
+                    statusEl.className = 'success';
+                    setTimeout(() => {
+                        closePaymentModal();
+                        unlockFullReport();
+                    }, 1500);
+                } catch (e) {
+                    console.error('Payment Request error:', e);
+                    statusEl.textContent = e.message || 'Payment failed. Please try again.';
+                    statusEl.className = 'error';
+                }
+            });
+
+            // Create card element
             cardElement = elements.create('card', {
                 style: {
                     base: {
@@ -1841,6 +1967,18 @@ const questions = [
             form.addEventListener('submit', handlePayment);
 
             stripeInitialized = true;
+        }
+
+        // Update payment request amount when promo is applied
+        function updatePaymentRequestAmount(amount) {
+            if (paymentRequest) {
+                paymentRequest.update({
+                    total: {
+                        label: 'Parser Profile™ Full Report',
+                        amount: amount,
+                    },
+                });
+            }
         }
 
         // Handle Stripe payment
@@ -1936,9 +2074,14 @@ const questions = [
             document.getElementById('promo-status').textContent = '';
             document.getElementById('display-price').textContent = '$9.99';
             document.getElementById('discount-badge').style.display = 'none';
+            // Reset payment elements visibility
+            document.getElementById('payment-request-button').style.display = '';
+            document.getElementById('payment-divider').style.display = '';
             document.getElementById('card-element').style.display = '';
             document.getElementById('card-errors').style.display = '';
             document.getElementById('card-button').textContent = 'Pay $9.99';
+            // Reset Payment Request amount
+            updatePaymentRequestAmount(999);
         }
 
         // ============================================================================
