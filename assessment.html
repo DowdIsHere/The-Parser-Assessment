@@ -2130,10 +2130,20 @@ const questions = [
             // The Secret
             const secretSection = document.querySelector('#secretPreview');
             if (secretSection && profile.secret) {
-                const secretHtml = profile.secret.split('\n\n')
-                    .filter(p => p.trim())
-                    .map(p => `<p>${p}</p>`)
-                    .join('');
+                const isUnlocked = secretSection.closest('.locked-section')?.classList.contains('unlocked');
+                const secretParagraphs = profile.secret.split('\n\n').filter(p => p.trim());
+
+                let secretHtml;
+                if (isUnlocked) {
+                    // Show full content when unlocked
+                    secretHtml = secretParagraphs.map(p => `<p>${p}</p>`).join('');
+                } else {
+                    // Show first paragraph + teaser when locked
+                    const firstParagraph = secretParagraphs[0] ? `<p>${secretParagraphs[0]}</p>` : '';
+                    const teaser = '<p style="color: var(--accent-spatial); font-style: italic; margin-top: 12px;">Continue reading in your full Parser Profile™...</p>';
+                    secretHtml = firstParagraph + teaser;
+                }
+
                 secretSection.innerHTML = `
                     <h3>🤫 The Secret You've Carried</h3>
                     <div class="content-section">${secretHtml}</div>
