@@ -970,7 +970,7 @@
                     <div class="feature-item"><span class="check">✓</span><span>Energy Patterns</span></div>
                     <div class="feature-item"><span class="check">✓</span><span>Optimal Environments</span></div>
                 </div>
-                <div class="price">$9.99 <span>USD</span></div>
+                <div class="price">$19.99 <span>USD</span></div>
                 <div class="price-note">One-time purchase • Instant access </div>
                 <button class="btn-primary" style="width: 100%; max-width: 300px;" onclick="openPaymentModal()">Get Full Report</button>
             </div>
@@ -985,7 +985,7 @@
                     <p>Unlock your full Parser Profile™ report</p>
                 </div>
                 <div class="modal-price">
-                    <span class="amount" id="display-price">$9.99</span>
+                    <span class="amount" id="display-price">$19.99</span>
                     <span class="currency">USD</span>
                     <div id="discount-badge" style="display: none; margin-top: 8px; font-size: 0.8rem; color: var(--accent-spatial); background: var(--accent-spatial-dim); padding: 4px 12px; border-radius: 12px; display: inline-block;"></div>
                 </div>
@@ -1002,7 +1002,7 @@
                     <div id="card-element"></div>
                     <div id="card-errors" role="alert"></div>
                     <button type="submit" id="card-button" class="btn-primary" style="width: 100%; margin-top: 16px;">
-                        Pay $9.99
+                        Pay $19.99
                     </button>
                 </form>
                 <div id="payment-status"></div>
@@ -1827,7 +1827,7 @@ const questions = [
                     } else {
                         const newPrice = (data.newAmount / 100).toFixed(2);
                         statusEl.textContent = `Promo applied — ${data.discount}% off!`;
-                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$9.99</s> $${newPrice}`;
+                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$19.99</s> $${newPrice}`;
                         document.getElementById('discount-badge').textContent = `${data.discount}% OFF`;
                         document.getElementById('discount-badge').style.display = 'inline-block';
                         document.getElementById('card-button').textContent = `Pay $${newPrice}`;
@@ -1887,7 +1887,7 @@ const questions = [
                 currency: 'usd',
                 total: {
                     label: 'Parser Profile™ Full Report',
-                    amount: activePromo?.newAmount || 999,
+                    amount: activePromo?.newAmount || 1999,
                 },
                 requestPayerEmail: true,
             });
@@ -2080,7 +2080,7 @@ const questions = [
                 statusEl.className = 'error';
             } finally {
                 submitButton.disabled = false;
-                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$9.99';
+                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$19.99';
                 submitButton.textContent = activePromo?.type === 'free' ? 'Unlock Full Report' : `Pay ${btnPrice}`;
             }
         }
@@ -2105,16 +2105,16 @@ const questions = [
             document.getElementById('applyPromoBtn').disabled = false;
             document.getElementById('applyPromoBtn').style.opacity = '1';
             document.getElementById('promo-status').textContent = '';
-            document.getElementById('display-price').textContent = '$9.99';
+            document.getElementById('display-price').textContent = '$19.99';
             document.getElementById('discount-badge').style.display = 'none';
             // Reset payment elements visibility
             document.getElementById('payment-request-button').style.display = '';
             document.getElementById('payment-divider').style.display = '';
             document.getElementById('card-element').style.display = '';
             document.getElementById('card-errors').style.display = '';
-            document.getElementById('card-button').textContent = 'Pay $9.99';
+            document.getElementById('card-button').textContent = 'Pay $19.99';
             // Reset Payment Request amount
-            updatePaymentRequestAmount(999);
+            updatePaymentRequestAmount(1999);
         }
 
         // ============================================================================
