@@ -121,7 +121,7 @@ app.get('/api/config', (req, res) => {
 
 // Log every assessment completion (email or skip)
 app.post('/api/log-completion', async (req, res) => {
-    const { profileName, scores, emailProvided } = req.body;
+    const { profileName, scores, emailProvided, assessmentType } = req.body;
     const timestamp = new Date().toISOString();
     const spatial = scores?.spatial || 0;
     const temporal = scores?.temporal || 0;
@@ -129,14 +129,18 @@ app.post('/api/log-completion', async (req, res) => {
     const spatialLabel = spatial >= 50 ? 'Abstract' : 'Concrete';
     const temporalLabel = temporal >= 50 ? 'Future' : 'Past';
     const referenceLabel = reference >= 50 ? 'Self' : 'Other';
+    const assessmentLabel = assessmentType === 'kids' ? 'Kids Assessment' : 'Adult Assessment';
 
-    console.log(`[COMPLETION] ${timestamp} | Profile: ${profileName} | Spatial: ${spatial}% ${spatialLabel} | Temporal: ${temporal}% ${temporalLabel} | Reference: ${reference}% ${referenceLabel} | Email: ${emailProvided ? 'Yes' : 'Skipped'}`);
+    console.log(`[COMPLETION] ${timestamp} | ${assessmentLabel} | Profile: ${profileName} | Spatial: ${spatial}% ${spatialLabel} | Temporal: ${temporal}% ${temporalLabel} | Reference: ${reference}% ${referenceLabel} | Email: ${emailProvided ? 'Yes' : 'Skipped'}`);
 
     // Notify the library of every completion
     const transporter = createTransporter();
     if (transporter) {
         const emailStatus = emailProvided ? 'Email Provided' : 'Email Skipped';
         const statusColor = emailProvided ? '#2e7d32' : '#c62828';
+        const assessmentBadge = assessmentType === 'kids'
+            ? '<span style="background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 4px; font-size: 12px;">KIDS</span>'
+            : '';
         try {
             await transporter.sendMail({
                 from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
@@ -144,10 +148,11 @@ app.post('/api/log-completion', async (req, res) => {
                 subject: `Parser Profile™ Completion: ${profileName} (${emailStatus})`,
                 html: `
 <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px;">
-    <h2 style="color: #1a1a24;">Assessment Completed</h2>
-    <p style="color: #4a4a5a;">Someone completed the Parser Profile™ assessment.</p>
+    <h2 style="color: #1a1a24;">Assessment Completed ${assessmentBadge}</h2>
+    <p style="color: #4a4a5a;">Someone completed the Parser Profile™ ${assessmentLabel.toLowerCase()}.</p>
     <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
         <tr><td style="padding: 8px; color: #6a6a7a;">Profile</td><td style="padding: 8px; font-weight: bold;">${profileName}</td></tr>
+        <tr><td style="padding: 8px; color: #6a6a7a;">Assessment</td><td style="padding: 8px;">${assessmentLabel}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Spatial</td><td style="padding: 8px;">${spatial}% ${spatialLabel}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Temporal</td><td style="padding: 8px;">${temporal}% ${temporalLabel}</td></tr>
         <tr><td style="padding: 8px; color: #6a6a7a;">Reference</td><td style="padding: 8px;">${reference}% ${referenceLabel}</td></tr>

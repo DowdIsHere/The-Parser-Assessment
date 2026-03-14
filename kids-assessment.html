@@ -456,6 +456,22 @@
 
             const profile = profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid'];
 
+            // Send completion notification to server
+            fetch('/api/log-completion', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    profileName: profile.name + ' (Kids)',
+                    scores: {
+                        spatial: Math.round(spatialPercent),
+                        temporal: Math.round(temporalPercent),
+                        reference: Math.round(referencePercent)
+                    },
+                    emailProvided: false,
+                    assessmentType: 'kids'
+                })
+            }).catch(() => {});
+
             // Update UI
             document.getElementById('questionScreen').classList.remove('active');
             document.getElementById('resultsScreen').classList.add('active');
