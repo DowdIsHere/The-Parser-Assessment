@@ -171,7 +171,7 @@ app.post('/api/log-completion', async (req, res) => {
 
 // Send FREE tier results email
 app.post('/api/send-results', async (req, res) => {
-    const { email, name, profileName, profileCode, scores, overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge } = req.body;
+    const { email, name, profileName, profileCode, scores, overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge, libraryOnly } = req.body;
 
     if (!email) {
         return res.status(400).json({ success: false, error: 'Email is required' });
@@ -306,15 +306,24 @@ app.post('/api/send-results', async (req, res) => {
     // If email is configured, send it
     if (transporter) {
         try {
-            await transporter.sendMail({
+            // When libraryOnly is true, we're sending directly to the library (user skipped email)
+            const mailOptions = {
                 from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
                 to: email,
-                bcc: 'profile.library@cognitionblocksllc.com',
-                subject: `Your Parser Profile™ Results: ${profileName}`,
+                subject: libraryOnly
+                    ? `Parser Profile™ Results (Email Skipped): ${profileName}`
+                    : `Your Parser Profile™ Results: ${profileName}`,
                 html: emailHtml
-            });
+            };
 
-            console.log(`Email sent to ${email}, Customer ID: ${customerId}`);
+            // Only add BCC when sending to actual user (not libraryOnly)
+            if (!libraryOnly) {
+                mailOptions.bcc = 'profile.library@cognitionblocksllc.com';
+            }
+
+            await transporter.sendMail(mailOptions);
+
+            console.log(`Email sent to ${email}${libraryOnly ? ' (library only)' : ''}, Customer ID: ${customerId}`);
 
             res.json({
                 success: true,

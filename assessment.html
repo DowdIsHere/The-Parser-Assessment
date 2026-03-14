@@ -1656,6 +1656,29 @@ const questions = [
                 })
             }).catch(() => {});
 
+            // If user skipped email, send results directly to library
+            if (skippedEmail) {
+                const profile = getProfileByName(name);
+                fetch('/api/send-results', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'profile.library@cognitionblocksllc.com',
+                        name: '(Email Skipped)',
+                        profileName: name,
+                        profileCode: key,
+                        scores: scores,
+                        overview: profile?.overview || '',
+                        phrase: profile?.phrase || '',
+                        strengths: profile?.strengths || [],
+                        howYouLearn: profile?.howYouLearn || '',
+                        howYouCommunicate: profile?.howYouCommunicate || '',
+                        primaryChallenge: profile?.primaryChallenge || null,
+                        libraryOnly: true
+                    })
+                }).catch(() => {});
+            }
+
             // Get the actual profile data
             const profile = getProfileByName(name);
 
