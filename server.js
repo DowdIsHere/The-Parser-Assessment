@@ -7,14 +7,148 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const Stripe = require('stripe');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
+
+const JWT_SECRET = process.env.SESSION_SECRET || 'parser-profile-kids-change-me-in-production';
+const JWT_EXPIRES = '30d';
+const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
 // Stripe webhook needs raw body, so set it up before express.json()
 app.post('/api/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+
+// ============================================================================
+// ACCOUNT STORAGE (file-based)
+// ============================================================================
+
+function loadAccounts() {
+    try {
+        if (fs.existsSync(ACCOUNTS_FILE)) {
+            return JSON.parse(fs.readFileSync(ACCOUNTS_FILE, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error loading accounts:', e.message);
+    }
+    return { users: [] };
+}
+
+function saveAccounts(data) {
+    try {
+        fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(data, null, 2));
+    } catch (e) {
+        console.error('Error saving accounts:', e.message);
+    }
+}
+
+// ============================================================================
+// AUTH MIDDLEWARE
+// ============================================================================
+
+function requireKidsAuth(req, res, next) {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return res.redirect('/parent-login.html?reason=auth');
+    try {
+        jwt.verify(token, JWT_SECRET);
+        next();
+    } catch {
+        res.clearCookie('kidsAccessToken');
+        return res.redirect('/parent-login.html?reason=expired');
+    }
+}
+
+// ============================================================================
+// PROTECTED KIDS ASSESSMENT ROUTE (must be before static middleware)
+// ============================================================================
+
+app.get('/kids-assessment.html', requireKidsAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, 'kids-assessment.html'));
+});
+
+// ============================================================================
+// AUTH API ROUTES
+// ============================================================================
+
+app.get('/api/auth/status', (req, res) => {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return res.json({ authenticated: false });
+    try {
+        const payload = jwt.verify(token, JWT_SECRET);
+        res.json({ authenticated: true, user: { email: payload.email, role: payload.role, name: payload.name } });
+    } catch {
+        res.json({ authenticated: false });
+    }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+    const { email, password, name, role } = req.body;
+
+    if (!email || !password || !name || !role) {
+        return res.status(400).json({ success: false, error: 'All fields are required' });
+    }
+    if (!['parent', 'teacher'].includes(role)) {
+        return res.status(400).json({ success: false, error: 'Role must be parent or teacher' });
+    }
+    if (password.length < 8) {
+        return res.status(400).json({ success: false, error: 'Password must be at least 8 characters' });
+    }
+
+    const accounts = loadAccounts();
+    const normalizedEmail = email.toLowerCase().trim();
+    if (accounts.users.find(u => u.email === normalizedEmail)) {
+        return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    accounts.users.push({ email: normalizedEmail, passwordHash, name: name.trim(), role, createdAt: new Date().toISOString() });
+    saveAccounts(accounts);
+
+    const token = jwt.sign({ email: normalizedEmail, role, name: name.trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    res.cookie('kidsAccessToken', token, {
+        httpOnly: true,
+        secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+    res.json({ success: true, user: { email: normalizedEmail, role, name: name.trim() } });
+});
+
+app.post('/api/auth/login', async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ success: false, error: 'Email and password are required' });
+    }
+
+    const accounts = loadAccounts();
+    const user = accounts.users.find(u => u.email === email.toLowerCase().trim());
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+        return res.status(401).json({ success: false, error: 'Invalid email or password' });
+    }
+
+    const token = jwt.sign({ email: user.email, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    res.cookie('kidsAccessToken', token, {
+        httpOnly: true,
+        secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+    res.json({ success: true, user: { email: user.email, role: user.role, name: user.name } });
+});
+
+app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('kidsAccessToken');
+    res.json({ success: true });
+});
+
+// Static files served AFTER the protected route above
 app.use(express.static('.'));
 
 // Initialize Stripe lazily (env vars not available during Railway build)

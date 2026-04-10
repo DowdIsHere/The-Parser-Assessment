@@ -4,6 +4,9 @@ node_modules/
 # Environment variables (contains secrets)
 .env
 
+# User accounts (contains hashed passwords)
+accounts.json
+
 # OS files
 .DS_Store
 Thumbs.db
