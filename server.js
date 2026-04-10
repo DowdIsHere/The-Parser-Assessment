@@ -82,16 +82,16 @@ app.get('/api/auth/status', (req, res) => {
     if (!token) return res.json({ authenticated: false });
     try {
         const payload = jwt.verify(token, JWT_SECRET);
-        res.json({ authenticated: true, user: { email: payload.email, role: payload.role, name: payload.name } });
+        res.json({ authenticated: true, user: { email: payload.email, role: payload.role, firstName: payload.firstName, lastName: payload.lastName } });
     } catch {
         res.json({ authenticated: false });
     }
 });
 
 app.post('/api/auth/register', async (req, res) => {
-    const { email, password, name, role } = req.body;
+    const { email, password, firstName, lastName, role } = req.body;
 
-    if (!email || !password || !name || !role) {
+    if (!email || !password || !firstName || !lastName || !role) {
         return res.status(400).json({ success: false, error: 'All fields are required' });
     }
     if (!['parent', 'teacher'].includes(role)) {
@@ -108,17 +108,17 @@ app.post('/api/auth/register', async (req, res) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    accounts.users.push({ email: normalizedEmail, passwordHash, name: name.trim(), role, createdAt: new Date().toISOString() });
+    accounts.users.push({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: lastName.trim(), role, createdAt: new Date().toISOString() });
     saveAccounts(accounts);
 
-    const token = jwt.sign({ email: normalizedEmail, role, name: name.trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
     res.cookie('kidsAccessToken', token, {
         httpOnly: true,
         secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
         sameSite: 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000
     });
-    res.json({ success: true, user: { email: normalizedEmail, role, name: name.trim() } });
+    res.json({ success: true, user: { email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() } });
 });
 
 app.post('/api/auth/login', async (req, res) => {
@@ -133,14 +133,14 @@ app.post('/api/auth/login', async (req, res) => {
         return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ email: user.email, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    const token = jwt.sign({ email: user.email, role: user.role, firstName: user.firstName, lastName: user.lastName }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
     res.cookie('kidsAccessToken', token, {
         httpOnly: true,
         secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
         sameSite: 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000
     });
-    res.json({ success: true, user: { email: user.email, role: user.role, name: user.name } });
+    res.json({ success: true, user: { email: user.email, role: user.role, firstName: user.firstName, lastName: user.lastName } });
 });
 
 app.post('/api/auth/logout', (req, res) => {

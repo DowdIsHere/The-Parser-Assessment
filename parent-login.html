@@ -236,10 +236,17 @@
                             </div>
                         </label>
                     </div>
-                    <div class="field">
-                        <label for="regName">Your Name</label>
-                        <input type="text" id="regName" placeholder="First and last name" required autocomplete="name">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                        <div class="field" style="margin-bottom:0;">
+                            <label for="regFirstName">First Name</label>
+                            <input type="text" id="regFirstName" placeholder="First" required autocomplete="given-name">
+                        </div>
+                        <div class="field" style="margin-bottom:0;">
+                            <label for="regLastName">Last Name</label>
+                            <input type="text" id="regLastName" placeholder="Last" required autocomplete="family-name">
+                        </div>
                     </div>
+                    <div style="margin-bottom:18px;"></div>
                     <div class="field">
                         <label for="regEmail">Email</label>
                         <input type="email" id="regEmail" placeholder="your@email.com" required autocomplete="email">
@@ -300,7 +307,7 @@
             document.getElementById('authForms').style.display = 'none';
             const ws = document.getElementById('welcomeState');
             ws.style.display = 'block';
-            document.getElementById('welcomeName').textContent = `Welcome back, ${user.name}!`;
+            document.getElementById('welcomeName').textContent = `Welcome back, ${user.firstName}!`;
             const roleLabel = user.role === 'teacher' ? 'Teacher account' : 'Parent account';
             document.getElementById('welcomeRole').textContent = roleLabel;
         }
@@ -349,7 +356,8 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        name: document.getElementById('regName').value,
+                        firstName: document.getElementById('regFirstName').value.trim(),
+                        lastName: document.getElementById('regLastName').value.trim(),
                         email: document.getElementById('regEmail').value,
                         password: document.getElementById('regPassword').value,
                         role
