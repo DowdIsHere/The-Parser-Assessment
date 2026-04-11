@@ -1553,6 +1553,7 @@ const questions = [
 
         // Store user info for email
         let userInfo = { name: '', email: '', customerId: '', lifeStage: 'established' };
+        let completionLogPromise = null;
 
         // Life stage selection handler
         document.querySelectorAll('input[name="lifeStage"]').forEach(radio => {
@@ -1592,17 +1593,18 @@ const questions = [
             userInfo.name = name;
             userInfo.lifeStage = lifeStage;
 
-            // Show results first
+            // Show results (fires log-completion in background, gets customer ID)
             window.showResults(false, lifeStage);
 
-            // Then send email in background
+            // Wait for customer ID from log-completion, then send user their email
             const scores = calculateScores(false);
             const key = getProfileKey(scores);
             const profileName = profileNames[key] || 'Equanimous';
             const profile = getProfileByName(profileName);
 
             try {
-                const response = await fetch('/api/send-results', {
+                const customerId = await completionLogPromise;
+                await fetch('/api/send-results', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1616,19 +1618,10 @@ const questions = [
                         strengths: profile?.strengths || [],
                         howYouLearn: profile?.howYouLearn || '',
                         howYouCommunicate: profile?.howYouCommunicate || '',
-                        primaryChallenge: profile?.challenges?.[0] || null
+                        primaryChallenge: profile?.challenges?.[0] || null,
+                        customerId: customerId
                     })
                 });
-
-                const data = await response.json();
-
-                if (data.success && data.customerId) {
-                    userInfo.customerId = data.customerId;
-                    // Display customer ID
-                    document.getElementById('customerIdValue').textContent = data.customerId;
-                    document.getElementById('customerIdDisplay').style.display = 'inline-block';
-                    console.log('Email sent! Customer ID:', data.customerId);
-                }
             } catch (error) {
                 console.error('Email error:', error);
             }
@@ -1645,44 +1638,36 @@ const questions = [
             const key = getProfileKey(scores);
             const name = profileNames[key] || 'Equanimous';
 
-            // Log completion to server
-            fetch('/api/log-completion', {
+            // Get the actual profile data
+            const profile = getProfileByName(name);
+
+            // Log completion — generates customer ID and sends full notification to library
+            completionLogPromise = fetch('/api/log-completion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     profileName: name,
+                    profileCode: key,
                     scores: scores,
                     emailProvided: !skippedEmail,
-                    lifeStage: selectedLifeStage,
-                    assessmentType: 'adult'
+                    assessmentType: 'adult',
+                    userEmail: skippedEmail ? null : userInfo.email,
+                    userName: skippedEmail ? null : userInfo.name,
+                    overview: profile?.overview || '',
+                    phrase: profile?.phrase || '',
+                    strengths: profile?.strengths || [],
+                    howYouLearn: profile?.howYouLearn || '',
+                    howYouCommunicate: profile?.howYouCommunicate || '',
+                    primaryChallenge: profile?.challenges?.[0] || null
                 })
-            }).catch(() => {});
-
-            // If user skipped email, send results directly to library
-            if (skippedEmail) {
-                const profile = getProfileByName(name);
-                fetch('/api/send-results', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: 'profile.library@cognitionblocksllc.com',
-                        name: '(Email Skipped)',
-                        profileName: name,
-                        profileCode: key,
-                        scores: scores,
-                        overview: profile?.overview || '',
-                        phrase: profile?.phrase || '',
-                        strengths: profile?.strengths || [],
-                        howYouLearn: profile?.howYouLearn || '',
-                        howYouCommunicate: profile?.howYouCommunicate || '',
-                        primaryChallenge: profile?.primaryChallenge || null,
-                        libraryOnly: true
-                    })
-                }).catch(() => {});
-            }
-
-            // Get the actual profile data
-            const profile = getProfileByName(name);
+            }).then(r => r.json()).then(data => {
+                if (data.customerId) {
+                    userInfo.customerId = data.customerId;
+                    document.getElementById('customerIdValue').textContent = data.customerId;
+                    document.getElementById('customerIdDisplay').style.display = 'inline-block';
+                }
+                return data.customerId;
+            }).catch(() => null);
 
             // TODO: Once life-stage variants are added to profiles, use:
             // const profileContent = selectedLifeStage === 'early' ? profile.earlyCareer : profile.established;

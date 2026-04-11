@@ -7,6 +7,9 @@ node_modules/
 # User accounts (contains hashed passwords)
 accounts.json
 
+# Sequential customer ID counter
+counter.json
+
 # OS files
 .DS_Store
 Thumbs.db

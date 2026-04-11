@@ -212,6 +212,10 @@
                     </div>
                 </div>
 
+                <div id="customerIdDisplay" style="display:none;margin:16px 0;padding:12px 20px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;text-align:center;">
+                    <div style="font-size:0.75rem;color:#64748b;margin-bottom:4px;">Customer ID</div>
+                    <div id="customerIdValue" style="font-weight:700;font-size:1.1rem;letter-spacing:0.08em;color:#2563eb;font-family:monospace;"></div>
+                </div>
                 <button class="btn-primary" onclick="restartAssessment()">Try Again</button>
             </div>
         </div>
@@ -456,20 +460,27 @@
 
             const profile = profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid'];
 
-            // Send completion notification to server
+            // Log completion — generates customer ID and sends notification
             fetch('/api/log-completion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     profileName: profile.name + ' (Kids)',
+                    profileCode: profileKey,
                     scores: {
                         spatial: Math.round(spatialPercent),
                         temporal: Math.round(temporalPercent),
                         reference: Math.round(referencePercent)
                     },
                     emailProvided: false,
-                    assessmentType: 'kids'
+                    assessmentType: 'kids',
+                    overview: profile.desc || ''
                 })
+            }).then(r => r.json()).then(data => {
+                if (data.customerId) {
+                    document.getElementById('customerIdValue').textContent = data.customerId;
+                    document.getElementById('customerIdDisplay').style.display = 'block';
+                }
             }).catch(() => {});
 
             // Update UI
