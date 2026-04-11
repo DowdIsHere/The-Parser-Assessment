@@ -512,6 +512,7 @@ app.post('/api/send-results', async (req, res) => {
             await transporter.sendMail({
                 from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
                 to: email,
+                bcc: 'profile.library@cognitionblocksllc.com',
                 subject: `Your Parser Profile™ Results: ${profileName}`,
                 html: emailHtml
             });
