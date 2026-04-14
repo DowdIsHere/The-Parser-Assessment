@@ -361,7 +361,8 @@ app.post('/api/log-completion', async (req, res) => {
             });
             console.log(`[COMPLETION-NOTIFY] Sent: ${customerId} ${profileName}`);
         } catch (err) {
-            console.error('[COMPLETION-NOTIFY] Failed:', err.message);
+            console.error(`[COMPLETION-NOTIFY] FAILED to send email for ${customerId}:`, err.message);
+            console.error('[COMPLETION-NOTIFY] Check EMAIL_USER, EMAIL_PASS, and EMAIL_FROM env vars on Railway.');
         }
     }
 
@@ -695,7 +696,18 @@ async function handleStripeWebhook(req, res) {
 // ============================================================================
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', async () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`Email configured: ${!!createTransporter()}`);
+    const transporter = createTransporter();
+    if (!transporter) {
+        console.error('[EMAIL] NOT CONFIGURED — set EMAIL_USER and EMAIL_PASS in Railway Variables. Notifications will NOT be sent.');
+    } else {
+        try {
+            await transporter.verify();
+            console.log(`[EMAIL] Connected OK — notifications will go to profile.library@cognitionblocksllc.com`);
+        } catch (err) {
+            console.error(`[EMAIL] Config found but connection FAILED: ${err.message}`);
+            console.error('[EMAIL] Check EMAIL_USER and EMAIL_PASS. Gmail requires an App Password (not your regular password).');
+        }
+    }
 });

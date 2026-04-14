@@ -1667,7 +1667,10 @@ const questions = [
                     document.getElementById('customerIdDisplay').style.display = 'inline-block';
                 }
                 return data.customerId;
-            }).catch(() => null);
+            }).catch(err => {
+                console.error('[log-completion] fetch failed:', err);
+                return null;
+            });
 
             // TODO: Once life-stage variants are added to profiles, use:
             // const profileContent = selectedLifeStage === 'early' ? profile.earlyCareer : profile.established;
@@ -1862,8 +1865,8 @@ const questions = [
 
         // Store profile data when showing results
         const originalShowResults = window.showResults;
-        window.showResults = function() {
-            originalShowResults();
+        window.showResults = function(...args) {
+            originalShowResults(...args);
             // Store current profile data for later use
             const scores = calculateScores(false);
             const key = getProfileKey(scores);
