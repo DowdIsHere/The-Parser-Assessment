@@ -181,35 +181,21 @@ function generateCustomerId() {
 // EMAIL CONFIGURATION
 // ============================================================================
 
-// Create transporter - configure via environment variables
-// Supports Gmail, SMTP, or other providers
+// Create transporter — SiteGround SMTP
+// Railway Variables required: EMAIL_USER, EMAIL_PASS
+// Optional: EMAIL_FROM (defaults to EMAIL_USER)
 const createTransporter = () => {
-    // Use Gmail if configured
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-        return nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-    }
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return null;
 
-    // Use custom SMTP if configured
-    if (process.env.SMTP_HOST) {
-        return nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT || '587'),
-            secure: process.env.SMTP_SECURE === 'true',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
-        });
-    }
-
-    // Return null if no email config (will skip sending)
-    return null;
+    return nodemailer.createTransport({
+        host: 'mail.cognitionblocksllc.com',
+        port: 465,
+        secure: true, // SSL on port 465
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
 };
 
 // ============================================================================
