@@ -182,18 +182,18 @@ function generateCustomerId() {
 // ============================================================================
 
 // Create transporter — SiteGround SMTP
-// Railway Variables required: EMAIL_USER, EMAIL_PASS
-// Optional: EMAIL_FROM (defaults to EMAIL_USER)
+// Railway Variables required: SMTP_USER, SMTP_PASS
+// Already set on Railway: SMTP_HOST, SMTP_SECURE, EMAIL_FROM
 const createTransporter = () => {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return null;
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) return null;
 
     return nodemailer.createTransport({
-        host: 'mail.cognitionblocksllc.com',
+        host: process.env.SMTP_HOST || 'mail.cognitionblocksllc.com',
         port: 587,
-        secure: false, // STARTTLS on port 587
+        secure: process.env.SMTP_SECURE === 'true',
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
         }
     });
 };
@@ -340,7 +340,7 @@ app.post('/api/log-completion', async (req, res) => {
 
         try {
             await transporter.sendMail({
-                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
                 to: 'profile.library@cognitionblocksllc.com',
                 subject: `[${customerId}] ${profileName} — ${assessmentLabel} (${emailStatus})`,
                 html
@@ -497,7 +497,7 @@ app.post('/api/send-results', async (req, res) => {
     if (transporter) {
         try {
             await transporter.sendMail({
-                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
                 to: email,
                 bcc: 'profile.library@cognitionblocksllc.com',
                 subject: `Your Parser Profile™ Results: ${profileName}`,
@@ -544,7 +544,7 @@ app.post('/api/notify-completion', async (req, res) => {
 
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+            from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
             to: 'profile.library@cognitionblocksllc.com',
             subject: `New Parser Profile™ Completion: ${profileName} (${tier})`,
             html: `
