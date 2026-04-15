@@ -189,8 +189,8 @@ const createTransporter = () => {
 
     return nodemailer.createTransport({
         host: 'mail.cognitionblocksllc.com',
-        port: 465,
-        secure: true, // SSL on port 465
+        port: 587,
+        secure: false, // STARTTLS on port 587
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
