@@ -62,7 +62,7 @@ export const embodiedProfile = {
     {
       "title": "The Knowing Without Words",
       "challenge": "You know things you can't easily explain. Your embodied knowledge doesn't translate smoothly into language. In verbal environments, you seem less intelligent—even when you understand more than those who speak fluently about what they've never actually felt.",
-      "remedy": "Develop your translation layer. After significant experiences, spend time finding words. Keep a vocabulary of sensations and what they mean. \"When my chest tightens, it usually means...\" Build your personal dictionary."
+      "remedy": "Build your decoder ring—a way of saying what you actually mean so it doesn't get misread. After significant experiences, spend time finding words. Keep a vocabulary of sensations and what they mean. \"When my chest tightens, it usually means...\" Build your personal dictionary."
     },
     {
       "title": "The Abstract That Mattered",

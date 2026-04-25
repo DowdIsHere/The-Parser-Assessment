@@ -1766,12 +1766,12 @@ const questions = [
         function loadFallbackContent(name, key) {
             // Fallback content if profile data is not found
             document.getElementById('profileDescription').innerHTML = `
-                <p>Your Parser Profile™ is <strong>${name}</strong>. This profile represents your unique cognitive architecture—the way your brain naturally parses reality across spatial, temporal, and reference dimensions.</p>
-                <p>Your cognitive signature shapes how you process information, make decisions, and interact with the world around you.</p>
+                <p>Your Parser Profile™ is <strong>${name}</strong>. This profile shows how your brain naturally works across three settings—your detail filter, your time horizon, and your priority setting.</p>
+                <p>Together they shape how you take in information, make decisions, and move through the world.</p>
             `;
 
             document.getElementById('phraseContent').textContent =
-                `"${predictions[key] || 'Your cognitive architecture shapes how you experience reality.'}"`;
+                `"${predictions[key] || 'How your brain is wired shapes how you experience the world.'}"`;
 
             document.getElementById('strengthsGrid').innerHTML = `
                 <div class="trait-item">
