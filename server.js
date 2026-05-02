@@ -19,12 +19,62 @@ const JWT_SECRET = process.env.SESSION_SECRET || 'parser-profile-kids-change-me-
 const JWT_EXPIRES = '30d';
 const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
+// Trial-period splash gate. Set TRIAL_GATE_PASSWORD env var to override.
+const TRIAL_GATE_PASSWORD = process.env.TRIAL_GATE_PASSWORD || 'RobertClaudeCBI';
+const TRIAL_GATE_EXEMPT = new Set([
+    '/splash.html',
+    '/api/splash-unlock',
+    '/api/health',
+    '/api/webhook'
+]);
+
 // Stripe webhook needs raw body, so set it up before express.json()
 app.post('/api/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+// ============================================================================
+// TRIAL-PERIOD SPLASH GATE
+// ============================================================================
+
+function trialGate(req, res, next) {
+    if (TRIAL_GATE_EXEMPT.has(req.path)) return next();
+
+    const token = req.cookies?.trialAccessToken;
+    if (token) {
+        try {
+            jwt.verify(token, JWT_SECRET);
+            return next();
+        } catch {
+            res.clearCookie('trialAccessToken');
+        }
+    }
+
+    const acceptsHtml = (req.headers.accept || '').includes('text/html');
+    if (acceptsHtml || req.path === '/' || req.path.endsWith('.html')) {
+        return res.redirect('/splash.html');
+    }
+    return res.status(403).json({ error: 'The Trial Period Has Ended. The Parser Profile Will Return.' });
+}
+
+app.post('/api/splash-unlock', (req, res) => {
+    const { password } = req.body || {};
+    if (!password || password !== TRIAL_GATE_PASSWORD) {
+        return res.status(401).json({ success: false, error: 'Incorrect password.' });
+    }
+    const token = jwt.sign({ trial: true }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    res.cookie('trialAccessToken', token, {
+        httpOnly: true,
+        secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+    res.json({ success: true });
+});
+
+app.use(trialGate);
 
 // ============================================================================
 // ACCOUNT STORAGE (file-based)
