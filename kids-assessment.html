@@ -115,6 +115,22 @@
         .score-labels { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
         .profile-name { font-size: 1.8rem; color: var(--blue-500); font-weight: 700; margin: 10px 0; }
         .profile-description { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6; }
+        /* Block accessibility tiers */
+        .blocks-section { margin: 30px 0 10px; }
+        .blocks-section h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; margin-bottom: 6px; }
+        .blocks-section .blocks-intro { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 16px; text-align: left; }
+        .block-tier { margin: 14px 0; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-card); }
+        .block-tier-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+        .block-tier.high  { background: #ecfdf5; border-color: #a7f3d0; }
+        .block-tier.high  .block-tier-label  { color: #047857; }
+        .block-tier.mod   { background: #fefce8; border-color: #fde68a; }
+        .block-tier.mod   .block-tier-label  { color: #a16207; }
+        .block-tier.low   { background: #fef2f2; border-color: #fecaca; }
+        .block-tier.low   .block-tier-label  { color: #b91c1c; }
+        .block-tier ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+        .block-tier li { display: flex; flex-direction: column; gap: 2px; padding: 6px 0; }
+        .block-kid-label { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+        .block-tech-label { font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
     </style>
 </head>
 <body>
@@ -212,6 +228,23 @@
                     </div>
                 </div>
 
+                <div class="blocks-section" id="blocksSection" style="display:none;">
+                    <h3>🧠 How Your Brain Works</h3>
+                    <p class="blocks-intro">Your brain is good at some things, okay at others, and works harder at the rest. Here's what your answers say about yours.</p>
+                    <div class="block-tier high">
+                        <div class="block-tier-label">Things your brain does easily</div>
+                        <ul id="blocksHigh"></ul>
+                    </div>
+                    <div class="block-tier mod">
+                        <div class="block-tier-label">Things your brain does okay</div>
+                        <ul id="blocksModerate"></ul>
+                    </div>
+                    <div class="block-tier low">
+                        <div class="block-tier-label">Things your brain works harder at</div>
+                        <ul id="blocksLow"></ul>
+                    </div>
+                </div>
+
                 <div id="customerIdDisplay" style="display:none;margin:16px 0;padding:12px 20px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;text-align:center;">
                     <div style="font-size:0.75rem;color:#64748b;margin-bottom:4px;">Customer ID</div>
                     <div id="customerIdValue" style="font-weight:700;font-size:1.1rem;letter-spacing:0.08em;color:#2563eb;font-family:monospace;"></div>
@@ -220,6 +253,17 @@
             </div>
         </div>
     </div>
+
+    <script type="module">
+        // Expose block accessibility helpers to the classic script below.
+        // Classic <script> tags can't import; we bridge via window.
+        import {
+            blockAccessibility,
+            blockKidLabels,
+            getBlocksByKidCode
+        } from './block-accessibility-map.js';
+        window.parserBlocks = { blockAccessibility, blockKidLabels, getBlocksByKidCode };
+    </script>
 
     <script>
         // 9 Questions for Kids Assessment
@@ -443,6 +487,26 @@
             }
         }
 
+        function renderBlocks(kidCode) {
+            const helpers = window.parserBlocks;
+            if (!helpers) return;
+            const data = helpers.getBlocksByKidCode(kidCode);
+            if (!data) return;
+            const labels = helpers.blockKidLabels || {};
+            const renderList = (id, items) => {
+                document.getElementById(id).innerHTML = items.map(b => `
+                    <li>
+                        <span class="block-kid-label">${labels[b] || b}</span>
+                        <span class="block-tech-label">(${b})</span>
+                    </li>
+                `).join('');
+            };
+            renderList('blocksHigh', data.high);
+            renderList('blocksModerate', data.moderate);
+            renderList('blocksLow', data.low);
+            document.getElementById('blocksSection').style.display = 'block';
+        }
+
         function showResults() {
             // Calculate average scores for each dimension (1-5 scale)
             const avgSpatial = scores.spatial.reduce((a, b) => a + b, 0) / scores.spatial.length;
@@ -459,6 +523,8 @@
             const profileKey = `${getLevel(spatialPercent)}-${getLevel(temporalPercent)}-${getLevel(referencePercent)}`;
 
             const profile = profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid'];
+
+            renderBlocks(profileKey);
 
             // Log completion — generates customer ID and sends notification
             fetch('/api/log-completion', {
@@ -507,6 +573,7 @@
             document.getElementById('welcomeScreen').classList.add('active');
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('progressText').textContent = 'Ready to start!';
+            document.getElementById('blocksSection').style.display = 'none';
         }
     </script>
 </body>
