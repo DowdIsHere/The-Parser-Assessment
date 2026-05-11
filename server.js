@@ -7,14 +7,148 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const Stripe = require('stripe');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
+
+const JWT_SECRET = process.env.SESSION_SECRET || 'parser-profile-kids-change-me-in-production';
+const JWT_EXPIRES = '30d';
+const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
 // Stripe webhook needs raw body, so set it up before express.json()
 app.post('/api/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+
+// ============================================================================
+// ACCOUNT STORAGE (file-based)
+// ============================================================================
+
+function loadAccounts() {
+    try {
+        if (fs.existsSync(ACCOUNTS_FILE)) {
+            return JSON.parse(fs.readFileSync(ACCOUNTS_FILE, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error loading accounts:', e.message);
+    }
+    return { users: [] };
+}
+
+function saveAccounts(data) {
+    try {
+        fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(data, null, 2));
+    } catch (e) {
+        console.error('Error saving accounts:', e.message);
+    }
+}
+
+// ============================================================================
+// AUTH MIDDLEWARE
+// ============================================================================
+
+function requireKidsAuth(req, res, next) {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return res.redirect('/parent-login.html?reason=auth');
+    try {
+        jwt.verify(token, JWT_SECRET);
+        next();
+    } catch {
+        res.clearCookie('kidsAccessToken');
+        return res.redirect('/parent-login.html?reason=expired');
+    }
+}
+
+// ============================================================================
+// PROTECTED KIDS ASSESSMENT ROUTE (must be before static middleware)
+// ============================================================================
+
+app.get('/kids-assessment.html', requireKidsAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, 'kids-assessment.html'));
+});
+
+// ============================================================================
+// AUTH API ROUTES
+// ============================================================================
+
+app.get('/api/auth/status', (req, res) => {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return res.json({ authenticated: false });
+    try {
+        const payload = jwt.verify(token, JWT_SECRET);
+        res.json({ authenticated: true, user: { email: payload.email, role: payload.role, firstName: payload.firstName, lastName: payload.lastName } });
+    } catch {
+        res.json({ authenticated: false });
+    }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+    const { email, password, firstName, lastName, role } = req.body;
+
+    if (!email || !password || !firstName || !lastName || !role) {
+        return res.status(400).json({ success: false, error: 'All fields are required' });
+    }
+    if (!['parent', 'teacher'].includes(role)) {
+        return res.status(400).json({ success: false, error: 'Role must be parent or teacher' });
+    }
+    if (password.length < 8) {
+        return res.status(400).json({ success: false, error: 'Password must be at least 8 characters' });
+    }
+
+    const accounts = loadAccounts();
+    const normalizedEmail = email.toLowerCase().trim();
+    if (accounts.users.find(u => u.email === normalizedEmail)) {
+        return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    accounts.users.push({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: lastName.trim(), role, createdAt: new Date().toISOString() });
+    saveAccounts(accounts);
+
+    const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    res.cookie('kidsAccessToken', token, {
+        httpOnly: true,
+        secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+    res.json({ success: true, user: { email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() } });
+});
+
+app.post('/api/auth/login', async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ success: false, error: 'Email and password are required' });
+    }
+
+    const accounts = loadAccounts();
+    const user = accounts.users.find(u => u.email === email.toLowerCase().trim());
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+        return res.status(401).json({ success: false, error: 'Invalid email or password' });
+    }
+
+    const token = jwt.sign({ email: user.email, role: user.role, firstName: user.firstName, lastName: user.lastName }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    res.cookie('kidsAccessToken', token, {
+        httpOnly: true,
+        secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+    res.json({ success: true, user: { email: user.email, role: user.role, firstName: user.firstName, lastName: user.lastName } });
+});
+
+app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('kidsAccessToken');
+    res.json({ success: true });
+});
+
+// Static files served AFTER the protected route above
 app.use(express.static('.'));
 
 // Initialize Stripe lazily (env vars not available during Railway build)
@@ -27,52 +161,41 @@ function getStripe() {
 }
 
 // ============================================================================
-// CUSTOMER ID GENERATION
+// CUSTOMER ID GENERATION (sequential, file-persisted)
 // ============================================================================
 
-// Simple counter stored in memory (resets on server restart)
-// For production, you'd want to store this in a database
-let customerCounter = Math.floor(Math.random() * 1000) + 1;
+const COUNTER_FILE = path.join(__dirname, 'counter.json');
 
 function generateCustomerId() {
-    const year = new Date().getFullYear();
-    const counter = String(customerCounter++).padStart(5, '0');
-    return `CBI-${year}-${counter}`;
+    let next = 1;
+    try {
+        if (fs.existsSync(COUNTER_FILE)) {
+            next = (JSON.parse(fs.readFileSync(COUNTER_FILE, 'utf8')).counter || 0) + 1;
+        }
+    } catch (e) { /* start at 1 */ }
+    fs.writeFileSync(COUNTER_FILE, JSON.stringify({ counter: next }));
+    return `CBI-${new Date().getFullYear()}-${String(next).padStart(5, '0')}`;
 }
 
 // ============================================================================
 // EMAIL CONFIGURATION
 // ============================================================================
 
-// Create transporter - configure via environment variables
-// Supports Gmail, SMTP, or other providers
+// Create transporter — SiteGround SMTP
+// Railway Variables required: SMTP_USER, SMTP_PASS
+// Already set on Railway: SMTP_HOST, SMTP_SECURE, EMAIL_FROM
 const createTransporter = () => {
-    // Use Gmail if configured
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-        return nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-    }
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) return null;
 
-    // Use custom SMTP if configured
-    if (process.env.SMTP_HOST) {
-        return nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT || '587'),
-            secure: process.env.SMTP_SECURE === 'true',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
-        });
-    }
-
-    // Return null if no email config (will skip sending)
-    return null;
+    return nodemailer.createTransport({
+        host: process.env.SMTP_HOST || 'mail.cognitionblocksllc.com',
+        port: 587,
+        secure: process.env.SMTP_SECURE === 'true',
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
+        }
+    });
 };
 
 // ============================================================================
@@ -119,70 +242,132 @@ app.get('/api/config', (req, res) => {
 // COMPLETION LOGGING
 // ============================================================================
 
-// Log every assessment completion (email or skip)
+// Log every assessment completion — generates the canonical customer ID and sends full notification
 app.post('/api/log-completion', async (req, res) => {
-    const { profileName, scores, emailProvided, assessmentType } = req.body;
+    const { profileName, profileCode, scores, emailProvided, assessmentType, userEmail, userName,
+            overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge } = req.body;
+
+    const customerId = generateCustomerId();
     const timestamp = new Date().toISOString();
-    const spatial = scores?.spatial || 0;
+    const spatial  = scores?.spatial  || 0;
     const temporal = scores?.temporal || 0;
     const reference = scores?.reference || 0;
-    const spatialLabel = spatial >= 50 ? 'Abstract' : 'Concrete';
-    const temporalLabel = temporal >= 50 ? 'Future' : 'Past';
-    const referenceLabel = reference >= 50 ? 'Self' : 'Other';
+    const spatialLabel   = spatial   >= 50 ? 'Abstract' : 'Concrete';
+    const temporalLabel  = temporal  >= 50 ? 'Future'   : 'Past';
+    const referenceLabel = reference >= 50 ? 'Self'     : 'Other';
     const assessmentLabel = assessmentType === 'kids' ? 'Kids Assessment' : 'Adult Assessment';
+    const emailStatus = emailProvided ? 'Email Provided' : 'Email Skipped';
 
-    console.log(`[COMPLETION] ${timestamp} | ${assessmentLabel} | Profile: ${profileName} | Spatial: ${spatial}% ${spatialLabel} | Temporal: ${temporal}% ${temporalLabel} | Reference: ${reference}% ${referenceLabel} | Email: ${emailProvided ? 'Yes' : 'Skipped'}`);
+    console.log(`[COMPLETION] ${customerId} | ${timestamp} | ${assessmentLabel} | ${profileName} | ${spatial}% ${spatialLabel} / ${temporal}% ${temporalLabel} / ${reference}% ${referenceLabel} | Email: ${emailStatus}`);
 
-    // Notify the library of every completion
     const transporter = createTransporter();
     if (transporter) {
-        const emailStatus = emailProvided ? 'Email Provided' : 'Email Skipped';
-        const statusColor = emailProvided ? '#2e7d32' : '#c62828';
-        const assessmentBadge = assessmentType === 'kids'
-            ? '<span style="background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 4px; font-size: 12px;">KIDS</span>'
+        const statusBg    = emailProvided ? '#f0fdf4' : '#fff7ed';
+        const statusColor = emailProvided ? '#15803d' : '#c2410c';
+        const kidsBadge   = assessmentType === 'kids'
+            ? '<span style="background:#dbeafe;color:#1d4ed8;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;margin-left:8px;">KIDS</span>'
             : '';
+
+        const strengthsHtml = (strengths && strengths.length > 0)
+            ? strengths.slice(0, 4).map(s => `
+                <div style="margin-bottom:8px;padding:10px 12px;background:#f1f5f9;border-radius:6px;">
+                    <strong style="color:#1a1a2e;font-size:13px;">${s.title || s}</strong>
+                    ${s.description ? `<div style="color:#64748b;font-size:12px;margin-top:2px;">${s.description}</div>` : ''}
+                </div>`).join('')
+            : '';
+
+        const html = `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f7f8fa;">
+
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,#0C2340 0%,#1B3A5C 100%);padding:28px 32px;text-align:center;">
+    <div style="color:rgba(255,255,255,0.7);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:6px;">Parser Profile™ — New Completion ${kidsBadge}</div>
+    <div style="color:rgba(255,255,255,0.5);font-size:12px;">${timestamp}</div>
+  </div>
+
+  <!-- Customer ID -->
+  <div style="background:#2563EB;padding:18px 32px;text-align:center;">
+    <div style="color:rgba(255,255,255,0.75);font-size:10px;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:4px;">Customer ID</div>
+    <div style="color:#fff;font-size:26px;font-weight:700;letter-spacing:0.1em;font-family:monospace;">${customerId}</div>
+  </div>
+
+  <!-- Email status + user info -->
+  <div style="background:${statusBg};padding:12px 32px;border-bottom:3px solid ${statusColor};text-align:center;">
+    <span style="color:${statusColor};font-weight:700;font-size:14px;">${emailStatus}</span>
+    ${userEmail ? `<span style="color:#555;font-size:13px;"> — ${userName ? userName + ' · ' : ''}${userEmail}</span>` : ''}
+  </div>
+
+  <div style="background:#fff;padding:28px 32px;">
+
+    <!-- Profile -->
+    <div style="text-align:center;padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid #e2e8f0;">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:6px;">Profile</div>
+      <div style="font-size:30px;font-weight:700;color:#0C2340;">${profileName}</div>
+      ${profileCode ? `<div style="color:#64748b;font-size:13px;margin-top:4px;">${profileCode}</div>` : ''}
+    </div>
+
+    <!-- Scores -->
+    <div style="padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid #e2e8f0;">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:12px;">Dimension Scores</div>
+      <div style="margin-bottom:6px;"><span style="background:#ecfdf5;color:#0d9488;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Spatial: ${spatial}% ${spatialLabel}</span></div>
+      <div style="margin-bottom:6px;"><span style="background:#fffbeb;color:#d97706;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Temporal: ${temporal}% ${temporalLabel}</span></div>
+      <div><span style="background:#eff6ff;color:#7c3aed;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Reference: ${reference}% ${referenceLabel}</span></div>
+    </div>
+
+    ${overview ? `
+    <!-- Overview -->
+    <div style="padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid #e2e8f0;">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:8px;">Overview</div>
+      <p style="color:#334155;line-height:1.65;margin:0;font-size:14px;">${overview.replace(/\n\n/g, '<br><br>')}</p>
+    </div>` : ''}
+
+    ${phrase ? `
+    <!-- Phrase -->
+    <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;margin-bottom:24px;">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:8px;">The Phrase That Hits Home</div>
+      <p style="color:#1a1a2e;font-size:16px;font-style:italic;line-height:1.5;margin:0;">"${phrase}"</p>
+    </div>` : ''}
+
+    ${strengthsHtml ? `
+    <!-- Strengths -->
+    <div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:10px;">Strengths</div>
+      ${strengthsHtml}
+    </div>` : ''}
+
+  </div>
+</div>`;
+
         try {
             await transporter.sendMail({
-                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
                 to: 'profile.library@cognitionblocksllc.com',
-                subject: `Parser Profile™ Completion: ${profileName} (${emailStatus})`,
-                html: `
-<div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px;">
-    <h2 style="color: #1a1a24;">Assessment Completed ${assessmentBadge}</h2>
-    <p style="color: #4a4a5a;">Someone completed the Parser Profile™ ${assessmentLabel.toLowerCase()}.</p>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-        <tr><td style="padding: 8px; color: #6a6a7a;">Profile</td><td style="padding: 8px; font-weight: bold;">${profileName}</td></tr>
-        <tr><td style="padding: 8px; color: #6a6a7a;">Assessment</td><td style="padding: 8px;">${assessmentLabel}</td></tr>
-        <tr><td style="padding: 8px; color: #6a6a7a;">Spatial</td><td style="padding: 8px;">${spatial}% ${spatialLabel}</td></tr>
-        <tr><td style="padding: 8px; color: #6a6a7a;">Temporal</td><td style="padding: 8px;">${temporal}% ${temporalLabel}</td></tr>
-        <tr><td style="padding: 8px; color: #6a6a7a;">Reference</td><td style="padding: 8px;">${reference}% ${referenceLabel}</td></tr>
-        <tr><td style="padding: 8px; color: #6a6a7a;">Completed</td><td style="padding: 8px;">${timestamp}</td></tr>
-        <tr><td style="padding: 8px; color: #6a6a7a;">Email Status</td><td style="padding: 8px; font-weight: bold; color: ${statusColor};">${emailStatus}</td></tr>
-    </table>
-</div>`
+                subject: `[${customerId}] ${profileName} — ${assessmentLabel} (${emailStatus})`,
+                html
             });
-            console.log(`[COMPLETION-NOTIFY] Email sent to library: ${profileName} (${emailStatus})`);
+            console.log(`[COMPLETION-NOTIFY] Sent: ${customerId} ${profileName}`);
         } catch (err) {
-            console.error('[COMPLETION-NOTIFY] Failed to send notification:', err.message);
+            console.error(`[COMPLETION-NOTIFY] FAILED to send email for ${customerId}:`, err.message);
+            console.error('[COMPLETION-NOTIFY] Check EMAIL_USER, EMAIL_PASS, and EMAIL_FROM env vars on Railway.');
         }
     }
 
-    res.json({ success: true });
+    res.json({ success: true, customerId });
 });
 
 // ============================================================================
 // EMAIL ENDPOINTS
 // ============================================================================
 
-// Send FREE tier results email
+// Send results email to the user
 app.post('/api/send-results', async (req, res) => {
-    const { email, name, profileName, profileCode, scores, overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge, libraryOnly } = req.body;
+    const { email, name, profileName, profileCode, scores, overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge, customerId: providedCustomerId } = req.body;
+    const customerId = providedCustomerId || generateCustomerId();
 
     if (!email) {
         return res.status(400).json({ success: false, error: 'Email is required' });
     }
 
-    const customerId = generateCustomerId();
     const transporter = createTransporter();
 
     // Build the email HTML
@@ -311,24 +496,15 @@ app.post('/api/send-results', async (req, res) => {
     // If email is configured, send it
     if (transporter) {
         try {
-            // When libraryOnly is true, we're sending directly to the library (user skipped email)
-            const mailOptions = {
-                from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+            await transporter.sendMail({
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
                 to: email,
-                subject: libraryOnly
-                    ? `Parser Profile™ Results (Email Skipped): ${profileName}`
-                    : `Your Parser Profile™ Results: ${profileName}`,
+                bcc: 'profile.library@cognitionblocksllc.com',
+                subject: `Your Parser Profile™ Results: ${profileName}`,
                 html: emailHtml
-            };
+            });
 
-            // Only add BCC when sending to actual user (not libraryOnly)
-            if (!libraryOnly) {
-                mailOptions.bcc = 'profile.library@cognitionblocksllc.com';
-            }
-
-            await transporter.sendMail(mailOptions);
-
-            console.log(`Email sent to ${email}${libraryOnly ? ' (library only)' : ''}, Customer ID: ${customerId}`);
+            console.log(`Results email sent to ${email}, Customer ID: ${customerId}`);
 
             res.json({
                 success: true,
@@ -368,7 +544,7 @@ app.post('/api/notify-completion', async (req, res) => {
 
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL_FROM || process.env.EMAIL_USER || 'noreply@cognitionblocksllc.com',
+            from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
             to: 'profile.library@cognitionblocksllc.com',
             subject: `New Parser Profile™ Completion: ${profileName} (${tier})`,
             html: `
@@ -506,7 +682,18 @@ async function handleStripeWebhook(req, res) {
 // ============================================================================
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', async () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`Email configured: ${!!createTransporter()}`);
+    const transporter = createTransporter();
+    if (!transporter) {
+        console.error('[EMAIL] NOT CONFIGURED — set EMAIL_USER and EMAIL_PASS in Railway Variables. Notifications will NOT be sent.');
+    } else {
+        try {
+            await transporter.verify();
+            console.log(`[EMAIL] Connected OK — notifications will go to profile.library@cognitionblocksllc.com`);
+        } catch (err) {
+            console.error(`[EMAIL] Config found but connection FAILED: ${err.message}`);
+            console.error('[EMAIL] Check EMAIL_USER and EMAIL_PASS. Gmail requires an App Password (not your regular password).');
+        }
+    }
 });
