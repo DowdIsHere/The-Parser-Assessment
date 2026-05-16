@@ -148,6 +148,15 @@ app.post('/api/auth/logout', (req, res) => {
     res.json({ success: true });
 });
 
+// Profile library — gallery + per-profile viewer
+app.get('/profiles', (req, res) => {
+    res.sendFile(path.join(__dirname, 'profiles-index.html'));
+});
+
+app.get('/profile/:name', (req, res) => {
+    res.sendFile(path.join(__dirname, 'profile-viewer.html'));
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
