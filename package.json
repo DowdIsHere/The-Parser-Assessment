@@ -4,7 +4,8 @@
   "description": "Parser Profile Assessment with Stripe Payment Processing",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "profile": "node scripts/generate-profile.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
