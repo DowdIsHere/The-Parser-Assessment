@@ -79,9 +79,9 @@ export function getProfileByScores(spatial, temporal, reference) {
   // temporal: 0-100 (0=Past, 50=Present, 100=Future)
   // reference: 0-100 (0=Other, 50=Balanced, 100=Self)
 
-  const s = spatial < 35 ? 'Concrete' : spatial > 65 ? 'Abstract' : 'Balanced';
-  const t = temporal < 35 ? 'Past' : temporal > 65 ? 'Future' : 'Present';
-  const r = reference < 35 ? 'Other' : reference > 65 ? 'Self' : 'Balanced';
+  const s = spatial < 33 ? 'Concrete' : spatial > 66 ? 'Abstract' : 'Balanced';
+  const t = temporal < 33 ? 'Past' : temporal > 66 ? 'Future' : 'Present';
+  const r = reference < 33 ? 'Other' : reference > 66 ? 'Self' : 'Balanced';
 
   const code = `${s} • ${t} • ${r}`;
 

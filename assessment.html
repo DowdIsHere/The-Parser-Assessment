@@ -1535,9 +1535,9 @@ const questions = [
         }
 
         function getProfileKey(scores) {
-            const spatial = scores.spatial < 35 ? 'concrete' : scores.spatial > 65 ? 'abstract' : 'balanced';
-            const temporal = scores.temporal < 35 ? 'past' : scores.temporal > 65 ? 'future' : 'present';
-            const reference = scores.reference < 35 ? 'other' : scores.reference > 65 ? 'self' : 'balanced';
+            const spatial = scores.spatial < 33 ? 'concrete' : scores.spatial > 66 ? 'abstract' : 'balanced';
+            const temporal = scores.temporal < 33 ? 'past' : scores.temporal > 66 ? 'future' : 'present';
+            const reference = scores.reference < 33 ? 'other' : scores.reference > 66 ? 'self' : 'balanced';
             return `${spatial}-${temporal}-${reference}`;
         }
 
@@ -1547,7 +1547,7 @@ const questions = [
                 temporal: { low: 'Past', high: 'Future', mid: 'Present' },
                 reference: { low: 'Other', high: 'Self', mid: 'Balanced' }
             };
-            const cat = score < 35 ? 'low' : score > 65 ? 'high' : 'mid';
+            const cat = score < 33 ? 'low' : score > 66 ? 'high' : 'mid';
             return labels[dimension][cat];
         }
 
