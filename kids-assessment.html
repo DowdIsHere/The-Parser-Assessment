@@ -455,7 +455,7 @@
             const referencePercent = ((avgReference - 1) / 4) * 100;
 
             // Determine profile key (low/mid/high for each dimension)
-            const getLevel = (pct) => pct < 33 ? 'low' : pct > 66 ? 'high' : 'mid';
+            const getLevel = (pct) => pct < 35 ? 'low' : pct > 65 ? 'high' : 'mid';
             const profileKey = `${getLevel(spatialPercent)}-${getLevel(temporalPercent)}-${getLevel(referencePercent)}`;
 
             const profile = profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid'];
