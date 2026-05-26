@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parser Profile Optimization Rules Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        
+        .input-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-name-input {
+            flex: 1;
+        }
+        
+        .profile-name-input label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ff88;
+            font-weight: 600;
+        }
+        
+        .profile-name-input input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .sliders {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .slider-group {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .slider-group h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .slider-group h3 span {
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, #4a9eff, #888, #ff6b6b);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #00ff88;
+            cursor: pointer;
+            border: 3px solid #fff;
+        }
+        
+        .dimension-indicator {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .output-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .rules-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 4px solid #00ff88;
+        }
+        
+        .rules-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .rules-card h4 {
+            color: #fff;
+            margin: 15px 0 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .rule-item {
+            background: rgba(0,255,136,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .rule-item.must {
+            border-left: 3px solid #00ff88;
+        }
+        
+        .rule-item.avoid {
+            border-left: 3px solid #ff6b6b;
+            background: rgba(255,107,107,0.1);
+        }
+        
+        .rule-label {
+            font-weight: bold;
+            color: #00ff88;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .rule-label.avoid {
+            color: #ff6b6b;
+        }
+        
+        .examples-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .examples-section h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .example-box {
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .example-box.wrong {
+            background: rgba(255,107,107,0.1);
+            border: 1px solid rgba(255,107,107,0.3);
+        }
+        
+        .example-box.right {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+        }
+        
+        .example-box h4 {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .example-box.wrong h4 {
+            color: #ff6b6b;
+        }
+        
+        .example-box.right h4 {
+            color: #00ff88;
+        }
+        
+        .example-text {
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .example-why {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,136,255,0.1) 100%);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(0,255,136,0.3);
+        }
+        
+        .summary-section h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .summary-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .summary-item h4 {
+            color: #00ff88;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .format-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .format-badge.prose {
+            background: rgba(138,43,226,0.3);
+            color: #da70d6;
+        }
+        
+        .format-badge.bullets {
+            background: rgba(0,255,136,0.3);
+            color: #00ff88;
+        }
+        
+        .format-badge.hybrid {
+            background: rgba(255,165,0,0.3);
+            color: #ffa500;
+        }
+
+        @media (max-width: 900px) {
+            .sliders, .output-section {
+                grid-template-columns: 1fr;
+            }
+            .example-grid, .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parser Profile Optimization Rules Engine</h1>
+        <p class="subtitle">Set aperture values to generate writing rules for any profile</p>
+        
+        <div class="input-section">
+            <div class="profile-header">
+                <div class="profile-name-input">
+                    <label for="profileName">Profile Name</label>
+                    <input type="text" id="profileName" value="SHARP" placeholder="Enter profile name">
+                </div>
+            </div>
+            
+            <div class="sliders">
+                <div class="slider-group">
+                    <h3>Spatial <span id="spatialValue">17</span></h3>
+                    <div class="slider-labels">
+                        <span>Concrete</span>
+                        <span>Balanced</span>
+                        <span>Abstract</span>
+                    </div>
+                    <input type="range" id="spatial" min="0" max="100" value="17">
+                    <div class="dimension-indicator" id="spatialIndicator">Concrete</div>
+                </div>
+                
+                <div class="slider-group">
+                    <h3>Temporal <span id="temporalValue">17</span></h3>
+                    <div class="slider-labels">
+                        <span>Past</span>
+                        <span>Present</span>
+                        <span>Future</span>
+                    </div>
+                    <input type="range" id="temporal" min="0" max="100" value="17">
+                    <div class="dimension-indicator" id="temporalIndicator">Past</div>
+                </div>
+                
+                <div class="slider-group">
+                    <h3>Reference <span id="referenceValue">84</span></h3>
+                    <div class="slider-labels">
+                        <span>Other</span>
+                        <span>Balanced</span>
+                        <span>Self</span>
+                    </div>
+                    <input type="range" id="reference" min="0" max="100" value="84">
+                    <div class="dimension-indicator" id="referenceIndicator">Self</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="output-section" id="rulesOutput">
+            <!-- Rules will be generated here -->
+        </div>
+        
+        <div class="examples-section">
+            <h2>Example Transformations</h2>
+            <div class="example-grid" id="examplesOutput">
+                <!-- Examples will be generated here -->
+            </div>
+        </div>
+        
+        <div class="summary-section">
+            <h2>Writing Summary for <span id="summaryProfileName">SHARP</span></h2>
+            <div class="summary-grid" id="summaryOutput">
+                <!-- Summary will be generated here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dimension rules based on aperture settings
+        const spatialRules = {
+            concrete: { // 0-35
+                must: [
+                    "Every abstract label must have its concrete referent in the same sentence or the one before",
+                    "Sentences must stand alone with merit - meaning clear without surrounding context",
+                    "Use specific objects: the question, the face, the room, the document",
+                    "Show the actual thing, not what the thing accomplishes",
+                    "Sensory and tangible language: what you saw, heard, felt physically",
+                    "Name actual questions, actual moments, actual scenarios"
+                ],
+                avoid: [
+                    "Abstract labels floating without referent (e.g., 'filters', 'pattern recognition')",
+                    "Category names without the specific instance",
+                    "Compressed summaries (e.g., 'quick read' without specifying of WHAT)",
+                    "Function descriptions instead of the actual thing",
+                    "Metaphors without grounding"
+                ],
+                format: "Structured prose with clear discrete points. NOT bullet-pointed to death, but each paragraph addresses one specific thing."
+            },
+            balanced: { // 36-64
+                must: [
+                    "Balance abstract concepts with concrete examples",
+                    "Abstract labels acceptable if grounded within 2 sentences",
+                    "Mix of specific instances and pattern names",
+                    "Flexibility between summary and detail"
+                ],
+                avoid: [
+                    "Pure abstraction without any grounding",
+                    "Pure concrete without any synthesis",
+                    "Forcing one mode when the other fits better"
+                ],
+                format: "Hybrid - prose that moves between concept and example fluidly."
+            },
+            abstract: { // 65-100
+                must: [
+                    "Conceptual frameworks and pattern names are primary",
+                    "Ideas build on each other across paragraphs",
+                    "Connections made explicit with transition words",
+                    "Principles before examples (if examples used at all)",
+                    "Synthesis and compression valued",
+                    "Room for nuance and qualification"
+                ],
+                avoid: [
+                    "Over-specifying when the pattern is the point",
+                    "Breaking flow with excessive concrete detail",
+                    "Fragmenting connected ideas into discrete points"
+                ],
+                format: "Flowing prose where conceptual threads weave together. Ideas build."
+            }
+        };
+        
+        const temporalRules = {
+            past: { // 0-35
+                must: [
+                    "Ground everything in lived experience: 'You remember when...'",
+                    "Past tense anchoring: 'You watched...', 'You saw...'",
+                    "Reference what has already happened as the source of knowledge",
+                    "Validation through historical precedent",
+                    "Experience as evidence: 'You know because you've seen'",
+                    "Weight of accumulated experience, not speculation"
+                ],
+                avoid: [
+                    "Future speculation as primary frame",
+                    "'You might find...' or 'You could discover...'",
+                    "Theoretical possibilities without proven backing",
+                    "New/untested as inherently valuable"
+                ],
+                vocabulary: ["remember", "watched", "saw", "learned", "experienced", "proven", "established", "before", "when you", "that time"]
+            },
+            present: { // 36-64
+                must: [
+                    "Focus on current state and immediate reality",
+                    "What IS, not what was or might be",
+                    "Balance past reference with present application",
+                    "Immediate relevance and actionability"
+                ],
+                avoid: [
+                    "Over-anchoring in history when present matters",
+                    "Over-projecting to future when now is the point"
+                ],
+                vocabulary: ["now", "currently", "today", "this moment", "right now", "as it stands", "what's in front of you"]
+            },
+            future: { // 65-100
+                must: [
+                    "Projection and possibility as primary frame",
+                    "Where things are heading, what could emerge",
+                    "Implications and trajectories",
+                    "Future tense comfortable: 'You'll find...', 'This will...'",
+                    "Speculation and theory welcomed",
+                    "New possibilities over proven patterns"
+                ],
+                avoid: [
+                    "Over-anchoring in what was",
+                    "Requiring proof before engagement",
+                    "Dismissing possibility because it's unproven"
+                ],
+                vocabulary: ["will", "could", "might", "emerging", "becoming", "heading toward", "trajectory", "possibility", "potential"]
+            }
+        };
+        
+        const referenceRules = {
+            other: { // 0-35
+                must: [
+                    "Far distance vocabulary - observing from outside",
+                    "Social context as meaning-maker",
+                    "How others perceive, react, respond",
+                    "Collective benefit framing",
+                    "Validation through external consensus",
+                    "Relational framing: impact on others, team dynamics"
+                ],
+                avoid: [
+                    "Purely internal experience without social context",
+                    "Isolated self-focus when connection is the point"
+                ],
+                distance: "Camera OUTSIDE watching them interact with others. Third-person feel even in second person."
+            },
+            balanced: { // 36-64
+                must: [
+                    "Flexible distance - sometimes close, sometimes observational",
+                    "Both internal experience and external impact",
+                    "Context-dependent framing"
+                ],
+                avoid: [
+                    "Forcing pure intimacy when observation fits",
+                    "Forcing pure distance when intimacy fits"
+                ],
+                distance: "Camera moves - sometimes inside, sometimes outside. Situational."
+            },
+            self: { // 65-100
+                must: [
+                    "Close/intimate distance vocabulary",
+                    "Inside the experience, not observing it",
+                    "What YOU felt, what YOUR hands did, what YOUR gut registered",
+                    "Personal relevance as primary filter",
+                    "Internal validation over external consensus",
+                    "First-person feel even in second person: 'You felt it in your chest'"
+                ],
+                avoid: [
+                    "Distant observational language",
+                    "Framing through how others see them (unless it's about the disconnect)",
+                    "External validation as primary",
+                    "'The people around you noticed...' as primary frame"
+                ],
+                distance: "Camera INSIDE their head. Intimate. Close to the skin. The words should feel like they're describing something happening inside them, not to them."
+            }
+        };
+        
+        function getCategory(value, dimension) {
+            if (dimension === 'spatial') {
+                if (value <= 35) return 'concrete';
+                if (value >= 65) return 'abstract';
+                return 'balanced';
+            }
+            if (dimension === 'temporal') {
+                if (value <= 35) return 'past';
+                if (value >= 65) return 'future';
+                return 'present';
+            }
+            if (dimension === 'reference') {
+                if (value <= 35) return 'other';
+                if (value >= 65) return 'self';
+                return 'balanced';
+            }
+        }
+        
+        function getIndicatorText(value, dimension) {
+            const cat = getCategory(value, dimension);
+            const intensity = value <= 20 || value >= 80 ? 'Strong ' : 
+                             value <= 35 || value >= 65 ? '' : 'Balanced';
+            
+            if (dimension === 'spatial') {
+                if (cat === 'concrete') return intensity + 'Concrete';
+                if (cat === 'abstract') return intensity + 'Abstract';
+                return 'Balanced';
+            }
+            if (dimension === 'temporal') {
+                if (cat === 'past') return intensity + 'Past';
+                if (cat === 'future') return intensity + 'Future';
+                return 'Present-Focused';
+            }
+            if (dimension === 'reference') {
+                if (cat === 'other') return intensity + 'Other-Oriented';
+                if (cat === 'self') return intensity + 'Self-Oriented';
+                return 'Balanced';
+            }
+        }
+        
+        function generateRules() {
+            const spatial = parseInt(document.getElementById('spatial').value);
+            const temporal = parseInt(document.getElementById('temporal').value);
+            const reference = parseInt(document.getElementById('reference').value);
+            const profileName = document.getElementById('profileName').value || 'PROFILE';
+            
+            // Update displays
+            document.getElementById('spatialValue').textContent = spatial;
+            document.getElementById('temporalValue').textContent = temporal;
+            document.getElementById('referenceValue').textContent = reference;
+            document.getElementById('spatialIndicator').textContent = getIndicatorText(spatial, 'spatial');
+            document.getElementById('temporalIndicator').textContent = getIndicatorText(temporal, 'temporal');
+            document.getElementById('referenceIndicator').textContent = getIndicatorText(reference, 'reference');
+            document.getElementById('summaryProfileName').textContent = profileName;
+            
+            // Get rule categories
+            const spatialCat = getCategory(spatial, 'spatial');
+            const temporalCat = getCategory(temporal, 'temporal');
+            const referenceCat = getCategory(reference, 'reference');
+            
+            const sRules = spatialRules[spatialCat];
+            const tRules = temporalRules[temporalCat];
+            const rRules = referenceRules[referenceCat];
+            
+            // Generate rules output
+            let rulesHTML = `
+                <div class="rules-card">
+                    <h3>Spatial Rules (${spatial} - ${spatialCat})</h3>
+                    <h4>MUST:</h4>
+                    ${sRules.must.map(r => `<div class="rule-item must"><div class="rule-label">Required</div>${r}</div>`).join('')}
+                    <h4>AVOID:</h4>
+                    ${sRules.avoid.map(r => `<div class="rule-item avoid"><div class="rule-label avoid">Avoid</div>${r}</div>`).join('')}
+                    <h4>FORMAT:</h4>
+                    <div class="rule-item must">${sRules.format}</div>
+                </div>
+                
+                <div class="rules-card">
+                    <h3>Temporal Rules (${temporal} - ${temporalCat})</h3>
+                    <h4>MUST:</h4>
+                    ${tRules.must.map(r => `<div class="rule-item must"><div class="rule-label">Required</div>${r}</div>`).join('')}
+                    <h4>AVOID:</h4>
+                    ${tRules.avoid.map(r => `<div class="rule-item avoid"><div class="rule-label avoid">Avoid</div>${r}</div>`).join('')}
+                    <h4>VOCABULARY:</h4>
+                    <div class="rule-item must">${tRules.vocabulary.join(', ')}</div>
+                </div>
+                
+                <div class="rules-card">
+                    <h3>Reference Rules (${reference} - ${referenceCat})</h3>
+                    <h4>MUST:</h4>
+                    ${rRules.must.map(r => `<div class="rule-item must"><div class="rule-label">Required</div>${r}</div>`).join('')}
+                    <h4>AVOID:</h4>
+                    ${rRules.avoid.map(r => `<div class="rule-item avoid"><div class="rule-label avoid">Avoid</div>${r}</div>`).join('')}
+                    <h4>CAMERA DISTANCE:</h4>
+                    <div class="rule-item must">${rRules.distance}</div>
+                </div>
+            `;
+            
+            document.getElementById('rulesOutput').innerHTML = rulesHTML;
+            
+            // Generate examples
+            let wrongExample, rightExample, wrongWhy, rightWhy;
+            
+            if (spatialCat === 'concrete') {
+                wrongExample = "Your pattern recognition filters out the gaps that become problems later. That quick read isn't cynicism—it's earned.";
+                rightExample = "You ask 'Who's responsible?' when everyone else assumes someone will handle it. You ask 'Has this been tested?' before the 2am call when it breaks. Those questions make people think. Sometimes they change course. Either way, you bought them time.";
+                wrongWhy = "Abstract labels ('pattern recognition', 'filters', 'quick read') floating without concrete referents. Describes function, not the actual thing.";
+                rightWhy = "Actual questions named. Actual scenario (2am call). Actual outcome (bought them time). Each element stands alone with merit.";
+            } else if (spatialCat === 'abstract') {
+                wrongExample = "You ask 'Who's responsible?' in meetings. You notice when the timeline seems off. You remember the last project that failed.";
+                rightExample = "Your cognitive architecture naturally compresses experience into predictive heuristics. What others call skepticism is actually sophisticated pattern-matching across temporal instances.";
+                wrongWhy = "Over-specified details fragment the conceptual throughline. Concrete instances without synthesis.";
+                rightWhy = "Conceptual framework as primary. Pattern names carry meaning. Ideas build and connect.";
+            } else {
+                wrongExample = "You only think in concepts without any grounding.";
+                rightExample = "You move between the principle and the instance—seeing the pattern, but also remembering the specific meeting where you learned it.";
+                wrongWhy = "Too abstract without grounding, or too concrete without synthesis.";
+                rightWhy = "Balanced movement between concept and example. Neither dominates.";
+            }
+            
+            let examplesHTML = `
+                <div class="example-box wrong">
+                    <h4>✗ WRONG for ${profileName}</h4>
+                    <p class="example-text">"${wrongExample}"</p>
+                    <p class="example-why"><strong>Why:</strong> ${wrongWhy}</p>
+                </div>
+                <div class="example-box right">
+                    <h4>✓ RIGHT for ${profileName}</h4>
+                    <p class="example-text">"${rightExample}"</p>
+                    <p class="example-why"><strong>Why:</strong> ${rightWhy}</p>
+                </div>
+            `;
+            
+            document.getElementById('examplesOutput').innerHTML = examplesHTML;
+            
+            // Generate summary
+            let formatBadge = spatialCat === 'concrete' ? 
+                '<span class="format-badge bullets">Structured Prose</span>' :
+                spatialCat === 'abstract' ? 
+                '<span class="format-badge prose">Flowing Prose</span>' :
+                '<span class="format-badge hybrid">Hybrid</span>';
+            
+            let summaryHTML = `
+                <div class="summary-item">
+                    <h4>Primary Format</h4>
+                    ${formatBadge}
+                    <p style="margin-top:10px;font-size:0.9rem;">${sRules.format}</p>
+                </div>
+                <div class="summary-item">
+                    <h4>Temporal Anchor</h4>
+                    <p>${temporalCat === 'past' ? 'Ground in lived experience. What they\'ve seen, watched, learned.' : 
+                        temporalCat === 'future' ? 'Project forward. Possibilities, trajectories, what\'s emerging.' :
+                        'Present reality. What IS, right now, in front of them.'}</p>
+                </div>
+                <div class="summary-item">
+                    <h4>Camera Distance</h4>
+                    <p>${rRules.distance}</p>
+                </div>
+                <div class="summary-item">
+                    <h4>Core Test</h4>
+                    <p>${spatialCat === 'concrete' ? 
+                        '<strong>Concrete Test:</strong> Does every sentence stand alone with merit? Is the actual THING named, not just what it does?' :
+                        spatialCat === 'abstract' ?
+                        '<strong>Abstract Test:</strong> Do ideas build and connect? Are patterns named and synthesized?' :
+                        '<strong>Balance Test:</strong> Does it move fluidly between concept and example?'}</p>
+                </div>
+            `;
+            
+            document.getElementById('summaryOutput').innerHTML = summaryHTML;
+        }
+        
+        // Event listeners
+        document.getElementById('spatial').addEventListener('input', generateRules);
+        document.getElementById('temporal').addEventListener('input', generateRules);
+        document.getElementById('reference').addEventListener('input', generateRules);
+        document.getElementById('profileName').addEventListener('input', generateRules);
+        
+        // Initial generation
+        generateRules();
+    </script>
+</body>
+</html>

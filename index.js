@@ -42,6 +42,19 @@ import {
   visionaryProfile,
 } from './profiles-group-4.js';
 
+// Young Adult (18–29 / "early" life stage) profile variants.
+// Only profiles with a dedicated YA variant appear here; everything else
+// falls back to the standard profile via getProfileForStage().
+import { sharpyaProfile } from './sharpya.js';
+import { embodiedyaProfile } from './embodiedya.js';
+import { integratedyaProfile } from './integratedya.js';
+
+const youngAdultProfiles = {
+  SHARP: sharpyaProfile,
+  EMBODIED: embodiedyaProfile,
+  INTEGRATED: integratedyaProfile,
+};
+
 // Profile lookup by name
 export const profiles = {
   ACTUALIZED: actualizedProfile,
@@ -96,6 +109,17 @@ export function getProfileByCode(code) {
 // Get profile by name
 export function getProfileByName(name) {
   return profiles[name.toUpperCase()] || null;
+}
+
+// Get profile by name for a given life stage.
+// lifeStage 'early' (young adult, 18–29) returns the YA variant when one
+// exists; otherwise it falls back to the standard profile.
+export function getProfileForStage(name, lifeStage) {
+  const key = name.toUpperCase();
+  if (lifeStage === 'early' && youngAdultProfiles[key]) {
+    return youngAdultProfiles[key];
+  }
+  return profiles[key] || null;
 }
 
 // Export count for verification

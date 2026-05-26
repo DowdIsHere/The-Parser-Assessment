@@ -276,8 +276,6 @@
         .input-group input:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
         .input-group input::placeholder { color: var(--text-muted); }
         .input-group label { display: block; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--slate-700); margin-bottom: 8px; }
-        .skip-link { display: block; margin-top: 20px; color: var(--text-muted); font-size: 0.9rem; cursor: pointer; }
-        .skip-link:hover { color: var(--blue-500); }
 
         /* Results Styles */
         .results-header { text-align: center; margin-bottom: 40px; padding: 48px 24px; background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%); border-radius: 16px; margin-left: -24px; margin-right: -24px; position: relative; overflow: hidden; }
@@ -293,29 +291,6 @@
         .results-card h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.25rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
         .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
 
-        /* Gradient Bars */
-        .gradient-row { margin-bottom: 28px; }
-        .gradient-row:last-child { margin-bottom: 0; }
-        .gradient-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .gradient-label { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.9rem; }
-        .gradient-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
-        .gradient-row.spatial .gradient-label { color: var(--accent-spatial); }
-        .gradient-row.spatial .gradient-value { background: #ECFDF5; color: var(--accent-spatial); }
-        .gradient-row.temporal .gradient-label { color: var(--accent-temporal); }
-        .gradient-row.temporal .gradient-value { background: #FFFBEB; color: var(--accent-temporal); }
-        .gradient-row.reference .gradient-label { color: var(--accent-reference); }
-        .gradient-row.reference .gradient-value { background: #EFF6FF; color: var(--accent-reference); }
-        .gradient-track { height: 8px; background: var(--slate-100); border-radius: 4px; position: relative; margin-bottom: 8px; }
-        .gradient-marker {
-            position: absolute; top: 50%; transform: translate(-50%, -50%);
-            width: 20px; height: 20px; border-radius: 50%;
-            border: 3px solid var(--bg-card); transition: left 1s ease;
-            box-shadow: var(--shadow-sm);
-        }
-        .gradient-row.spatial .gradient-marker { background: var(--accent-spatial); }
-        .gradient-row.temporal .gradient-marker { background: var(--accent-temporal); }
-        .gradient-row.reference .gradient-marker { background: var(--accent-reference); }
-        .gradient-poles { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
 
         /* Profile Content */
         .profile-description { line-height: 1.6; color: var(--text-secondary); font-size: 1rem; }
@@ -685,7 +660,6 @@
                     <input type="email" id="emailInput" placeholder="your@email.com">
                 </div>
                 <button class="btn-primary" onclick="submitEmailAndShowResults()">Email My Results</button>
-                <span class="skip-link" onclick="showResults(true, getSelectedLifeStage())">Skip — just show results</span>
             </div>
         </div>
 
@@ -705,39 +679,6 @@
                 <h3>🎉 Full Report Unlocked!</h3>
                 <p>Your complete Parser Profile™ is now available. Download your personalized PDF report.</p>
                 <button class="btn-download" onclick="downloadPDF()">📄 Download Full Report (PDF)</button>
-            </div>
-
-            <!-- Dimension Scores -->
-            <div class="results-card">
-                <div class="section-label">Your Cognitive Coordinates</div>
-                <h3>📊 Dimension Scores</h3>
-                <div class="gradient-row spatial">
-                    <div class="gradient-header">
-                        <span class="gradient-label">Spatial Processing</span>
-                        <span class="gradient-value" id="spatialValue">72% Abstract</span>
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">How you organize and interpret information — from hands-on and detail-oriented (Concrete) to big-picture and conceptual (Abstract).</p>
-                    <div class="gradient-track"><div class="gradient-marker" id="spatialMarker" style="left: 50%"></div></div>
-                    <div class="gradient-poles"><span>Concrete</span><span>Abstract</span></div>
-                </div>
-                <div class="gradient-row temporal">
-                    <div class="gradient-header">
-                        <span class="gradient-label">Temporal Processing</span>
-                        <span class="gradient-value" id="temporalValue">65% Future</span>
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">Where your mind naturally anchors in time — drawing from experience and precedent (Past) or anticipating what's next (Future).</p>
-                    <div class="gradient-track"><div class="gradient-marker" id="temporalMarker" style="left: 50%"></div></div>
-                    <div class="gradient-poles"><span>Past</span><span>Future</span></div>
-                </div>
-                <div class="gradient-row reference">
-                    <div class="gradient-header">
-                        <span class="gradient-label">Reference Processing</span>
-                        <span class="gradient-value" id="referenceValue">58% Self</span>
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">How you make decisions and evaluate situations — guided by others' needs and perspectives (Other) or by your own internal compass (Self).</p>
-                    <div class="gradient-track"><div class="gradient-marker" id="referenceMarker" style="left: 50%"></div></div>
-                    <div class="gradient-poles"><span>Other</span><span>Self</span></div>
-                </div>
             </div>
 
             <!-- FREE TIER: Profile Overview -->
@@ -957,6 +898,20 @@
                 </div>
             </div>
 
+            <!-- PAID TIER LOCKED: Top Careers (only profiles with topCareers) -->
+            <div class="results-card locked-section" id="careersCard" style="display:none;">
+                <div class="locked-content">
+                    <h3>💼 Your Top 3 Careers</h3>
+                    <p>Career fit description...</p>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Your Top 3 Careers</p>
+                    <p>See the work you're actually built for.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
             <!-- CTA -->
             <div class="cta-card" id="ctaCard">
                 <h3>Unlock Your Complete Profile</h3>
@@ -1026,7 +981,7 @@
 
         console.log('Parser Assessment: Loading module...');
 
-        import { profiles, getProfileByName } from './index.js';
+        import { profiles, getProfileByName, getProfileForStage } from './index.js';
 
         console.log('Parser Assessment: Profiles loaded successfully. Count:', Object.keys(profiles).length);
 
@@ -1535,9 +1490,9 @@ const questions = [
         }
 
         function getProfileKey(scores) {
-            const spatial = scores.spatial < 35 ? 'concrete' : scores.spatial > 65 ? 'abstract' : 'balanced';
-            const temporal = scores.temporal < 35 ? 'past' : scores.temporal > 65 ? 'future' : 'present';
-            const reference = scores.reference < 35 ? 'other' : scores.reference > 65 ? 'self' : 'balanced';
+            const spatial = scores.spatial < 33 ? 'concrete' : scores.spatial > 66 ? 'abstract' : 'balanced';
+            const temporal = scores.temporal < 33 ? 'past' : scores.temporal > 66 ? 'future' : 'present';
+            const reference = scores.reference < 33 ? 'other' : scores.reference > 66 ? 'self' : 'balanced';
             return `${spatial}-${temporal}-${reference}`;
         }
 
@@ -1547,7 +1502,7 @@ const questions = [
                 temporal: { low: 'Past', high: 'Future', mid: 'Present' },
                 reference: { low: 'Other', high: 'Self', mid: 'Balanced' }
             };
-            const cat = score < 35 ? 'low' : score > 65 ? 'high' : 'mid';
+            const cat = score < 33 ? 'low' : score > 66 ? 'high' : 'mid';
             return labels[dimension][cat];
         }
 
@@ -1583,8 +1538,9 @@ const questions = [
             const name = document.getElementById('nameInput').value.trim();
             const lifeStage = getSelectedLifeStage();
 
-            if (!email) {
-                alert('Please enter your email to receive your results.');
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!emailValid) {
+                alert('Please enter a valid email to receive your results.');
                 return;
             }
 
@@ -1600,7 +1556,7 @@ const questions = [
             const scores = calculateScores(false);
             const key = getProfileKey(scores);
             const profileName = profileNames[key] || 'Equanimous';
-            const profile = getProfileByName(profileName);
+            const profile = getProfileForStage(profileName, lifeStage);
 
             try {
                 const customerId = await completionLogPromise;
@@ -1638,8 +1594,8 @@ const questions = [
             const key = getProfileKey(scores);
             const name = profileNames[key] || 'Equanimous';
 
-            // Get the actual profile data
-            const profile = getProfileByName(name);
+            // Get the actual profile data (life-stage aware: 'early' = young adult variant)
+            const profile = getProfileForStage(name, selectedLifeStage);
 
             // Log completion — generates customer ID and sends full notification to library
             completionLogPromise = fetch('/api/log-completion', {
@@ -1678,25 +1634,6 @@ const questions = [
 
             // Header
             document.getElementById('profileName').textContent = name;
-
-            // Gradient markers
-            setTimeout(() => {
-                document.getElementById('spatialMarker').style.left = scores.spatial + '%';
-                document.getElementById('temporalMarker').style.left = scores.temporal + '%';
-                document.getElementById('referenceMarker').style.left = scores.reference + '%';
-            }, 100);
-
-            // Gradient values
-            const spatialDir = scores.spatial >= 50 ? 'Abstract' : 'Concrete';
-            const temporalDir = scores.temporal >= 50 ? 'Future' : 'Past';
-            const referenceDir = scores.reference >= 50 ? 'Self' : 'Other';
-
-            document.getElementById('spatialValue').textContent =
-                `${scores.spatial >= 50 ? scores.spatial : 100 - scores.spatial}% ${spatialDir}`;
-            document.getElementById('temporalValue').textContent =
-                `${scores.temporal >= 50 ? scores.temporal : 100 - scores.temporal}% ${temporalDir}`;
-            document.getElementById('referenceValue').textContent =
-                `${scores.reference >= 50 ? scores.reference : 100 - scores.reference}% ${referenceDir}`;
 
             // Load profile content
             if (profile) {
@@ -1874,7 +1811,7 @@ const questions = [
             currentProfile = {
                 name: name,
                 code: `${getCategoryLabel('spatial', scores.spatial)} • ${getCategoryLabel('temporal', scores.temporal)} • ${getCategoryLabel('reference', scores.reference)}`,
-                profile: getProfileByName(name),
+                profile: getProfileForStage(name, getSelectedLifeStage()),
                 scores: scores
             };
         }
@@ -2332,6 +2269,23 @@ const questions = [
                     <div class="content-section">${blockHtml}</div>
                 `;
             }
+
+            // Top Careers (only present on some profiles; card stays hidden otherwise)
+            const careersCard = document.getElementById('careersCard');
+            if (careersCard) {
+                if (Array.isArray(profile.topCareers) && profile.topCareers.length) {
+                    const careersHtml = profile.topCareers
+                        .map((c, i) => `<div class="content-section"><h4>${i + 1}. ${c.title}</h4><p>${c.description}</p></div>`)
+                        .join('');
+                    careersCard.querySelector('.locked-content').innerHTML = `
+                        <h3>💼 Your Top 3 Careers</h3>
+                        ${careersHtml}
+                    `;
+                    careersCard.style.display = '';
+                } else {
+                    careersCard.style.display = 'none';
+                }
+            }
         }
 
         // ============================================================================
@@ -2419,95 +2373,6 @@ const questions = [
                 doc.setLineWidth(0.8);
                 doc.line((pageWidth - nameWidth) / 2, y, (pageWidth + nameWidth) / 2, y);
                 y += 12;
-
-                // === DIMENSION SCORES WITH VISUAL BARS ===
-                doc.setFontSize(14);
-                doc.setTextColor(...colors.textDark);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Dimension Scores', margin, y);
-                y += 3;
-                doc.setDrawColor(...colors.accent);
-                doc.setLineWidth(0.6);
-                doc.line(margin, y, margin + 40, y);
-                y += 8;
-
-                const scores = currentProfile.scores;
-                const dimensionData = [
-                    {
-                        label: 'Spatial Processing',
-                        value: scores.spatial,
-                        direction: scores.spatial >= 50 ? 'Abstract' : 'Concrete',
-                        definition: 'How you organize and interpret information \u2014 from hands-on and detail-oriented (Concrete) to big-picture and conceptual (Abstract).',
-                        barColor: colors.accent,
-                        poles: ['Concrete', 'Abstract']
-                    },
-                    {
-                        label: 'Temporal Processing',
-                        value: scores.temporal,
-                        direction: scores.temporal >= 50 ? 'Future' : 'Past',
-                        definition: 'Where your mind naturally anchors in time \u2014 drawing from experience and precedent (Past) or anticipating what\u2019s next (Future).',
-                        barColor: colors.gold,
-                        poles: ['Past', 'Future']
-                    },
-                    {
-                        label: 'Reference Processing',
-                        value: scores.reference,
-                        direction: scores.reference >= 50 ? 'Self' : 'Other',
-                        definition: 'How you make decisions and evaluate situations \u2014 guided by others\u2019 needs and perspectives (Other) or by your own internal compass (Self).',
-                        barColor: colors.purple,
-                        poles: ['Other', 'Self']
-                    }
-                ];
-
-                const barWidth = contentWidth - 4;
-                const barHeight = 4;
-                const barX = margin + 2;
-
-                dimensionData.forEach(dim => {
-                    checkPage(28);
-
-                    // Label and value
-                    doc.setFontSize(11);
-                    doc.setTextColor(...colors.textDark);
-                    doc.setFont('helvetica', 'bold');
-                    doc.text(dim.label, margin, y);
-
-                    const displayVal = dim.value >= 50 ? dim.value : (100 - dim.value);
-                    const valText = `${displayVal}% ${dim.direction}`;
-                    doc.setFontSize(10);
-                    doc.setTextColor(...dim.barColor);
-                    doc.text(valText, pageWidth - margin, y, { align: 'right' });
-                    y += 5;
-
-                    // Track background
-                    drawRoundedRect(barX, y, barWidth, barHeight, 2, [230, 230, 235]);
-
-                    // Filled bar
-                    const fillWidth = Math.max(4, (dim.value / 100) * barWidth);
-                    drawRoundedRect(barX, y, fillWidth, barHeight, 2, dim.barColor);
-
-                    y += barHeight + 2;
-
-                    // Pole labels
-                    doc.setFontSize(7.5);
-                    doc.setTextColor(...colors.textMuted);
-                    doc.setFont('helvetica', 'normal');
-                    doc.text(dim.poles[0], barX, y);
-                    doc.text(dim.poles[1], barX + barWidth, y, { align: 'right' });
-                    y += 4;
-
-                    // Definition
-                    doc.setFontSize(8.5);
-                    doc.setTextColor(...colors.textMuted);
-                    const defLines = doc.splitTextToSize(dim.definition, contentWidth - 4);
-                    defLines.forEach(line => {
-                        doc.text(line, margin + 2, y);
-                        y += 3.5;
-                    });
-                    y += 5;
-                });
-
-                y += 2;
 
                 // === HELPER FUNCTIONS ===
                 function addSectionHeader(text) {
@@ -2721,6 +2586,33 @@ const questions = [
                     if (profile.workEnvironments) {
                         addSectionHeader('Optimal Work Environments');
                         addLongText(profile.workEnvironments);
+                    }
+
+                    // Top Careers (only present on some profiles)
+                    if (profile.topCareers && profile.topCareers.length) {
+                        addSectionHeader('Your Top 3 Careers');
+                        profile.topCareers.forEach((c, i) => {
+                            checkPage(16);
+                            const cTitle = c.title.replace(/\n/g, ' ').replace(/  +/g, ' ');
+                            doc.setFillColor(...colors.accent);
+                            doc.circle(margin + 4, y - 1.5, 3, 'F');
+                            doc.setFontSize(8);
+                            doc.setTextColor(...colors.white);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text(String(i + 1), margin + 4, y - 0.5, { align: 'center' });
+
+                            doc.setFontSize(10.5);
+                            doc.setTextColor(...colors.textDark);
+                            doc.setFont('helvetica', 'bold');
+                            const cTitleLines = doc.splitTextToSize(cTitle, contentWidth - 12);
+                            cTitleLines.forEach(line => {
+                                doc.text(line, margin + 10, y);
+                                y += 5;
+                            });
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(...colors.textBody);
+                            addParagraph(c.description, 10);
+                        });
                     }
 
                     // Block Indicators
