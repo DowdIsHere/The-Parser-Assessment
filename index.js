@@ -47,10 +47,12 @@ import {
 // falls back to the standard profile via getProfileForStage().
 import { sharpyaProfile } from './sharpya.js';
 import { embodiedyaProfile } from './embodiedya.js';
+import { integratedyaProfile } from './integratedya.js';
 
 const youngAdultProfiles = {
   SHARP: sharpyaProfile,
   EMBODIED: embodiedyaProfile,
+  INTEGRATED: integratedyaProfile,
 };
 
 // Profile lookup by name

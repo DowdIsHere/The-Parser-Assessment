@@ -898,6 +898,20 @@
                 </div>
             </div>
 
+            <!-- PAID TIER LOCKED: Top Careers (only profiles with topCareers) -->
+            <div class="results-card locked-section" id="careersCard" style="display:none;">
+                <div class="locked-content">
+                    <h3>💼 Your Top 3 Careers</h3>
+                    <p>Career fit description...</p>
+                </div>
+                <div class="locked-overlay">
+                    <div class="lock-icon">🔒</div>
+                    <p class="locked-teaser">Your Top 3 Careers</p>
+                    <p>See the work you're actually built for.</p>
+                    <button class="btn-secondary" onclick="scrollToCTA()">Unlock Full Report</button>
+                </div>
+            </div>
+
             <!-- CTA -->
             <div class="cta-card" id="ctaCard">
                 <h3>Unlock Your Complete Profile</h3>
@@ -2255,6 +2269,23 @@ const questions = [
                     <div class="content-section">${blockHtml}</div>
                 `;
             }
+
+            // Top Careers (only present on some profiles; card stays hidden otherwise)
+            const careersCard = document.getElementById('careersCard');
+            if (careersCard) {
+                if (Array.isArray(profile.topCareers) && profile.topCareers.length) {
+                    const careersHtml = profile.topCareers
+                        .map((c, i) => `<div class="content-section"><h4>${i + 1}. ${c.title}</h4><p>${c.description}</p></div>`)
+                        .join('');
+                    careersCard.querySelector('.locked-content').innerHTML = `
+                        <h3>💼 Your Top 3 Careers</h3>
+                        ${careersHtml}
+                    `;
+                    careersCard.style.display = '';
+                } else {
+                    careersCard.style.display = 'none';
+                }
+            }
         }
 
         // ============================================================================
@@ -2555,6 +2586,33 @@ const questions = [
                     if (profile.workEnvironments) {
                         addSectionHeader('Optimal Work Environments');
                         addLongText(profile.workEnvironments);
+                    }
+
+                    // Top Careers (only present on some profiles)
+                    if (profile.topCareers && profile.topCareers.length) {
+                        addSectionHeader('Your Top 3 Careers');
+                        profile.topCareers.forEach((c, i) => {
+                            checkPage(16);
+                            const cTitle = c.title.replace(/\n/g, ' ').replace(/  +/g, ' ');
+                            doc.setFillColor(...colors.accent);
+                            doc.circle(margin + 4, y - 1.5, 3, 'F');
+                            doc.setFontSize(8);
+                            doc.setTextColor(...colors.white);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text(String(i + 1), margin + 4, y - 0.5, { align: 'center' });
+
+                            doc.setFontSize(10.5);
+                            doc.setTextColor(...colors.textDark);
+                            doc.setFont('helvetica', 'bold');
+                            const cTitleLines = doc.splitTextToSize(cTitle, contentWidth - 12);
+                            cTitleLines.forEach(line => {
+                                doc.text(line, margin + 10, y);
+                                y += 5;
+                            });
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(...colors.textBody);
+                            addParagraph(c.description, 10);
+                        });
                     }
 
                     // Block Indicators
