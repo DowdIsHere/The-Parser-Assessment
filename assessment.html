@@ -276,8 +276,6 @@
         .input-group input:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
         .input-group input::placeholder { color: var(--text-muted); }
         .input-group label { display: block; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--slate-700); margin-bottom: 8px; }
-        .skip-link { display: block; margin-top: 20px; color: var(--text-muted); font-size: 0.9rem; cursor: pointer; }
-        .skip-link:hover { color: var(--blue-500); }
 
         /* Results Styles */
         .results-header { text-align: center; margin-bottom: 40px; padding: 48px 24px; background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%); border-radius: 16px; margin-left: -24px; margin-right: -24px; position: relative; overflow: hidden; }
@@ -293,29 +291,6 @@
         .results-card h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.25rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
         .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
 
-        /* Gradient Bars */
-        .gradient-row { margin-bottom: 28px; }
-        .gradient-row:last-child { margin-bottom: 0; }
-        .gradient-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .gradient-label { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.9rem; }
-        .gradient-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
-        .gradient-row.spatial .gradient-label { color: var(--accent-spatial); }
-        .gradient-row.spatial .gradient-value { background: #ECFDF5; color: var(--accent-spatial); }
-        .gradient-row.temporal .gradient-label { color: var(--accent-temporal); }
-        .gradient-row.temporal .gradient-value { background: #FFFBEB; color: var(--accent-temporal); }
-        .gradient-row.reference .gradient-label { color: var(--accent-reference); }
-        .gradient-row.reference .gradient-value { background: #EFF6FF; color: var(--accent-reference); }
-        .gradient-track { height: 8px; background: var(--slate-100); border-radius: 4px; position: relative; margin-bottom: 8px; }
-        .gradient-marker {
-            position: absolute; top: 50%; transform: translate(-50%, -50%);
-            width: 20px; height: 20px; border-radius: 50%;
-            border: 3px solid var(--bg-card); transition: left 1s ease;
-            box-shadow: var(--shadow-sm);
-        }
-        .gradient-row.spatial .gradient-marker { background: var(--accent-spatial); }
-        .gradient-row.temporal .gradient-marker { background: var(--accent-temporal); }
-        .gradient-row.reference .gradient-marker { background: var(--accent-reference); }
-        .gradient-poles { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
 
         /* Profile Content */
         .profile-description { line-height: 1.6; color: var(--text-secondary); font-size: 1rem; }
@@ -685,7 +660,6 @@
                     <input type="email" id="emailInput" placeholder="your@email.com">
                 </div>
                 <button class="btn-primary" onclick="submitEmailAndShowResults()">Email My Results</button>
-                <span class="skip-link" onclick="showResults(true, getSelectedLifeStage())">Skip — just show results</span>
             </div>
         </div>
 
@@ -1550,8 +1524,9 @@ const questions = [
             const name = document.getElementById('nameInput').value.trim();
             const lifeStage = getSelectedLifeStage();
 
-            if (!email) {
-                alert('Please enter your email to receive your results.');
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!emailValid) {
+                alert('Please enter a valid email to receive your results.');
                 return;
             }
 
@@ -2367,95 +2342,6 @@ const questions = [
                 doc.setLineWidth(0.8);
                 doc.line((pageWidth - nameWidth) / 2, y, (pageWidth + nameWidth) / 2, y);
                 y += 12;
-
-                // === DIMENSION SCORES WITH VISUAL BARS ===
-                doc.setFontSize(14);
-                doc.setTextColor(...colors.textDark);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Dimension Scores', margin, y);
-                y += 3;
-                doc.setDrawColor(...colors.accent);
-                doc.setLineWidth(0.6);
-                doc.line(margin, y, margin + 40, y);
-                y += 8;
-
-                const scores = currentProfile.scores;
-                const dimensionData = [
-                    {
-                        label: 'Spatial Processing',
-                        value: scores.spatial,
-                        direction: scores.spatial >= 50 ? 'Abstract' : 'Concrete',
-                        definition: 'How you organize and interpret information \u2014 from hands-on and detail-oriented (Concrete) to big-picture and conceptual (Abstract).',
-                        barColor: colors.accent,
-                        poles: ['Concrete', 'Abstract']
-                    },
-                    {
-                        label: 'Temporal Processing',
-                        value: scores.temporal,
-                        direction: scores.temporal >= 50 ? 'Future' : 'Past',
-                        definition: 'Where your mind naturally anchors in time \u2014 drawing from experience and precedent (Past) or anticipating what\u2019s next (Future).',
-                        barColor: colors.gold,
-                        poles: ['Past', 'Future']
-                    },
-                    {
-                        label: 'Reference Processing',
-                        value: scores.reference,
-                        direction: scores.reference >= 50 ? 'Self' : 'Other',
-                        definition: 'How you make decisions and evaluate situations \u2014 guided by others\u2019 needs and perspectives (Other) or by your own internal compass (Self).',
-                        barColor: colors.purple,
-                        poles: ['Other', 'Self']
-                    }
-                ];
-
-                const barWidth = contentWidth - 4;
-                const barHeight = 4;
-                const barX = margin + 2;
-
-                dimensionData.forEach(dim => {
-                    checkPage(28);
-
-                    // Label and value
-                    doc.setFontSize(11);
-                    doc.setTextColor(...colors.textDark);
-                    doc.setFont('helvetica', 'bold');
-                    doc.text(dim.label, margin, y);
-
-                    const displayVal = dim.value >= 50 ? dim.value : (100 - dim.value);
-                    const valText = `${displayVal}% ${dim.direction}`;
-                    doc.setFontSize(10);
-                    doc.setTextColor(...dim.barColor);
-                    doc.text(valText, pageWidth - margin, y, { align: 'right' });
-                    y += 5;
-
-                    // Track background
-                    drawRoundedRect(barX, y, barWidth, barHeight, 2, [230, 230, 235]);
-
-                    // Filled bar
-                    const fillWidth = Math.max(4, (dim.value / 100) * barWidth);
-                    drawRoundedRect(barX, y, fillWidth, barHeight, 2, dim.barColor);
-
-                    y += barHeight + 2;
-
-                    // Pole labels
-                    doc.setFontSize(7.5);
-                    doc.setTextColor(...colors.textMuted);
-                    doc.setFont('helvetica', 'normal');
-                    doc.text(dim.poles[0], barX, y);
-                    doc.text(dim.poles[1], barX + barWidth, y, { align: 'right' });
-                    y += 4;
-
-                    // Definition
-                    doc.setFontSize(8.5);
-                    doc.setTextColor(...colors.textMuted);
-                    const defLines = doc.splitTextToSize(dim.definition, contentWidth - 4);
-                    defLines.forEach(line => {
-                        doc.text(line, margin + 2, y);
-                        y += 3.5;
-                    });
-                    y += 5;
-                });
-
-                y += 2;
 
                 // === HELPER FUNCTIONS ===
                 function addSectionHeader(text) {
