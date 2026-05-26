@@ -707,39 +707,6 @@
                 <button class="btn-download" onclick="downloadPDF()">📄 Download Full Report (PDF)</button>
             </div>
 
-            <!-- Dimension Scores -->
-            <div class="results-card">
-                <div class="section-label">Your Cognitive Coordinates</div>
-                <h3>📊 Dimension Scores</h3>
-                <div class="gradient-row spatial">
-                    <div class="gradient-header">
-                        <span class="gradient-label">Spatial Processing</span>
-                        <span class="gradient-value" id="spatialValue">72% Abstract</span>
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">How you organize and interpret information — from hands-on and detail-oriented (Concrete) to big-picture and conceptual (Abstract).</p>
-                    <div class="gradient-track"><div class="gradient-marker" id="spatialMarker" style="left: 50%"></div></div>
-                    <div class="gradient-poles"><span>Concrete</span><span>Abstract</span></div>
-                </div>
-                <div class="gradient-row temporal">
-                    <div class="gradient-header">
-                        <span class="gradient-label">Temporal Processing</span>
-                        <span class="gradient-value" id="temporalValue">65% Future</span>
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">Where your mind naturally anchors in time — drawing from experience and precedent (Past) or anticipating what's next (Future).</p>
-                    <div class="gradient-track"><div class="gradient-marker" id="temporalMarker" style="left: 50%"></div></div>
-                    <div class="gradient-poles"><span>Past</span><span>Future</span></div>
-                </div>
-                <div class="gradient-row reference">
-                    <div class="gradient-header">
-                        <span class="gradient-label">Reference Processing</span>
-                        <span class="gradient-value" id="referenceValue">58% Self</span>
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: var(--text-muted);">How you make decisions and evaluate situations — guided by others' needs and perspectives (Other) or by your own internal compass (Self).</p>
-                    <div class="gradient-track"><div class="gradient-marker" id="referenceMarker" style="left: 50%"></div></div>
-                    <div class="gradient-poles"><span>Other</span><span>Self</span></div>
-                </div>
-            </div>
-
             <!-- FREE TIER: Profile Overview -->
             <div class="results-card">
                 <div class="section-label">Who You Are</div>
@@ -1026,7 +993,7 @@
 
         console.log('Parser Assessment: Loading module...');
 
-        import { profiles, getProfileByName } from './index.js';
+        import { profiles, getProfileByName, getProfileForStage } from './index.js';
 
         console.log('Parser Assessment: Profiles loaded successfully. Count:', Object.keys(profiles).length);
 
@@ -1600,7 +1567,7 @@ const questions = [
             const scores = calculateScores(false);
             const key = getProfileKey(scores);
             const profileName = profileNames[key] || 'Equanimous';
-            const profile = getProfileByName(profileName);
+            const profile = getProfileForStage(profileName, lifeStage);
 
             try {
                 const customerId = await completionLogPromise;
@@ -1638,8 +1605,8 @@ const questions = [
             const key = getProfileKey(scores);
             const name = profileNames[key] || 'Equanimous';
 
-            // Get the actual profile data
-            const profile = getProfileByName(name);
+            // Get the actual profile data (life-stage aware: 'early' = young adult variant)
+            const profile = getProfileForStage(name, selectedLifeStage);
 
             // Log completion — generates customer ID and sends full notification to library
             completionLogPromise = fetch('/api/log-completion', {
@@ -1678,25 +1645,6 @@ const questions = [
 
             // Header
             document.getElementById('profileName').textContent = name;
-
-            // Gradient markers
-            setTimeout(() => {
-                document.getElementById('spatialMarker').style.left = scores.spatial + '%';
-                document.getElementById('temporalMarker').style.left = scores.temporal + '%';
-                document.getElementById('referenceMarker').style.left = scores.reference + '%';
-            }, 100);
-
-            // Gradient values
-            const spatialDir = scores.spatial >= 50 ? 'Abstract' : 'Concrete';
-            const temporalDir = scores.temporal >= 50 ? 'Future' : 'Past';
-            const referenceDir = scores.reference >= 50 ? 'Self' : 'Other';
-
-            document.getElementById('spatialValue').textContent =
-                `${scores.spatial >= 50 ? scores.spatial : 100 - scores.spatial}% ${spatialDir}`;
-            document.getElementById('temporalValue').textContent =
-                `${scores.temporal >= 50 ? scores.temporal : 100 - scores.temporal}% ${temporalDir}`;
-            document.getElementById('referenceValue').textContent =
-                `${scores.reference >= 50 ? scores.reference : 100 - scores.reference}% ${referenceDir}`;
 
             // Load profile content
             if (profile) {
@@ -1874,7 +1822,7 @@ const questions = [
             currentProfile = {
                 name: name,
                 code: `${getCategoryLabel('spatial', scores.spatial)} • ${getCategoryLabel('temporal', scores.temporal)} • ${getCategoryLabel('reference', scores.reference)}`,
-                profile: getProfileByName(name),
+                profile: getProfileForStage(name, getSelectedLifeStage()),
                 scores: scores
             };
         }
