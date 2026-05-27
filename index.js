@@ -48,11 +48,13 @@ import {
 import { sharpyaProfile } from './sharpya.js';
 import { embodiedyaProfile } from './embodiedya.js';
 import { integratedyaProfile } from './integratedya.js';
+import { coherentyaProfile } from './coherentya.js';
 
 const youngAdultProfiles = {
   SHARP: sharpyaProfile,
   EMBODIED: embodiedyaProfile,
   INTEGRATED: integratedyaProfile,
+  COHERENT: coherentyaProfile,
 };
 
 // Profile lookup by name
