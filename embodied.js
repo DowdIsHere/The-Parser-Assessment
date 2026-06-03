@@ -1,8 +1,10 @@
 // EMBODIED Profile
 // Parser Profile™ © 2026 Cognition Blocks LLC
+// Concrete • Present • Self
 
 export const embodiedProfile = {
   "name": "EMBODIED",
+  "code": "Concrete • Present • Self",
   "tagline": "The one who lives in the body others merely inhabit",
 
   "overview": "You knew before you had words for it. Right now, in this room, something is off—you feel it as a tightness behind your sternum. Or something is right, and your shoulders drop a half-inch you didn't decide to drop. The information arrives as sensation, not as a sentence. And you're right more often than anyone gives you credit for.\n\nThey told you to \"think more.\" But you were never not thinking. They only count one kind of thinking—the kind that happens in the head, out loud, in words. Your hands, your gut, your breath have been doing the math the whole time. They just can't see the channel it runs on.\n\nYou live in your senses. While the person across from you is somewhere else—replaying this morning, rehearsing tomorrow—you're here. In this chair. In this body. In contact with the thing that's actually happening.\n\nThey call it simple. They mistake the fact that you're present for proof that there's nothing underneath.",

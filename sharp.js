@@ -1,8 +1,10 @@
 // SHARP Profile
 // Parser Profile™ © 2026 Cognition Blocks LLC
+// Concrete • Past • Self
 
 export const sharpProfile = {
   "name": "SHARP",
+  "code": "Concrete • Past • Self",
   "tagline": "The one who remembers what actually happened",
 
   "overview": "You sat in the meeting where they said it would work this time. Your jaw tightened before you knew why. Then it surfaced: you'd heard those exact words before—different room, two years back, the same easy confidence on someone's face. That project shipped four months late, and you were the one who stayed until 2am rebuilding the piece everyone skipped.\n\nYou didn't say anything. You'd already learned what saying something costs.\n\nThis is what lives in you—not a theory about how things go wrong, but the memory of watching them go wrong. The timeline that slipped. The dependency nobody checked. The promise someone made and the thing that actually got delivered, which were never the same thing. You remember who said what. Your gut files it whether you want it to or not.\n\nThey called it negative. You felt the difference in your chest: you weren't being negative, you'd just seen this exact thing play out before.",
