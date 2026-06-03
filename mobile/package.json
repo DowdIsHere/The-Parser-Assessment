@@ -1,0 +1,27 @@
+{
+  "name": "parser-profile-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Capacitor native shell (iOS/Android) for the Parser Profile™ Assessment. Self-contained: does NOT affect the Express/Railway backend deploy.",
+  "type": "module",
+  "scripts": {
+    "build:www": "node scripts/build-www.mjs",
+    "sync": "npm run build:www && cap sync",
+    "add:ios": "npm run build:www && cap add ios",
+    "add:android": "npm run build:www && cap add android",
+    "open:ios": "cap open ios",
+    "open:android": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/core": "^6.1.0",
+    "@capacitor/ios": "^6.1.0",
+    "@capacitor/android": "^6.1.0",
+    "@capacitor/status-bar": "^6.0.0",
+    "@capacitor/splash-screen": "^6.0.0",
+    "cordova-plugin-purchase": "^13.11.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.0"
+  }
+}
