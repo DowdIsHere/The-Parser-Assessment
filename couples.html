@@ -44,6 +44,11 @@
     .hero p { font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.6; color: rgba(255,255,255,0.75); max-width: 58ch; font-style: italic; margin-bottom: 44px; }
     .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue-900); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 14px 36px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .btn-hero:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .btn-hero-primary { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue-900); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 15px 34px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .btn-hero-primary:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .btn-hero-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.22); font-family: var(--font-body); font-size: 0.95rem; font-weight: 500; padding: 14px 28px; border-radius: 8px; text-decoration: none; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+    .btn-hero-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); transform: translateY(-1px); }
 
     .section { padding: 80px 0; }
     .section.alt { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -138,9 +143,12 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="eyebrow-tag">Couples Parser Analysis</div>
-      <h1>The same fight, on repeat, <em>has a name.</em></h1>
-      <p>You're not arguing about what you think you're arguing about. The Couples Parser Analysis shows what is actually happening between two minds — and puts it in writing both of you can read.</p>
-      <a href="#pricing" class="btn-hero">See What's Included →</a>
+      <h1>Understanding <em>the one you're with</em> —<br>starts with understanding yourself.</h1>
+      <p>This assessment doesn't tell you what kind of person you are. It shows you why — and gives you language to articulate what you've always felt, but couldn't put your finger on.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-hero-primary">See What's Included →</a>
+        <a href="/individual.html" class="btn-hero-secondary">Take the Individual Assessment</a>
+      </div>
     </div>
   </section>
 
