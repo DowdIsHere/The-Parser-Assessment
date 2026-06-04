@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J.D. Mercer | Parser Profile</title>
+  <meta name="description" content="Understanding the one you're with starts with understanding yourself. The Parser Profile shows you how your mind takes in the world.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-900: #0C2340;
+      --blue-700: #1B3A5C;
+      --blue-600: #1E4D78;
+      --blue-500: #2563EB;
+      --blue-400: #3B82F6;
+      --blue-100: #DBEAFE;
+      --blue-50: #EFF6FF;
+      --text-primary: #1A1A2E;
+      --text-secondary: #334155;
+      --text-muted: #64748B;
+      --bg-page: #F7F8FA;
+      --bg-card: #FFFFFF;
+      --bg-inset: #F1F5F9;
+      --border: rgba(0,0,0,0.08);
+      --border-strong: rgba(0,0,0,0.14);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+      --font-display: 'Source Serif 4', Georgia, serif;
+      --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 17px;
+      letter-spacing: 0.01em;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .h-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
+    .logo .wordmark {
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;
+      color: var(--text-primary); letter-spacing: -0.01em; line-height: 1;
+    }
+    .logo .sub {
+      font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--text-muted);
+    }
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a {
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--blue-500); }
+    nav a.btn {
+      background: var(--blue-500); color: #fff; padding: 9px 20px;
+      border-radius: 8px; font-weight: 600; font-size: 0.85rem;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    nav a.btn:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    /* HERO — always dark */
+    .hero {
+      background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.10) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; padding: 96px 24px 80px;
+      position: relative; z-index: 1;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 600; line-height: 1.08;
+      letter-spacing: -0.025em; color: #fff;
+      margin-bottom: 24px; max-width: 820px;
+    }
+    .hero h1 em { font-style: italic; font-weight: 300; color: #F59E0B; }
+    .hero p {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      line-height: 1.6; color: rgba(255,255,255,0.75);
+      max-width: 58ch; font-style: italic; margin-bottom: 44px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-hero-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; color: var(--blue-900);
+      font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+      padding: 14px 32px; border-radius: 8px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .btn-hero-primary:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .btn-hero-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.2);
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+      padding: 14px 28px; border-radius: 8px; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-hero-secondary:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.35); }
+
+    /* MAIN */
+    main { flex: 1; }
+
+    /* TWO PATHS */
+    .paths { padding: 80px 0; }
+    .paths-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .paths h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+      font-weight: 400; color: var(--text-secondary);
+      text-align: center; margin-bottom: 48px;
+      letter-spacing: -0.01em; line-height: 1.4;
+    }
+    .paths-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    }
+    .path-card {
+      display: block; text-decoration: none;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .path-card:hover {
+      border-color: var(--blue-400);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .path-image {
+      aspect-ratio: 4/3; background: var(--bg-inset);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .path-image-placeholder {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+    /* Diagonal hatch texture for placeholder */
+    .path-image::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent 0, transparent 12px,
+        rgba(0,0,0,0.025) 12px, rgba(0,0,0,0.025) 24px
+      );
+    }
+    .path-body { padding: 28px 32px 32px; }
+    .path-tag {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--blue-600);
+      background: var(--blue-50);
+      display: inline-block; padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 14px;
+    }
+    .path-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 600;
+      color: var(--text-primary); letter-spacing: -0.015em;
+      margin-bottom: 10px; line-height: 1.2;
+    }
+    .path-card p {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.65; margin-bottom: 20px;
+    }
+    .path-cta {
+      font-family: var(--font-body); font-size: 0.9rem;
+      font-weight: 600; color: var(--blue-500);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: gap 0.2s;
+    }
+    .path-card:hover .path-cta { gap: 10px; }
+
+    /* TAGLINE BAND */
+    .tagline-band {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 0;
+    }
+    .tagline-band-inner {
+      max-width: 760px; margin: 0 auto; padding: 0 24px;
+      text-align: center;
+    }
+    .tagline-band p {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+      line-height: 1.55; color: var(--text-primary);
+      font-style: italic; letter-spacing: -0.01em;
+    }
+    .tagline-band p .turn {
+      font-style: normal; font-weight: 600; color: var(--blue-600);
+    }
+    .tagline-attr {
+      margin-top: 28px;
+      font-family: var(--font-mono); font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--text-muted); line-height: 1.8;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--blue-900);
+      color: rgba(255,255,255,0.6);
+      padding: 48px 0 28px;
+    }
+    .f-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+    }
+    .f-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 24px; flex-wrap: wrap;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
+    footer strong { color: #fff; }
+    footer a { color: var(--blue-100); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .f-meta {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.05em; color: rgba(255,255,255,0.4);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 760px) {
+      .paths-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .btn-hero-primary, .btn-hero-secondary { text-align: center; justify-content: center; }
+      nav a:not(.btn) { display: none; }
+      .f-top { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="h-inner">
+      <a href="/" class="logo">
+        <span class="wordmark">J.D. Mercer</span>
+        <span class="sub">Cognition Blocks of Intelligence</span>
+      </a>
+      <nav>
+        <a href="/parserframe.html">The 27 Parsers</a>
+        <a href="/individual.html">Individual</a>
+        <a href="/couples.html">Couples</a>
+        <a href="/clinicians.html">For Clinicians</a>
+        <a href="/individual.html" class="btn">Begin Your Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Understanding <em>the one you're with</em> —<br>starts with understanding yourself.</h1>
+      <p>This assessment doesn't tell you what kind of person you are. It shows you why — and gives you language to articulate what you've always felt, but couldn't put your finger on.</p>
+      <div class="hero-actions">
+        <a href="/individual.html" class="btn-hero-primary">Take the Individual Assessment</a>
+        <a href="/couples.html" class="btn-hero-secondary">Couples Analysis →</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <section class="paths">
+      <div class="paths-inner">
+        <h2>Two ways to see what you've been missing.</h2>
+
+        <div class="paths-grid">
+
+          <a href="/individual.html" class="path-card">
+            <div class="path-image">
+              <!-- Replace with: <img src="/images/individual.jpg" alt="Individual Parser Profile"> -->
+              <span class="path-image-placeholder">Individual Image</span>
+            </div>
+            <div class="path-body">
+              <span class="path-tag">For Yourself</span>
+              <h3>Individual Parser Profile</h3>
+              <p>A personal profile of how your mind receives information — what it notices first, where it anchors, and how that shapes the way you learn, communicate, and relate.</p>
+              <span class="path-cta">Begin your profile →</span>
+            </div>
+          </a>
+
+          <a href="/couples.html" class="path-card">
+            <div class="path-image">
+              <!-- Replace with: <img src="/images/couples.jpg" alt="Couples Analysis"> -->
+              <span class="path-image-placeholder">Couples Image</span>
+            </div>
+            <div class="path-body">
+              <span class="path-tag">For You and the One You're With</span>
+              <h3>Couples Parser Analysis</h3>
+              <p>A 90-minute session focused on the dynamic between two architectures — and the conversation that keeps collapsing in the same place.</p>
+              <span class="path-cta">See what's included →</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="tagline-band">
+      <div class="tagline-band-inner">
+        <p>Not personality. <span class="turn">The architecture that operates before personality engages</span> — the layer that determines what each person actually receives from a shared moment.</p>
+        <div class="tagline-attr">
+          Parser Profile™ · J.D. Mercer · Cognition Blocks Intelligence Framework<br>
+          U.S. Copyright TXu 2-497-721 · © 2025–2026 Cognition Blocks LLC
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="f-inner">
+      <div class="f-top">
+        <div>
+          <strong>J.D. Mercer</strong>
+          <div style="margin-top:6px; font-size:0.85rem;">Cognition Blocks of Intelligence</div>
+        </div>
+        <div class="f-meta">
+          © 2026 Cognition Blocks LLC<br>
+          U.S. Copyright TXu 2-497-721<br>
+          <a href="/clinicians.html">For Clinicians →</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+</body>
+</html>

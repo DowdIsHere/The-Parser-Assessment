@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Couples Parser Analysis | J.D. Mercer</title>
+  <meta name="description" content="A 90-minute session and written analysis that names what is actually happening between two minds.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-900: #0C2340; --blue-700: #1B3A5C; --blue-600: #1E4D78;
+      --blue-500: #2563EB; --blue-400: #3B82F6; --blue-100: #DBEAFE; --blue-50: #EFF6FF;
+      --text-primary: #1A1A2E; --text-secondary: #334155; --text-muted: #64748B;
+      --bg-page: #F7F8FA; --bg-card: #FFFFFF; --bg-inset: #F1F5F9;
+      --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.14);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08); --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+      --font-display: 'Source Serif 4', Georgia, serif;
+      --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.6; font-size: 17px; letter-spacing: 0.01em; }
+
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 20px 0; }
+    .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
+    .logo .wordmark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; line-height: 1; }
+    .logo .sub { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); }
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    nav a:hover { color: var(--blue-500); }
+    nav a.btn { background: var(--blue-500); color: #fff; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; box-shadow: var(--shadow-sm); }
+    nav a.btn:hover { background: var(--blue-400); }
+
+    .hero { background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.10) 0%, transparent 50%); pointer-events: none; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; padding: 96px 24px 80px; position: relative; z-index: 1; }
+    .eyebrow-tag { display: inline-block; background: rgba(219,234,254,0.10); border: 1px solid rgba(219,234,254,0.20); color: rgba(255,255,255,0.85); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 100px; margin-bottom: 24px; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; color: #fff; margin-bottom: 24px; max-width: 820px; }
+    .hero h1 em { font-style: italic; font-weight: 300; color: #F59E0B; }
+    .hero p { font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.6; color: rgba(255,255,255,0.75); max-width: 58ch; font-style: italic; margin-bottom: 44px; }
+    .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue-900); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 14px 36px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .btn-hero:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+    .section { padding: 80px 0; }
+    .section.alt { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section-narrow { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-600); margin-bottom: 14px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 16px; }
+    .section-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 68ch; margin-bottom: 48px; }
+
+    /* RECOGNITION */
+    .recognition-stack { display: flex; flex-direction: column; gap: 16px; max-width: 740px; }
+    .r-item { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--blue-500); border-radius: 0 12px 12px 0; padding: 20px 26px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .r-item:hover { border-left-color: var(--blue-400); box-shadow: var(--shadow-sm); }
+    .r-item p { font-family: var(--font-display); font-size: 1.05rem; font-style: italic; color: var(--text-primary); line-height: 1.5; margin-bottom: 6px; }
+    .r-item cite { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-style: normal; }
+
+    /* WHAT'S IN IT */
+    .contents-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .c-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
+    .c-item:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+    .c-num { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 10px; }
+    .c-item h4 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.01em; line-height: 1.25; }
+    .c-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* EXCERPT */
+    .excerpt-block { background: var(--blue-900); border-radius: 16px; padding: 48px; position: relative; overflow: hidden; }
+    .excerpt-block::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); pointer-events: none; }
+    .excerpt-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-100); opacity: 0.7; margin-bottom: 24px; position: relative; }
+    .excerpt-block blockquote { font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.3rem); line-height: 1.65; color: rgba(255,255,255,0.88); font-style: italic; max-width: 68ch; position: relative; }
+    .excerpt-source { margin-top: 28px; font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); position: relative; }
+
+    /* HOW IT WORKS */
+    .steps { display: flex; flex-direction: column; max-width: 740px; }
+    .step { display: grid; grid-template-columns: 52px 1fr; gap: 20px; align-items: start; padding: 28px 0; border-bottom: 1px solid var(--border); }
+    .step:first-child { border-top: 1px solid var(--border); }
+    .step-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 300; color: var(--blue-400); font-style: italic; line-height: 1; }
+    .step h4 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; letter-spacing: -0.01em; }
+    .step p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* PRICING */
+    .pricing-block { max-width: 600px; }
+    .intro-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-900); color: var(--blue-100); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 7px 16px; border-radius: 4px; margin-bottom: 32px; }
+    .intro-dot { width: 6px; height: 6px; background: var(--blue-400); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .price-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 10px; }
+    .price-main { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 600; color: var(--text-primary); line-height: 1; letter-spacing: -0.03em; }
+    .price-note { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; }
+    .package-list { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 0; margin-bottom: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .pkg-item { display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start; }
+    .pkg-num { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--blue-400); line-height: 1.3; }
+    .pkg-item strong { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 2px; }
+    .pkg-item span { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+    .already-own { font-size: 0.9rem; color: var(--text-muted); margin-top: 20px; font-style: italic; }
+    .already-own a { color: var(--blue-500); text-decoration: none; font-style: normal; font-weight: 500; }
+    .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-500); color: #fff; font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; padding: 16px 40px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
+    .btn-cta:hover { background: var(--blue-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+    footer { background: var(--blue-900); color: rgba(255,255,255,0.6); padding: 48px 0 28px; }
+    .f-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .f-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+    footer strong { color: #fff; }
+    footer a { color: var(--blue-100); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .f-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); line-height: 1.8; }
+    .disclaimer { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); line-height: 1.7; text-align: center; max-width: 760px; margin: 0 auto; }
+
+    @media (max-width: 760px) {
+      .contents-grid { grid-template-columns: 1fr; }
+      .excerpt-block { padding: 32px 24px; }
+      nav a:not(.btn) { display: none; }
+      .f-top { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo">
+        <span class="wordmark">J.D. Mercer</span>
+        <span class="sub">Cognition Blocks of Intelligence</span>
+      </a>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/individual.html">Individual</a>
+        <a href="/clinicians.html">For Clinicians</a>
+        <a href="#pricing" class="btn">Book Analysis</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow-tag">Couples Parser Analysis</div>
+      <h1>The same fight, on repeat, <em>has a name.</em></h1>
+      <p>You're not arguing about what you think you're arguing about. The Couples Parser Analysis shows what is actually happening between two minds — and puts it in writing both of you can read.</p>
+      <a href="#pricing" class="btn-hero">See What's Included →</a>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="section-inner">
+      <div class="eyebrow">Recognition</div>
+      <h2 class="section-title">If any of this is familiar.</h2>
+      <div class="recognition-stack">
+        <div class="r-item">
+          <p>"We keep having the same conversation, but it never resolves."</p>
+          <cite>Gottman Institute — 69% of relationship conflicts are perpetual, not solvable through communication skills alone</cite>
+        </div>
+        <div class="r-item">
+          <p>"I thought I was being clear. They thought I was being cold."</p>
+          <cite>Cited by couples therapists — one of the most common complaints in relationship counseling</cite>
+        </div>
+        <div class="r-item">
+          <p>"I explain it three times and they still don't get it. They explain it back and I still don't get it."</p>
+          <cite>Talkspace, Psychology Today — communication breakdown is the #1 reason couples seek therapy</cite>
+        </div>
+        <div class="r-item">
+          <p>"When I want to talk, they try to fix it. I just want them to hear me."</p>
+          <cite>HuffPost — one of the most reported mismatches in couples therapy</cite>
+        </div>
+        <div class="r-item">
+          <p>"We're great at running the house. We're great with the kids. We've forgotten how to be a couple."</p>
+          <cite>Psychology Today — couples therapy literature on losing connection while maintaining function</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="eyebrow">What You Receive</div>
+      <h2 class="section-title">A written analysis built around your two minds.</h2>
+      <p class="section-sub">Not a compatibility score. A document that reads like it was written for the relationship you are actually in.</p>
+
+      <div class="contents-grid">
+        <div class="c-item">
+          <div class="c-num">I · Dimensional Map</div>
+          <h4>Where you align, where you don't.</h4>
+          <p>The three dimensions plotted side by side — with what each gap means in real life.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">II · Dimensional Analysis</div>
+          <h4>Each gap, in plain language.</h4>
+          <p>How each difference shows up in real conversations, with examples you'll recognize.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">III · The Core Dynamic</div>
+          <h4>What is actually happening.</h4>
+          <p>The pattern underneath the recurring conflict — why both of you have been right about what you're saying while saying different things.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">IV · Where It Works</div>
+          <h4>What this pairing produces together.</h4>
+          <p>The picture neither mind can hold alone — and what the relationship is structurally built to create.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">V · Where It Breaks</div>
+          <h4>The specific places friction lives.</h4>
+          <p>Named, without blame. The moments that have been confusing become legible.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">VI · Translation Layer</div>
+          <h4>What each of you actually means.</h4>
+          <p>What gets said versus what gets heard — and the language that bridges it.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">VII · Parenting Together</div>
+          <h4>Two minds, one set of children.</h4>
+          <p>What each parent sees that the other doesn't — and how to use both reads.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">VIII · Household Operations</div>
+          <h4>The visible load and the invisible one.</h4>
+          <p>Why one of you feels they carry more — and how the load is actually distributed once both kinds of work are named.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">IX · Financial Decisions</div>
+          <h4>Where the gaps converge.</h4>
+          <p>Money is where all three dimensions often meet at once — the order of operations that lets both reads inform a sound decision.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">X · Intimacy and Connection</div>
+          <h4>What presence means to each of you.</h4>
+          <p>Why one version of being there can feel like absence to the other.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">XI · Long-Term Vision</div>
+          <h4>Building a future you both own.</h4>
+          <p>Why a vision held in one mind rarely lands in the other — and how to build one that both of you recognize as yours.</p>
+        </div>
+        <div class="c-item">
+          <div class="c-num">XII · The One Sentence</div>
+          <h4>Everything, in one line.</h4>
+          <p>The summary you can carry into the next conversation — and the next one after that.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="section-inner">
+      <div class="excerpt-block">
+        <div class="excerpt-label">From a Real Couples Parser Analysis · Altruistic × Sharp</div>
+        <blockquote>
+          Between these two minds, the entire range of how a situation can be processed is held simultaneously. One mind sees the collective future implications — what is building, who it affects, what could become possible. The other sees the concrete reality — what this actually is right now, what the real costs are, what direct experience says about how it resolves. No single mind has access to both at the same time. This pairing does. The gap that makes communication hard is the same gap that produces a more complete read than either mind generates alone.
+        </blockquote>
+        <div class="excerpt-source">This is the kind of thing the analysis says about you.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="eyebrow">How It Works</div>
+      <h2 class="section-title">Three steps.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">i</div>
+          <div>
+            <h4>Each of you completes a Parser Profile.</h4>
+            <p>Both partners take the individual assessment separately. Each profile stays private to the person who took it — the analysis is built from both, but neither partner sees the other's raw profile.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">ii</div>
+          <div>
+            <h4>The written analysis is prepared.</h4>
+            <p>Using both architectures, a written analysis is built specifically for your pairing — covering all twelve sections above.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">iii</div>
+          <div>
+            <h4>The 90-minute consultation.</h4>
+            <p>Both of you and J.D. Mercer, walking through the analysis live. Questions, examples, the places it lands and the places that need adjusting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="pricing">
+    <div class="section-inner">
+      <div class="pricing-block">
+        <div class="eyebrow">Pricing</div>
+        <h2 class="section-title">Couples Parser Analysis.</h2>
+        <p class="section-sub" style="margin-bottom:32px;">Both individual profiles, the written analysis, and the 90-minute consultation — in one package.</p>
+
+        <div class="intro-badge">
+          <span class="intro-dot"></span>
+          Introductory Price
+        </div>
+
+        <div class="price-row">
+          <span class="price-main">$299</span>
+        </div>
+        <p class="price-note">One-time. Everything below is included.</p>
+
+        <div class="package-list">
+          <div class="pkg-item">
+            <span class="pkg-num">i</span>
+            <div>
+              <strong>Individual Parser Profile — Partner One</strong>
+              <span>Full written profile of how the first partner takes in the world.</span>
+            </div>
+          </div>
+          <div class="pkg-item">
+            <span class="pkg-num">ii</span>
+            <div>
+              <strong>Individual Parser Profile — Partner Two</strong>
+              <span>Full written profile of how the second partner takes in the world.</span>
+            </div>
+          </div>
+          <div class="pkg-item">
+            <span class="pkg-num">iii</span>
+            <div>
+              <strong>Couples Parser Analysis</strong>
+              <span>The twelve-section written analysis of the dynamic between your two architectures.</span>
+            </div>
+          </div>
+          <div class="pkg-item">
+            <span class="pkg-num">+</span>
+            <div>
+              <strong>90-Minute Consultation</strong>
+              <span>Both of you and J.D. Mercer, walking through the analysis live.</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="#" class="btn-cta">Book Couples Analysis →</a>
+        <p class="already-own">Already own both Individual Parser Profiles? <a href="#">Couples Analysis only — $199.</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-inner">
+      <div class="f-top">
+        <div>
+          <strong>J.D. Mercer</strong>
+          <div style="margin-top:6px;font-size:0.85rem;">Cognition Blocks of Intelligence</div>
+        </div>
+        <div class="f-meta">
+          © 2026 Cognition Blocks LLC<br>
+          U.S. Copyright TXu 2-497-721<br>
+          <a href="/clinicians.html">For Clinicians →</a>
+        </div>
+      </div>
+      <div class="disclaimer">
+        The Parser Profile and Couples Parser Analysis are non-clinical, educational services. They are not therapy, diagnosis, or treatment of any medical or mental health condition. If you are in crisis or need clinical support, please contact a licensed professional.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

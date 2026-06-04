@@ -199,11 +199,15 @@ const createTransporter = () => {
 };
 
 // ============================================================================
-// ROOT REDIRECT
+// ROOT — marketing homepage
 // ============================================================================
 
+// The public marketing site lives at index.html. express.static (above)
+// serves it for '/' as well; this explicit route documents the intent and
+// guarantees the homepage even if static index resolution is disabled.
+// The assessment itself remains reachable directly at /assessment.html.
 app.get('/', (req, res) => {
-    res.redirect('/assessment.html');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ============================================================================
