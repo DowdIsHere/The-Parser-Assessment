@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0C2340">
+    <title>Parser Profiles™ | The 27 Cognitive Architectures</title>
+    <meta name="description" content="Explore all 27 Parser Profiles — the cognitive architectures that shape how you perceive, process, and move through the world.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* CBI Blue trust palette */
+            --blue-900: #0C2340;
+            --blue-700: #1B3A5C;
+            --blue-600: #1E4D78;
+            --blue-500: #2563EB;
+            --blue-400: #3B82F6;
+            --blue-100: #DBEAFE;
+            --blue-50:  #EFF6FF;
+
+            --slate-900: #1A1A2E;
+            --slate-700: #334155;
+            --slate-500: #64748B;
+            --slate-300: #CBD5E1;
+            --slate-100: #F1F5F9;
+            --white: #FFFFFF;
+
+            --amber-500: #D97706;
+            --amber-400: #F59E0B;
+            --green-600: #059669;
+
+            --bg-page: #F7F8FA;
+            --bg-card: #FFFFFF;
+            --bg-inset: #F1F5F9;
+            --text-primary: #1A1A2E;
+            --text-secondary: #334155;
+            --text-muted: #64748B;
+
+            --border: rgba(0,0,0,0.08);
+            --border-strong: rgba(0,0,0,0.14);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+
+            /* Spatial family accents (drawn from CBI accent set) */
+            --concrete: #0D9488;
+            --balanced: #2563EB;
+            --abstract: #7C3AED;
+
+            --hero-gradient: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'IBM Plex Sans', system-ui, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Minimal-theme two-column shell ===== */
+        .shell { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
+        @media (min-width: 1000px) {
+            .shell { grid-template-columns: 340px 1fr; }
+        }
+
+        /* ===== Sidebar (navy hero, à la minimal theme left column) ===== */
+        .sidebar {
+            background: var(--hero-gradient);
+            color: var(--white);
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sidebar::before {
+            content: "";
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(37,99,235,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 90% 80%, rgba(59,130,246,0.12) 0%, transparent 55%);
+            pointer-events: none;
+        }
+        @media (min-width: 1000px) {
+            .sidebar {
+                position: sticky; top: 0; height: 100vh;
+                display: flex; flex-direction: column;
+                padding: 56px 40px;
+            }
+        }
+        .sidebar > * { position: relative; z-index: 1; }
+        .brand-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em;
+            color: var(--blue-100); margin-bottom: 14px;
+        }
+        .brand-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-weight: 700; line-height: 1.12;
+            font-size: clamp(2rem, 4.5vw, 2.6rem);
+            margin-bottom: 16px;
+        }
+        .brand-title em { font-style: italic; color: var(--amber-400); }
+        .brand-sub {
+            color: rgba(255,255,255,0.82);
+            font-size: 1rem; max-width: 42ch; margin-bottom: 28px;
+        }
+        .filters { margin-bottom: 26px; }
+        .filters-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em;
+            color: rgba(219,234,254,0.7); margin-bottom: 12px;
+        }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.8rem; font-weight: 500;
+            color: var(--blue-100);
+            background: rgba(219,234,254,0.10);
+            border: 1px solid rgba(219,234,254,0.28);
+            padding: 6px 14px; border-radius: 100px;
+            cursor: pointer; transition: all 0.18s ease;
+        }
+        .chip:hover { background: rgba(219,234,254,0.20); }
+        .chip.active { background: var(--white); color: var(--blue-900); border-color: var(--white); }
+
+        .search-wrap { margin-bottom: 24px; }
+        .search-input {
+            width: 100%;
+            font-family: 'IBM Plex Sans', sans-serif; font-size: 0.95rem;
+            color: var(--white);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 10px; padding: 12px 16px;
+            transition: all 0.18s ease;
+        }
+        .search-input::placeholder { color: rgba(255,255,255,0.55); }
+        .search-input:focus {
+            outline: none; border-color: var(--blue-400);
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+        }
+
+        .sidebar-foot { margin-top: auto; padding-top: 28px; }
+        .count-pill {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem; letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.7); margin-bottom: 18px;
+        }
+        .cta-btn {
+            display: inline-block; width: 100%; text-align: center;
+            font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.95rem;
+            background: var(--white); color: var(--blue-900);
+            padding: 13px 20px; border-radius: 8px; text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.22); }
+
+        /* ===== Content column ===== */
+        .content { padding: 40px 24px 80px; }
+        @media (min-width: 1000px) { .content { padding: 56px 48px 96px; max-width: 1100px; } }
+
+        .grid {
+            display: grid; gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        }
+
+        .pcard {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column;
+        }
+        .pcard:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+        .pcard::before {
+            content: ""; position: absolute; left: 0; top: 22px; bottom: 22px; width: 4px;
+            border-radius: 0 4px 4px 0; background: var(--accent, var(--blue-500));
+        }
+        .pcard .archetype {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.3rem; font-weight: 700; line-height: 1.2;
+            color: var(--text-primary); margin-bottom: 4px;
+        }
+        .pcard .pname {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--accent, var(--blue-500)); font-weight: 600; margin-bottom: 14px;
+        }
+        .pcard .ptag {
+            font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;
+            flex: 1; margin-bottom: 16px;
+        }
+        .pcard .code {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.66rem; letter-spacing: 0.04em; color: var(--text-muted);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .pcard .code .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent, var(--blue-500)); }
+
+        .empty {
+            grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted);
+            font-family: 'Source Serif 4', Georgia, serif; font-size: 1.1rem; font-style: italic;
+        }
+
+        /* ===== Detail overlay (app-like) ===== */
+        .detail {
+            position: fixed; inset: 0; z-index: 200;
+            background: var(--bg-page);
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+            -webkit-overflow-scrolling: touch;
+        }
+        .detail.open { transform: translateX(0); }
+
+        .detail-hero {
+            background: var(--hero-gradient);
+            color: var(--white); position: relative; overflow: hidden;
+            padding: 24px 24px 40px;
+        }
+        .detail-hero::before {
+            content: ""; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 18% 40%, rgba(37,99,235,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 85% 15%, rgba(59,130,246,0.12) 0%, transparent 55%);
+        }
+        .detail-hero > * { position: relative; z-index: 1; }
+        .detail-inner { max-width: 720px; margin: 0 auto; }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+            color: var(--white); font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.85rem; font-weight: 500;
+            padding: 9px 16px; border-radius: 100px; cursor: pointer;
+            transition: background 0.18s ease; margin-bottom: 28px;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.22); }
+        .detail-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--amber-400); margin-bottom: 10px;
+        }
+        .detail-title {
+            font-family: 'Source Serif 4', Georgia, serif; font-weight: 700;
+            font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.12; margin-bottom: 10px;
+        }
+        .detail-code {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem;
+            color: rgba(255,255,255,0.7); letter-spacing: 0.05em; margin-bottom: 18px;
+        }
+        .detail-tag {
+            font-family: 'Source Serif 4', Georgia, serif; font-style: italic;
+            font-size: 1.2rem; color: rgba(255,255,255,0.92); max-width: 52ch;
+        }
+
+        .detail-body { max-width: 720px; margin: 0 auto; padding: 40px 24px 90px; }
+        .section { margin-bottom: 44px; }
+        .section-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--text-muted); margin-bottom: 12px;
+        }
+        .section h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.6rem; font-weight: 600; line-height: 1.25;
+            color: var(--text-primary); margin-bottom: 18px;
+            padding-bottom: 12px; border-bottom: 1px solid var(--border);
+        }
+        .section p { color: var(--text-secondary); margin-bottom: 16px; max-width: 68ch; }
+        .section p:last-child { margin-bottom: 0; }
+
+        .phrase {
+            background: var(--blue-50);
+            border-left: 4px solid var(--blue-500);
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+        }
+        .phrase p {
+            font-family: 'Source Serif 4', Georgia, serif; font-style: italic;
+            font-size: 1.25rem; line-height: 1.55; color: var(--text-primary); margin: 0;
+        }
+
+        .strengths { display: grid; gap: 14px; }
+        @media (min-width: 640px) { .strengths { grid-template-columns: 1fr 1fr; } }
+        .strength {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);
+        }
+        .strength h4 {
+            font-family: 'IBM Plex Sans', sans-serif; font-size: 1rem; font-weight: 600;
+            color: var(--text-primary); margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .strength h4::before {
+            content: ""; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent, var(--blue-500)); flex-shrink: 0;
+        }
+        .strength p { font-size: 0.92rem; color: var(--text-secondary); margin: 0; }
+
+        .unlock {
+            background: var(--hero-gradient); color: var(--white);
+            border-radius: 16px; padding: 32px; text-align: center; position: relative; overflow: hidden;
+        }
+        .unlock::before {
+            content: ""; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.18) 0%, transparent 60%);
+        }
+        .unlock > * { position: relative; z-index: 1; }
+        .unlock h3 {
+            font-family: 'Source Serif 4', Georgia, serif; font-size: 1.5rem; margin-bottom: 10px;
+        }
+        .unlock p { color: rgba(255,255,255,0.84); margin-bottom: 22px; max-width: 48ch; margin-left: auto; margin-right: auto; }
+        .unlock .locked-list {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px;
+        }
+        .unlock .locked-list span {
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+            letter-spacing: 0.05em; color: var(--blue-100);
+            background: rgba(219,234,254,0.10); border: 1px solid rgba(219,234,254,0.22);
+            padding: 5px 11px; border-radius: 100px;
+        }
+
+        .loading { padding: 80px 24px; text-align: center; color: var(--text-muted);
+            font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 1.15rem; }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="brand-eyebrow">Parser Profile™</div>
+            <h1 class="brand-title">The 27 <em>cognitive</em> architectures</h1>
+            <p class="brand-sub">Not personality. Architecture — the way your mind filters reality before conscious thought. Explore every profile.</p>
+
+            <div class="search-wrap">
+                <input type="text" id="search" class="search-input" placeholder="Search profiles…" autocomplete="off" spellcheck="false">
+            </div>
+
+            <div class="filters">
+                <div class="filters-label">Filter by perceptual lens</div>
+                <div class="chips" id="chips">
+                    <button class="chip active" data-filter="all">All</button>
+                    <button class="chip" data-filter="Concrete">Concrete</button>
+                    <button class="chip" data-filter="Balanced">Balanced</button>
+                    <button class="chip" data-filter="Abstract">Abstract</button>
+                </div>
+            </div>
+
+            <div class="sidebar-foot">
+                <div class="count-pill" id="countPill">27 profiles</div>
+                <a class="cta-btn" href="/assessment.html">Find your profile →</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="grid" id="grid">
+                <div class="loading">Loading profiles…</div>
+            </div>
+        </main>
+    </div>
+
+    <div class="detail" id="detail" aria-hidden="true">
+        <div id="detailContent"></div>
+    </div>
+
+    <script type="module">
+        import { profiles } from './index.js';
+
+        // Archetype names (Parser Profile™ reference — Part 6 of the methodology)
+        const ARCHETYPE = {
+            VISIONARY: 'The Pattern-Seer', SHARP: 'The Seasoned Expert', GROUNDED: 'The Reality-Anchor',
+            ATTUNED: 'The Room-Reader', LEGACY: 'The Tradition-Keeper', EMBODIED: 'The Sensor',
+            INTENTIONAL: 'The Architect', RESILIENT: 'The Contingency Planner', RELIABLE: 'The Promise-Keeper',
+            INTEGRATED: 'The Synthesizer', COHERENT: 'The Thread-Finder', RECONCILED: 'The Bridge-Builder',
+            CENTERED: 'The Still Point', EQUANIMOUS: 'The Witness', EMPATHETIC: 'The Holder',
+            ACTUALIZED: 'The Becomer', HARMONIOUS: 'The Balancer', COLLABORATIVE: 'The Builder',
+            SENTIMENTAL: 'The Meaning-Keeper', REFLECTIVE: 'The Philosopher', IDEALIZED: 'The Romantic',
+            INTROSPECTIVE: 'The Depth-Perceiver', MINDFUL: 'The Observer', INTUITIVE: 'The Reader',
+            FORESIGHTED: 'The Anticipator', ALTRUISTIC: 'The Systems Visionary', SEASONED: 'The Practitioner',
+        };
+
+        // Canonical gradient codes (Part 6). Used as a fallback for any profile
+        // whose data object omits `code` (a few redrafted profiles do), so the
+        // spatial lens, filter, and accent stay correct without touching content.
+        const CODE = {
+            VISIONARY: 'Abstract • Future • Self', SHARP: 'Concrete • Past • Self',
+            GROUNDED: 'Concrete • Present • Balanced', ATTUNED: 'Concrete • Present • Other',
+            LEGACY: 'Concrete • Past • Other', EMBODIED: 'Concrete • Present • Self',
+            INTENTIONAL: 'Concrete • Future • Self', RESILIENT: 'Concrete • Future • Balanced',
+            RELIABLE: 'Concrete • Future • Other', INTEGRATED: 'Balanced • Past • Self',
+            COHERENT: 'Balanced • Past • Balanced', RECONCILED: 'Balanced • Past • Other',
+            CENTERED: 'Balanced • Present • Self', EQUANIMOUS: 'Balanced • Present • Balanced',
+            EMPATHETIC: 'Balanced • Present • Other', ACTUALIZED: 'Balanced • Future • Self',
+            HARMONIOUS: 'Balanced • Future • Balanced', COLLABORATIVE: 'Balanced • Future • Other',
+            SENTIMENTAL: 'Abstract • Past • Self', REFLECTIVE: 'Abstract • Past • Balanced',
+            IDEALIZED: 'Abstract • Past • Other', INTROSPECTIVE: 'Abstract • Present • Self',
+            MINDFUL: 'Abstract • Present • Balanced', INTUITIVE: 'Abstract • Present • Other',
+            FORESIGHTED: 'Abstract • Future • Balanced', ALTRUISTIC: 'Abstract • Future • Other',
+            SEASONED: 'Concrete • Past • Balanced',
+        };
+
+        const ACCENT = { Concrete: 'var(--concrete)', Balanced: 'var(--balanced)', Abstract: 'var(--abstract)' };
+
+        const list = Object.values(profiles).map(p => {
+            const code = p.code || CODE[p.name] || '';
+            const spatial = code.split('•')[0].trim() || 'Balanced';
+            return { ...p, code, archetype: ARCHETYPE[p.name] || p.name, spatial };
+        }).sort((a, b) => a.archetype.localeCompare(b.archetype));
+
+        const esc = (s) => String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const paras = (t) => String(t || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean)
+            .map(s => `<p>${esc(s)}</p>`).join('');
+
+        const grid = document.getElementById('grid');
+        const detail = document.getElementById('detail');
+        const detailContent = document.getElementById('detailContent');
+        const search = document.getElementById('search');
+        const countPill = document.getElementById('countPill');
+
+        let activeFilter = 'all';
+        let query = '';
+
+        function visible() {
+            return list.filter(p => {
+                const matchFilter = activeFilter === 'all' || p.spatial === activeFilter;
+                const q = query.toLowerCase();
+                const matchQuery = !q ||
+                    p.archetype.toLowerCase().includes(q) ||
+                    (p.name || '').toLowerCase().includes(q) ||
+                    (p.tagline || '').toLowerCase().includes(q) ||
+                    (p.code || '').toLowerCase().includes(q);
+                return matchFilter && matchQuery;
+            });
+        }
+
+        function renderGrid() {
+            const items = visible();
+            countPill.textContent = `${items.length} profile${items.length === 1 ? '' : 's'}`;
+            if (!items.length) {
+                grid.innerHTML = `<div class="empty">No profiles match “${esc(query)}”.</div>`;
+                return;
+            }
+            grid.innerHTML = items.map(p => `
+                <article class="pcard" data-name="${esc(p.name)}" style="--accent:${ACCENT[p.spatial] || 'var(--blue-500)'}">
+                    <div class="archetype">${esc(p.archetype)}</div>
+                    <div class="pname">${esc(p.name)}</div>
+                    <div class="ptag">${esc(p.tagline || '')}</div>
+                    <div class="code"><span class="dot"></span>${esc(p.code || '')}</div>
+                </article>`).join('');
+        }
+
+        function renderDetail(p) {
+            const accent = ACCENT[p.spatial] || 'var(--blue-500)';
+            const strengths = Array.isArray(p.strengths) ? p.strengths.slice(0, 6) : [];
+            detailContent.innerHTML = `
+                <div class="detail-hero" style="--accent:${accent}">
+                    <div class="detail-inner">
+                        <button class="back-btn" id="backBtn">← All profiles</button>
+                        <div class="detail-eyebrow">${esc(p.spatial)} lens</div>
+                        <h1 class="detail-title">${esc(p.archetype)}</h1>
+                        <div class="detail-code">${esc(p.name)} · ${esc(p.code || '')}</div>
+                        <p class="detail-tag">${esc(p.tagline || '')}</p>
+                    </div>
+                </div>
+                <div class="detail-body" style="--accent:${accent}">
+                    ${p.overview ? `<section class="section">
+                        <div class="section-label">The architecture</div>
+                        <h2>How your mind moves</h2>
+                        ${paras(p.overview)}
+                    </section>` : ''}
+
+                    ${p.phrase ? `<section class="section">
+                        <div class="section-label">The phrase that hits home</div>
+                        <div class="phrase"><p>“${esc(p.phrase)}”</p></div>
+                    </section>` : ''}
+
+                    ${strengths.length ? `<section class="section">
+                        <div class="section-label">Cognitive strengths</div>
+                        <h2>What your architecture does well</h2>
+                        <div class="strengths">
+                            ${strengths.map(s => `<div class="strength">
+                                <h4>${esc(s.title)}</h4>
+                                <p>${esc(s.description)}</p>
+                            </div>`).join('')}
+                        </div>
+                    </section>` : ''}
+
+                    ${p.howYouLearn ? `<section class="section">
+                        <div class="section-label">How you learn</div>
+                        <h2>The conditions that fit you</h2>
+                        ${paras(p.howYouLearn)}
+                    </section>` : ''}
+
+                    ${p.howYouCommunicate ? `<section class="section">
+                        <div class="section-label">How you communicate</div>
+                        <h2>Your natural signal</h2>
+                        ${paras(p.howYouCommunicate)}
+                    </section>` : ''}
+
+                    <section class="section">
+                        <div class="unlock">
+                            <h3>The full reading goes deeper</h3>
+                            <p>Take the assessment to unlock the parts of ${esc(p.archetype)} that only show up once we know it's yours.</p>
+                            <div class="locked-list">
+                                <span>The secret you've carried</span>
+                                <span>Hidden superpower</span>
+                                <span>Blind spot</span>
+                                <span>Natural challenges</span>
+                                <span>Energy patterns</span>
+                                <span>Work environments</span>
+                            </div>
+                            <a class="cta-btn" style="max-width:280px;margin:0 auto;" href="/assessment.html">Take the assessment →</a>
+                        </div>
+                    </section>
+                </div>`;
+            document.getElementById('backBtn').addEventListener('click', closeDetail);
+        }
+
+        function openDetail(name) {
+            const p = list.find(x => x.name === name);
+            if (!p) return;
+            renderDetail(p);
+            detail.classList.add('open');
+            detail.setAttribute('aria-hidden', 'false');
+            detail.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+            history.pushState({ profile: name }, '', `#${name.toLowerCase()}`);
+        }
+
+        function closeDetail(fromPop) {
+            detail.classList.remove('open');
+            detail.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (!fromPop && location.hash) history.pushState({}, '', location.pathname);
+        }
+
+        grid.addEventListener('click', (e) => {
+            const card = e.target.closest('.pcard');
+            if (card) openDetail(card.dataset.name);
+        });
+
+        search.addEventListener('input', (e) => { query = e.target.value; renderGrid(); });
+
+        document.getElementById('chips').addEventListener('click', (e) => {
+            const chip = e.target.closest('.chip');
+            if (!chip) return;
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            activeFilter = chip.dataset.filter;
+            renderGrid();
+        });
+
+        window.addEventListener('popstate', () => {
+            if (location.hash) {
+                const name = location.hash.slice(1).toUpperCase();
+                if (list.find(x => x.name === name)) { openDetail.fromHash = true; renderDetail(list.find(x => x.name === name)); detail.classList.add('open'); document.body.style.overflow = 'hidden'; }
+            } else {
+                closeDetail(true);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && detail.classList.contains('open')) closeDetail();
+        });
+
+        renderGrid();
+
+        // Deep-link support: /profiles.html#intuitive opens that profile.
+        if (location.hash) {
+            const name = location.hash.slice(1).toUpperCase();
+            const p = list.find(x => x.name === name);
+            if (p) { renderDetail(p); detail.classList.add('open'); detail.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
+        }
+    </script>
+</body>
+</html>

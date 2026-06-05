@@ -1,0 +1,34 @@
+{
+  "appId": "com.cognitionblocks.parserprofile",
+  "appName": "Parser Profile",
+  "webDir": "www",
+  "server": {
+    "url": "https://REPLACE-WITH-YOUR-RAILWAY-DOMAIN.up.railway.app",
+    "cleartext": false,
+    "allowNavigation": [
+      "REPLACE-WITH-YOUR-RAILWAY-DOMAIN.up.railway.app",
+      "js.stripe.com",
+      "*.stripe.com",
+      "fonts.googleapis.com",
+      "fonts.gstatic.com"
+    ]
+  },
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#0C2340"
+  },
+  "android": {
+    "backgroundColor": "#0C2340"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "backgroundColor": "#0C2340",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "LIGHT",
+      "backgroundColor": "#0C2340"
+    }
+  }
+}
