@@ -3,373 +3,1302 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>J.D. Mercer | Parser Profile</title>
-  <meta name="description" content="Understanding the one you're with starts with understanding yourself. The Parser Profile shows you how your mind takes in the world.">
+  <title>Parser Frame™ — The 27 Parsers | J.D. Mercer</title>
+  <meta name="description" content="Everyone takes in the world a little differently. The 27 Parser Profiles — grouped by how they take things in.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --blue-900: #0C2340;
-      --blue-700: #1B3A5C;
-      --blue-600: #1E4D78;
-      --blue-500: #2563EB;
-      --blue-400: #3B82F6;
-      --blue-100: #DBEAFE;
-      --blue-50: #EFF6FF;
-      --text-primary: #1A1A2E;
-      --text-secondary: #334155;
-      --text-muted: #64748B;
-      --bg-page: #F7F8FA;
-      --bg-card: #FFFFFF;
-      --bg-inset: #F1F5F9;
-      --border: rgba(0,0,0,0.08);
-      --border-strong: rgba(0,0,0,0.14);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+      /* Unified light premium palette */
+      --blue-900: #0C2340; --blue-700: #1B3A5C; --blue-600: #1E4D78;
+      --blue-500: #2563EB; --blue-400: #3B82F6; --blue-100: #DBEAFE; --blue-50: #EFF6FF;
+      --text-primary: #1A1A2E; --text-secondary: #334155; --text-muted: #64748B;
+      --bg-page: #F7F8FA; --bg-card: #FFFFFF; --bg-inset: #F1F5F9;
+      --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.14);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08); --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+      --amber: #F59E0B;
+
+      /* Legacy aliases remapped onto the light system */
+      --ink: #F7F8FA; --ink-soft: #F1F5F9; --ink-card: #FFFFFF; --ink-lift: #F1F5F9;
+      --gold: #1E4D78; --gold-bright: #2563EB; --gold-pale: #1E4D78;
+      --cream: #1A1A2E; --cream-dim: #334155;
+      --mist: rgba(37,99,235,0.06);
+      --rule: rgba(0,0,0,0.08); --rule-soft: rgba(0,0,0,0.05);
+      --text: #1A1A2E; --text-soft: #334155;
+      --blue: #2563EB;
+
       --font-display: 'Source Serif 4', Georgia, serif;
-      --font-body: 'IBM Plex Sans', system-ui, sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
     }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       font-family: var(--font-body);
-      background: var(--bg-page);
-      color: var(--text-primary);
-      line-height: 1.6;
-      font-size: 17px;
-      letter-spacing: 0.01em;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      overflow-x: hidden;
     }
 
-    /* HEADER */
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .container-narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── HEADER ── */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: 20px 0;
+      padding: 18px 0;
     }
     .h-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
-    .logo .wordmark {
-      font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;
-      color: var(--text-primary); letter-spacing: -0.01em; line-height: 1;
+    .logo-lockup {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none;
     }
-    .logo .sub {
-      font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase;
-      letter-spacing: 0.15em; color: var(--text-muted);
+    .logo-img {
+      width: 38px; height: 38px;
+      border-radius: 6px;
+      object-fit: cover;
+      filter: brightness(0.9) contrast(1.1);
     }
-    nav { display: flex; gap: 20px; align-items: center; }
+    .logo-text .name {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--cream); letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .logo-text .sub {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      margin-top: 4px;
+    }
+    nav { display: flex; gap: 28px; align-items: center; }
     nav a {
-      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
       text-decoration: none; transition: color 0.2s;
     }
-    nav a:hover { color: var(--blue-500); }
-    nav a.btn {
-      background: var(--blue-500); color: #fff; padding: 9px 20px;
-      border-radius: 8px; font-weight: 600; font-size: 0.85rem;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    nav a:hover { color: var(--gold-bright); }
+    nav a.cta {
+      background: var(--blue-500);
+      color: #fff; font-weight: 600;
+      padding: 9px 20px; border-radius: 8px;
       box-shadow: var(--shadow-sm);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     }
-    nav a.btn:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    nav a.cta:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
-    /* HERO — always dark */
+    /* ── HERO ── */
     .hero {
+      padding: 120px 0 96px;
+      position: relative;
       background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%);
-      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
     }
     .hero::before {
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.10) 0%, transparent 50%);
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245,158,11,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 50%, rgba(59,130,246,0.12) 0%, transparent 60%);
       pointer-events: none;
     }
     .hero-inner {
-      max-width: 1100px; margin: 0 auto; padding: 96px 24px 80px;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
       position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--amber);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 1px; background: var(--amber);
     }
     .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.6rem, 6vw, 4.2rem);
-      font-weight: 600; line-height: 1.08;
-      letter-spacing: -0.025em; color: #fff;
-      margin-bottom: 24px; max-width: 820px;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300; line-height: 1.0;
+      letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 28px;
     }
-    .hero h1 em { font-style: italic; font-weight: 300; color: #F59E0B; }
-    .hero p {
+    .hero h1 em {
+      font-style: italic; font-weight: 300; color: var(--amber);
+    }
+    .hero-sub {
       font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-      line-height: 1.6; color: rgba(255,255,255,0.75);
-      max-width: 58ch; font-style: italic; margin-bottom: 44px;
+      font-size: 1.2rem; line-height: 1.7;
+      color: rgba(255,255,255,0.78); max-width: 54ch;
+      font-style: italic; margin-bottom: 40px;
     }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-hero-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #fff; color: var(--blue-900);
-      font-family: var(--font-body); font-size: 1rem; font-weight: 600;
-      padding: 14px 32px; border-radius: 8px; text-decoration: none;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .btn-hero-primary:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-    .btn-hero-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9);
-      border: 1px solid rgba(255,255,255,0.2);
-      font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
-      padding: 14px 28px; border-radius: 8px; text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .btn-hero-secondary:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.35); }
-
-    /* MAIN */
-    main { flex: 1; }
-
-    /* TWO PATHS */
-    .paths { padding: 80px 0; }
-    .paths-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .paths h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 2.5vw, 1.9rem);
-      font-weight: 400; color: var(--text-secondary);
-      text-align: center; margin-bottom: 48px;
-      letter-spacing: -0.01em; line-height: 1.4;
-    }
-    .paths-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
-    }
-    .path-card {
-      display: block; text-decoration: none;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-      box-shadow: var(--shadow-sm);
-    }
-    .path-card:hover {
-      border-color: var(--blue-400);
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
-    }
-    .path-image {
-      aspect-ratio: 4/3; background: var(--bg-inset);
+    .hero-image-box {
+      aspect-ratio: 3/4;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
     }
-    .path-image-placeholder {
-      font-family: var(--font-mono); font-size: 0.68rem;
-      text-transform: uppercase; letter-spacing: 0.18em;
-      color: var(--text-muted);
-    }
-    /* Diagonal hatch texture for placeholder */
-    .path-image::before {
+    .hero-image-box::before {
       content: '';
       position: absolute; inset: 0;
       background: repeating-linear-gradient(
-        45deg,
-        transparent 0, transparent 12px,
-        rgba(0,0,0,0.025) 12px, rgba(0,0,0,0.025) 24px
+        -45deg, transparent 0, transparent 18px,
+        rgba(255,255,255,0.035) 18px, rgba(255,255,255,0.035) 36px
       );
     }
-    .path-body { padding: 28px 32px 32px; }
-    .path-tag {
-      font-family: var(--font-mono); font-size: 0.65rem;
-      text-transform: uppercase; letter-spacing: 0.15em;
-      color: var(--blue-600);
-      background: var(--blue-50);
-      display: inline-block; padding: 4px 10px; border-radius: 4px;
-      margin-bottom: 14px;
+    .img-placeholder {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      position: relative;
     }
-    .path-card h3 {
+    .hero-image-box .img-placeholder { color: rgba(255,255,255,0.5); }
+    .hero-stats {
+      display: flex; gap: 40px;
+    }
+    .stat-item .num {
       font-family: var(--font-display);
-      font-size: 1.5rem; font-weight: 600;
-      color: var(--text-primary); letter-spacing: -0.015em;
-      margin-bottom: 10px; line-height: 1.2;
+      font-size: 2.8rem; font-weight: 300;
+      color: #fff; line-height: 1;
+      letter-spacing: -0.02em;
     }
-    .path-card p {
-      font-size: 0.95rem; color: var(--text-secondary);
-      line-height: 1.65; margin-bottom: 20px;
+    .stat-item .label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.55);
+      margin-top: 4px;
     }
-    .path-cta {
-      font-family: var(--font-body); font-size: 0.9rem;
-      font-weight: 600; color: var(--blue-500);
-      display: inline-flex; align-items: center; gap: 6px;
-      transition: gap 0.2s;
-    }
-    .path-card:hover .path-cta { gap: 10px; }
 
-    /* TAGLINE BAND */
-    .tagline-band {
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--ink-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 64px 0;
+    }
+    .intro-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 300; line-height: 1.55;
+      color: var(--cream); max-width: 80ch;
+      letter-spacing: -0.01em;
+    }
+    .intro-text em { font-style: italic; color: var(--gold-pale); }
+
+    /* ── SECTION STRUCTURE ── */
+    .section { padding: 96px 0; }
+    .section-border { border-top: 1px solid var(--rule); }
+    .section-header {
+      display: flex; align-items: baseline;
+      gap: 24px; margin-bottom: 64px;
+    }
+    .section-num {
+      font-family: var(--font-display);
+      font-size: 5rem; font-weight: 300;
+      color: rgba(30,77,120,0.16);
+      line-height: 1; letter-spacing: -0.04em;
+      flex-shrink: 0;
+    }
+    .section-label-block {}
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--cream);
+    }
+    .section-title em { font-style: italic; color: var(--gold-pale); }
+    .section-sub {
+      font-size: 1rem; color: var(--text-soft);
+      line-height: 1.75; max-width: 62ch;
+      margin-top: 16px;
+    }
+
+    /* ── PARSER GROUP HEADER ── */
+    .group-header {
+      padding: 48px 0 40px;
+      border-top: 1px solid var(--rule);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: end; margin-bottom: 40px;
+    }
+    .group-header:first-of-type { border-top: none; }
+    .group-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 300; letter-spacing: -0.025em;
+      color: var(--cream); line-height: 1;
+    }
+    .group-name em { font-style: italic; color: var(--gold-pale); }
+    .group-desc {
+      font-size: 0.95rem; color: var(--text-soft);
+      line-height: 1.7; max-width: 48ch;
+      padding-bottom: 8px;
+    }
+    .group-image {
+      aspect-ratio: 16/7; background: var(--ink-card);
+      border: 1px solid var(--rule); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 48px; position: relative; overflow: hidden;
+    }
+    .group-image::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 14px,
+        rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
+      );
+    }
+
+    /* ── PARSER GRID ── */
+    .parser-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .parser-card {
       background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 56px 0;
+      padding: 32px 28px 28px;
+      position: relative;
+      transition: background 0.25s;
+      cursor: default;
     }
-    .tagline-band-inner {
-      max-width: 760px; margin: 0 auto; padding: 0 24px;
-      text-align: center;
+    .parser-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
     }
-    .tagline-band p {
+    .parser-card:hover { background: var(--blue-50); }
+    .parser-card:hover::before { opacity: 1; }
+    .parser-num {
       font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
-      line-height: 1.55; color: var(--text-primary);
-      font-style: italic; letter-spacing: -0.01em;
+      font-size: 3.5rem; font-weight: 300;
+      color: rgba(30,77,120,0.14);
+      line-height: 1; letter-spacing: -0.04em;
+      margin-bottom: -8px; display: block;
+      transition: color 0.25s;
     }
-    .tagline-band p .turn {
-      font-style: normal; font-weight: 600; color: var(--blue-600);
+    .parser-card:hover .parser-num { color: rgba(37,99,235,0.32); }
+    .parser-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 6px; line-height: 1.15;
     }
-    .tagline-attr {
-      margin-top: 28px;
-      font-family: var(--font-mono); font-size: 0.65rem;
-      text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--text-muted); line-height: 1.8;
+    .parser-tagline {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-style: italic;
+      color: var(--gold-pale); margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .parser-body {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
     }
 
-    /* FOOTER */
+    /* ── COLLISION SECTION ── */
+    .collision-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--rule);
+      background: var(--ink-soft);
+    }
+    .collision-domain-header {
+      margin-bottom: 56px;
+    }
+    .collision-domain-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .collision-domain-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 300; color: var(--cream);
+      letter-spacing: -0.025em; line-height: 1.05;
+    }
+    .collision-domain-image {
+      aspect-ratio: 21/6; background: var(--ink-card);
+      border: 1px solid var(--rule); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 40px 0; position: relative; overflow: hidden;
+    }
+    .collision-domain-image::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 14px,
+        rgba(0,0,0,0.02) 14px, rgba(0,0,0,0.02) 28px
+      );
+    }
+
+    .faceoff {
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .faceoff-header {
+      background: var(--blue-50);
+      border-bottom: 1px solid var(--rule);
+      padding: 20px 28px;
+      display: flex; align-items: baseline;
+      gap: 16px;
+    }
+    .faceoff-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--blue-600);
+      background: var(--blue-100);
+      padding: 4px 10px; border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .faceoff-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .faceoff-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .faceoff-body {
+      padding: 28px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 28px;
+    }
+    .faceoff-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .faceoff-col h4 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .faceoff-col p {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
+    }
+    .faceoff-col.through {
+      border-left: 1px solid var(--rule);
+      padding-left: 28px;
+    }
+    .faceoff-col.through h4 { color: var(--gold-pale); }
+
+    .gradient-mismatch {
+      background: var(--ink);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .gm-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .gm-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      background: rgba(0,0,0,0.04);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .gm-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+    }
+    .gm-body { padding: 28px; }
+    .gm-setup {
+      font-size: 0.9rem; color: var(--text-soft);
+      line-height: 1.7; margin-bottom: 24px;
+    }
+    .gm-voices {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 24px;
+    }
+    .gm-voice {
+      background: var(--ink-card);
+      border: 1px solid var(--rule-soft);
+      border-radius: 4px; padding: 18px;
+    }
+    .gm-voice-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .gm-voice p {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-style: italic;
+      color: var(--text); line-height: 1.6;
+    }
+    .gm-nav {
+      border-top: 1px solid var(--rule-soft);
+      padding-top: 20px;
+    }
+    .gm-nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .gm-nav p {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    /* ── QUICK REF ── */
+    .quick-ref {
+      padding: 96px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 48px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .ref-item {
+      background: var(--bg-card);
+      padding: 28px;
+    }
+    .ref-item .dimension {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .ref-item h4 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 8px;
+    }
+    .ref-item p {
+      font-size: 0.85rem; color: var(--text-soft);
+      line-height: 1.65;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 96px 0;
+      background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 300; letter-spacing: -0.025em;
+      color: #fff; margin-bottom: 20px;
+      position: relative;
+    }
+    .cta-band h2 em { font-style: italic; color: var(--amber); }
+    .cta-band p {
+      font-family: var(--font-display);
+      font-size: 1.2rem; color: rgba(255,255,255,0.78);
+      line-height: 1.7; max-width: 52ch; font-style: italic;
+      margin: 0 auto 40px; position: relative;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff;
+      color: var(--blue-900); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .cta-btn:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+
+    /* ── FOOTER ── */
     footer {
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border);
       background: var(--blue-900);
       color: rgba(255,255,255,0.6);
-      padding: 48px 0 28px;
     }
     .f-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 24px;
-    }
-    .f-top {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
       display: flex; justify-content: space-between;
       align-items: flex-start; gap: 24px; flex-wrap: wrap;
-      padding-bottom: 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 20px;
     }
-    footer strong { color: #fff; }
-    footer a { color: var(--blue-100); text-decoration: none; }
-    footer a:hover { color: #fff; }
+    .f-brand { display: flex; align-items: center; gap: 12px; }
+    .f-logo { width: 32px; height: 32px; border-radius: 5px; object-fit: cover; }
+    .f-name {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; color: #fff;
+    }
     .f-meta {
-      font-family: var(--font-mono); font-size: 0.68rem;
-      letter-spacing: 0.05em; color: rgba(255,255,255,0.4);
-      line-height: 1.8;
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.5); line-height: 1.9; text-align: right;
+    }
+    .f-meta a { color: var(--blue-100); text-decoration: none; }
+    .f-meta a:hover { color: #fff; }
+    .f-disclaimer {
+      width: 100%; margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.4); line-height: 1.8;
+      text-align: center;
     }
 
-    @media (max-width: 760px) {
-      .paths-grid { grid-template-columns: 1fr; }
-      .hero-actions { flex-direction: column; }
-      .btn-hero-primary, .btn-hero-secondary { text-align: center; justify-content: center; }
-      nav a:not(.btn) { display: none; }
-      .f-top { flex-direction: column; }
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1, .hero-sub, .hero-stats { animation: fadeUp 0.8s ease both; }
+    .hero-sub { animation-delay: 0.1s; }
+    .hero-stats { animation-delay: 0.2s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-image-box { aspect-ratio: 16/9; }
+      .parser-grid { grid-template-columns: 1fr 1fr; }
+      .faceoff-body { grid-template-columns: 1fr; }
+      .faceoff-col.through { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 20px; }
+      .gm-voices { grid-template-columns: 1fr; }
+      .group-header { grid-template-columns: 1fr; gap: 20px; }
+      .ref-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      .container-narrow { padding: 0 20px; }
+      .parser-grid { grid-template-columns: 1fr; }
+      nav a:not(.cta) { display: none; }
     }
   </style>
 </head>
+
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="h-inner">
-      <a href="/" class="logo">
-        <span class="wordmark">J.D. Mercer</span>
-        <span class="sub">Cognition Blocks of Intelligence</span>
+      <a href="/index.html" class="logo-lockup">
+        <img src="cbi-logo.jpg" alt="CBI" class="logo-img">
+        <div class="logo-text">
+          <div class="name">J.D. Mercer</div>
+          <div class="sub">Cognition Blocks Intelligence</div>
+        </div>
       </a>
       <nav>
-        <a href="/parserframe.html">The 27 Parsers</a>
+        <a href="#parsers">The 27</a>
+        <a href="#collisions">Collisions</a>
         <a href="/individual.html">Individual</a>
         <a href="/couples.html">Couples</a>
         <a href="/clinicians.html">For Clinicians</a>
-        <a href="/individual.html" class="btn">Begin Your Profile</a>
+        <a href="/individual.html" class="cta">Get Your Profile</a>
       </nav>
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
-      <h1>Understanding <em>the one you're with</em> —<br>starts with understanding yourself.</h1>
-      <p>This assessment doesn't tell you what kind of person you are. It shows you why — and gives you language to articulate what you've always felt, but couldn't put your finger on.</p>
-      <div class="hero-actions">
-        <a href="/individual.html" class="btn-hero-primary">Take the Individual Assessment</a>
-        <a href="/couples.html" class="btn-hero-secondary">Couples Analysis →</a>
+      <div>
+        <div class="hero-eyebrow">Parser Frame™</div>
+        <h1>The <em>27</em><br>Parsers.</h1>
+        <p class="hero-sub">Everyone takes in the world a little differently — not in what you believe or care about, but in what you actually notice first. Your Parser is the lens your attention defaults to.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="num">27</div>
+            <div class="label">Parser Profiles</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">3</div>
+            <div class="label">Gradient Dimensions</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">4</div>
+            <div class="label">Life Domains</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image-box">
+        <!-- Replace: <img src="/images/parser-frame-hero.jpg" alt="Parser Frame visual"> -->
+        <span class="img-placeholder">Hero Image</span>
       </div>
     </div>
   </section>
 
-  <main>
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <div class="container-narrow">
+      <p class="intro-text">Two people can want the same things, share the same values, and walk out of the same meeting having registered <em>completely different details.</em> They're not disagreeing. They just picked up different parts of the same moment.</p>
+    </div>
+  </div>
 
-    <section class="paths">
-      <div class="paths-inner">
-        <h2>Two ways to see what you've been missing.</h2>
-
-        <div class="paths-grid">
-
-          <a href="/individual.html" class="path-card">
-            <div class="path-image">
-              <!-- Replace with: <img src="/images/individual.jpg" alt="Individual Parser Profile"> -->
-              <span class="path-image-placeholder">Individual Image</span>
-            </div>
-            <div class="path-body">
-              <span class="path-tag">For Yourself</span>
-              <h3>Individual Parser Profile</h3>
-              <p>A personal profile of how your mind receives information — what it notices first, where it anchors, and how that shapes the way you learn, communicate, and relate.</p>
-              <span class="path-cta">Begin your profile →</span>
-            </div>
-          </a>
-
-          <a href="/couples.html" class="path-card">
-            <div class="path-image">
-              <!-- Replace with: <img src="/images/couples.jpg" alt="Couples Analysis"> -->
-              <span class="path-image-placeholder">Couples Image</span>
-            </div>
-            <div class="path-body">
-              <span class="path-tag">For You and the One You're With</span>
-              <h3>Couples Parser Analysis</h3>
-              <p>A 90-minute session focused on the dynamic between two architectures — and the conversation that keeps collapsing in the same place.</p>
-              <span class="path-cta">See what's included →</span>
-            </div>
-          </a>
-
+  <!-- ═══ THE 27 PARSERS ═══ -->
+  <section class="section" id="parsers">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">The Parser Profiles</div>
+          <h2 class="section-title">Grouped by how they<br>take things in.</h2>
+          <p class="section-sub">There's no better or worse one to be — it's just the angle you're standing at. Once you can see yours, a lot of everyday friction starts to make sense.</p>
         </div>
       </div>
-    </section>
 
-    <div class="tagline-band">
-      <div class="tagline-band-inner">
-        <p>Not personality. <span class="turn">The architecture that operates before personality engages</span> — the layer that determines what each person actually receives from a shared moment.</p>
-        <div class="tagline-attr">
-          Parser Profile™ · J.D. Mercer · Cognition Blocks Intelligence Framework<br>
-          U.S. Copyright TXu 2-497-721 · © 2025–2026 Cognition Blocks LLC
+      <!-- GROUP 1: CLOSE-UP LENSES -->
+      <div class="group-header">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:12px;">Group One</div>
+          <div class="group-name"><em>Close-Up</em><br>Lenses</div>
+        </div>
+        <div class="group-desc">Parsers anchored in the concrete and immediate — lived experience, present reality, physical sensation, and what can be personally verified.</div>
+      </div>
+      <div class="group-image">
+        <!-- Replace: <img src="/images/close-up-lenses.jpg" alt="Close-Up Lenses"> -->
+        <span class="img-placeholder">Close-Up Lenses — Group Image</span>
+      </div>
+
+      <div class="parser-grid">
+        <div class="parser-card">
+          <span class="parser-num">01</span>
+          <h3 class="parser-name">Sharp</h3>
+          <div class="parser-tagline">You trust what you've personally lived and tested.</div>
+          <p class="parser-body">You trust what you've lived through. Experience isn't just a teacher — it's the only teacher you fully believe. When someone offers advice, you're already running it against your own history, checking whether it matches what actually happened. You remember the specifics: what worked, what failed, and exactly why. That precision isn't stubbornness — it's earned.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">02</span>
+          <h3 class="parser-name">Seasoned</h3>
+          <div class="parser-tagline">You know what holds up because you've done the reps.</div>
+          <p class="parser-body">You've done the reps. While others theorize, you've tested — refining methods through repetition until you know what holds up. Expertise for you isn't credentials; it's accumulated proof. You're the one who remembers why something became standard practice, long after everyone else just accepts it as "how we do things."</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">03</span>
+          <h3 class="parser-name">Legacy</h3>
+          <div class="parser-tagline">You keep the history others forget.</div>
+          <p class="parser-body">Someone has to remember. You hold the names, the contributions, the specific moments when things changed — the shared history others too easily forget. This isn't nostalgia; it's stewardship. You understand that what exists now was built by people, and honoring that isn't optional. It's how continuity survives.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">04</span>
+          <h3 class="parser-name">Embodied</h3>
+          <div class="parser-tagline">You feel what's happening before you can explain it.</div>
+          <p class="parser-body">Your body knows before your mind catches up. You register the subtle signal — the tension, the shift, the "something's off" — before any test would confirm it. Reality for you isn't abstract; it's what you're physically experiencing right now. This isn't mystical. It's just paying attention to the channel most people have muted.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">05</span>
+          <h3 class="parser-name">Grounded</h3>
+          <div class="parser-tagline">You see the simple, obvious thing everyone's talking past.</div>
+          <p class="parser-body">You see through the noise. While others complicate, you notice what's actually happening — the obvious thing no one is addressing because they're too busy philosophizing. Simplicity isn't limitation for you; it's clarity. And yes, it's frustrating when people need three meetings to reach what you saw in the first five minutes.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">06</span>
+          <h3 class="parser-name">Attuned</h3>
+          <div class="parser-tagline">You read a room before anyone says a word.</div>
+          <p class="parser-body">You read rooms before anyone speaks. The shifted posture, the micro-expression, the energy change when tension enters — you catch it all. This isn't a skill you developed; it's just how you experience being around people. Others say you're "intuitive." You'd say you're just not ignoring the obvious.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">07</span>
+          <h3 class="parser-name">Intentional</h3>
+          <div class="parser-tagline">You're already building toward something months out.</div>
+          <p class="parser-body">You're already building something that won't matter for months. While others react to what's happening, you're three steps ahead, constructing conditions for a future you've clearly pictured. Life isn't something that happens to you — it's something you're deliberately assembling, piece by piece.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">08</span>
+          <h3 class="parser-name">Resilient</h3>
+          <div class="parser-tagline">You've already planned for what could go wrong.</div>
+          <p class="parser-body">You run scenarios. Not anxiously — practically. You want to know what could go wrong so you can have a plan before it does. Preparation isn't worry for you; it's care expressed in advance. When things go sideways, you're the one who already thought about this. That's not luck. That's how you operate.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">09</span>
+          <h3 class="parser-name">Reliable</h3>
+          <div class="parser-tagline">You remember what you promised, and you deliver.</div>
+          <p class="parser-body">You remember what you promised. Long after others have forgotten they asked, you're still tracking the commitment. Following through isn't burden — it's how you demonstrate that your word means something. Trust is built in the details of delivery, and you know that dropping balls drops relationships.</p>
+        </div>
+      </div>
+
+      <!-- GROUP 2: ADJUSTABLE LENSES -->
+      <div class="group-header" style="margin-top:64px;">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:12px;">Group Two</div>
+          <div class="group-name"><em>Adjustable</em><br>Lenses</div>
+        </div>
+        <div class="group-desc">Parsers that move fluidly across dimensions — synthesizing past and present, self and other, concrete and abstract depending on context.</div>
+      </div>
+      <div class="group-image">
+        <!-- Replace: <img src="/images/adjustable-lenses.jpg" alt="Adjustable Lenses"> -->
+        <span class="img-placeholder">Adjustable Lenses — Group Image</span>
+      </div>
+
+      <div class="parser-grid">
+        <div class="parser-card">
+          <span class="parser-num">10</span>
+          <h3 class="parser-name">Integrated</h3>
+          <div class="parser-tagline">You make sense of life by connecting your own experiences.</div>
+          <p class="parser-body">Your insights come from synthesis. You learn more from reflecting on what you've lived through than from any external source — connecting your own experiences into patterns that explain more than the individual moments ever could. Understanding, for you, is an inside job.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">11</span>
+          <h3 class="parser-name">Coherent</h3>
+          <div class="parser-tagline">You see how now connects to what came before.</div>
+          <p class="parser-body">You see the threads. Where others experience events as disconnected, you perceive the continuity — how now relates to then, how patterns repeat with variation. Making sense of the present requires understanding the story that led here. You're the one who remembers the context everyone else has already dropped.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">12</span>
+          <h3 class="parser-name">Reconciled</h3>
+          <div class="parser-tagline">You hold what a group has been through so it can move on honestly.</div>
+          <p class="parser-body">You witness what others want to move past. Group histories live in you — who contributed what, how decisions were made, what was lost along the way. Healing isn't about forgetting; it's about truly seeing. You hold space for what happened so that moving forward doesn't mean pretending it didn't.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">13</span>
+          <h3 class="parser-name">Centered</h3>
+          <div class="parser-tagline">You have an inner anchor that holds when things get turbulent.</div>
+          <p class="parser-body">You know when you're off before anyone else notices. There's an internal anchor that doesn't depend on external circumstances — a stable point you can return to when things get turbulent. Your presence comes from that center. It's not that you don't feel disruption; it's that you know where home is.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">14</span>
+          <h3 class="parser-name">Equanimous</h3>
+          <div class="parser-tagline">You stay calm by not adding to what's already happening.</div>
+          <p class="parser-body">People call you calm. You'd say you're just not adding extra. What's happening is already happening — reacting to it doesn't change it, just creates more turbulence. This isn't detachment; it's efficiency. From where you sit, most drama is optional. You've simply opted out.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">15</span>
+          <h3 class="parser-name">Empathetic</h3>
+          <div class="parser-tagline">You feel the room's emotional shift before it's named.</div>
+          <p class="parser-body">You feel the room shift before anyone names it. Emotional undercurrents register in you like weather changes — present, unmistakable, worth attending to. Your presence creates a container for what others are experiencing, sometimes before you've fully processed your own response. Holding space isn't a technique. It's just how you're wired.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">16</span>
+          <h3 class="parser-name">Actualized</h3>
+          <div class="parser-tagline">You're pulled forward by who you're becoming.</div>
+          <p class="parser-body">The person you're becoming feels more real than who you are today. You live in the gap between current self and possible self — and that gap energizes rather than discourages you. Growth isn't a goal; it's the medium you move through. The question is never "who am I?" It's "who am I becoming?"</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">17</span>
+          <h3 class="parser-name">Harmonious</h3>
+          <div class="parser-tagline">You spot the fix that would make a system work better.</div>
+          <p class="parser-body">You see the optimization everyone else misses. Systems could work better — not theoretically, but obviously, practically, if anyone would just adjust the obvious friction points. This isn't criticism; it's perception. The improvements are right there. You're genuinely puzzled why others don't notice.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">18</span>
+          <h3 class="parser-name">Collaborative</h3>
+          <div class="parser-tagline">You're energized by what a group could build together.</div>
+          <p class="parser-body">You get excited about collective potential. What could groups accomplish if they actually aligned? The possibility energizes you — and the waste when they don't frustrates you equally. Building something together isn't just a strategy; it's the point. Solo success feels hollow compared to shared creation.</p>
+        </div>
+      </div>
+
+      <!-- GROUP 3: WIDE-ANGLE LENSES -->
+      <div class="group-header" style="margin-top:64px;">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:12px;">Group Three</div>
+          <div class="group-name"><em>Wide-Angle</em><br>Lenses</div>
+        </div>
+        <div class="group-desc">Parsers operating at the level of pattern, system, and meaning — perceiving the abstract, the emergent, and the collective across time.</div>
+      </div>
+      <div class="group-image">
+        <!-- Replace: <img src="/images/wide-angle-lenses.jpg" alt="Wide-Angle Lenses"> -->
+        <span class="img-placeholder">Wide-Angle Lenses — Group Image</span>
+      </div>
+
+      <div class="parser-grid">
+        <div class="parser-card">
+          <span class="parser-num">19</span>
+          <h3 class="parser-name">Sentimental</h3>
+          <div class="parser-tagline">You carry the feeling of the past into how you see today.</div>
+          <p class="parser-body">Feelings are your archive. You remember the emotional texture of experiences more vividly than the facts — and those feelings aren't behind you. They're layered into how you perceive today, still coloring everything. The past isn't something you visit; it's something you carry, woven into present experience.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">20</span>
+          <h3 class="parser-name">Reflective</h3>
+          <div class="parser-tagline">You understand things best with a little distance.</div>
+          <p class="parser-body">Understanding comes after. You make sense of things in hindsight — not because you're slow, but because meaning emerges from distance. The immediate moment is data; the reflection is insight. You're the one who sees what something meant long after everyone else has moved on to what's next.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">21</span>
+          <h3 class="parser-name">Idealized</h3>
+          <div class="parser-tagline">You protect the principles that were earned the hard way.</div>
+          <p class="parser-body">You hold certain standards as sacred — not blindly, but because you see what they represent. Principles earned their place through history, and abandoning them isn't progress; it's amnesia. You're the keeper of what we learned, the reminder that some things were figured out for good reason.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">22</span>
+          <h3 class="parser-name">Introspective</h3>
+          <div class="parser-tagline">You turn inward to understand your own experience.</div>
+          <p class="parser-body">You've been told you "think too much" — and wondered what others do with all that unexamined experience. Your attention turns inward naturally, mapping the territory of your own mind. This isn't navel-gazing; it's data collection. You're studying the instrument through which you experience everything else.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">23</span>
+          <h3 class="parser-name">Mindful</h3>
+          <div class="parser-tagline">You notice the texture of experience itself.</div>
+          <p class="parser-body">You notice the texture of experience itself. Where others are lost in content, you perceive the quality of the moment — its particular character, this awareness, this configuration of attention. Presence isn't a practice for you; it's what you naturally do when you stop doing everything else.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">24</span>
+          <h3 class="parser-name">Intuitive</h3>
+          <div class="parser-tagline">You sense how people feel about each other before it's spoken.</div>
+          <p class="parser-body">You know how people feel about each other before they've said anything. The unspoken dynamics are visible to you — who's aligned, who's in tension, who's pretending. This isn't mind-reading; you're just picking up on signals everyone else is sending and missing. You see the dynamics others only discover when they finally surface.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">25</span>
+          <h3 class="parser-name">Visionary</h3>
+          <div class="parser-tagline">You see where things are heading before anyone else.</div>
+          <p class="parser-body">You see where things are heading before anyone else notices anything changing. Patterns extend forward in your mind naturally — not as worry, but as perception. You're already living in a future others haven't imagined yet. The gap between your timeline and theirs can be lonely, but it's also where your value lives.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">26</span>
+          <h3 class="parser-name">Foresighted</h3>
+          <div class="parser-tagline">You sense the shape of what's coming before it arrives.</div>
+          <p class="parser-body">You perceive trajectories. Not predictions — something more like seeing the shape of what's emerging before it fully arrives. This isn't prophecy; it's noticing where things are headed before the trend is obvious. You're often right about where things are going, which is useful. You're often early, which is frustrating.</p>
+        </div>
+        <div class="parser-card">
+          <span class="parser-num">27</span>
+          <h3 class="parser-name">Altruistic</h3>
+          <div class="parser-tagline">You think in systems and generations, not just yourself.</div>
+          <p class="parser-body">You think in systems and generations. Individual outcomes matter less than collective trajectory — where are we heading, not just where am I going. This can feel cold to people focused on immediate personal impact, but you're playing a longer game. The beneficiaries of your thinking may not even be born yet.</p>
         </div>
       </div>
     </div>
+  </section>
 
-  </main>
+  <!-- ═══ WHEN PARSERS COLLIDE ═══ -->
+  <section class="collision-section" id="collisions">
+    <div class="container">
 
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">Perceptual Friction</div>
+          <h2 class="section-title">When Parsers<br><em>Collide.</em></h2>
+          <p class="section-sub">Friction between people isn't always personality conflict — sometimes it's perceptual. Two parsers processing reality through different coordinates will experience the same moment differently. Neither is wrong. Understanding the geometry transforms frustration into navigation.</p>
+        </div>
+      </div>
+
+      <!-- PROFESSIONAL -->
+      <div class="collision-domain-header">
+        <div class="collision-domain-eyebrow">Domain One</div>
+        <h3 class="collision-domain-title">Professional<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <!-- Replace: <img src="/images/professional-collisions.jpg" alt="Professional Collisions"> -->
+        <span class="img-placeholder">Professional Collisions — Domain Image</span>
+      </div>
+
+      <!-- Face-Off 1 -->
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div>
+            <div class="faceoff-title">Sharp vs. Visionary</div>
+            <div class="faceoff-sub">Concrete-Past-Self · Abstract-Future-Self</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Sharp has done this before and knows exactly what worked. Visionary sees where the market is heading and wants to build for that future. Both are self-referential — trusting their own judgment over external input.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Sharp presents case studies and proven results. Visionary dismisses them as "backward-looking." Visionary presents emerging patterns. Sharp dismisses it as "speculation without evidence." Each thinks the other is ignoring obvious reality — because they're processing different slices of it.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>The project needs both anchors.</h4>
+            <p>Sharp validates faster when future projections connect to past patterns. Visionary gains traction when they anchor vision in concrete starting points. Sharp's grounding prevents costly mistakes. Visionary's foresight prevents irrelevance.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Face-Off 2 -->
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div>
+            <div class="faceoff-title">Legacy vs. Actualized</div>
+            <div class="faceoff-sub">Concrete-Past-Other · Balanced-Future-Self</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Legacy holds institutional memory — who built what, why decisions were made, what the organization learned the hard way. Actualized is focused on personal growth trajectory and sees the organization as a vehicle for becoming.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Legacy feels Actualized is disrespecting history, treating hard-won lessons as obstacles. Actualized feels Legacy is weaponizing the past to prevent necessary evolution. "Do you even know why we do it this way?" vs. "Does it matter if it's not working anymore?"</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Learn the history before proposing changes.</h4>
+            <p>Actualized earns Legacy's respect by acknowledging the people and decisions that built the foundation. Legacy enables Actualized by distinguishing between principles worth preserving and practices ready for retirement.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gradient Mismatch: Professional -->
+      <div class="gradient-mismatch">
+        <div class="gm-header">
+          <span class="gm-badge">Gradient Mismatch</span>
+          <span class="gm-title">Concrete vs. Abstract in Strategy Sessions</span>
+        </div>
+        <div class="gm-body">
+          <p class="gm-setup">Concrete processors want to know the specific next steps, deliverables, and timelines. Abstract processors want to ensure alignment on principles and vision before discussing execution. Neither is wrong — but a strategy session designed for one leaves the other frustrated.</p>
+          <div class="gm-voices">
+            <div class="gm-voice">
+              <div class="gm-voice-label">Concrete Experience</div>
+              <p>"We've been talking for an hour and I still don't know what I'm supposed to DO on Monday. This is a waste of time."</p>
+            </div>
+            <div class="gm-voice">
+              <div class="gm-voice-label">Abstract Experience</div>
+              <p>"They keep pushing for action items before we've even agreed on what problem we're solving. We'll just end up doing the wrong thing faster."</p>
+            </div>
+          </div>
+          <div class="gm-nav">
+            <div class="gm-nav-label">The Navigation</div>
+            <p>Successful teams learn to signal mode-switches explicitly: "Let's take 20 minutes on the conceptual level, then translate to specifics." This legitimizes both needs instead of treating one as obstruction of the other.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARENTING -->
+      <div class="collision-domain-header" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Domain Two</div>
+        <h3 class="collision-domain-title">Parenting<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <!-- Replace: <img src="/images/parenting-collisions.jpg" alt="Parenting Collisions"> -->
+        <span class="img-placeholder">Parenting Collisions — Domain Image</span>
+      </div>
+
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div>
+            <div class="faceoff-title">Intentional vs. Grounded</div>
+            <div class="faceoff-sub">Concrete-Future-Self · Concrete-Present-Balanced</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both parents are concrete processors — they agree on practical approaches. But Intentional is planning for the child's future, while Grounded is focused on what's actually happening right now with this child today.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Intentional signs the kid up for activities that build toward future goals. Grounded notices the kid seems stressed and overwhelmed today. "Short-term discomfort for long-term benefit." vs. "They're a child NOW, not just a future adult."</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Both protect the child — from different threats.</h4>
+            <p>Intentional prevents under-preparation; Grounded prevents childhood becoming merely instrumental. Regular check-ins that honor both timelines: "Is this serving who they're becoming AND who they are right now?"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div>
+            <div class="faceoff-title">Empathetic vs. Sharp Parent</div>
+            <div class="faceoff-sub">Balanced-Present-Other · Concrete-Past-Self</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Empathetic parent feels into the child's emotional experience, holding space for whatever is present. Sharp parent draws on their own experience — what worked for them, what they learned the hard way, what they know to be true.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Child comes home upset about a friend conflict. Empathetic parent listens and creates space. Sharp parent offers direct advice based on experience: "Here's what you do." Child feels validated by Empathetic, instructed by Sharp — but possibly not BOTH at once.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Sequence matters.</h4>
+            <p>Empathetic creates the opening; Sharp provides the tools. When Sharp leads with advice, the child feels unheard. "What do you need right now — someone to listen or someone to help you figure out what to do?"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gradient-mismatch">
+        <div class="gm-header">
+          <span class="gm-badge">Gradient Mismatch</span>
+          <span class="gm-title">Self vs. Other in Parenting Philosophy</span>
+        </div>
+        <div class="gm-body">
+          <p class="gm-setup">Self-oriented parents emphasize individual development — the child's unique strengths, personal boundaries, self-advocacy. Other-oriented parents emphasize social development — consideration for others, family contribution, community belonging.</p>
+          <div class="gm-voices">
+            <div class="gm-voice">
+              <div class="gm-voice-label">Self-Oriented Experience</div>
+              <p>"We keep telling them to think about how others feel, but when do we teach them to honor their OWN feelings? They're going to become a people-pleaser."</p>
+            </div>
+            <div class="gm-voice">
+              <div class="gm-voice-label">Other-Oriented Experience</div>
+              <p>"Everything is about what THEY want, what THEY need. When do they learn they're part of something bigger than themselves?"</p>
+            </div>
+          </div>
+          <div class="gm-nav">
+            <div class="gm-nav-label">The Navigation</div>
+            <p>Children need both capacities — healthy self-regard AND social attunement. The question isn't which is right; it's which is currently underdeveloped. Awareness of your own gradient helps you see what your child might need that doesn't come naturally to you.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROMANTIC -->
+      <div class="collision-domain-header" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Domain Three</div>
+        <h3 class="collision-domain-title">Romantic<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <!-- Replace: <img src="/images/romantic-collisions.jpg" alt="Romantic Collisions"> -->
+        <span class="img-placeholder">Romantic Collisions — Domain Image</span>
+      </div>
+
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div>
+            <div class="faceoff-title">Sentimental vs. Resilient</div>
+            <div class="faceoff-sub">Abstract-Past-Self · Concrete-Future-Balanced</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Sentimental partner lives in the emotional texture of shared history — anniversaries, origin stories, the feeling of early memories. Resilient partner focuses on preparing for what's ahead — financial planning, logistics, making sure they're ready for whatever comes.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Sentimental wants to revisit meaningful places, honor what they've built. Resilient wants to discuss the five-year plan. Each feels the other is missing what matters most. Sentimental feels unseen in their emotional history; Resilient feels dismissed as "just practical."</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Both are expressing love — in different temporal directions.</h4>
+            <p>"Our past is sacred." vs. "Our future is secure." The relationship needs both anchors. Resilient saying "tell me that story again" means as much as Sentimental saying "I'm glad you're planning for us."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div>
+            <div class="faceoff-title">Introspective vs. Attuned</div>
+            <div class="faceoff-sub">Abstract-Present-Self · Concrete-Present-Other</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both are present-focused — but Introspective turns inward while Attuned turns outward. Both think they're paying attention. They're just attending to different data.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Attuned picks up that something is wrong. Introspective is still processing internally — not ready to articulate. Attuned presses: "What's going on?" Introspective feels invaded. Attuned feels shut out: "Why won't you let me in?"</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Protocol, not pressure.</h4>
+            <p>"I notice you're working through something. I'm here when you're ready. Do you want space or company?" This honors Attuned's attunement without demanding Introspective perform readiness they don't have.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gradient-mismatch">
+        <div class="gm-header">
+          <span class="gm-badge">Gradient Mismatch</span>
+          <span class="gm-title">Past vs. Future in Conflict Recovery</span>
+        </div>
+        <div class="gm-body">
+          <p class="gm-setup">Past-oriented partners need to fully process what happened before moving forward. Future-oriented partners want to establish what will be different going forward and stop dwelling on what can't be changed.</p>
+          <div class="gm-voices">
+            <div class="gm-voice">
+              <div class="gm-voice-label">Past-Oriented Experience</div>
+              <p>"You keep saying 'let's move on' but we haven't actually addressed what happened. If we don't deal with it, it's going to come back."</p>
+            </div>
+            <div class="gm-voice">
+              <div class="gm-voice-label">Future-Oriented Experience</div>
+              <p>"We've talked about this three times. I've apologized. What else can I do about the past? I want to focus on making sure it doesn't happen again."</p>
+            </div>
+          </div>
+          <div class="gm-nav">
+            <div class="gm-nav-label">The Navigation</div>
+            <p>Past-oriented partner: "What do you need to feel complete with this?" Future-oriented partner: "Here's what I'm committing to going forward." When both needs are met — full acknowledgment AND clear commitment — the system can actually move.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOCIAL -->
+      <div class="collision-domain-header" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Domain Four</div>
+        <h3 class="collision-domain-title">Social<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <!-- Replace: <img src="/images/social-collisions.jpg" alt="Social Collisions"> -->
+        <span class="img-placeholder">Social Collisions — Domain Image</span>
+      </div>
+
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div>
+            <div class="faceoff-title">Collaborative vs. Visionary in Group Settings</div>
+            <div class="faceoff-sub">Balanced-Future-Other · Abstract-Future-Self</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both are future-oriented. But Collaborative is excited about what the GROUP could accomplish together, while Visionary is running their own pattern-recognition and may have already leapt ahead of where the group can follow.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>In a brainstorming session, Visionary shares where they see things heading — it's brilliant, and three steps past where anyone else is. Visionary: "Why are we still discussing the obvious?" Collaborative: "Why do they keep leaving everyone behind?"</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Adoption requires more than being right.</h4>
+            <p>Visionary needs to pace revelation — sequencing so others can follow. Collaborative helps translate Visionary's insight into group-accessible form. Visionary learns that being right and being followed are different problems.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div>
+            <div class="faceoff-title">Legacy vs. Harmonious at Community Events</div>
+            <div class="faceoff-sub">Concrete-Past-Other · Balanced-Future-Balanced</div>
+          </div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Legacy honors how things have always been done — the traditions that create continuity and belonging. Harmonious sees the obvious optimizations that could make everything work better.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Annual community event. Legacy: "This is how we've always done it. It means something." Harmonious sees inefficiencies everywhere: "We could serve twice as many people if we just reorganized the flow." Legacy feels disrespected. Harmonious feels obstructed.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Protect meaning. Optimize logistics.</h4>
+            <p>Which elements carry the MEANING (protect those) vs. which are just inherited logistics (optimize those)? When Harmonious asks "what matters most about the tradition?" — not to dismantle but to preserve — Legacy becomes an ally instead of an obstacle.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gradient-mismatch">
+        <div class="gm-header">
+          <span class="gm-badge">Gradient Mismatch</span>
+          <span class="gm-title">Concrete vs. Abstract in Social Connection</span>
+        </div>
+        <div class="gm-body">
+          <p class="gm-setup">Concrete social processors connect through shared activities and specific shared experiences. Abstract social processors connect through ideas and meaningful conversation. A friendship between them can feel like constant negotiation about what "spending time together" even means.</p>
+          <div class="gm-voices">
+            <div class="gm-voice">
+              <div class="gm-voice-label">Concrete Experience</div>
+              <p>"Every time we hang out, they want to have some deep conversation. Can't we just DO something? I feel like I'm always in a philosophy seminar."</p>
+            </div>
+            <div class="gm-voice">
+              <div class="gm-voice-label">Abstract Experience</div>
+              <p>"Every time we hang out, they want to do activities. We never actually TALK. I leave feeling like we were parallel-playing, not actually connecting."</p>
+            </div>
+          </div>
+          <div class="gm-nav">
+            <div class="gm-nav-label">The Navigation</div>
+            <p>"I connect by doing things together. You connect by talking about ideas. Can we find the overlap — activities that create space for conversation, or conversations that feel like we're building something together?" The friendship survives when both connection styles are legitimized.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="container">
+      <h2>Find out which Parser<br><em>you are.</em></h2>
+      <p>The Parser Profile shows you your lens — and gives you language for the friction that's been hard to explain.</p>
+      <a href="/individual.html" class="cta-btn">Begin Your Parser Profile →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
     <div class="f-inner">
-      <div class="f-top">
-        <div>
-          <strong>J.D. Mercer</strong>
-          <div style="margin-top:6px; font-size:0.85rem;">Cognition Blocks of Intelligence</div>
-        </div>
-        <div class="f-meta">
-          © 2026 Cognition Blocks LLC<br>
-          U.S. Copyright TXu 2-497-721<br>
-          <a href="/clinicians.html">For Clinicians →</a>
-        </div>
+      <div class="f-brand">
+        <img src="cbi-logo.jpg" alt="CBI" class="f-logo">
+        <span class="f-name">J.D. Mercer</span>
+      </div>
+      <div class="f-meta">
+        Parser Frame™ · Cognition Blocks Intelligence Framework<br>
+        U.S. Copyright TXu 2-497-721<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
+        <a href="/individual.html">Get Your Profile →</a>
+      </div>
+      <div class="f-disclaimer">
+        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · © 2025–2026 Cognition Blocks LLC
       </div>
     </div>
   </footer>
 
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
-  </script>
 </body>
 </html>
