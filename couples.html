@@ -124,7 +124,20 @@
       nav a:not(.btn) { display: none; }
       .f-top { flex-direction: column; }
     }
+    /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js-anim [data-reveal] {
+        opacity: 0; transform: translateY(26px); filter: blur(6px);
+        transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
+                    transform .85s cubic-bezier(0.22,0.61,0.36,1),
+                    filter .85s cubic-bezier(0.22,0.61,0.36,1);
+        will-change: opacity, transform;
+      }
+      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+      a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
+    }
   </style>
+  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
 </head>
 <body>
 
@@ -369,6 +382,26 @@
       </div>
     </div>
   </footer>
+  <script>
+  (function(){
+    var root=document.documentElement;
+    if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
+    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.parser-card,.ref-item,.faceoff,.gradient-mismatch,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    if(!els.length)return;
+    els.forEach(function(el){el.setAttribute('data-reveal','');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var t=e.target,p=t.parentNode,i=p?[].indexOf.call(p.children,t):0;
+          t.style.transitionDelay=(Math.min(i,6)*60)+'ms';
+          t.classList.add('in');io.unobserve(t);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+  })();
+  </script>
 
 </body>
 </html>
