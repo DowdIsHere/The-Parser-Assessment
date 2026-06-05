@@ -6,29 +6,29 @@
     <title>Kids Assessment Access | Parser Profile™</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --blue-900: #0C2340;
-            --blue-700: #1B3A5C;
-            --blue-500: #2563EB;
-            --blue-400: #3B82F6;
-            --blue-100: #DBEAFE;
-            --blue-50:  #EFF6FF;
-            --slate-900: #1A1A2E;
-            --slate-700: #334155;
-            --slate-500: #64748B;
-            --slate-300: #CBD5E1;
-            --slate-100: #F1F5F9;
-            --white: #FFFFFF;
+            --blue-900: #211A12;
+            --blue-700: #2E2419;
+            --blue-500: #9A7B2E;
+            --blue-400: #B8922A;
+            --blue-100: #E8D9B0;
+            --blue-50:  #F3ECD9;
+            --slate-900: #1E1813;
+            --slate-700: #4A3F35;
+            --slate-500: #8A7E6E;
+            --slate-300: #CFC4AE;
+            --slate-100: #F2ECE0;
+            --white: #FFFDF9;
             --green-600: #059669;
             --red-600: #DC2626;
-            --bg-page: #F7F8FA;
-            --bg-card: #FFFFFF;
-            --bg-inset: #F1F5F9;
-            --text-primary: #1A1A2E;
-            --text-secondary: #334155;
-            --text-muted: #64748B;
+            --bg-page: #FAF7F0;
+            --bg-card: #FFFDF9;
+            --bg-inset: #F2ECE0;
+            --text-primary: #1E1813;
+            --text-secondary: #4A3F35;
+            --text-muted: #8A7E6E;
             --border: rgba(0,0,0,0.08);
             --border-strong: rgba(0,0,0,0.14);
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
@@ -36,7 +36,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'IBM Plex Sans', system-ui, sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
             min-height: 100vh;
@@ -50,7 +50,7 @@
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
         }
-        .logo { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: var(--slate-900); }
+        .logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: var(--slate-900); }
         .logo span { color: var(--blue-500); }
         .tagline { font-family: 'IBM Plex Mono', monospace; color: var(--slate-500); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; }
         .back-link { color: var(--slate-500); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
@@ -75,7 +75,7 @@
         .card-header { text-align: center; margin-bottom: 32px; }
         .card-icon { font-size: 2.5rem; margin-bottom: 12px; }
         .card-title {
-            font-family: 'Source Serif 4', Georgia, serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 1.6rem; font-weight: 700; color: var(--text-primary);
             margin-bottom: 8px;
         }
@@ -85,7 +85,7 @@
         .tabs { display: flex; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 28px; overflow: hidden; }
         .tab-btn {
             flex: 1; padding: 10px; border: none; background: transparent;
-            font-family: 'IBM Plex Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
             color: var(--text-muted); cursor: pointer; transition: all 0.2s;
         }
         .tab-btn.active { background: var(--blue-500); color: white; }
@@ -112,7 +112,7 @@
         .field input {
             width: 100%; padding: 12px 16px;
             border: 1px solid var(--border); border-radius: 10px;
-            font-family: 'IBM Plex Sans', sans-serif; font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem;
             color: var(--text-primary); background: var(--bg-card);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
@@ -122,7 +122,7 @@
         .btn-primary {
             width: 100%; padding: 13px; border: none; border-radius: 10px;
             background: var(--blue-500); color: white;
-            font-family: 'IBM Plex Sans', sans-serif; font-size: 1rem; font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 600;
             cursor: pointer; transition: all 0.2s; margin-top: 4px;
         }
         .btn-primary:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
@@ -147,7 +147,7 @@
         .notice strong { color: var(--blue-500); }
 
         .welcome-state { display: none; text-align: center; }
-        .welcome-name { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 8px; }
+        .welcome-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 8px; }
         .welcome-role { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
         .btn-goto {
             display: inline-block; padding: 13px 32px;
@@ -159,10 +159,12 @@
         .btn-logout {
             display: inline-block; margin-top: 12px;
             background: none; border: none; color: var(--text-muted);
-            font-family: 'IBM Plex Sans', sans-serif; font-size: 0.85rem;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem;
             cursor: pointer; text-decoration: underline;
         }
         .btn-logout:hover { color: var(--red-600); }
+        body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+        @media (prefers-reduced-motion: no-preference) { button:active, a[class*="btn"]:active, .btn:active, .btn-primary:active { transform: translateY(-1px) scale(0.98); } }
     </style>
 </head>
 <body>

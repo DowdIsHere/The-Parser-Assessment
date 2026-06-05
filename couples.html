@@ -7,22 +7,25 @@
   <meta name="description" content="A 90-minute session and written analysis that names what is actually happening between two minds.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue-900: #0C2340; --blue-700: #1B3A5C; --blue-600: #1E4D78;
-      --blue-500: #2563EB; --blue-400: #3B82F6; --blue-100: #DBEAFE; --blue-50: #EFF6FF;
-      --text-primary: #1A1A2E; --text-secondary: #334155; --text-muted: #64748B;
-      --bg-page: #F7F8FA; --bg-card: #FFFFFF; --bg-inset: #F1F5F9;
-      --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.14);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08); --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
-      --font-display: 'Source Serif 4', Georgia, serif;
-      --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+      /* Editorial Luxury — cream + gold (taste-skill: high-end-visual-design) */
+      --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
+      --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
+      --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
+      --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
+      --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
+      --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
+      --gold: #9A7B2E; --gold-pale: #D8B45E;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.6; font-size: 17px; letter-spacing: 0.01em; }
+    body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
 
     header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 20px 0; }
     .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
@@ -35,12 +38,12 @@
     nav a.btn { background: var(--blue-500); color: #fff; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; box-shadow: var(--shadow-sm); }
     nav a.btn:hover { background: var(--blue-400); }
 
-    .hero { background: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%); position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.10) 0%, transparent 50%); pointer-events: none; }
+    .hero { background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(184,146,42,0.16) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(216,180,94,0.10) 0%, transparent 50%); pointer-events: none; }
     .hero-inner { max-width: 1100px; margin: 0 auto; padding: 96px 24px 80px; position: relative; z-index: 1; }
-    .eyebrow-tag { display: inline-block; background: rgba(219,234,254,0.10); border: 1px solid rgba(219,234,254,0.20); color: rgba(255,255,255,0.85); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 100px; margin-bottom: 24px; }
+    .eyebrow-tag { display: inline-block; background: rgba(216,180,94,0.10); border: 1px solid rgba(216,180,94,0.24); color: rgba(245,238,224,0.9); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 100px; margin-bottom: 24px; }
     .hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; color: #fff; margin-bottom: 24px; max-width: 820px; }
-    .hero h1 em { font-style: italic; font-weight: 300; color: #F59E0B; }
+    .hero h1 em { font-style: italic; font-weight: 400; color: var(--gold-pale); }
     .hero p { font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.6; color: rgba(255,255,255,0.75); max-width: 58ch; font-style: italic; margin-bottom: 44px; }
     .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue-900); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 14px 36px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .btn-hero:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
@@ -75,7 +78,7 @@
 
     /* EXCERPT */
     .excerpt-block { background: var(--blue-900); border-radius: 16px; padding: 48px; position: relative; overflow: hidden; }
-    .excerpt-block::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); pointer-events: none; }
+    .excerpt-block::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(216,180,94,0.14) 0%, transparent 70%); pointer-events: none; }
     .excerpt-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-100); opacity: 0.7; margin-bottom: 24px; position: relative; }
     .excerpt-block blockquote { font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.3rem); line-height: 1.65; color: rgba(255,255,255,0.88); font-style: italic; max-width: 68ch; position: relative; }
     .excerpt-source { margin-top: 28px; font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); position: relative; }
@@ -121,7 +124,20 @@
       nav a:not(.btn) { display: none; }
       .f-top { flex-direction: column; }
     }
+    /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js-anim [data-reveal] {
+        opacity: 0; transform: translateY(26px); filter: blur(6px);
+        transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
+                    transform .85s cubic-bezier(0.22,0.61,0.36,1),
+                    filter .85s cubic-bezier(0.22,0.61,0.36,1);
+        will-change: opacity, transform;
+      }
+      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+      a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
+    }
   </style>
+  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
 </head>
 <body>
 
@@ -366,6 +382,26 @@
       </div>
     </div>
   </footer>
+  <script>
+  (function(){
+    var root=document.documentElement;
+    if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
+    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.parser-card,.ref-item,.faceoff,.gradient-mismatch,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    if(!els.length)return;
+    els.forEach(function(el){el.setAttribute('data-reveal','');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var t=e.target,p=t.parentNode,i=p?[].indexOf.call(p.children,t):0;
+          t.style.transitionDelay=(Math.min(i,6)*60)+'ms';
+          t.classList.add('in');io.unobserve(t);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+  })();
+  </script>
 
 </body>
 </html>

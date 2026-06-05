@@ -3,40 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#0C2340">
+    <meta name="theme-color" content="#211A12">
     <title>Parser Profiles™ | The 27 Cognitive Architectures</title>
     <meta name="description" content="Explore all 27 Parser Profiles — the cognitive architectures that shape how you perceive, process, and move through the world.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* CBI Blue trust palette */
-            --blue-900: #0C2340;
-            --blue-700: #1B3A5C;
-            --blue-600: #1E4D78;
-            --blue-500: #2563EB;
-            --blue-400: #3B82F6;
-            --blue-100: #DBEAFE;
-            --blue-50:  #EFF6FF;
+            /* Editorial Luxury — cream + gold */
+            --blue-900: #211A12;
+            --blue-700: #2E2419;
+            --blue-600: #8A6D24;
+            --blue-500: #9A7B2E;
+            --blue-400: #B8922A;
+            --blue-100: #E8D9B0;
+            --blue-50:  #F3ECD9;
 
-            --slate-900: #1A1A2E;
-            --slate-700: #334155;
-            --slate-500: #64748B;
-            --slate-300: #CBD5E1;
-            --slate-100: #F1F5F9;
-            --white: #FFFFFF;
+            --slate-900: #1E1813;
+            --slate-700: #4A3F35;
+            --slate-500: #8A7E6E;
+            --slate-300: #CFC4AE;
+            --slate-100: #F2ECE0;
+            --white: #FFFDF9;
 
             --amber-500: #D97706;
             --amber-400: #F59E0B;
             --green-600: #059669;
 
-            --bg-page: #F7F8FA;
-            --bg-card: #FFFFFF;
-            --bg-inset: #F1F5F9;
-            --text-primary: #1A1A2E;
-            --text-secondary: #334155;
-            --text-muted: #64748B;
+            --bg-page: #FAF7F0;
+            --bg-card: #FFFDF9;
+            --bg-inset: #F2ECE0;
+            --text-primary: #1E1813;
+            --text-secondary: #4A3F35;
+            --text-muted: #8A7E6E;
 
             --border: rgba(0,0,0,0.08);
             --border-strong: rgba(0,0,0,0.14);
@@ -49,13 +49,13 @@
             --balanced: #2563EB;
             --abstract: #7C3AED;
 
-            --hero-gradient: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%);
+            --hero-gradient: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'IBM Plex Sans', system-ui, sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
             line-height: 1.6;
@@ -100,7 +100,7 @@
             color: var(--blue-100); margin-bottom: 14px;
         }
         .brand-title {
-            font-family: 'Source Serif 4', Georgia, serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-weight: 700; line-height: 1.12;
             font-size: clamp(2rem, 4.5vw, 2.6rem);
             margin-bottom: 16px;
@@ -118,7 +118,7 @@
         }
         .chips { display: flex; flex-wrap: wrap; gap: 8px; }
         .chip {
-            font-family: 'IBM Plex Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem; font-weight: 500;
             color: var(--blue-100);
             background: rgba(219,234,254,0.10);
@@ -132,7 +132,7 @@
         .search-wrap { margin-bottom: 24px; }
         .search-input {
             width: 100%;
-            font-family: 'IBM Plex Sans', sans-serif; font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem;
             color: var(--white);
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.22);
@@ -154,7 +154,7 @@
         }
         .cta-btn {
             display: inline-block; width: 100%; text-align: center;
-            font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.95rem;
             background: var(--white); color: var(--blue-900);
             padding: 13px 20px; border-radius: 8px; text-decoration: none;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -188,7 +188,7 @@
             border-radius: 0 4px 4px 0; background: var(--accent, var(--blue-500));
         }
         .pcard .archetype {
-            font-family: 'Source Serif 4', Georgia, serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 1.3rem; font-weight: 700; line-height: 1.2;
             color: var(--text-primary); margin-bottom: 4px;
         }
@@ -210,7 +210,7 @@
 
         .empty {
             grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted);
-            font-family: 'Source Serif 4', Georgia, serif; font-size: 1.1rem; font-style: italic;
+            font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; font-style: italic;
         }
 
         /* ===== Detail overlay (app-like) ===== */
@@ -240,7 +240,7 @@
         .back-btn {
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
-            color: var(--white); font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--white); font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.85rem; font-weight: 500;
             padding: 9px 16px; border-radius: 100px; cursor: pointer;
             transition: background 0.18s ease; margin-bottom: 28px;
@@ -252,7 +252,7 @@
             color: var(--amber-400); margin-bottom: 10px;
         }
         .detail-title {
-            font-family: 'Source Serif 4', Georgia, serif; font-weight: 700;
+            font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700;
             font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.12; margin-bottom: 10px;
         }
         .detail-code {
@@ -260,7 +260,7 @@
             color: rgba(255,255,255,0.7); letter-spacing: 0.05em; margin-bottom: 18px;
         }
         .detail-tag {
-            font-family: 'Source Serif 4', Georgia, serif; font-style: italic;
+            font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
             font-size: 1.2rem; color: rgba(255,255,255,0.92); max-width: 52ch;
         }
 
@@ -272,7 +272,7 @@
             color: var(--text-muted); margin-bottom: 12px;
         }
         .section h2 {
-            font-family: 'Source Serif 4', Georgia, serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 1.6rem; font-weight: 600; line-height: 1.25;
             color: var(--text-primary); margin-bottom: 18px;
             padding-bottom: 12px; border-bottom: 1px solid var(--border);
@@ -287,7 +287,7 @@
             padding: 24px 28px;
         }
         .phrase p {
-            font-family: 'Source Serif 4', Georgia, serif; font-style: italic;
+            font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
             font-size: 1.25rem; line-height: 1.55; color: var(--text-primary); margin: 0;
         }
 
@@ -298,7 +298,7 @@
             border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);
         }
         .strength h4 {
-            font-family: 'IBM Plex Sans', sans-serif; font-size: 1rem; font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 600;
             color: var(--text-primary); margin-bottom: 8px;
             display: flex; align-items: center; gap: 8px;
         }
@@ -318,7 +318,7 @@
         }
         .unlock > * { position: relative; z-index: 1; }
         .unlock h3 {
-            font-family: 'Source Serif 4', Georgia, serif; font-size: 1.5rem; margin-bottom: 10px;
+            font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; margin-bottom: 10px;
         }
         .unlock p { color: rgba(255,255,255,0.84); margin-bottom: 22px; max-width: 48ch; margin-left: auto; margin-right: auto; }
         .unlock .locked-list {
@@ -332,7 +332,9 @@
         }
 
         .loading { padding: 80px 24px; text-align: center; color: var(--text-muted);
-            font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 1.15rem; }
+            font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.15rem; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+        @media (prefers-reduced-motion: no-preference) { button:active, a[class*="btn"]:active, .cta-btn:active, .chip:active { transform: translateY(-1px) scale(0.98); } }
     </style>
 </head>
 <body>
