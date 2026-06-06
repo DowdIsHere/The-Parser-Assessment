@@ -29,6 +29,21 @@ export const centeredProfile = {
 
   "workEnvironments": "Where you thrive:\n- Authentic presence valued over performance\n- Independent work and meaningful collaboration both possible\n- Facilitation, coaching, counseling, mediation\n- Roles requiring steady presence under pressure\n- Self-awareness is an asset\n\nWhere you suffocate:\n- Environments that punish authenticity\n- Constant crisis-mode thinking\n- Having to abandon your internal reference point to merge with team dynamics\n- Excessive performance demands",
 
+  "topCareers": [
+    {
+      "title": "Coach / Counselor",
+      "description": "When chaos erupts, you don't spiral into worst-case futures or freeze on past failures—you assess what's actually happening and what you can actually do. Coaching and counseling run on that steadiness: staying connected to yourself while someone else comes apart, offering a still point they can borrow. You know where you stand, practically, in the moment, and that groundedness is contagious. The presence that felt like simply being yourself becomes, here, the most valuable thing in the room."
+    },
+    {
+      "title": "Facilitator / Mediator",
+      "description": "You hold steady when everything around you shakes, neither swept into the panic nor checked out from it. Facilitation and mediation pay for exactly that regulated presence—the person who can sit in the heat of a hard conversation and stay clear. You assess the real situation rather than the catastrophized one, and you don't abandon your own center to merge with the group's anxiety. The self-anchored calm that others mistake for detachment is the thing that keeps the room from spinning out."
+    },
+    {
+      "title": "Leadership / Crisis Steadier",
+      "description": "Under pressure, people look for whoever's still standing in themselves—and that's reliably you. Leadership and crisis roles reward the steady presence that doesn't need the situation to settle before you do. You stay present and clear when others are lost in abstraction or drowning in detail, and you make calls from what's real now. The authenticity you refused to perform away becomes, in these rooms, the reason people trust you to hold the line."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Self-Reference Processing (continuous internal awareness)\n- Perceptual Discrimination (present-moment attention)\n- Pattern Recognition (balanced concrete and abstract patterns)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (accessible but not dominant)\n- Social Signal Processing (available when you direct attention outward)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (present-focus may limit speculative generation)\n- Symbolic Manipulation (less emphasis on abstract manipulation without grounding)\n\nThis pattern suggests your cognitive architecture is optimized for authentic self-expression, present-moment awareness, and grounded presence.\n\nCENTERED",
 
   "strengths": [

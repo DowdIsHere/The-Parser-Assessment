@@ -27,6 +27,21 @@ export const embodiedyaProfile = {
 
   "workEnvironments": "Where you thrive:\n- Hands-on stuff where being good with your body is the point\n- Sports, trades, kitchens, performing, building, working with people in person\n- Places where you prove it by doing it, right now, in front of everyone\n- Work where you make, fix, move, or grow something real\n- Settings where your body is an asset, not something to apologize for\n\nWhere you suffocate:\n- All sitting, all talking, all theory\n- A desk and back-to-back meetings or classes\n- Places that grade you on how well you talk about the work instead of the work\n- Roles that act like your body doesn't matter\n- Crowds that only respect the bookish kind of smart",
 
+  "topCareers": [
+    {
+      "title": "Skilled Trades / Building",
+      "description": "Your hands figure things out before your head can explain them, and you've spent school being told to \"think more\" when your body was already doing the work. Trades and building reward exactly that—you prove it by doing it, right now, in front of everyone, and the result either works or it doesn't. There's no essay about the work, just the work. The body-knowing that classrooms couldn't grade is the whole skill here."
+    },
+    {
+      "title": "Sports / Movement / Performance",
+      "description": "You live in your body in a way most people don't, reading what's off or right as a feeling before it's a thought. Athletics, dance, performance—anything physical—runs on that channel: the instant read of a body under pressure that you can't fake and can't teach to someone who doesn't have it. You don't talk about it; you do it and feel it. The intelligence that doesn't happen in words is exactly what these fields measure."
+    },
+    {
+      "title": "Kitchens / Hands-On Frontline",
+      "description": "When it gets hectic, you're already moving—your gut handled it before anyone gave the order. Kitchens, emergency work, any fast hands-on environment is built for the person who knows in the body and acts now, with no overthinking between sensing and doing. You're calmer in the rush than people who have to talk it through. The channel nobody could see becomes the thing that holds when it all speeds up."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Perceptual Discrimination (high-resolution sensory processing)\n- Spatial Relationships (physical space navigation)\n- Self-Reference Processing (strong interoceptive awareness)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (procedural physical skills)\n- Pattern Recognition (through physical channel)\n\nLikely Lower-Accessibility Blocks:\n- Symbolic Manipulation (abstract reasoning)\n- Generative Creation (conceptual ideation)\n- Social Signal Processing (other-focus less emphasized)\n\nThis pattern suggests your cognitive architecture is optimized for physical intelligence, sensing the moment you're in, and trusting what your body knows, with room to grow in planning for a future you can't feel yet and tuning into what others are carrying.\n\nEMBODIED",
 
   "strengths": [

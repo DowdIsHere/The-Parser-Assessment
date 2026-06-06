@@ -29,6 +29,21 @@ export const reconciledProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments where collective history matters\n- Reconciliation work, community development, organizational development\n- Historical preservation, restorative justice\n- Any domain where understanding group dynamics through their history creates value\n\nWhere you suffocate:\n- Organizations that just want to move on\n- Cultures that treat the past as irrelevant weight\n- Groups that refuse to acknowledge what's happened\n- Environments with aggressive forward-focus that dismisses history",
 
+  "topCareers": [
+    {
+      "title": "Mediator / Restorative Justice Facilitator",
+      "description": "You carry the memory of groups—who was hurt by which decision, who deserves credit they never got, what's been lost across time. Reconciliation and restorative-justice work is that exact capacity in action: holding the full story so a community can face it and move through it instead of around it. You track the debts organizations owe to people they've forgotten, and you help them be paid. The collective memory you held when it lived nowhere else becomes the ground that makes repair possible."
+    },
+    {
+      "title": "Organizational Development Consultant",
+      "description": "You're the one who remembers how the team actually got here—the old wound still steering the room, the sacrifice nobody acknowledged. Organizational development pays for that: understanding a group's present through its history so change doesn't just repeat the buried conflict. You hold every side's version with the same care, which is why people trust your read of what happened. The institutional memory you carried for free becomes the lever that finally moves a stuck group."
+    },
+    {
+      "title": "Community Development / Reconciliation Lead",
+      "description": "You hold what groups need to remember, and you can lay the whole history out so people on different sides finally see the same map. Community and reconciliation work is built on that—bridging factions by surfacing the shared past honestly, debts and credits both. You don't let a group \"just move on\" from what it hasn't reckoned with. The role you always played, keeper of the collective story, becomes the thing that lets communities actually heal."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Social Signal Processing (strong collective awareness)\n- Pattern Recognition (historical pattern detection)\n- Sequential Processing (chronological tracking)\n\nLikely Moderate-Accessibility Blocks:\n- Perceptual Discrimination (concrete historical facts)\n- Symbolic Manipulation (meaning-making from collective history)\n\nLikely Lower-Accessibility Blocks:\n- Self-Reference Processing (other-focus may under-develop self-attention)\n- Generative Creation (reconciliation over generation)\n- Spatial Relationships (less emphasized)\n\nThis pattern suggests your cognitive architecture is optimized for collective memory, historical understanding of group dynamics, and facilitation of reconciliation. Your developmental opportunities lie in self-focus—building capacity to attend to your own history with the same care you give collective history.\n\nRECONCILED",
 
   "strengths": [

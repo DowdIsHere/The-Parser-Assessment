@@ -29,6 +29,21 @@ export const groundedProfile = {
 
   "workEnvironments": "Where you thrive:\n- Clear tasks, tangible outputs, immediate feedback\n- Competent execution valued over theoretical sophistication\n- Action orientation without endless deliberation\n- Teams that ship\n- Roles where doing matters more than discussing\n\nWhere you suffocate:\n- Strategy without execution\n- Environments dominated by speculation and long planning horizons\n- Roles requiring extensive work with abstractions that never land\n- Cultures that reward intellectual performance over practical results\n- Places where meetings replace work",
 
+  "topCareers": [
+    {
+      "title": "Operations Manager / Coordinator",
+      "description": "Forty-five minutes into the meeting, everyone's still debating possibilities and you've known the answer since minute three. Operations work pays for exactly that—seeing what's actually in front of you and dealing with what's actually happening while everyone else builds elaborate models of what might. You cut through the theoretical to the practical, you ship, and you give people a clear read they can act on now. What they called \"simple,\" the job calls \"clear\"—and clarity under noise is rarer than it looks."
+    },
+    {
+      "title": "Skilled Trades / Hands-On Technical",
+      "description": "You trust what's in front of you over what's on the whiteboard, and you'd rather fix the thing than hold a meeting about fixing the thing. Trades and hands-on technical work reward that completely: tangible output, immediate feedback, a result you can point to at the end of the day. There's no abstraction to get lost in and no performance of expertise—just whether it works, which you can see. The bias for doing over discussing that frustrated talk-heavy rooms is the whole value here."
+    },
+    {
+      "title": "Implementation / Delivery Lead",
+      "description": "Strategy without execution drains you; you're the one who turns the deck into the thing that actually exists. Delivery and implementation work is built for that—taking the plan everyone admired and grounding it in what concretely has to happen, in order, now. You keep the team honest about reality, you measure progress by what's shipped rather than what's discussed, and you notice when the abstraction never lands. You're the anchor that keeps a project tied to the ground it's actually built on."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Perceptual Discrimination (concrete present focus)\n- Sequential Processing (practical task execution)\n- Social Signal Processing (balanced reference enables social reading)\n\nLikely Moderate-Accessibility Blocks:\n- Spatial Relationships (practical, hands-on)\n- Self-Reference Processing (balanced, accessible)\n\nLikely Lower-Accessibility Blocks:\n- Pattern Recognition (across time; present-focus limits)\n- Generative Creation (abstract ideation)\n- Symbolic Manipulation (theoretical reasoning)\n\nThis pattern suggests your cognitive architecture is optimized for practical problem-solving and stable execution, with potential developmental opportunities in abstract reasoning and long-term pattern recognition.\n\nGROUNDED",
 
   "strengths": [

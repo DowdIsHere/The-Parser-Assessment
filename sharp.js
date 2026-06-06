@@ -29,6 +29,21 @@ export const sharpProfile = {
 
   "workEnvironments": "Where you thrive:\n- Clear ownership, outcomes you can measure\n- Rooms where your track record speaks before you do\n- Problems that pay off depth instead of speed\n- Teammates who've shipped before and remember what it cost\n- Places where your experience is treated as the asset it is\n\nWhere you suffocate:\n- \"Move fast and break things,\" when you're the one who fixes what breaks\n- Innovation theater with nobody on the hook for the outcome\n- Credential-heavy rooms that wave off what you actually lived\n- Being handed responsibility for the result but not the method\n- Places that punish the person who named the problem",
 
+  "topCareers": [
+    {
+      "title": "Senior Specialist / Domain Expert",
+      "description": "You're the one who heard those confident words before—different room, two years back—and knew exactly how it would go, because you stayed until 2am rebuilding the piece everyone skipped. That hard-won memory is the asset. In a senior specialist role, your scars become the value: you've already lived the failure modes, so you catch the slipped timeline and the unchecked dependency before they cost anyone. You don't need a theory of how things go wrong. You were there when they did."
+    },
+    {
+      "title": "Operations / Quality Lead",
+      "description": "You remember what actually happened, not the cleaned-up version in the postmortem deck. That memory for the real cost of cutting corners is exactly what operations and quality work runs on—the discipline of knowing which shortcut bites back and when. You've earned the right to say \"we tried that, here's what it broke,\" and to be the person who keeps the result from repeating the last mistake. The experience others treat as baggage is the thing that keeps the lights on."
+    },
+    {
+      "title": "Technical Advisor / Troubleshooter",
+      "description": "When something breaks, you're the one who's seen this exact failure before and can name it before the panic sets in. Advising and troubleshooting pay for precisely that—deep, lived familiarity with how a real system fails in practice, not in principle. You walk in, recognize the pattern from a project that shipped four months late, and shortcut everyone past the dead ends you already mapped. Your whole career has been quietly collecting the receipts; this is the job that finally asks to see them."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Perceptual Discrimination (concrete detail processing)\n- Sequential Processing (procedural memory from experience)\n- Self-Reference Processing (strong personal experience integration)\n\nLikely Moderate-Accessibility Blocks:\n- Pattern Recognition (across experienced situations)\n- Spatial Relationships (practical, hands-on)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (preference for proven over novel)\n- Symbolic Manipulation (abstract reasoning without concrete grounding)\n- Social Signal Processing (self-focus can limit other-awareness)\n\nThis pattern suggests your cognitive architecture is optimized for expertise development and practical execution, with potential developmental opportunities in theoretical reasoning and interpersonal perception.\n\nSHARP",
 
   "strengths": [
