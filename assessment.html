@@ -570,7 +570,7 @@
             <div class="card centered">
                 <h1>Parser Profile™ Assessment</h1>
                 <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px;">Right now, your brain is doing something remarkable.</p>
-                <p>It's not just existing in space and time—it's <em style="color: var(--accent-spatial);">parsing</em> reality through three cognitive systems that determine what you notice, how you think, and why some things click instantly while others feel like work.</p>
+                <p>It's not just taking the world in—it's quietly <em style="color: var(--accent-spatial);">filtering</em> it, deciding in a split second what you notice, what you skip, and why some things click instantly while others feel like work.</p>
                 <div class="dimensions-preview">
                     <div class="dimension-item spatial">
                         <div class="icon">◈</div>
@@ -588,8 +588,8 @@
                         <div class="dimension-desc">Self ↔ Other</div>
                     </div>
                 </div>
-                <p style="font-size: 0.95rem;">Two people can look at the same situation and experience completely different realities—not because one is smarter, but because their brains <strong style="color: var(--accent-temporal);">filter reality differently</strong>.</p>
-                <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; color: var(--text-primary); margin-bottom: 8px;">Discover your unique cognitive signature.</p>
+                <p style="font-size: 0.95rem;">Two people can look at the exact same thing and walk away with completely different takes—not because one is smarter, but because they each <strong style="color: var(--accent-temporal);">notice different things</strong>.</p>
+                <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; color: var(--text-primary); margin-bottom: 8px;">See how your mind actually works.</p>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px;">15 questions • 5 minutes • Free results</p>
                 <button class="btn-primary" onclick="startAssessment()">Begin Assessment</button>
             </div>
@@ -803,7 +803,7 @@
                 <div class="locked-content">
                     <h3>👁️ Your Blind Spot</h3>
                     <div class="content-section">
-                        <p>There's something your cognitive architecture makes nearly impossible to see on your own...</p>
+                        <p>There's something about how you're wired that's nearly impossible to see on your own...</p>
                         <p>This isn't a flaw—it's the natural shadow of your strengths...</p>
                     </div>
                 </div>
@@ -1705,12 +1705,12 @@ const questions = [
         function loadFallbackContent(name, key) {
             // Fallback content if profile data is not found
             document.getElementById('profileDescription').innerHTML = `
-                <p>Your Parser Profile™ is <strong>${name}</strong>. This profile represents your unique cognitive architecture—the way your brain naturally parses reality across spatial, temporal, and reference dimensions.</p>
-                <p>Your cognitive signature shapes how you process information, make decisions, and interact with the world around you.</p>
+                <p>Your Parser Profile™ is <strong>${name}</strong>. It's a snapshot of how you naturally take things in — what you notice first, where your attention goes, and how you make sense of it.</p>
+                <p>It shapes how you take in information, make decisions, and connect with the people around you.</p>
             `;
 
             document.getElementById('phraseContent').textContent =
-                `"${predictions[key] || 'Your cognitive architecture shapes how you experience reality.'}"`;
+                `"${predictions[key] || 'How you are wired shapes the way you see things.'}"`;
 
             document.getElementById('strengthsGrid').innerHTML = `
                 <div class="trait-item">

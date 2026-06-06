@@ -312,7 +312,7 @@ app.post('/api/log-completion', async (req, res) => {
 
     <!-- Scores -->
     <div style="padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid #e2e8f0;">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:12px;">Dimension Scores</div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:12px;">Your Scores</div>
       <div style="margin-bottom:6px;"><span style="background:#ecfdf5;color:#0d9488;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Spatial: ${spatial}% ${spatialLabel}</span></div>
       <div style="margin-bottom:6px;"><span style="background:#fffbeb;color:#d97706;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Temporal: ${temporal}% ${temporalLabel}</span></div>
       <div><span style="background:#eff6ff;color:#7c3aed;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Reference: ${reference}% ${referenceLabel}</span></div>
@@ -404,7 +404,7 @@ app.post('/api/send-results', async (req, res) => {
             <p style="color: #6a6a7a; font-size: 14px; margin: 0;">${profileCode}</p>
         </div>
 
-        <!-- Dimension Scores -->
+        <!-- Your Scores -->
         <div style="padding: 30px; border-bottom: 1px solid #e0e0e5;">
             <h3 style="color: #1a1a24; font-size: 16px; margin: 0 0 20px 0;">📊 Your Cognitive Coordinates</h3>
             <div style="margin-bottom: 16px;">
