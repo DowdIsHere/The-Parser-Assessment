@@ -91,11 +91,11 @@ app.get('/api/auth/status', (req, res) => {
 app.post('/api/auth/register', async (req, res) => {
     const { email, password, firstName, lastName, role } = req.body;
 
-    if (!email || !password || !firstName || !lastName || !role) {
+    if (!email || !password || !firstName || !role) {
         return res.status(400).json({ success: false, error: 'All fields are required' });
     }
-    if (!['parent', 'teacher'].includes(role)) {
-        return res.status(400).json({ success: false, error: 'Role must be parent or teacher' });
+    if (!['parent', 'teacher', 'member'].includes(role)) {
+        return res.status(400).json({ success: false, error: 'Role must be parent, teacher, or member' });
     }
     if (password.length < 8) {
         return res.status(400).json({ success: false, error: 'Password must be at least 8 characters' });
@@ -108,10 +108,10 @@ app.post('/api/auth/register', async (req, res) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    accounts.users.push({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: lastName.trim(), role, createdAt: new Date().toISOString() });
+    accounts.users.push({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: (lastName || '').trim(), role, createdAt: new Date().toISOString() });
     saveAccounts(accounts);
 
-    const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: (lastName || '').trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
     res.cookie('kidsAccessToken', token, {
         httpOnly: true,
         secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
@@ -606,7 +606,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 1999; // $19.99 in cents
+        let amount = 7999; // $79.99 in cents
         if (promoCode) {
             const promoFree = process.env.PROMO_FREE || '';
             const promoDiscount = process.env.PROMO_DISCOUNT || '';
@@ -618,7 +618,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
             }
 
             if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(1999 * 0.85); // 15% off
+                amount = Math.round(7999 * 0.85); // 15% off
             }
         }
 

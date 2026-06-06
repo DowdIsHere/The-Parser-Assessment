@@ -600,6 +600,7 @@
             <div class="question-container">
                 <div class="question-phase" id="questionPhase">Calibration · Question 1 of 3</div>
                 <span class="question-badge" id="questionBadge">Spatial</span>
+                <p class="question-frame" id="questionFrame" style="color: var(--text-muted); font-style: italic; font-size: 0.95rem; margin: 10px 0 2px; display:none;"></p>
                 <h2 class="question-text" id="questionText">Loading...</h2>
                 <div class="answer-options" id="answerOptions"></div>
             </div>
@@ -609,59 +610,145 @@
             </div>
         </div>
 
-        <!-- PREDICTION -->
-        <div class="screen" id="predictionScreen">
+        <!-- PHRASE GATE -->
+        <div class="screen" id="phraseScreen">
             <div class="card prediction-card">
-                <div class="prediction-icon">👁️</div>
-                <p class="prediction-text" id="predictionText">"You probably skim instructions and figure it out as you go."</p>
+                <div class="prediction-icon">🔮</div>
+                <div class="section-label" style="text-align:center;">The Phrase That Hits Home</div>
+                <p class="prediction-text" id="gatePhrase">"..."</p>
                 <div class="prediction-check">
-                    <p><strong>If that landed</strong>, your answers were thoughtful—keep going.</p>
-                    <p><strong>If it missed</strong>, consider whether you answered for who you <em>are,</em> or, who you're <em>striving to be</em>.</p>
-                    <p style="margin-top: 16px; font-size: 0.9rem;">Your actual profile reveals a path.<br>Your desired profile assumes you're at the end of it.</p>
-                </div>
-                <div style="margin-top: 24px; padding: 20px; background: var(--accent-temporal-dim); border: 1px solid rgba(255, 200, 87, 0.3); border-radius: 12px; text-align: center;">
-                    <p style="font-weight: 700; color: var(--accent-temporal); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;">⚠️ Please Read All Selections</p>
+                    <p>That's a first read from just three questions — a glimpse of where you lean.</p>
+                    <p><strong>If it landed</strong>, keep going. <strong>If it missed</strong>, ask whether you answered for who you <em>are</em> — not who you're <em>striving to be</em>.</p>
                 </div>
                 <div class="btn-group" style="margin-top: 24px;">
-                    <button class="btn-primary" onclick="continuePastPrediction()">That Landed — Continue</button>
+                    <button class="btn-primary" onclick="goToAccount()">Continue →</button>
                     <button class="btn-secondary" onclick="redoCalibration()">Start Over</button>
                 </div>
             </div>
         </div>
 
-        <!-- EMAIL -->
-        <div class="screen" id="emailScreen">
+        <!-- ACCOUNT -->
+        <div class="screen" id="accountScreen">
             <div class="card centered">
-                <h2>One Last Step</h2>
-                <p>See your FREE results and receive a copy and your unique Customer ID.</p>
+                <h2>Create Your Account</h2>
+                <p>Save your results and unlock the full assessment. A nickname is perfectly fine.</p>
+                <div class="input-group">
+                    <input type="text" id="nicknameInput" placeholder="Name or nickname" style="margin-bottom: 12px;">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="emailInput" placeholder="your@email.com" style="margin-bottom: 12px;">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="passwordInput" placeholder="Create a password (8+ characters)">
+                </div>
+                <label style="display:flex; align-items:flex-start; gap:10px; text-align:left; margin:18px 0 8px; font-size:0.88rem; color:var(--text-secondary); cursor:pointer;">
+                    <input type="checkbox" id="termsCheck" style="margin-top:3px; flex:0 0 auto;">
+                    <span>I have read and accept the <a href="/terms.html" target="_blank" style="color:var(--accent-spatial); font-weight:600;">Terms of Use &amp; License Agreement</a>. My results are licensed to me for personal, non-commercial use.</span>
+                </label>
+                <p id="accountError" style="color:#dc2626; font-size:0.85rem; min-height:1.1em; margin:4px 0 12px;"></p>
+                <button class="btn-primary" id="accountBtn" onclick="registerAndContinue()">Create Account &amp; Continue</button>
+            </div>
+        </div>
 
-                <div class="life-stage-select" style="margin-bottom: 20px;">
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Select your life stage for personalized results:</p>
+        <!-- AGE / LIFE STAGE -->
+        <div class="screen" id="ageScreen">
+            <div class="card centered">
+                <h2>Which fits you best?</h2>
+                <p>We tune your reading to where you are in life.</p>
+                <div class="life-stage-select" style="margin: 8px 0 24px;">
                     <div style="display: flex; gap: 12px; justify-content: center;">
-                        <label style="flex: 1; max-width: 160px; cursor: pointer;">
+                        <label style="flex: 1; max-width: 180px; cursor: pointer;">
                             <input type="radio" name="lifeStage" value="early" style="display: none;">
-                            <div class="life-stage-option" style="padding: 16px 12px; border: 2px solid var(--text-muted); border-radius: 10px; text-align: center; transition: all 0.2s;">
-                                <div style="font-weight: 600; margin-bottom: 4px;">Early Career</div>
+                            <div class="life-stage-option" style="padding: 18px 12px; border: 2px solid var(--text-muted); border-radius: 10px; text-align: center; transition: all 0.2s;">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Young Adult</div>
                                 <div style="font-size: 0.8rem; color: var(--text-muted);">18 – 29</div>
                             </div>
                         </label>
-                        <label style="flex: 1; max-width: 160px; cursor: pointer;">
+                        <label style="flex: 1; max-width: 180px; cursor: pointer;">
                             <input type="radio" name="lifeStage" value="established" checked style="display: none;">
-                            <div class="life-stage-option selected" style="padding: 16px 12px; border: 2px solid var(--accent-spatial); border-radius: 10px; text-align: center; transition: all 0.2s; background: var(--accent-spatial-dim);">
-                                <div style="font-weight: 600; margin-bottom: 4px;">Established</div>
+                            <div class="life-stage-option selected" style="padding: 18px 12px; border: 2px solid var(--accent-spatial); border-radius: 10px; text-align: center; transition: all 0.2s; background: var(--accent-spatial-dim);">
+                                <div style="font-weight: 600; margin-bottom: 4px;">Adult</div>
                                 <div style="font-size: 0.8rem; color: var(--text-muted);">30+</div>
                             </div>
                         </label>
                     </div>
                 </div>
+                <button class="btn-primary" onclick="goToTeaser()">Show My Preview →</button>
+            </div>
+        </div>
 
-                <div class="input-group">
-                    <input type="text" id="nameInput" placeholder="Your name (optional)" style="margin-bottom: 12px;">
+        <!-- TEASER / PREVIEW -->
+        <div class="screen" id="teaserScreen">
+            <div class="results-header">
+                <div class="subtitle">Your Preview · Parser Profile™</div>
+                <h1 class="profile-name" id="teaserProfileName">—</h1>
+            </div>
+
+            <div class="results-card">
+                <div class="section-label">Who You Are</div>
+                <div class="profile-description" id="teaserOverview"></div>
+            </div>
+
+            <div class="results-card">
+                <div class="section-label">The Phrase That Hits Home</div>
+                <div class="phrase-highlight"><p id="teaserPhrase">"..."</p></div>
+            </div>
+
+            <div class="results-card">
+                <div class="section-label">What Comes Naturally</div>
+                <div class="trait-item" id="teaserStrength"></div>
+            </div>
+
+            <div class="results-card">
+                <div class="section-label">How You Learn Best</div>
+                <div class="content-section" id="teaserLearn"></div>
+            </div>
+
+            <div class="results-card">
+                <div class="section-label">Only a few may know This,</div>
+                <p class="locked-teaser" id="teaserSecret" style="font-style:italic;"></p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">…the rest is in your full profile.</p>
+            </div>
+
+            <div class="results-card">
+                <div class="section-label">What's Waiting in Your Full Profile</div>
+                <ul class="whats-waiting" style="list-style:none; padding:0; margin:0; line-height:1.9;">
+                    <li>✦ The remaining 12 questions — your complete, accurate profile</li>
+                    <li>✦ All of your Cognitive Strengths</li>
+                    <li>✦ "Only a few may know This" — in full</li>
+                    <li>✦ How You Communicate</li>
+                    <li>✦ Your Natural Challenges — each with a usable remedy</li>
+                    <li>✦ Your Hidden Superpower</li>
+                    <li>✦ Energy Patterns &amp; Optimal Environments</li>
+                    <li>✦ Where to Grow</li>
+                    <li>✦ A downloadable PDF report</li>
+                </ul>
+            </div>
+
+            <div class="results-card" style="text-align:center;">
+                <h3 style="margin-bottom:16px;">Is This You?</h3>
+                <div class="is-this-you" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                    <button class="btn-secondary" onclick="isThisYou(100)">100%</button>
+                    <button class="btn-secondary" onclick="isThisYou(75)">75%</button>
+                    <button class="btn-secondary" onclick="isThisYou(50)">50%</button>
                 </div>
-                <div class="input-group">
-                    <input type="email" id="emailInput" placeholder="your@email.com">
-                </div>
-                <button class="btn-primary" onclick="submitEmailAndShowResults()">Email My Results</button>
+                <div id="resonanceMsg" style="display:none; margin-top:18px; padding:16px; background:var(--accent-temporal-dim); border:1px solid rgba(255,200,87,0.3); border-radius:12px; color:var(--text-secondary); font-size:0.95rem; line-height:1.6;"></div>
+            </div>
+
+            <div class="cta-card">
+                <div class="price">$79.99 <span>USD</span></div>
+                <div class="price-note">One-time • Full Assessment &amp; Profile • Instant access</div>
+                <button class="btn-primary" style="width:100%; max-width:320px;" onclick="openPaymentModal()">🔓 Unlock the Full Assessment &amp; Profile</button>
+            </div>
+        </div>
+
+        <!-- READY POPUP (Is This You? = 100%) -->
+        <div class="modal-overlay" id="readyPopup">
+            <div class="modal" style="text-align:center;">
+                <h2 style="margin-bottom:8px;">Ready When You Are</h2>
+                <p style="color:var(--text-secondary); margin-bottom:20px;">Your full assessment and profile are one step away.</p>
+                <button class="btn-primary" style="width:100%;" onclick="closeReadyPopup(); openPaymentModal();">Continue to Checkout →</button>
+                <button class="btn-secondary" style="width:100%; margin-top:10px;" onclick="closeReadyPopup()">Not yet</button>
             </div>
         </div>
 
@@ -928,7 +1015,7 @@
                     <div class="feature-item"><span class="check">✓</span><span>Energy Patterns</span></div>
                     <div class="feature-item"><span class="check">✓</span><span>Optimal Environments</span></div>
                 </div>
-                <div class="price">$49.99 <span>USD</span></div>
+                <div class="price">$79.99 <span>USD</span></div>
                 <div class="price-note">One-time purchase • Instant access </div>
                 <button class="btn-primary" style="width: 100%; max-width: 300px;" onclick="openPaymentModal()">Get Full Report</button>
             </div>
@@ -943,7 +1030,7 @@
                     <p>Unlock your full Parser Profile™ report</p>
                 </div>
                 <div class="modal-price">
-                    <span class="amount" id="display-price">$49.99</span>
+                    <span class="amount" id="display-price">$79.99</span>
                     <span class="currency">USD</span>
                     <div id="discount-badge" style="display: none; margin-top: 8px; font-size: 0.8rem; color: var(--accent-spatial); background: var(--accent-spatial-dim); padding: 4px 12px; border-radius: 12px; display: inline-block;"></div>
                 </div>
@@ -960,7 +1047,7 @@
                     <div id="card-element"></div>
                     <div id="card-errors" role="alert"></div>
                     <button type="submit" id="card-button" class="btn-primary" style="width: 100%; margin-top: 16px;">
-                        Pay $49.99
+                        Pay $79.99
                     </button>
                 </form>
                 <div id="payment-status"></div>
@@ -1359,6 +1446,20 @@ const questions = [
             badge.textContent = q.dimension.charAt(0).toUpperCase() + q.dimension.slice(1);
             badge.className = 'question-badge ' + q.dimension;
 
+            const frameEl = document.getElementById('questionFrame');
+            const frames = {
+                spatial: 'Instructions and principles — do you reach for the concept, or the steps?',
+                temporal: 'Proven methods and new capabilities — what has worked, or what could?',
+                reference: 'The value others feel and the value you feel — which surfaces first?'
+            };
+            if (q.phase === 'calibration' && frames[q.dimension]) {
+                frameEl.textContent = frames[q.dimension];
+                frameEl.style.display = 'block';
+            } else {
+                frameEl.textContent = '';
+                frameEl.style.display = 'none';
+            }
+
             document.getElementById('questionText').textContent = q.text;
 
             const optionsContainer = document.getElementById('answerOptions');
@@ -1410,8 +1511,9 @@ const questions = [
         }
 
         window.nextQuestion = function() {
-            if (currentQuestion === 2) {
-                showPrediction();
+            // After the 3 free questions, gate into the phrase → account → teaser flow.
+            if (!hasPaid && currentQuestion === 2) {
+                showPhrase();
                 return;
             }
 
@@ -1419,8 +1521,8 @@ const questions = [
                 currentQuestion++;
                 showQuestion(currentQuestion);
             } else {
-                showScreen('emailScreen');
-                document.getElementById('progressContainer').style.display = 'none';
+                // All 15 answered (only reachable after payment) → full profile.
+                showFullResults();
             }
         }
 
@@ -1435,26 +1537,169 @@ const questions = [
             }
         }
 
-        function showPrediction() {
+        function showPhrase() {
             const scores = calculateScores(true);
             const key = getProfileKey(scores);
-            const prediction = predictions[key] || predictions['balanced-present-balanced'];
-
-            document.getElementById('predictionText').textContent = `"${prediction}"`;
-            showScreen('predictionScreen');
+            const name = profileNames[key] || 'Equanimous';
+            tentativeName = name;
+            tentativeProfile = getProfileForStage(name, 'established');
+            currentProfile = { name: name, profile: tentativeProfile };
+            const phrase = tentativeProfile?.phrase || predictions[key] || 'You notice what most people walk right past.';
+            document.getElementById('gatePhrase').textContent = `"${phrase}"`;
+            document.getElementById('progressContainer').style.display = 'none';
+            showScreen('phraseScreen');
         }
 
-        window.continuePastPrediction = function() {
-            currentQuestion = 3;
-            showScreen('questionScreen');
-            showQuestion(currentQuestion);
+        window.goToAccount = function() {
+            showScreen('accountScreen');
         }
 
         window.redoCalibration = function() {
             answers = {};
             currentQuestion = 0;
+            document.getElementById('progressContainer').style.display = 'block';
             showScreen('questionScreen');
             showQuestion(0);
+            window.scrollTo(0, 0);
+        }
+
+        // ── Account creation (full account, nickname allowed) ──
+        window.registerAndContinue = async function() {
+            const nickname = document.getElementById('nicknameInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const terms = document.getElementById('termsCheck').checked;
+            const errEl = document.getElementById('accountError');
+            errEl.textContent = '';
+
+            if (!nickname) { errEl.textContent = 'Please choose a name or nickname.'; return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email.'; return; }
+            if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
+            if (!terms) { errEl.textContent = 'Please accept the Terms of Use to continue.'; return; }
+
+            const btn = document.getElementById('accountBtn');
+            btn.disabled = true; btn.textContent = 'Creating account…';
+            try {
+                let resp = await fetch('/api/auth/register', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, firstName: nickname, lastName: '', role: 'member' })
+                });
+                let data = await resp.json();
+
+                if (!data.success && resp.status === 409) {
+                    // Account exists — try logging in with the same credentials.
+                    resp = await fetch('/api/auth/login', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    data = await resp.json();
+                    if (!data.success) {
+                        errEl.textContent = 'An account with this email already exists. Check your password.';
+                        btn.disabled = false; btn.textContent = 'Create Account & Continue';
+                        return;
+                    }
+                } else if (!data.success) {
+                    errEl.textContent = data.error || 'Could not create account. Please try again.';
+                    btn.disabled = false; btn.textContent = 'Create Account & Continue';
+                    return;
+                }
+
+                userInfo.email = email;
+                userInfo.name = nickname;
+                btn.disabled = false; btn.textContent = 'Create Account & Continue';
+                showScreen('ageScreen');
+                window.scrollTo(0, 0);
+            } catch (e) {
+                console.error('Register error:', e);
+                errEl.textContent = 'Network error. Please try again.';
+                btn.disabled = false; btn.textContent = 'Create Account & Continue';
+            }
+        }
+
+        // ── Age selection → teaser ──
+        window.goToTeaser = function() {
+            userInfo.lifeStage = getSelectedLifeStage();
+            populateTeaser();
+            document.getElementById('progressContainer').style.display = 'none';
+            showScreen('teaserScreen');
+            window.scrollTo(0, 0);
+        }
+
+        function firstSentence(text) {
+            const t = (text || '').replace(/\s+/g, ' ').trim();
+            if (!t) return '';
+            const m = t.match(/^.*?[.!?](\s|$)/);
+            return (m ? m[0] : t).trim();
+        }
+
+        function populateTeaser() {
+            const scores = calculateScores(true);
+            const key = getProfileKey(scores);
+            const name = profileNames[key] || 'Equanimous';
+            tentativeName = name;
+            const profile = getProfileForStage(name, userInfo.lifeStage) || tentativeProfile;
+            tentativeProfile = profile;
+            currentProfile = { name: name, profile: profile, scores: scores };
+
+            document.getElementById('teaserProfileName').textContent = name;
+
+            // First 2 paragraphs of the overview
+            const ov = (profile?.overview || '').split('\n\n').filter(p => p.trim()).slice(0, 2)
+                .map(p => `<p>${p}</p>`).join('');
+            document.getElementById('teaserOverview').innerHTML = ov || '<p>Your preview is being prepared.</p>';
+
+            // The phrase
+            if (profile?.phrase) document.getElementById('teaserPhrase').textContent = `"${profile.phrase}"`;
+
+            // First cognitive strength
+            if (profile?.strengths && profile.strengths.length) {
+                const s = profile.strengths[0];
+                document.getElementById('teaserStrength').innerHTML =
+                    `<div class="trait-icon">⚡</div><div class="trait-content"><h4>${s.title}</h4><p>${s.description}</p></div>`;
+            }
+
+            // First paragraph of How You Learn Best
+            const learn = (profile?.howYouLearn || '').split('\n\n').filter(p => p.trim())[0] || '';
+            document.getElementById('teaserLearn').innerHTML = learn ? `<p>${learn}</p>` : '';
+
+            // First sentence of "The Secret" → relabeled "Only a few may know This,"
+            document.getElementById('teaserSecret').textContent = firstSentence(profile?.secret);
+
+            const rm = document.getElementById('resonanceMsg');
+            rm.style.display = 'none';
+            rm.innerHTML = '';
+        }
+
+        // ── "Is This You?" resonance check ──
+        window.isThisYou = function(level) {
+            const box = document.getElementById('resonanceMsg');
+            if (level === 100) { openReadyPopup(); return; }
+            if (level === 75) {
+                box.textContent = 'The above are excerpts from where you currently fit — however, your profile may differ from the above once complete.';
+            } else {
+                box.innerHTML = 'We strongly suggest starting over and answering how you <em>feel</em>, not what you feel is right. The latter is the personality you have developed; the former is you.' +
+                    '<div style="margin-top:14px;"><button class="btn-secondary" onclick="redoCalibration()">Start Over</button></div>';
+            }
+            box.style.display = 'block';
+        }
+
+        window.openReadyPopup = function() { document.getElementById('readyPopup').classList.add('active'); }
+        window.closeReadyPopup = function() { document.getElementById('readyPopup').classList.remove('active'); }
+
+        // ── After payment: resume the remaining 12 questions, then the full profile ──
+        function afterPayment() {
+            hasPaid = true;
+            closePaymentModal();
+            currentQuestion = 3;
+            document.getElementById('progressContainer').style.display = 'block';
+            showScreen('questionScreen');
+            showQuestion(3);
+            window.scrollTo(0, 0);
+        }
+
+        function showFullResults() {
+            window.showResults(false, userInfo.lifeStage);
+            unlockFullReport();
         }
 
         function calculateScores(ddcotOnly = false) {
@@ -1511,6 +1756,9 @@ const questions = [
         // Store user info for email
         let userInfo = { name: '', email: '', customerId: '', lifeStage: 'established' };
         let completionLogPromise = null;
+        let hasPaid = false;
+        let tentativeName = '';
+        let tentativeProfile = null;
 
         // Life stage selection handler
         document.querySelectorAll('input[name="lifeStage"]').forEach(radio => {
@@ -1779,7 +2027,7 @@ const questions = [
                     } else {
                         const newPrice = (data.newAmount / 100).toFixed(2);
                         statusEl.textContent = `Promo applied — ${data.discount}% off!`;
-                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$49.99</s> $${newPrice}`;
+                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$79.99</s> $${newPrice}`;
                         document.getElementById('discount-badge').textContent = `${data.discount}% OFF`;
                         document.getElementById('discount-badge').style.display = 'inline-block';
                         document.getElementById('card-button').textContent = `Pay $${newPrice}`;
@@ -1839,7 +2087,7 @@ const questions = [
                 currency: 'usd',
                 total: {
                     label: 'Parser Profile™ Full Report',
-                    amount: activePromo?.newAmount || 4999,
+                    amount: activePromo?.newAmount || 7999,
                 },
                 requestPayerEmail: true,
             });
@@ -1914,8 +2162,7 @@ const questions = [
                     statusEl.textContent = 'Payment successful!';
                     statusEl.className = 'success';
                     setTimeout(() => {
-                        closePaymentModal();
-                        unlockFullReport();
+                        afterPayment();
                     }, 1500);
                 } catch (e) {
                     console.error('Payment Request error:', e);
@@ -1984,8 +2231,7 @@ const questions = [
                     statusEl.textContent = 'Unlocking your full report...';
                     statusEl.className = 'success';
                     setTimeout(() => {
-                        closePaymentModal();
-                        unlockFullReport();
+                        afterPayment();
                     }, 1000);
                     return;
                 }
@@ -2022,8 +2268,7 @@ const questions = [
                     statusEl.className = 'success';
 
                     setTimeout(() => {
-                        closePaymentModal();
-                        unlockFullReport();
+                        afterPayment();
                     }, 1500);
                 }
             } catch (e) {
@@ -2032,7 +2277,7 @@ const questions = [
                 statusEl.className = 'error';
             } finally {
                 submitButton.disabled = false;
-                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$49.99';
+                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$79.99';
                 submitButton.textContent = activePromo?.type === 'free' ? 'Unlock Full Report' : `Pay ${btnPrice}`;
             }
         }
@@ -2057,16 +2302,16 @@ const questions = [
             document.getElementById('applyPromoBtn').disabled = false;
             document.getElementById('applyPromoBtn').style.opacity = '1';
             document.getElementById('promo-status').textContent = '';
-            document.getElementById('display-price').textContent = '$49.99';
+            document.getElementById('display-price').textContent = '$79.99';
             document.getElementById('discount-badge').style.display = 'none';
             // Reset payment elements visibility
             document.getElementById('payment-request-button').style.display = '';
             document.getElementById('payment-divider').style.display = '';
             document.getElementById('card-element').style.display = '';
             document.getElementById('card-errors').style.display = '';
-            document.getElementById('card-button').textContent = 'Pay $49.99';
+            document.getElementById('card-button').textContent = 'Pay $79.99';
             // Reset Payment Request amount
-            updatePaymentRequestAmount(4999);
+            updatePaymentRequestAmount(7999);
         }
 
         // ============================================================================
