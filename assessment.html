@@ -627,29 +627,6 @@
             </div>
         </div>
 
-        <!-- ACCOUNT -->
-        <div class="screen" id="accountScreen">
-            <div class="card centered">
-                <h2>Create Your Account</h2>
-                <p>Save your results and unlock the full assessment. A nickname is perfectly fine.</p>
-                <div class="input-group">
-                    <input type="text" id="nicknameInput" placeholder="Name or nickname" style="margin-bottom: 12px;">
-                </div>
-                <div class="input-group">
-                    <input type="email" id="emailInput" placeholder="your@email.com" style="margin-bottom: 12px;">
-                </div>
-                <div class="input-group">
-                    <input type="password" id="passwordInput" placeholder="Create a password (8+ characters)">
-                </div>
-                <label style="display:flex; align-items:flex-start; gap:10px; text-align:left; margin:18px 0 8px; font-size:0.88rem; color:var(--text-secondary); cursor:pointer;">
-                    <input type="checkbox" id="termsCheck" style="margin-top:3px; flex:0 0 auto;">
-                    <span>I have read and accept the <a href="/terms.html" target="_blank" style="color:var(--accent-spatial); font-weight:600;">Terms of Use &amp; License Agreement</a>. My results are licensed to me for personal, non-commercial use.</span>
-                </label>
-                <p id="accountError" style="color:#dc2626; font-size:0.85rem; min-height:1.1em; margin:4px 0 12px;"></p>
-                <button class="btn-primary" id="accountBtn" onclick="registerAndContinue()">Create Account &amp; Continue</button>
-            </div>
-        </div>
-
         <!-- AGE / LIFE STAGE -->
         <div class="screen" id="ageScreen">
             <div class="card centered">
@@ -1028,13 +1005,43 @@
                 <button class="modal-close" onclick="closePaymentModal()">×</button>
                 <div class="modal-header">
                     <h3>Complete Your Purchase</h3>
-                    <p>Unlock your full Parser Profile™ report</p>
+                    <p>Create your account and unlock your full Parser Profile™</p>
                 </div>
                 <div class="modal-price">
                     <span class="amount" id="display-price">$79.99</span>
                     <span class="currency">USD</span>
                     <div id="discount-badge" style="display: none; margin-top: 8px; font-size: 0.8rem; color: var(--accent-spatial); background: var(--accent-spatial-dim); padding: 4px 12px; border-radius: 12px; display: inline-block;"></div>
                 </div>
+
+                <!-- What the purchase includes -->
+                <div class="checkout-benefits" style="background: var(--bg-inset); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; text-align: left;">
+                    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:8px;">Your purchase includes</div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:0.9rem; color:var(--text-secondary); line-height:1.9;">
+                        <li>✦ Your complete Parser Profile™ + PDF report</li>
+                        <li>✦ A saved account to revisit your profile anytime</li>
+                        <li>✦ Bi-Weekly Parser Newsletters</li>
+                        <li>✦ Member discounts on future assessments</li>
+                    </ul>
+                </div>
+
+                <!-- Account creation (part of checkout) -->
+                <div class="checkout-account" style="margin-bottom: 16px; text-align: left;">
+                    <div class="input-group">
+                        <input type="text" id="pay-nickname" placeholder="Name or nickname" style="margin-bottom: 10px;">
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="pay-email" placeholder="your@email.com" style="margin-bottom: 10px;">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="pay-password" placeholder="Create a password (8+ characters)">
+                    </div>
+                    <label style="display:flex; align-items:flex-start; gap:10px; margin:12px 0 4px; font-size:0.82rem; color:var(--text-secondary); cursor:pointer;">
+                        <input type="checkbox" id="pay-terms" style="margin-top:3px; flex:0 0 auto;">
+                        <span>I have read and accept the <a href="/terms.html" target="_blank" style="color:var(--accent-spatial); font-weight:600;">Terms of Use &amp; License Agreement</a>. My results are licensed to me for personal, non-commercial use.</span>
+                    </label>
+                    <p id="pay-account-error" style="color:#dc2626; font-size:0.82rem; min-height:1em; margin:4px 0 0;"></p>
+                </div>
+
                 <div id="promo-section" style="margin-bottom: 16px;">
                     <div style="display: flex; gap: 8px; align-items: center;">
                         <input type="text" id="promoInput" placeholder="Promo code" style="flex: 1; padding: 10px 14px; background: var(--bg-primary); border: 1px solid var(--text-muted); border-radius: 8px; color: var(--text-primary); font-size: 0.9rem; font-family: inherit;">
@@ -1551,12 +1558,8 @@ const questions = [
             showScreen('phraseScreen');
         }
 
-        window.goToAccount = function() {
-            showScreen('accountScreen');
-        }
-
         // Continue from the phrase gate straight to the age/life-stage selection,
-        // then the profile preview. (Account is collected at checkout.)
+        // then the profile preview. (Account is created at checkout.)
         window.goToAge = function() {
             showScreen('ageScreen');
             window.scrollTo(0, 0);
@@ -1571,22 +1574,11 @@ const questions = [
             window.scrollTo(0, 0);
         }
 
-        // ── Account creation (full account, nickname allowed) ──
-        window.registerAndContinue = async function() {
-            const nickname = document.getElementById('nicknameInput').value.trim();
-            const email = document.getElementById('emailInput').value.trim();
-            const password = document.getElementById('passwordInput').value;
-            const terms = document.getElementById('termsCheck').checked;
-            const errEl = document.getElementById('accountError');
-            errEl.textContent = '';
-
-            if (!nickname) { errEl.textContent = 'Please choose a name or nickname.'; return; }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email.'; return; }
-            if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
-            if (!terms) { errEl.textContent = 'Please accept the Terms of Use to continue.'; return; }
-
-            const btn = document.getElementById('accountBtn');
-            btn.disabled = true; btn.textContent = 'Creating account…';
+        // ── Account creation as part of checkout ──
+        // Creates the member account (or signs in if it already exists).
+        // Validation errors block checkout; a network/backend outage does NOT
+        // block the purchase — we keep the details locally and continue.
+        async function createOrLoginAccount(email, password, nickname) {
             try {
                 let resp = await fetch('/api/auth/register', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1602,25 +1594,15 @@ const questions = [
                     });
                     data = await resp.json();
                     if (!data.success) {
-                        errEl.textContent = 'An account with this email already exists. Check your password.';
-                        btn.disabled = false; btn.textContent = 'Create Account & Continue';
-                        return;
+                        return { ok: false, error: 'An account with this email already exists. Check your password.' };
                     }
                 } else if (!data.success) {
-                    errEl.textContent = data.error || 'Could not create account. Please try again.';
-                    btn.disabled = false; btn.textContent = 'Create Account & Continue';
-                    return;
+                    return { ok: false, error: data.error || 'Could not create account. Please try again.' };
                 }
-
-                userInfo.email = email;
-                userInfo.name = nickname;
-                btn.disabled = false; btn.textContent = 'Create Account & Continue';
-                showScreen('ageScreen');
-                window.scrollTo(0, 0);
+                return { ok: true };
             } catch (e) {
-                console.error('Register error:', e);
-                errEl.textContent = 'Network error. Please try again.';
-                btn.disabled = false; btn.textContent = 'Create Account & Continue';
+                console.warn('Account API unreachable — continuing with local details:', e);
+                return { ok: true, offline: true };
             }
         }
 
@@ -2132,8 +2114,17 @@ const questions = [
                 statusEl.className = '';
 
                 try {
+                    // Capture account details (create the member account if a password was provided)
+                    const email = ev.payerEmail || document.getElementById('pay-email')?.value.trim() || '';
+                    const nickname = ev.payerName || document.getElementById('pay-nickname')?.value.trim() || '';
+                    const password = document.getElementById('pay-password')?.value || '';
+                    if (email && password.length >= 8) {
+                        await createOrLoginAccount(email, password, nickname);
+                    }
+                    userInfo.email = email;
+                    userInfo.name = nickname;
+
                     // Create PaymentIntent on the server
-                    const email = ev.payerEmail || document.getElementById('emailInput')?.value || '';
                     const response = await fetch('/api/create-payment-intent', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -2232,6 +2223,18 @@ const questions = [
 
             const submitButton = document.getElementById('card-button');
             const statusEl = document.getElementById('payment-status');
+            const accErr = document.getElementById('pay-account-error');
+            accErr.textContent = '';
+
+            // Validate account fields — the member account is created at checkout
+            const nickname = document.getElementById('pay-nickname').value.trim();
+            const email = document.getElementById('pay-email').value.trim();
+            const password = document.getElementById('pay-password').value;
+            const terms = document.getElementById('pay-terms').checked;
+            if (!nickname) { accErr.textContent = 'Please choose a name or nickname.'; return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { accErr.textContent = 'Please enter a valid email.'; return; }
+            if (password.length < 8) { accErr.textContent = 'Password must be at least 8 characters.'; return; }
+            if (!terms) { accErr.textContent = 'Please accept the Terms of Use to continue.'; return; }
 
             submitButton.disabled = true;
             submitButton.textContent = 'Processing...';
@@ -2239,6 +2242,15 @@ const questions = [
             statusEl.className = '';
 
             try {
+                // Create the member account (or sign in if it exists) as part of checkout
+                const acct = await createOrLoginAccount(email, password, nickname);
+                if (!acct.ok) {
+                    accErr.textContent = acct.error;
+                    throw new Error(acct.error);
+                }
+                userInfo.email = email;
+                userInfo.name = nickname;
+
                 // If free promo, skip payment entirely
                 if (activePromo && activePromo.type === 'free') {
                     statusEl.textContent = 'Unlocking your full report...';
@@ -2250,7 +2262,6 @@ const questions = [
                 }
 
                 // Create PaymentIntent on the server
-                const email = document.getElementById('emailInput')?.value || '';
                 const response = await fetch('/api/create-payment-intent', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
