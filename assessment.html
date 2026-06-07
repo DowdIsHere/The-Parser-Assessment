@@ -621,7 +621,7 @@
                     <p><strong>If it landed</strong>, keep going. <strong>If it missed</strong>, ask whether you answered for who you <em>are</em> — not who you're <em>striving to be</em>.</p>
                 </div>
                 <div class="btn-group" style="margin-top: 24px;">
-                    <button class="btn-primary" onclick="goToAccount()">Continue →</button>
+                    <button class="btn-primary" onclick="goToAge()">Continue →</button>
                     <button class="btn-secondary" onclick="redoCalibration()">Start Over</button>
                 </div>
             </div>
@@ -722,6 +722,7 @@
                     <li>✦ Energy Patterns &amp; Optimal Environments</li>
                     <li>✦ Where to Grow</li>
                     <li>✦ A downloadable PDF report</li>
+                    <li>✦ Bi-Weekly Parser Newsletters</li>
                 </ul>
             </div>
 
@@ -744,7 +745,7 @@
 
         <!-- READY POPUP (Is This You? = 100%) -->
         <div class="modal-overlay" id="readyPopup">
-            <div class="modal" style="text-align:center;">
+            <div class="modal-content" style="text-align:center;">
                 <h2 style="margin-bottom:8px;">Ready When You Are</h2>
                 <p style="color:var(--text-secondary); margin-bottom:20px;">Your full assessment and profile are one step away.</p>
                 <button class="btn-primary" style="width:100%;" onclick="closeReadyPopup(); openPaymentModal();">Continue to Checkout →</button>
@@ -1554,6 +1555,13 @@ const questions = [
             showScreen('accountScreen');
         }
 
+        // Continue from the phrase gate straight to the age/life-stage selection,
+        // then the profile preview. (Account is collected at checkout.)
+        window.goToAge = function() {
+            showScreen('ageScreen');
+            window.scrollTo(0, 0);
+        }
+
         window.redoCalibration = function() {
             answers = {};
             currentQuestion = 0;
@@ -1671,16 +1679,21 @@ const questions = [
         }
 
         // ── "Is This You?" resonance check ──
+        // 100% & 75% → on to payment.  50% → back to the homepage.
         window.isThisYou = function(level) {
             const box = document.getElementById('resonanceMsg');
             if (level === 100) { openReadyPopup(); return; }
             if (level === 75) {
-                box.textContent = 'The above are excerpts from where you currently fit — however, your profile may differ from the above once complete.';
+                box.innerHTML = 'The above are excerpts from where you currently fit — however, your profile may differ from the above once complete.' +
+                    '<div style="margin-top:14px;"><button class="btn-primary" onclick="openPaymentModal()">Continue to Checkout →</button></div>';
+                box.style.display = 'block';
             } else {
                 box.innerHTML = 'We strongly suggest starting over and answering how you <em>feel</em>, not what you feel is right. The latter is the personality you have developed; the former is you.' +
-                    '<div style="margin-top:14px;"><button class="btn-secondary" onclick="redoCalibration()">Start Over</button></div>';
+                    '<div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">' +
+                    '<button class="btn-primary" onclick="window.location.href=\'/index.html\'">Back to Home</button>' +
+                    '<button class="btn-secondary" onclick="redoCalibration()">Start Over</button></div>';
+                box.style.display = 'block';
             }
-            box.style.display = 'block';
         }
 
         window.openReadyPopup = function() { document.getElementById('readyPopup').classList.add('active'); }
