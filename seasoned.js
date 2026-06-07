@@ -29,6 +29,21 @@ export const seasonedProfile = {
 
   "workEnvironments": "Where you thrive:\n- Institutional knowledge valued\n- Operations, quality assurance, skilled trades, training and development\n- Apprenticeship-based cultures\n- Organizations that respect tenure and value consistency\n- Building on what works rather than constant disruption\n\nWhere you suffocate:\n- \"Move fast and break things\" cultures\n- Innovation prized over execution\n- Theory over practice\n- Novelty over reliability\n- Experience treated as baggage",
 
+  "topCareers": [
+    {
+      "title": "Master Tradesperson / Practitioner",
+      "description": "You've developed methods that work—tested, refined, earned through trying and failing and adjusting until you found what delivers. Skilled trades and applied practice reward exactly that hard-won competence: real approaches, not borrowed frameworks. You've already run the experiments others are about to run and found the dead ends they're about to discover. The experience some places treat as baggage is, in this work, the entire asset."
+    },
+    {
+      "title": "Trainer / Apprenticeship Mentor",
+      "description": "You watch people ignore your methods to \"find their own way\" and feel the quiet certainty of knowing what's coming. Training and apprenticeship work make that into a craft—passing on what you've proven so the next person doesn't pay full tuition for it. You're not controlling; you're efficient, handing over the shortcut you earned the slow way. The practical wisdom you accumulated becomes, here, the thing you're trusted to transmit."
+    },
+    {
+      "title": "Operations / Quality Lead",
+      "description": "You build on what works instead of disrupting for its own sake, because you know what disruption actually costs. Operations and quality assurance reward that practitioner's judgment: consistency, reliability, the refined method that delivers every time. You trust tested practice over novelty because you've watched novelty break. The tenure that \"move fast and break things\" cultures discounted is precisely what these roles are built to value."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Perceptual Discrimination (concrete detail processing)\n- Sequential Processing (method development and procedural knowledge)\n- Pattern Recognition (across experienced situations)\n\nLikely Moderate-Accessibility Blocks:\n- Self-Reference Processing (balanced, accessible)\n- Social Signal Processing (balanced reference enables awareness)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (preference for proven over novel)\n- Symbolic Manipulation (abstract reasoning without concrete grounding)\n\nThis pattern suggests your cognitive architecture is optimized for expertise development, method building, and practical knowledge transfer.\n\nSEASONED",
 
   "strengths": [

@@ -29,6 +29,21 @@ export const visionaryProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value innovation over execution, autonomy over supervision\n- Startups in the exploration phase, research institutions, think tanks, strategic consulting\n- Any role labeled \"visionary,\" \"architect,\" or \"strategist\"\n- High novelty, minimal process overhead, problems without known solutions\n\nWhere you suffocate:\n- Environments that prioritize compliance, standardization, and detailed execution\n- Large bureaucratic organizations\n- Roles focused on maintenance rather than creation\n- Any position where the \"what\" is predetermined and you're only responsible for the \"how\"",
 
+  "topCareers": [
+    {
+      "title": "Strategic Architect / Innovation Lead",
+      "description": "While the room is still defining the problem, you've already mapped where it leads and connected it to six things nobody's named yet. That's not a quirk to manage—it's the job description of the person companies pay to see around the next bend. You're not built to execute a plan someone hands you; you're built to author the plan that doesn't exist yet, the one that reads as obvious only after you've drawn it. The pattern you can't stop seeing becomes the thing organizations finally pay you to see on purpose."
+    },
+    {
+      "title": "Founder / Entrepreneur",
+      "description": "You've always lived more in the version of things that doesn't exist yet than in the one in front of you. That's the founder's actual gift—not the hustle, but the ability to hold a future vivid enough to build toward when everyone else only sees the present. You thrive in the exploration phase, before the path is paved, where the question is \"what could this be\" instead of \"how do we maintain it.\" The restlessness that made every settled job feel like a cage is the same drive that starts the thing from nothing."
+    },
+    {
+      "title": "Futurist / Research Strategist",
+      "description": "You see the shape of things before they fully form, and you've spent your life arriving at conclusions other people reach months later. In strategy, foresight, and research, that earliness stops being a social liability and becomes the product. You get paid to operate at the altitude that always felt lonely—tracking trajectories, modeling what's coming, telling organizations what they'll need before they feel the need. What teachers called distraction was advanced computation; here it's just called insight."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (your native mode)\n- Generative Creation (constant ideation)\n- Symbolic Manipulation (abstract reasoning)\n\nLikely Moderate-Accessibility Blocks:\n- Self-Reference Processing (strong but sometimes unexamined)\n- Spatial Relationships (for systems visualization)\n\nLikely Lower-Accessibility Blocks:\n- Sequential Processing (execution and follow-through)\n- Perceptual Discrimination (concrete details)\n- Social Signal Processing (may miss present-moment interpersonal cues)\n\nThis pattern suggests your cognitive architecture is optimized for insight generation and strategic thinking, with developmental opportunities in execution systems and present-moment awareness.\n\nVISIONARY",
 
   "strengths": [

@@ -29,6 +29,21 @@ export const attunedProfile = {
 
   "workEnvironments": "Where you thrive:\n- High interpersonal content—counseling, coaching, facilitation\n- Small teams with healthy dynamics\n- Roles where human navigation is the job\n- Collaborative cultures that value emotional intelligence\n- Environments with psychological safety\n\nWhere you suffocate:\n- Toxic dynamics you can't escape and can't stop feeling\n- Isolated work without human signal\n- Aggressive, thick-skin cultures\n- Abstract work disconnected from people\n- Roles that require ignoring what you perceive",
 
+  "topCareers": [
+    {
+      "title": "Counselor / Therapist",
+      "description": "You walked in and knew—who was tense, who was pretending, who was about to crack—before anyone spoke. Counseling runs on exactly that channel. You receive the signal others aren't tuned to, the shift in a face, the thing held back, and you respond to what's actually happening in the room instead of the words being said. What got called \"too sensitive\" your whole life is, in this work, the instrument itself—the thing that lets you meet someone where they really are."
+    },
+    {
+      "title": "Facilitator / Mediator",
+      "description": "When a group's dynamic curdles, you feel it in your body before it's named—and you can name it. Facilitation and mediation pay for that real-time read: sensing the unspoken tension, the person going quiet, the moment to slow down. You don't navigate people from a theory of how groups work; you navigate from what you're picking up live in the room. The perception you couldn't turn off becomes the reason the meeting doesn't fall apart."
+    },
+    {
+      "title": "Coach",
+      "description": "You read the room before the room knows it's been read, and people trust whoever actually sees them. Coaching is built on that—meeting someone exactly where they are, catching the flicker of resistance or relief, working with the real human in front of you rather than the one on paper. The empathy that cost you in thick-skinned rooms is the core competency here. You were always doing this for free; this is the version that pays."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Social Signal Processing (your native mode)\n- Perceptual Discrimination (concrete present focus)\n- Self-Reference Processing (through other-awareness, paradoxically)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (practical responsiveness)\n- Spatial Relationships (reading physical cues)\n\nLikely Lower-Accessibility Blocks:\n- Pattern Recognition (across time; present-focus limits)\n- Generative Creation (abstract ideation)\n- Symbolic Manipulation (theoretical reasoning)\n\nThis pattern suggests your cognitive architecture is optimized for social intelligence and interpersonal effectiveness, with potential developmental opportunities in abstract reasoning and self-focused processing.\n\nATTUNED",
 
   "strengths": [

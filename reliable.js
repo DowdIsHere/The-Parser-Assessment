@@ -29,6 +29,21 @@ export const reliableProfile = {
 
   "workEnvironments": "Where you thrive:\n- Reliability valued and follow-through determines success\n- Project management, operations, client services, healthcare, logistics\n- Trust is currency\n- Your track record creates access and opportunity\n- Commitment-keeping recognized\n\nWhere you suffocate:\n- Chaotic environments where commitments are fluid\n- Cultures that don't honor promises\n- Organizations that over-commit and under-deliver\n- Your reliability exploited without recognition\n- No one else carries their weight",
 
+  "topCareers": [
+    {
+      "title": "Project / Operations Manager",
+      "description": "When you say it's done, it's done—your word lives in your body as structure until it's fulfilled. Project and operations management is that trait made into a profession: commitments tracked, promises kept, the bridge that doesn't collapse because you won't let it. You feel a casual request as a contract, and in this work that asymmetry is the value, not the burden. The dependability that went invisible through its own success is exactly what these roles exist to reward."
+    },
+    {
+      "title": "Client Services / Account Lead",
+      "description": "Your reliability is the thing people walk across without looking down, and clients are people who need a bridge that holds. Account and client-services work runs on follow-through—the promise made and kept, the deadline that never becomes a surprise. You build trust as currency, and your track record opens doors that pitches can't. The consistency others took for granted becomes, here, the entire basis of the relationship."
+    },
+    {
+      "title": "Logistics / Healthcare Coordinator",
+      "description": "You carry commitments as concrete obligations extending into the future, and you don't drop them. Logistics and care coordination depend on exactly that—the person who ensures the thing actually happens, on time, for someone who's counting on it. In domains where a dropped promise has real consequences, your built-in inability to over-commit and under-deliver is the safeguard. What looked like quiet over-responsibility is, in this work, the reason it all stays standing."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Sequential Processing (commitment and delivery tracking)\n- Social Signal Processing (other-need awareness)\n- Pattern Recognition (anticipating needs over time)\n\nLikely Moderate-Accessibility Blocks:\n- Perceptual Discrimination (concrete detail tracking)\n- Spatial Relationships (practical coordination)\n\nLikely Lower-Accessibility Blocks:\n- Self-Reference Processing (other-focus dominates)\n- Generative Creation (delivery focus over ideation)\n\nThis pattern suggests your cognitive architecture is optimized for commitment fulfillment, need anticipation, and relationship maintenance through consistent delivery.\n\nRELIABLE",
 
   "strengths": [

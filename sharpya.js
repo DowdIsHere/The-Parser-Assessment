@@ -27,6 +27,21 @@ export const sharpyaProfile = {
 
   "workEnvironments": "Where you thrive:\n- Anything where you can see the actual result of what you did\n- People who judge you by what you pull off, not by how you talk about it\n- Roles where being careful is treated as a strength, not a buzzkill\n- A small crew that's been through some stuff and gets it\n- Places that don't make you fake excitement you don't feel\n\nWhere you suffocate:\n- \"Move fast,\" when you're the one who ends up fixing the mess\n- All hype, no follow-through, nobody actually responsible when it flops\n- Settings that care more about how confident you sound than whether you're right\n- Being blamed for the problem you literally called out first\n- Group stuff where the loudest person wins and the right answer loses",
 
+  "topCareers": [
+    {
+      "title": "Skilled Trade / Apprenticeship",
+      "description": "You learn by doing the thing and remembering exactly what went wrong last time—which is the whole basis of how a trade actually works. An apprenticeship rewards that: you build real skill through reps, you remember the mistake so you don't repeat it, and you get judged by what you can pull off, not how you talk about it. You're probably already the one in the group project who said \"this won't work\" and got ignored—then turned out right. The trades pay you to be that person on purpose."
+    },
+    {
+      "title": "Operations / Quality Roles",
+      "description": "You remember what actually happened, not the hyped-up version, and you notice the corner someone's about to cut. Entry-level ops and quality work is built for that—being the careful one who catches the problem before it ships. In a world that rewards moving fast, you're the person who quietly keeps the fast-movers from blowing it up. The carefulness that gets called a buzzkill is, in this work, the entire reason you're worth having around."
+    },
+    {
+      "title": "Specialist / Expert-Track Roles",
+      "description": "You go deep on the thing you care about and remember every detail of how it's gone before, which is exactly how real expertise gets built. Specialist tracks—technical, craft, analytical—reward that patient accumulation: you've already run the experiments, so you see the dead ends coming. You're at your best with clear ownership and a result you can point to. The depth that doesn't show up in a fast first impression becomes the thing that makes you genuinely good over time."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Perceptual Discrimination (concrete detail processing)\n- Sequential Processing (procedural memory from experience)\n- Self-Reference Processing (strong personal experience integration)\n\nLikely Moderate-Accessibility Blocks:\n- Pattern Recognition (across experienced situations)\n- Spatial Relationships (practical, hands-on)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (preference for proven over novel)\n- Symbolic Manipulation (abstract reasoning without concrete grounding)\n- Social Signal Processing (self-focus can limit other-awareness)\n\nThis pattern suggests your cognitive architecture is optimized for learning fast from real experience and trusting what you've actually lived, with room to grow in giving new things a clean shot before your memory decides for you.\n\nSHARP",
 
   "strengths": [

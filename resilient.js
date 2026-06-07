@@ -29,6 +29,21 @@ export const resilientProfile = {
 
   "workEnvironments": "Where you thrive:\n- Risk management valued, not dismissed\n- Emergency services, operations, healthcare, security\n- Organizations that have learned from failure\n- Contingency planning is standard practice\n- Realistic assessment appreciated\n\nWhere you suffocate:\n- Toxic optimism that punishes risk acknowledgment\n- \"Negative thinking\" discouraged\n- Failure treated as unthinkable rather than prepared-for\n- Contingency planning seen as disloyalty\n- Only cheerleaders advance",
 
+  "topCareers": [
+    {
+      "title": "Risk / Contingency Manager",
+      "description": "You see around corners—you've already run the scenarios and prepared the backup nobody wanted until they needed it. Risk management is that instinct given a budget: identifying what could go wrong before it does and building the contingency that turns a disaster into a Tuesday. What gets dismissed as pessimism in optimistic rooms is, in this work, the core deliverable. Your preparation finally lands somewhere it reads as foresight instead of negativity."
+    },
+    {
+      "title": "Emergency / Operations Lead",
+      "description": "You're the one who \"just happened\" to have what was needed when things went wrong—because you saw it coming and quietly got ready. Emergency services and operations are built around that: realistic assessment of failure, plans for the bad day, the question asked before launch instead of after the crash. You don't catastrophize; you prepare. The uncomfortable foresight that made cheerleader cultures wince is exactly the discipline these fields can't run without."
+    },
+    {
+      "title": "Security / Safety Specialist",
+      "description": "While everyone assumes it'll be fine, you've already mapped how it breaks and what you'd do. Security and safety work pays for precisely that vigilance—treating failure as something to prepare for rather than something unthinkable. You hold realism without panic, the steady middle that plans for the worst while functioning in the present. The risk-awareness that read as disloyalty in toxic-optimism rooms becomes, here, the whole reason you're trusted."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Sequential Processing (scenario and contingency planning)\n- Pattern Recognition (risk pattern detection)\n- Perceptual Discrimination (concrete detail tracking)\n\nLikely Moderate-Accessibility Blocks:\n- Self-Reference Processing (balanced, accessible)\n- Social Signal Processing (balanced other-awareness)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (focus on preparation over innovation)\n- Symbolic Manipulation (abstract reasoning without concrete grounding)\n\nThis pattern suggests your cognitive architecture is optimized for anticipation, preparation, and adaptive response.\n\nRESILIENT",
 
   "strengths": [

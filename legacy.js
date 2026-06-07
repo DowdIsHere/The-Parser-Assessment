@@ -29,6 +29,21 @@ export const legacyProfile = {
 
   "workEnvironments": "Where you thrive:\n- Institutions that value their own history\n- Roles focused on preservation and transmission\n- Organizations with long time horizons\n- Cultures that respect precedent\n- Positions where your memory is an asset\n\nWhere you suffocate:\n- \"Move fast and break things\" cultures\n- Organizations without respect for what came before\n- Environments that prize disruption for its own sake\n- Places where institutional knowledge is seen as obstacle\n- Roles where your historical perspective is dismissed as resistance",
 
+  "topCareers": [
+    {
+      "title": "Archivist / Curator",
+      "description": "You remember what they've forgotten—the people who built what everyone takes for granted, the reason the rule exists. Archives and curation make a craft of that: preserving not just the object but the why behind it, so the sacrifice that didn't make the highlight reel survives. You don't romanticize the past; you witness it, and you keep the names that got erased from the story. The memory you carried because someone had to becomes the thing an institution trusts you to hold."
+    },
+    {
+      "title": "Institutional Historian / Heritage Steward",
+      "description": "When they want to tear it down and start fresh, you're the one asking if they know what they're standing on. Heritage and institutional-history work is that instinct made into a role—keeping the record of how we got here so the next generation doesn't pay full price to relearn it. You hold precedent not as nostalgia but as hard-won knowledge of what worked and what it cost. People lean on that memory for years without ever writing it into your title."
+    },
+    {
+      "title": "Educator / Tradition-Keeper",
+      "description": "You know why we stopped doing it that way, and you can hand that knowing to people who never lived it. Teaching and transmission work is built for the tradition-keeper—passing on the context, the precedent, the reason behind the rule, so a community keeps its own memory. You make the past usable rather than sacred. The role you always played for free, holding the backstory when it lived nowhere else, becomes the thing you're actually there to do."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Sequential Processing (historical narrative tracking)\n- Social Signal Processing (collective awareness)\n- Self-Reference Processing (through community identity)\n\nLikely Moderate-Accessibility Blocks:\n- Pattern Recognition (historical patterns)\n- Perceptual Discrimination (concrete details)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (preference for preservation over innovation)\n- Symbolic Manipulation (abstract reasoning without concrete grounding)\n- Spatial Relationships (may be less emphasized)\n\nThis pattern suggests your cognitive architecture is optimized for cultural transmission and institutional stewardship, with potential developmental opportunities in abstract reasoning and future-oriented thinking.\n\nLEGACY",
 
   "strengths": [

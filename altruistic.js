@@ -29,6 +29,21 @@ export const altruisticProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments oriented toward collective impact\n- Nonprofits, social enterprises, public interest organizations, mission-driven companies\n- Roles with strategic influence on collective outcomes\n- Systems thinking valued, colleagues who share orientation toward larger good\n\nWhere you suffocate:\n- Environments focused purely on individual advancement and short-term profit\n- Organizations without larger purpose\n- Roles without collective impact\n- Cultures that dismiss concern for others as naive",
 
+  "topCareers": [
+    {
+      "title": "Social Entrepreneur / Systems-Change Lead",
+      "description": "You see what we could become—not as wishful thinking, but as pattern recognition applied to collective potential. Social entrepreneurship and systems-change work are exactly that vision made operational: modeling futures where systems work better and building toward them. You think in movements and large-scale change because that's where your attention natively goes. The concern for collective good that got called naive becomes, here, the entire strategic foundation."
+    },
+    {
+      "title": "Nonprofit / Mission-Driven Strategist",
+      "description": "You model futures where collective outcomes improve and what could be becomes what is. Nonprofit and mission-driven strategy reward that orientation: holding the systemic, long-horizon view while others optimize individual advantage. You see the leverage points in a whole system, not just the next quarter. The drive toward larger purpose that profit-only cultures couldn't house is precisely what these organizations are built around."
+    },
+    {
+      "title": "Public Interest / Policy Strategist",
+      "description": "You think in systems and large-scale change, weighing collective welfare over personal benefit as your default. Public-interest and policy work pay for that: designing for outcomes that improve the whole rather than the few. You hold a future vivid enough to organize people toward it. The systemic, collective-first mind that felt out of place in advancement-focused rooms becomes, in this domain, the entire qualification."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (systemic patterns)\n- Social Signal Processing (collective dynamics)\n- Generative Creation (vision development)\n\nLikely Moderate-Accessibility Blocks:\n- Symbolic Manipulation (abstract reasoning)\n- Self-Reference Processing (through collective identity)\n\nLikely Lower-Accessibility Blocks:\n- Sequential Processing (present-moment execution)\n- Perceptual Discrimination (concrete details)\n- Spatial Relationships (may be less emphasized than social-temporal)\n\nThis pattern suggests your cognitive architecture is optimized for collective vision and systemic change, with developmental opportunities in concrete execution and self-care.\n\nALTRUISTIC",
 
   "strengths": [
