@@ -180,6 +180,10 @@
       position: relative;
     }
     .hero-image-box .img-placeholder { color: rgba(255,255,255,0.5); }
+    .hero-image-box img, .group-image img, .collision-domain-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; position: relative; z-index: 1;
+    }
     .hero-stats {
       display: flex; gap: 40px;
     }
@@ -645,7 +649,7 @@
   <header>
     <div class="h-inner">
       <a href="/index.html" class="logo-lockup">
-        <img src="cbi-logo.jpg" alt="CBI" class="logo-img">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="logo-img">
         <div class="logo-text">
           <div class="name">J.D. Mercer</div>
           <div class="sub">Cognition Blocks Intelligence</div>
@@ -688,8 +692,7 @@
         </div>
       </div>
       <div class="hero-image-box">
-        <!-- Replace: <img src="/images/parser-frame-hero.jpg" alt="Parser Frame visual"> -->
-        <span class="img-placeholder">Hero Image</span>
+        <img src="images/Hero-image.jpg" alt="Parser Frame visual">
       </div>
     </div>
   </section>
@@ -722,8 +725,7 @@
         <div class="group-desc">People who trust what's right in front of them — what they've lived, what they can see, and what they know from real experience.</div>
       </div>
       <div class="group-image">
-        <!-- Replace: <img src="/images/close-up-lenses.jpg" alt="Close-Up Lenses"> -->
-        <span class="img-placeholder">Close-Up Lenses — Group Image</span>
+        <img src="images/close-up-lenses.jpg" alt="Close-Up Lenses">
       </div>
 
       <div class="parser-grid">
@@ -792,8 +794,7 @@
         <div class="group-desc">People who shift with the moment — past or future, themselves or others, the practical or the big picture, depending on what the situation calls for.</div>
       </div>
       <div class="group-image">
-        <!-- Replace: <img src="/images/adjustable-lenses.jpg" alt="Adjustable Lenses"> -->
-        <span class="img-placeholder">Adjustable Lenses — Group Image</span>
+        <img src="images/adjustable-lenses.jpg" alt="Adjustable Lenses">
       </div>
 
       <div class="parser-grid">
@@ -862,8 +863,7 @@
         <div class="group-desc">People who naturally see the bigger picture — the patterns, the connections, and where things are heading for everyone, not just right now.</div>
       </div>
       <div class="group-image">
-        <!-- Replace: <img src="/images/wide-angle-lenses.jpg" alt="Wide-Angle Lenses"> -->
-        <span class="img-placeholder">Wide-Angle Lenses — Group Image</span>
+        <img src="images/wide-angle-lenses.jpg" alt="Wide-Angle Lenses">
       </div>
 
       <div class="parser-grid">
@@ -944,8 +944,7 @@
         <h3 class="collision-domain-title">Professional<br>Collisions</h3>
       </div>
       <div class="collision-domain-image">
-        <!-- Replace: <img src="/images/professional-collisions.jpg" alt="Professional Collisions"> -->
-        <span class="img-placeholder">Professional Collisions — Domain Image</span>
+        <img src="images/professional-collisions.jpg" alt="Professional Collisions">
       </div>
 
       <!-- Face-Off 1 -->
@@ -1029,8 +1028,7 @@
         <h3 class="collision-domain-title">Parenting<br>Collisions</h3>
       </div>
       <div class="collision-domain-image">
-        <!-- Replace: <img src="/images/parenting-collisions.jpg" alt="Parenting Collisions"> -->
-        <span class="img-placeholder">Parenting Collisions — Domain Image</span>
+        <img src="images/parenting-collisions.jpg" alt="Parenting Collisions">
       </div>
 
       <div class="faceoff">
@@ -1111,8 +1109,7 @@
         <h3 class="collision-domain-title">Romantic<br>Collisions</h3>
       </div>
       <div class="collision-domain-image">
-        <!-- Replace: <img src="/images/romantic-collisions.jpg" alt="Romantic Collisions"> -->
-        <span class="img-placeholder">Romantic Collisions — Domain Image</span>
+        <img src="images/romantic-collisions.jpg" alt="Romantic Collisions">
       </div>
 
       <div class="faceoff">
@@ -1193,8 +1190,7 @@
         <h3 class="collision-domain-title">Social<br>Collisions</h3>
       </div>
       <div class="collision-domain-image">
-        <!-- Replace: <img src="/images/social-collisions.jpg" alt="Social Collisions"> -->
-        <span class="img-placeholder">Social Collisions — Domain Image</span>
+        <img src="images/social-collisions.jpg" alt="Social Collisions">
       </div>
 
       <div class="faceoff">
@@ -1285,7 +1281,7 @@
   <footer>
     <div class="f-inner">
       <div class="f-brand">
-        <img src="cbi-logo.jpg" alt="CBI" class="f-logo">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="f-logo">
         <span class="f-name">J.D. Mercer</span>
       </div>
       <div class="f-meta">
