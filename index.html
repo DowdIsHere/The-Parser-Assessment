@@ -498,6 +498,75 @@
       line-height: 1.7;
     }
 
+    /* ── FINDING SYNERGY (the positive synthesis that closes each domain) ── */
+    .synergy {
+      background:
+        linear-gradient(160deg, rgba(184,146,42,0.12) 0%, rgba(184,146,42,0.03) 55%, transparent 100%),
+        var(--ink-card);
+      border: 1px solid rgba(184,146,42,0.32);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .synergy-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(184,146,42,0.22);
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .synergy-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: #1c1608;
+      background: var(--gold);
+      padding: 4px 10px; border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .synergy-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .synergy-body { padding: 28px; }
+    .synergy-setup {
+      font-size: 0.9rem; color: var(--text-soft);
+      line-height: 1.7; margin-bottom: 24px;
+    }
+    .synergy-cols {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 28px; margin-bottom: 24px;
+    }
+    .synergy-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .synergy-col p {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
+    }
+    .synergy-payoff {
+      border-top: 1px solid rgba(184,146,42,0.22);
+      padding-top: 20px;
+    }
+    .synergy-payoff-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .synergy-payoff h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--gold-pale); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .synergy-payoff p {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
+    }
+
     /* ── QUICK REF ── */
     .quick-ref {
       padding: 96px 0;
@@ -630,6 +699,7 @@
       .faceoff-body { grid-template-columns: 1fr; }
       .faceoff-col.through { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 20px; }
       .gm-voices { grid-template-columns: 1fr; }
+      .synergy-cols { grid-template-columns: 1fr; }
       .group-header { grid-template-columns: 1fr; gap: 20px; }
       .ref-grid { grid-template-columns: 1fr; }
     }
@@ -1034,6 +1104,32 @@
         </div>
       </div>
 
+      <!-- Finding Synergy: Professional -->
+      <div class="synergy">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Team That Sees the Whole Timeline</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">The same split that makes Sharp and Visionary talk past each other is what makes a team complete. One end holds what's already been proven; the other reaches for what's coming next. A group built from only one end is either stuck or unmoored — a group that holds both covers the entire distance from track record to horizon.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">Proven Ground · Sharp + Legacy</div>
+              <p>Sharp tests every idea against what actually worked. Legacy keeps the institutional memory of why decisions were made in the first place. Together they make sure the team doesn't pay for the same expensive lessons twice — or build a bold future on a foundation that's already cracked.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">Open Horizon · Visionary + Actualized</div>
+              <p>Visionary sees where things are heading before the trend has a name. Actualized keeps the team reaching for what it could still become. Together they make sure proven ground doesn't quietly harden into a rut that no one thinks to question.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>Foundation and foresight, in the same room.</h4>
+            <p>When the proven and the emerging stop dismissing each other, validation gets faster and risk gets smaller at the same time. Sharp's evidence de-risks Visionary's bets; Visionary's read keeps Sharp's expertise from going stale. The team stops choosing between safe and bold and starts being both.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- PARENTING -->
       <div class="collision-domain-header" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Two</div>
@@ -1111,6 +1207,32 @@
           <div class="gm-nav">
             <div class="gm-nav-label">The Navigation</div>
             <p>Children need both capacities — healthy self-regard AND social attunement. The question isn't which is right; it's which is currently underdeveloped. Awareness of your own gradient helps you see what your child might need that doesn't come naturally to you.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finding Synergy: Parenting -->
+      <div class="synergy">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Child Who Gets the Whole Picture</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">Intentional plans for who the child is becoming. Grounded protects who the child is today. Empathetic feels with them; Sharp equips them. Apart, each parent quietly worries the others are getting it wrong. Together, they hand a child something no single lens can give: a childhood that is honored right now and prepared for later.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">Held in the Present · Grounded + Empathetic</div>
+              <p>Grounded notices when the schedule is quietly crushing the kid in front of them. Empathetic makes sure the child feels understood before they're ever corrected. Together they keep a child from being treated as a project instead of a person.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">Pointed Toward the Future · Intentional + Sharp</div>
+              <p>Intentional builds toward the adult this child is going to be. Sharp hands over hard-won tools instead of letting the child relearn everything from scratch. Together they keep care from collapsing into the moment with no road out ahead of it.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>Felt with, and equipped.</h4>
+            <p>A child raised across these lenses learns that their feelings are real <em>and</em> that the world has rules worth knowing — that today matters <em>and</em> tomorrow is being built for them. The parents stop grading each other's instincts and start covering the angles none of them could hold alone.</p>
           </div>
         </div>
       </div>
@@ -1196,6 +1318,32 @@
         </div>
       </div>
 
+      <!-- Finding Synergy: Romantic -->
+      <div class="synergy">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Relationship That Holds Both Directions</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">Sentimental anchors the couple in what they've already built. Resilient anchors them in what's still ahead. Introspective needs to go inward; Attuned reaches outward to stay connected. The very differences that can feel like being unseen are, pointed the right way, exactly what makes a relationship safe in every direction at once.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">Honoring What Is · Sentimental + Introspective</div>
+              <p>Sentimental keeps the shared history sacred. Introspective brings a depth the relationship can actually rest in. Together they make sure a couple never quietly becomes two logistics partners who've forgotten why they started.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">Securing What's Next · Resilient + Attuned</div>
+              <p>Resilient makes sure the couple is ready for whatever's coming. Attuned catches the small shifts before they widen into distance. Together they make sure tenderness doesn't drift into a relationship that nobody is actually tending.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>Sacred past, secure future — under one roof.</h4>
+            <p>When "tell me that story again" and "I'm glad you're planning for us" both get said out loud, neither partner has to choose between being cherished and being prepared for. The relationship stops being a negotiation over what matters most and becomes a place that simply holds all of it.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- SOCIAL -->
       <div class="collision-domain-header" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Four</div>
@@ -1273,6 +1421,32 @@
           <div class="gm-nav">
             <div class="gm-nav-label">The Navigation</div>
             <p>"I connect by doing things together. You connect by talking about ideas. Can we find the overlap — activities that create space for conversation, or conversations that feel like we're building something together?" The friendship survives when both connection styles are legitimized.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finding Synergy: Social -->
+      <div class="synergy">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Group That Moves Without Leaving Anyone</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">Visionary sees where the group is heading. Collaborative makes sure the group can actually follow. Legacy guards what gives the community its meaning; Harmonious finds the friction worth fixing. A group of only futurists fractures; a group of only keepers calcifies. With all four lenses in the room, it gets to move and stay whole.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">Keeping Everyone In · Collaborative + Legacy</div>
+              <p>Collaborative paces the group so nobody gets left three steps behind. Legacy protects the traditions that make people feel they belong here. Together they keep progress from quietly costing the community its cohesion.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">Moving Everyone Forward · Visionary + Harmonious</div>
+              <p>Visionary reads where things are heading before it's obvious to anyone else. Harmonious spots the one adjustment that would make the whole thing run better. Together they keep belonging from hardening into "we've always done it this way."</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>Continuity and momentum — not one at the cost of the other.</h4>
+            <p>When the keepers and the optimizers stop treating each other as obstacles, tradition becomes the thing worth carrying forward instead of the thing holding everyone back. The group gets to change and still recognize itself on the other side.</p>
           </div>
         </div>
       </div>
