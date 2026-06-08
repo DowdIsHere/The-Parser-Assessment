@@ -567,6 +567,35 @@
       line-height: 1.7;
     }
 
+    /* ── COLLISION CAROUSEL (one block at a time, full space each) ── */
+    .collision-splide { position: relative; padding-bottom: 60px; margin-bottom: 8px; }
+    .collision-splide .splide__slide { height: auto; }
+    .collision-splide .faceoff,
+    .collision-splide .gradient-mismatch,
+    .collision-splide .synergy { margin-bottom: 0; }
+    .collision-splide .splide__arrow {
+      top: auto; bottom: 0; transform: none;
+      width: 42px; height: 42px;
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.28);
+      opacity: 1;
+    }
+    .collision-splide .splide__arrow svg { width: 16px; height: 16px; fill: var(--gold); }
+    .collision-splide .splide__arrow:disabled { opacity: 0.32; }
+    .collision-splide .splide__arrow--prev { left: auto; right: 54px; }
+    .collision-splide .splide__arrow--next { right: 0; }
+    .collision-splide .splide__pagination {
+      bottom: 14px; left: 2px; right: auto;
+      justify-content: flex-start; padding: 0;
+    }
+    .collision-splide .splide__pagination__page {
+      background: rgba(255,255,255,0.22); margin: 0 5px;
+    }
+    .collision-splide .splide__pagination__page.is-active {
+      background: var(--gold); transform: scale(1.5);
+    }
+
     /* ── QUICK REF ── */
     .quick-ref {
       padding: 96px 0;
@@ -1029,8 +1058,12 @@
         <img src="images/professional-collisions.jpg" alt="Professional Collisions">
       </div>
 
+      <div class="splide collision-splide" aria-label="Professional collisions and synergy">
+        <div class="splide__track">
+          <div class="splide__list">
+
       <!-- Face-Off 1 -->
-      <div class="faceoff">
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #1</span>
           <div>
@@ -1055,7 +1088,7 @@
       </div>
 
       <!-- Face-Off 2 -->
-      <div class="faceoff">
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #2</span>
           <div>
@@ -1080,7 +1113,7 @@
       </div>
 
       <!-- Gradient Mismatch: Professional -->
-      <div class="gradient-mismatch">
+      <div class="gradient-mismatch splide__slide">
         <div class="gm-header">
           <span class="gm-badge">Talking Past Each Other</span>
           <span class="gm-title">Big-Picture vs. Practical, at Work</span>
@@ -1105,7 +1138,7 @@
       </div>
 
       <!-- Finding Synergy: Professional -->
-      <div class="synergy">
+      <div class="synergy splide__slide">
         <div class="synergy-header">
           <span class="synergy-badge">Finding Synergy</span>
           <div class="synergy-title">The Team That Sees the Whole Timeline</div>
@@ -1130,6 +1163,10 @@
         </div>
       </div>
 
+          </div>
+        </div>
+      </div>
+
       <!-- PARENTING -->
       <div class="collision-domain-header" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Two</div>
@@ -1139,7 +1176,11 @@
         <img src="images/parenting-collisions.jpg" alt="Parenting Collisions">
       </div>
 
-      <div class="faceoff">
+      <div class="splide collision-splide" aria-label="Parenting collisions and synergy">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #1</span>
           <div>
@@ -1163,7 +1204,7 @@
         </div>
       </div>
 
-      <div class="faceoff">
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #2</span>
           <div>
@@ -1187,7 +1228,7 @@
         </div>
       </div>
 
-      <div class="gradient-mismatch">
+      <div class="gradient-mismatch splide__slide">
         <div class="gm-header">
           <span class="gm-badge">Talking Past Each Other</span>
           <span class="gm-title">Raising an Individual vs. Raising a Team Player</span>
@@ -1212,7 +1253,7 @@
       </div>
 
       <!-- Finding Synergy: Parenting -->
-      <div class="synergy">
+      <div class="synergy splide__slide">
         <div class="synergy-header">
           <span class="synergy-badge">Finding Synergy</span>
           <div class="synergy-title">The Child Who Gets the Whole Picture</div>
@@ -1237,6 +1278,10 @@
         </div>
       </div>
 
+          </div>
+        </div>
+      </div>
+
       <!-- ROMANTIC -->
       <div class="collision-domain-header" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Three</div>
@@ -1246,7 +1291,11 @@
         <img src="images/romantic-collisions.jpg" alt="Romantic Collisions">
       </div>
 
-      <div class="faceoff">
+      <div class="splide collision-splide" aria-label="Romantic collisions and synergy">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #1</span>
           <div>
@@ -1270,7 +1319,7 @@
         </div>
       </div>
 
-      <div class="faceoff">
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #2</span>
           <div>
@@ -1294,7 +1343,7 @@
         </div>
       </div>
 
-      <div class="gradient-mismatch">
+      <div class="gradient-mismatch splide__slide">
         <div class="gm-header">
           <span class="gm-badge">Talking Past Each Other</span>
           <span class="gm-title">Working Through It vs. Moving Forward</span>
@@ -1319,7 +1368,7 @@
       </div>
 
       <!-- Finding Synergy: Romantic -->
-      <div class="synergy">
+      <div class="synergy splide__slide">
         <div class="synergy-header">
           <span class="synergy-badge">Finding Synergy</span>
           <div class="synergy-title">The Relationship That Holds Both Directions</div>
@@ -1344,6 +1393,10 @@
         </div>
       </div>
 
+          </div>
+        </div>
+      </div>
+
       <!-- SOCIAL -->
       <div class="collision-domain-header" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Four</div>
@@ -1353,7 +1406,11 @@
         <img src="images/social-collisions.jpg" alt="Social Collisions">
       </div>
 
-      <div class="faceoff">
+      <div class="splide collision-splide" aria-label="Social collisions and synergy">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #1</span>
           <div>
@@ -1377,7 +1434,7 @@
         </div>
       </div>
 
-      <div class="faceoff">
+      <div class="faceoff splide__slide">
         <div class="faceoff-header">
           <span class="faceoff-badge">Face-Off #2</span>
           <div>
@@ -1401,7 +1458,7 @@
         </div>
       </div>
 
-      <div class="gradient-mismatch">
+      <div class="gradient-mismatch splide__slide">
         <div class="gm-header">
           <span class="gm-badge">Talking Past Each Other</span>
           <span class="gm-title">Doing Things Together vs. Talking Things Through</span>
@@ -1426,7 +1483,7 @@
       </div>
 
       <!-- Finding Synergy: Social -->
-      <div class="synergy">
+      <div class="synergy splide__slide">
         <div class="synergy-header">
           <span class="synergy-badge">Finding Synergy</span>
           <div class="synergy-title">The Group That Moves Without Leaving Anyone</div>
@@ -1451,6 +1508,9 @@
         </div>
       </div>
 
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1485,7 +1545,7 @@
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.ref-item,.faceoff,.gradient-mismatch,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
+    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.ref-item,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
@@ -1514,6 +1574,17 @@
           breakpoints: {
             768: { perPage: 1 } // Drop to 1 card on mobile devices
           }
+        }).mount();
+      });
+      // Collision domains: one block at a time, full space each
+      document.querySelectorAll('.collision-splide').forEach(function (el) {
+        new Splide(el, {
+          perPage: 1,
+          perMove: 1,
+          gap: '24px',
+          autoHeight: true,   // give each block exactly the room it needs
+          arrows: true,
+          pagination: true
         }).mount();
       });
     });
