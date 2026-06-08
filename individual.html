@@ -63,12 +63,12 @@
     .section-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 68ch; margin-bottom: 48px; }
 
     /* WHAT'S IN IT GRID */
-    .what-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .what-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 28px 28px 28px 24px; border-left: 3px solid var(--blue-400); transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; box-shadow: var(--shadow-sm); }
-    .what-card:hover { border-color: var(--border-strong); border-left-color: var(--blue-500); box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .what-num { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 10px; }
-    .what-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.01em; line-height: 1.25; }
-    .what-card p { font-size: 0.93rem; color: var(--text-secondary); line-height: 1.6; }
+    .what-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 44px 56px; }
+    .what-card { background: transparent; border: none; border-radius: 0; padding: 0; box-shadow: none; }
+    .what-num { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--blue-500); margin-bottom: 12px; }
+    .what-card h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; line-height: 1.25; transition: color 0.2s; }
+    .what-card:hover h3 { color: var(--blue-600); }
+    .what-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; max-width: 36ch; }
 
     /* PRICING */
     .price-block { max-width: 600px; }
