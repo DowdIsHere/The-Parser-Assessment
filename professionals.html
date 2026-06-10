@@ -258,7 +258,6 @@
       .split { grid-template-columns: 1fr; gap: 40px; }
       .line-row-grid { grid-template-columns: 1fr; gap: 16px; }
       .invite-core { grid-template-columns: 1fr; gap: 40px; }
-      nav a:not(.nav-cta) { display: none; }
     }
     @media (max-width: 768px) {
       .wrap { padding: 0 22px; }
@@ -274,6 +273,7 @@
     }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 <body>
 
@@ -284,14 +284,18 @@
         <span class="wordmark">J.D. Mercer</span>
         <span class="sub">Cognition Blocks of Intelligence</span>
       </a>
-      <nav>
+      <nav id="siteNav">
         <a href="/index.html">Home</a>
         <a href="#line">The Line</a>
         <a href="/clinicians.html">For Clinicians</a>
         <a href="#inquire" class="nav-cta">Inquire <span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim"></div>
 
   <!-- HERO -->
   <section class="hero">
@@ -736,6 +740,8 @@
     });
   })();
   </script>
+
+  <script src="/mobile-nav.js" defer></script>
 
 </body>
 </html>

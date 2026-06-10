@@ -124,7 +124,6 @@
       .who-row { grid-template-columns: 1fr; gap: 6px; }
       .ip-terms { grid-template-columns: 1fr; gap: 16px; }
       .ip-block { padding: 32px 24px; }
-      nav a:not(.btn) { display: none; }
       .f-top { flex-direction: column; }
     }
     /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
@@ -141,6 +140,7 @@
     }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 <body>
 
@@ -155,13 +155,17 @@
         <span class="wordmark">Cognition Blocks of Intelligence</span>
         <span class="sub">Clinician Certification · CBI Framework</span>
       </a>
-      <nav>
+      <nav id="siteNav">
         <a href="#what-you-get">Certification</a>
         <a href="#pricing">Pricing</a>
         <a href="#inquire" class="btn">Schedule Inquiry</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim"></div>
 
   <section class="hero">
     <div class="hero-inner">
@@ -361,5 +365,6 @@
   })();
   </script>
 
+  <script src="/mobile-nav.js" defer></script>
 </body>
 </html>
