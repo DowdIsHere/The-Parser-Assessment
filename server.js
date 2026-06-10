@@ -19,6 +19,25 @@ const JWT_SECRET = process.env.SESSION_SECRET || 'parser-profile-kids-change-me-
 const JWT_EXPIRES = '30d';
 const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
+// ============================================================================
+// SUPABASE (persistent storage)
+// ============================================================================
+// When SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set, accounts and
+// completions are stored in Postgres. Otherwise the server transparently
+// falls back to the local JSON files below (fine for local dev only).
+let createClient = null;
+try { ({ createClient } = require('@supabase/supabase-js')); } catch { /* package not installed */ }
+
+const supabase = (createClient && process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
+    ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } })
+    : null;
+
+if (supabase) {
+    console.log('[DB] Supabase connected:', process.env.SUPABASE_URL);
+} else {
+    console.warn('[DB] Supabase NOT configured — using local JSON files (data will not persist across deploys). Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
+}
+
 // Stripe webhook needs raw body, so set it up before express.json()
 app.post('/api/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
@@ -47,6 +66,68 @@ function saveAccounts(data) {
     } catch (e) {
         console.error('Error saving accounts:', e.message);
     }
+}
+
+// ── Data layer: Supabase when configured, local file otherwise ──
+
+async function dbFindAccount(email) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_accounts')
+            .select('email, password_hash, first_name, last_name, role')
+            .eq('email', normalized)
+            .maybeSingle();
+        if (error) throw error;
+        if (!data) return null;
+        return { email: data.email, passwordHash: data.password_hash, firstName: data.first_name, lastName: data.last_name, role: data.role };
+    }
+    const accounts = loadAccounts();
+    return accounts.users.find(u => u.email === normalized) || null;
+}
+
+async function dbCreateAccount({ email, passwordHash, firstName, lastName, role }) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { error } = await supabase.from('parser_accounts').insert({
+            email: normalized, password_hash: passwordHash,
+            first_name: firstName, last_name: lastName || '', role
+        });
+        if (error) {
+            if (error.code === '23505') return { duplicate: true }; // unique violation
+            throw error;
+        }
+        return { ok: true };
+    }
+    const accounts = loadAccounts();
+    accounts.users.push({ email: normalized, passwordHash, firstName, lastName: lastName || '', role, createdAt: new Date().toISOString() });
+    saveAccounts(accounts);
+    return { ok: true };
+}
+
+// Insert a completion row and return its canonical customer ID.
+// Falls back to the file-based counter when Supabase is not configured.
+async function dbInsertCompletion(fields) {
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_completions')
+            .insert({
+                profile_name: fields.profileName || null,
+                profile_code: fields.profileCode || null,
+                scores: fields.scores || null,
+                email: fields.userEmail ? fields.userEmail.toLowerCase().trim() : null,
+                name: fields.userName || null,
+                assessment_type: fields.assessmentType || 'adult',
+                email_provided: !!fields.emailProvided
+            })
+            .select('id')
+            .single();
+        if (error) throw error;
+        const customerId = `CBI-${new Date().getFullYear()}-${String(data.id).padStart(5, '0')}`;
+        await supabase.from('parser_completions').update({ customer_id: customerId }).eq('id', data.id);
+        return customerId;
+    }
+    return generateCustomerId();
 }
 
 // ============================================================================
@@ -101,15 +182,21 @@ app.post('/api/auth/register', async (req, res) => {
         return res.status(400).json({ success: false, error: 'Password must be at least 8 characters' });
     }
 
-    const accounts = loadAccounts();
     const normalizedEmail = email.toLowerCase().trim();
-    if (accounts.users.find(u => u.email === normalizedEmail)) {
-        return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+    try {
+        const existing = await dbFindAccount(normalizedEmail);
+        if (existing) {
+            return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+        }
+        const passwordHash = await bcrypt.hash(password, 12);
+        const created = await dbCreateAccount({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: (lastName || '').trim(), role });
+        if (created.duplicate) {
+            return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+        }
+    } catch (e) {
+        console.error('[register] DB error:', e.message);
+        return res.status(500).json({ success: false, error: 'Could not create account. Please try again.' });
     }
-
-    const passwordHash = await bcrypt.hash(password, 12);
-    accounts.users.push({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: (lastName || '').trim(), role, createdAt: new Date().toISOString() });
-    saveAccounts(accounts);
 
     const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: (lastName || '').trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
     res.cookie('kidsAccessToken', token, {
@@ -118,7 +205,7 @@ app.post('/api/auth/register', async (req, res) => {
         sameSite: 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000
     });
-    res.json({ success: true, user: { email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() } });
+    res.json({ success: true, user: { email: normalizedEmail, role, firstName: firstName.trim(), lastName: (lastName || '').trim() } });
 });
 
 app.post('/api/auth/login', async (req, res) => {
@@ -127,8 +214,13 @@ app.post('/api/auth/login', async (req, res) => {
         return res.status(400).json({ success: false, error: 'Email and password are required' });
     }
 
-    const accounts = loadAccounts();
-    const user = accounts.users.find(u => u.email === email.toLowerCase().trim());
+    let user;
+    try {
+        user = await dbFindAccount(email);
+    } catch (e) {
+        console.error('[login] DB error:', e.message);
+        return res.status(500).json({ success: false, error: 'Login failed. Please try again.' });
+    }
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
         return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
@@ -251,7 +343,13 @@ app.post('/api/log-completion', async (req, res) => {
     const { profileName, profileCode, scores, emailProvided, assessmentType, userEmail, userName,
             overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge } = req.body;
 
-    const customerId = generateCustomerId();
+    let customerId;
+    try {
+        customerId = await dbInsertCompletion({ profileName, profileCode, scores, emailProvided, assessmentType, userEmail, userName });
+    } catch (e) {
+        console.error('[log-completion] DB insert failed, using local counter:', e.message);
+        customerId = generateCustomerId();
+    }
     const timestamp = new Date().toISOString();
     const spatial  = scores?.spatial  || 0;
     const temporal = scores?.temporal || 0;
@@ -570,6 +668,89 @@ app.post('/api/notify-completion', async (req, res) => {
 });
 
 // ============================================================================
+// PROFESSIONAL INQUIRY (Parser Frame for Professionals)
+// ============================================================================
+
+function escapeHtml(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+async function dbInsertInquiry(fields) {
+    if (!supabase) return;
+    const { error } = await supabase.from('parser_inquiries').insert({
+        name: fields.name, email: fields.email,
+        organization: fields.organization || null, role: fields.role || null,
+        team_size: fields.teamSize || null, team_type: fields.teamType || null,
+        message: fields.message || null, source: 'professionals'
+    });
+    if (error) throw error;
+}
+
+app.post('/api/inquire', async (req, res) => {
+    const { name, email, organization, role, teamSize, teamType, message, company_url } = req.body || {};
+
+    // Honeypot — bots fill hidden fields. Accept silently and drop.
+    if (company_url) return res.json({ success: true });
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!name || !name.trim() || !email || !emailRe.test(String(email).trim())) {
+        return res.status(400).json({ success: false, error: 'Please provide your name and a valid email.' });
+    }
+
+    const fields = {
+        name: name.trim().slice(0, 200),
+        email: email.trim().slice(0, 200),
+        organization: (organization || '').trim().slice(0, 200),
+        role: (role || '').trim().slice(0, 200),
+        teamSize: (teamSize || '').trim().slice(0, 100),
+        teamType: (teamType || '').trim().slice(0, 100),
+        message: (message || '').trim().slice(0, 4000)
+    };
+
+    // Persist (best-effort — never blocks the response)
+    try {
+        await dbInsertInquiry(fields);
+    } catch (e) {
+        console.error('[inquire] DB insert failed:', e.message);
+    }
+
+    // Notify the team
+    const transporter = createTransporter();
+    if (transporter) {
+        try {
+            await transporter.sendMail({
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
+                to: process.env.INQUIRY_TO || 'profile.library@cognitionblocksllc.com',
+                replyTo: fields.email,
+                subject: `Parser Frame inquiry — ${fields.name}${fields.organization ? ' · ' + fields.organization : ''}`,
+                html: `
+                    <h2>New Parser Frame for Professionals inquiry</h2>
+                    <p><strong>Name:</strong> ${escapeHtml(fields.name)}</p>
+                    <p><strong>Email:</strong> ${escapeHtml(fields.email)}</p>
+                    <p><strong>Organization:</strong> ${escapeHtml(fields.organization) || '—'}</p>
+                    <p><strong>Role:</strong> ${escapeHtml(fields.role) || '—'}</p>
+                    <p><strong>Team size:</strong> ${escapeHtml(fields.teamSize) || '—'}</p>
+                    <p><strong>Team type:</strong> ${escapeHtml(fields.teamType) || '—'}</p>
+                    <p><strong>About the team:</strong></p>
+                    <p style="white-space:pre-wrap;">${escapeHtml(fields.message) || '—'}</p>
+                    <hr>
+                    <p style="color:#888;font-size:12px;">Received ${new Date().toISOString()}</p>
+                `
+            });
+            console.log(`[INQUIRE] ${fields.name} <${fields.email}>${fields.organization ? ' · ' + fields.organization : ''}`);
+        } catch (err) {
+            console.error('[INQUIRE] email failed:', err.message);
+        }
+    } else {
+        console.warn('[INQUIRE] Email not configured — inquiry from', fields.email, 'was', supabase ? 'saved to DB only.' : 'NOT captured.');
+    }
+
+    res.json({ success: true });
+});
+
+// ============================================================================
 // PROMO CODE VALIDATION
 // ============================================================================
 
@@ -662,10 +843,29 @@ async function handleStripeWebhook(req, res) {
         const event = getStripe().webhooks.constructEvent(req.body, sig, webhookSecret);
 
         switch (event.type) {
-            case 'payment_intent.succeeded':
+            case 'payment_intent.succeeded': {
                 const paymentIntent = event.data.object;
                 console.log('Payment succeeded:', paymentIntent.id, paymentIntent.metadata);
+                // Mark the buyer's most recent completion as paid.
+                const buyerEmail = paymentIntent.metadata?.email;
+                if (supabase && buyerEmail) {
+                    try {
+                        const { data } = await supabase.from('parser_completions')
+                            .select('id')
+                            .eq('email', buyerEmail.toLowerCase().trim())
+                            .order('id', { ascending: false })
+                            .limit(1);
+                        if (data && data.length) {
+                            await supabase.from('parser_completions')
+                                .update({ paid: true, payment_intent_id: paymentIntent.id })
+                                .eq('id', data[0].id);
+                        }
+                    } catch (e) {
+                        console.error('[webhook] mark paid failed:', e.message);
+                    }
+                }
                 break;
+            }
             case 'payment_intent.payment_failed':
                 const failedPayment = event.data.object;
                 console.log('Payment failed:', failedPayment.id, failedPayment.last_payment_error?.message);

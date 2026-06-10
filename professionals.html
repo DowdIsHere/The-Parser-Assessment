@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parser Frame for Professionals | J.D. Mercer · Cognition Blocks</title>
+  <meta name="description" content="A map of how your team's minds actually take things in — where they cluster, where the structural blind spot is, and the coverage no single mind can hold alone. Leader-facing. Inquire to bring it to your team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Soft Structuralism — zinc/slate base, one restrained emerald accent (THE LILA BAN holds) */
+      --bg:        #F5F6F7;   /* silver-grey page */
+      --bg-alt:    #FFFFFF;   /* alt section */
+      --surface:   #FFFFFF;   /* card core */
+      --shell:     rgba(17,17,20,0.035); /* outer bezel shell */
+      --ink:       #131417;   /* off-black, never #000 */
+      --ink-2:     #3F3F46;   /* zinc-700 */
+      --muted:     #52525B;   /* zinc-600 body */
+      --muted-2:   #8A8A93;   /* faint labels */
+      --line:      rgba(24,24,27,0.09);
+      --line-2:    rgba(24,24,27,0.16);
+      --accent:    #1C6B57;   /* deep emerald, <80% sat */
+      --accent-2:  #14513F;
+      --accent-soft: rgba(28,107,87,0.08);
+      --accent-line: rgba(28,107,87,0.20);
+      --shadow:    0 24px 50px -22px rgba(17,17,20,0.14), 0 8px 22px -14px rgba(17,17,20,0.08);
+      --shadow-sm: 0 14px 30px -18px rgba(17,17,20,0.12);
+      --maxw: 1400px;
+      --font-display: 'Clash Display', 'Satoshi', system-ui, sans-serif;
+      --font-body: 'Satoshi', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* iOS-like drawer curve (from Ionic Framework) */
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body {
+      font-family: var(--font-body); background: var(--bg); color: var(--ink);
+      line-height: 1.6; font-size: 1rem; letter-spacing: 0.005em;
+    }
+    /* grain only on a fixed, non-interactive layer */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 2000; pointer-events: none; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245,246,247,0.72); backdrop-filter: blur(18px) saturate(140%);
+      border-bottom: 1px solid var(--line);
+    }
+    .h-inner { max-width: var(--maxw); margin: 0 auto; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
+    .logo .wordmark { font-family: var(--font-display); font-size: 1.08rem; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1; }
+    .logo .sub { font-family: var(--font-mono); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted-2); }
+    nav { display: flex; gap: 30px; align-items: center; }
+    nav a { font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.25s var(--ease-drawer); }
+    nav a:hover { color: var(--ink); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--ink); color: #fff !important; border-radius: 999px;
+      padding: 9px 10px 9px 18px; font-weight: 600; font-size: 0.85rem;
+      transition: transform 0.4s var(--ease-drawer), box-shadow 0.3s;
+      box-shadow: 0 8px 20px -10px rgba(17,17,20,0.5);
+    }
+    .nav-cta:hover { transform: translateY(-1px); }
+    .nav-cta .dot { width: 22px; height: 22px; border-radius: 999px; background: var(--accent); display: inline-flex; align-items: center; justify-content: center; }
+    .nav-cta .dot svg { width: 12px; height: 12px; stroke: #fff; stroke-width: 2; fill: none; }
+
+    /* ── SHARED ── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--accent-soft); color: var(--accent);
+      border: 1px solid var(--accent-line); border-radius: 999px;
+      padding: 5px 13px; font-family: var(--font-mono);
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 500;
+    }
+    .eyebrow::before { content: ''; width: 5px; height: 5px; border-radius: 999px; background: var(--accent); }
+    h1, h2, h3 { font-family: var(--font-display); color: var(--ink); letter-spacing: -0.03em; font-weight: 600; }
+    .s-title { font-size: clamp(1.95rem, 3.6vw, 3rem); line-height: 1.03; }
+    .lead { font-size: clamp(1.05rem, 1.5vw, 1.22rem); color: var(--ink-2); line-height: 1.7; max-width: 60ch; }
+    p.body { color: var(--muted); line-height: 1.78; max-width: 65ch; font-size: 1.02rem; }
+    p.body + p.body { margin-top: 1.3em; }
+    .section { padding: 132px 0; position: relative; }
+    .section.alt { background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .head-block { max-width: 64ch; margin-bottom: 64px; }
+    .head-block .eyebrow { margin-bottom: 22px; }
+    .head-block .s-title { margin-bottom: 22px; }
+
+    /* materiality: double-bezel */
+    .bezel { background: var(--shell); border: 1px solid var(--line); border-radius: 2rem; padding: 0.4rem; box-shadow: var(--shadow); }
+    .bezel-core {
+      background: var(--surface); border-radius: 1.625rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 1px rgba(24,24,27,0.035);
+      padding: 40px;
+    }
+
+    /* button-in-button CTA */
+    .cta {
+      display: inline-flex; align-items: center; gap: 16px;
+      background: var(--ink); color: #fff; border-radius: 999px;
+      padding: 13px 14px 13px 28px; font-family: var(--font-body);
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      box-shadow: 0 14px 30px -12px rgba(17,17,20,0.55);
+      transition: transform 0.45s var(--ease-drawer), box-shadow 0.35s var(--ease-drawer);
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -14px rgba(17,17,20,0.6); }
+    .cta .arrow {
+      width: 36px; height: 36px; border-radius: 999px; flex-shrink: 0;
+      background: rgba(255,255,255,0.12); display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.35s, transform 0.45s var(--ease-drawer);
+    }
+    .cta:hover .arrow { background: var(--accent); transform: translateX(3px); }
+    .cta .arrow svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 1.75; fill: none; }
+
+    /* ── HERO ── */
+    .hero { padding: 88px 0 110px; min-height: 86dvh; display: flex; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1.06fr 0.94fr; gap: 72px; align-items: center; width: 100%; }
+    .hero .eyebrow { margin-bottom: 28px; }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5.4vw, 4.1rem); line-height: 1.0;
+      letter-spacing: -0.035em; margin-bottom: 28px;
+    }
+    .hero h1 .soft { color: var(--accent); }
+    .hero-sub { font-size: clamp(1.05rem, 1.5vw, 1.18rem); color: var(--ink-2); line-height: 1.72; max-width: 56ch; margin-bottom: 40px; }
+    .hero-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+
+    /* hero asset — the coverage field (abstract, no scores) */
+    .field-svg { width: 100%; height: auto; display: block; border-radius: 1.5rem; background: linear-gradient(165deg, #FCFCFD 0%, #F1F2F4 100%); }
+    .field-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; fill: var(--muted-2); }
+    .field-cap { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-2); margin-top: 18px; padding-left: 6px; }
+
+    /* ── PROBLEM ── */
+    .split { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 64px; align-items: start; }
+    .pullquote { }
+    .pullquote .pq {
+      font-family: var(--font-display); font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+      line-height: 1.16; letter-spacing: -0.02em; color: var(--ink); font-weight: 500;
+    }
+    .pullquote .pq em { font-style: italic; color: var(--accent); font-weight: 500; }
+    .pullquote .pq-meta { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted-2); margin-top: 26px; }
+
+    /* ── POSITION × PARSER ── */
+    .px-card { display: grid; gap: 14px; }
+    .px-row { display: flex; align-items: baseline; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .px-row:last-child { border-bottom: none; }
+    .px-k { font-family: var(--font-mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted-2); width: 92px; flex-shrink: 0; }
+    .px-v { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ink); }
+    .px-v span { color: var(--muted); font-size: 0.95rem; font-family: var(--font-body); display: block; margin-top: 4px; letter-spacing: 0; }
+    .px-times { text-align: center; font-family: var(--font-display); font-size: 1.6rem; color: var(--accent); padding: 6px 0; }
+
+    /* ── PRODUCT LINE ── */
+    .line-stack { display: flex; flex-direction: column; gap: 22px; max-width: 1040px; }
+    .line-row .bezel-core { padding: 36px 40px; }
+    .line-row-grid { display: grid; grid-template-columns: 88px 1fr; gap: 28px; align-items: start; }
+    .line-idx { font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); letter-spacing: 0; line-height: 1; padding-top: 4px; }
+    .line-name { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+    .line-name h3 { font-size: 1.55rem; letter-spacing: -0.02em; }
+    .status { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.16em; padding: 4px 11px; border-radius: 999px; }
+    .status.now { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-line); }
+    .status.soon { background: rgba(24,24,27,0.05); color: var(--muted); border: 1px solid var(--line); }
+    .line-row p { color: var(--muted); line-height: 1.72; max-width: 64ch; font-size: 1rem; }
+    .line-row .dep { display: block; margin-top: 12px; font-size: 0.86rem; color: var(--muted-2); }
+    .line-intro { max-width: 60ch; color: var(--ink-2); font-size: 1.1rem; line-height: 1.7; margin-bottom: 48px; }
+
+    /* ── RECEIVE (roman list) ── */
+    .recv { max-width: 1000px; }
+    .recv-lead { color: var(--ink-2); font-size: 1.12rem; line-height: 1.7; max-width: 60ch; margin-bottom: 56px; }
+    .recv-item { display: grid; grid-template-columns: 76px 1fr; gap: 30px; padding: 34px 0; border-top: 1px solid var(--line); }
+    .recv-item:first-of-type { border-top: none; padding-top: 0; }
+    .recv-num { font-family: var(--font-display); font-size: 1.35rem; color: var(--accent); line-height: 1.2; letter-spacing: 0.02em; }
+    .recv-item h3 { font-size: 1.4rem; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .recv-item p { color: var(--muted); line-height: 1.74; max-width: 62ch; font-size: 1.02rem; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; max-width: 940px; }
+    .step { display: grid; grid-template-columns: 76px 1fr; gap: 30px; padding: 34px 0; border-top: 1px solid var(--line); }
+    .step:first-child { border-top: none; padding-top: 0; }
+    .step-i { font-family: var(--font-display); font-size: 1.5rem; color: var(--accent); }
+    .step h3 { font-size: 1.3rem; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .step p { color: var(--muted); line-height: 1.74; max-width: 60ch; }
+    .step p .note { color: var(--muted-2); font-style: italic; }
+
+    /* ── WHO ── */
+    .chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .chip { font-family: var(--font-mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-2); background: var(--bg-alt); border: 1px solid var(--line-2); border-radius: 999px; padding: 9px 16px; }
+
+    /* ── INVITATION + FORM ── */
+    .invite-core { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 56px; align-items: start; padding: 60px 60px; }
+    .invite-copy h2 { font-size: clamp(2rem, 3.4vw, 2.8rem); line-height: 1.02; letter-spacing: -0.035em; margin: 20px 0 20px; }
+    .invite-copy p { color: var(--muted); font-size: 1.05rem; line-height: 1.72; max-width: 42ch; margin-bottom: 24px; }
+    .inq-fallback { font-size: 0.88rem; color: var(--muted-2); }
+    .inq-fallback a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-line); }
+    .inq-fallback a:hover { border-bottom-color: var(--accent); }
+
+    .inq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+    .inq-field { display: flex; flex-direction: column; gap: 8px; }
+    .inq-field.full { grid-column: 1 / -1; }
+    .inq-field label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
+    .inq-field label .req { color: var(--accent); }
+    .inq-field input, .inq-field select, .inq-field textarea {
+      font-family: var(--font-body); font-size: 0.98rem; color: var(--ink);
+      background: var(--bg); border: 1px solid var(--line-2); border-radius: 12px;
+      padding: 13px 15px; width: 100%;
+      transition: border-color 0.25s var(--ease-drawer), box-shadow 0.25s, background 0.25s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .inq-field textarea { resize: vertical; min-height: 116px; line-height: 1.6; }
+    .inq-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2352525B' stroke-width='1.75'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center; background-size: 18px; padding-right: 40px; cursor: pointer;
+    }
+    .inq-field input:focus, .inq-field select:focus, .inq-field textarea:focus {
+      outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .inq-field input::placeholder, .inq-field textarea::placeholder { color: var(--muted-2); }
+    .inq-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 22px; }
+    .inq-note { font-size: 0.8rem; color: var(--muted-2); max-width: 30ch; line-height: 1.5; }
+    .inq-error { color: #9F2A2F; font-size: 0.9rem; margin-top: 16px; display: none; }
+    .honeypot { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    form.sent { display: none; }
+    .inq-success { display: none; }
+    .inq-success.show { display: block; }
+    .inq-success h3 { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .inq-success p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 48ch; }
+    .inq-success .tick { width: 46px; height: 46px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent-line); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .inq-success .tick svg { width: 22px; height: 22px; stroke: var(--accent); stroke-width: 2; fill: none; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--ink); color: rgba(255,255,255,0.62); padding: 72px 0 40px; }
+    .f-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 26px; }
+    .f-top .wordmark { font-family: var(--font-display); font-size: 1.2rem; color: #fff; letter-spacing: -0.01em; }
+    .f-top .sub { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.4); margin-top: 8px; }
+    .f-meta { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.45); line-height: 1.9; text-align: right; }
+    .f-meta a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.25s; }
+    .f-meta a:hover { color: #fff; }
+    .disclaimer { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.03em; color: rgba(255,255,255,0.36); line-height: 1.8; max-width: 820px; }
+
+    /* ── MOTION ── */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js-anim [data-reveal] {
+        opacity: 0; transform: translateY(34px); filter: blur(8px);
+        transition: opacity 0.9s var(--ease-drawer), transform 0.9s var(--ease-drawer), filter 0.9s var(--ease-drawer);
+        will-change: opacity, transform;
+      }
+      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+      .cta:active, .nav-cta:active { transform: translateY(0) scale(0.98); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .split { grid-template-columns: 1fr; gap: 40px; }
+      .line-row-grid { grid-template-columns: 1fr; gap: 16px; }
+      .invite-core { grid-template-columns: 1fr; gap: 40px; }
+      nav a:not(.nav-cta) { display: none; }
+    }
+    @media (max-width: 768px) {
+      .wrap { padding: 0 22px; }
+      .h-inner { padding: 16px 22px; }
+      .section { padding: 84px 0; }
+      .hero { padding: 56px 0 72px; min-height: auto; }
+      .recv-item, .step { grid-template-columns: 1fr; gap: 10px; }
+      .invite-core { padding: 40px 24px; gap: 32px; }
+      .inq-grid { grid-template-columns: 1fr; }
+      .bezel-core { padding: 30px; }
+      .f-top { flex-direction: column; }
+      .f-meta { text-align: left; }
+    }
+  </style>
+  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo">
+        <span class="wordmark">J.D. Mercer</span>
+        <span class="sub">Cognition Blocks of Intelligence</span>
+      </a>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="#line">The Line</a>
+        <a href="/clinicians.html">For Clinicians</a>
+        <a href="#inquire" class="nav-cta">Inquire <span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow" data-reveal>Parser Frame for Professionals</div>
+          <h1 data-reveal>Your team isn't a set of roles.<br>It's a set of <span class="soft">minds.</span></h1>
+          <p class="hero-sub" data-reveal>You've mapped the org chart. You know who sits where and who owns what. What you've never had is a map of how those minds actually take things in — what each person notices first, before anyone has formed an opinion. Parser Frame shows you that, for the whole team, together. Role and process certifications tell you what a seat is supposed to do. Parser Frame shows you who is in it — and whether, together, your people cover the whole field.</p>
+          <div class="hero-actions" data-reveal>
+            <a href="#inquire" class="cta">Bring this to your team <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          </div>
+        </div>
+        <div data-reveal>
+          <div class="bezel">
+            <div class="bezel-core" style="padding:1.1rem;">
+              <svg class="field-svg" viewBox="0 0 520 440" role="img" aria-label="An abstract field showing a team's minds clustered on one side, leaving a corner uncovered.">
+                <!-- baseline -->
+                <line x1="48" y1="392" x2="472" y2="392" stroke="rgba(24,24,27,0.14)" stroke-width="1"/>
+                <line x1="48" y1="388" x2="48" y2="396" stroke="rgba(24,24,27,0.14)" stroke-width="1"/>
+                <line x1="472" y1="388" x2="472" y2="396" stroke="rgba(24,24,27,0.14)" stroke-width="1"/>
+                <text class="field-label" x="48" y="414">Proven ground</text>
+                <text class="field-label" x="472" y="414" text-anchor="end">Open horizon</text>
+                <!-- coverage links -->
+                <g stroke="rgba(28,107,87,0.22)" stroke-width="1.25">
+                  <line x1="142" y1="250" x2="206" y2="236"/>
+                  <line x1="206" y1="236" x2="232" y2="300"/>
+                  <line x1="232" y1="300" x2="288" y2="288"/>
+                  <line x1="168" y1="200" x2="206" y2="236"/>
+                  <line x1="142" y1="250" x2="186" y2="304"/>
+                </g>
+                <!-- clustered nodes (the minds you have) -->
+                <g>
+                  <circle cx="142" cy="250" r="9"  fill="rgba(19,20,23,0.78)"/>
+                  <circle cx="186" cy="304" r="7"  fill="rgba(19,20,23,0.62)"/>
+                  <circle cx="232" cy="300" r="10" fill="#1C6B57"/>
+                  <circle cx="168" cy="200" r="6"  fill="rgba(19,20,23,0.55)"/>
+                  <circle cx="252" cy="338" r="8"  fill="rgba(19,20,23,0.66)"/>
+                  <circle cx="206" cy="236" r="7"  fill="rgba(19,20,23,0.7)"/>
+                  <circle cx="118" cy="312" r="6"  fill="rgba(19,20,23,0.5)"/>
+                  <circle cx="288" cy="288" r="9"  fill="rgba(19,20,23,0.7)"/>
+                  <circle cx="268" cy="214" r="7"  fill="rgba(28,107,87,0.65)"/>
+                  <circle cx="306" cy="342" r="6"  fill="rgba(19,20,23,0.5)"/>
+                </g>
+                <!-- the structural blind spot (the corner no one watches) -->
+                <circle cx="408" cy="132" r="50" fill="none" stroke="rgba(28,107,87,0.5)" stroke-width="1.25" stroke-dasharray="4 6"/>
+                <text class="field-label" x="408" y="136" text-anchor="middle" fill="rgba(28,107,87,0.8)">Blind spot</text>
+              </svg>
+              <div class="field-cap">The shape of a team — clustered, with one corner uncovered</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="head-block">
+        <div class="eyebrow" data-reveal>The Problem</div>
+        <h2 class="s-title" data-reveal>The same meeting, registered three different ways.</h2>
+      </div>
+      <div class="split">
+        <div>
+          <p class="body" data-reveal>You have watched it happen. The meeting ends, everyone nods, and within a day it is clear that three people walked out with three different meetings. One locked onto what is proven and what it will cost. One was already three-quarters down the road, seeing where it was heading. One was reading the room. None of them was wrong. They were parsing the same moment differently — and with no language for it, the gap read as friction, stubbornness, or someone "not getting it."</p>
+          <p class="body" data-reveal>Then there is the other failure, the quieter one: the team that agrees too easily. When everyone takes things in the same way, the room feels efficient and the blind spot is total. A team built entirely from proven ground is stuck — it defends what is tested and never sees the turn coming. A team built entirely from open horizon is unmoored — full of where-things-are-heading and short on what is real right now and what it will cost. Most leaders can feel which one their team leans toward. Almost none can see it laid out.</p>
+        </div>
+        <div class="pullquote" data-reveal>
+          <div class="bezel">
+            <div class="bezel-core">
+              <p class="pq">None of them was wrong. They were <em>parsing the same moment differently.</em></p>
+              <div class="pq-meta">Friction, with no language for it</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT MAKES THIS DIFFERENT -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head-block">
+        <div class="eyebrow" data-reveal>What Makes This Different</div>
+        <h2 class="s-title" data-reveal>Position × Parser.</h2>
+      </div>
+      <div class="split">
+        <div>
+          <p class="body" data-reveal>Role and process certifications do something real: they assign behavioral roles and standardize how work moves through a team. But they treat the person in the seat as interchangeable — fill the role, follow the ceremony, and the human inside becomes a variable to be standardized away. That is the gap. A role tells you what a seat is supposed to do. It tells you nothing about how the actual mind in that seat takes things in — or whether your team, all minds counted, covers the full range or leaves half the field uncovered.</p>
+          <p class="body" data-reveal>Parser Frame is the other axis. Position tells you the seat. Parser tells you the mind. Put them together and you stop managing a chart of roles and start seeing the actual coverage your people give you. Friction stops being a personality problem and becomes information: two minds parsing the same moment differently. Once it is seen, the gap stops being friction and becomes coverage.</p>
+        </div>
+        <div data-reveal>
+          <div class="bezel">
+            <div class="bezel-core px-card">
+              <div class="px-row">
+                <div class="px-k">Position</div>
+                <div class="px-v">The seat<span>What the work is supposed to do.</span></div>
+              </div>
+              <div class="px-times">×</div>
+              <div class="px-row">
+                <div class="px-k">Parser</div>
+                <div class="px-v">The mind<span>How the person in it takes things in.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PRODUCT LINE -->
+  <section class="section alt" id="line">
+    <div class="wrap">
+      <div class="head-block">
+        <div class="eyebrow" data-reveal>The Line</div>
+        <h2 class="s-title" data-reveal>Three ways to see the mind against the seat.</h2>
+      </div>
+      <p class="line-intro" data-reveal>The names read as a progression — the minds you have, the mind against its current chair, and the chair before anyone sits in it.</p>
+
+      <div class="line-stack">
+        <div class="line-row" data-reveal>
+          <div class="bezel">
+            <div class="bezel-core">
+              <div class="line-row-grid">
+                <div class="line-idx">01</div>
+                <div>
+                  <div class="line-name">
+                    <h3>Team Parser — The Coverage Map</h3>
+                    <span class="status now">Available now</span>
+                  </div>
+                  <p>The whole team goes through it together. It maps where your group clusters in how its people take things in, and shows you where its structural blind spot is. This is the set of minds you actually have, seen as a group — collective experience, not a manager's private diagnostic.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="line-row" data-reveal>
+          <div class="bezel">
+            <div class="bezel-core">
+              <div class="line-row-grid">
+                <div class="line-idx">02</div>
+                <div>
+                  <div class="line-name">
+                    <h3>Seat Parser</h3>
+                    <span class="status soon">Coming soon</span>
+                  </div>
+                  <p>A single mind read against the seat it already occupies — the fit between an occupant and the demands of their current position.<span class="dep">Depends on a forthcoming position-demand layer.</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="line-row" data-reveal>
+          <div class="bezel">
+            <div class="bezel-core">
+              <div class="line-row-grid">
+                <div class="line-idx">03</div>
+                <div>
+                  <div class="line-name">
+                    <h3>Billet Parser</h3>
+                    <span class="status soon">Coming soon</span>
+                  </div>
+                  <p>The seat defined before the mind exists. The position assessed on its own terms, with the deliverable being screening questions calibrated to what the seat actually demands — so you can hire against the chair, not against a résumé. The name is deliberate: in the U.S. Department of Defense Dictionary of Military and Associated Terms (2005), a billet is "a personnel position or assignment that may be filled by one person" — a defined position that exists independent of whoever occupies it.<span class="dep">Depends on the position-demand layer and a question-derivation method.</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT THE TEAM RECEIVES -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head-block">
+        <div class="eyebrow" data-reveal>What the Team Receives</div>
+        <h2 class="s-title" data-reveal>A Team Coverage Map written around your actual people.</h2>
+      </div>
+      <div class="recv">
+        <p class="recv-lead" data-reveal>Not a score. Not a ranking of your people. A written reading of how the group takes things in — in plain language, section by section.</p>
+
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">I</div>
+          <div>
+            <h3>The Shape</h3>
+            <p>Where your team clusters, and what that clustering produces and what it misses.</p>
+          </div>
+        </div>
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">II</div>
+          <div>
+            <h3>The Coverage Arc</h3>
+            <p>Your team mapped across the span from proven ground (trusts what is tested and lived) to open horizon (sees where things are heading), so you can see at a glance whether you are covering the whole field or crowded onto one end. Two further readings sit alongside it: concrete to big-picture, and self-referential to other-referential.</p>
+          </div>
+        </div>
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">III</div>
+          <div>
+            <h3>The Structural Blind Spot</h3>
+            <p>The way of taking things in that almost no one on the team defaults to — the corner of the field nobody is watching.</p>
+          </div>
+        </div>
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">IV</div>
+          <div>
+            <h3>Where Friction Lives</h3>
+            <p>Named, without blame. The recurring standoffs become legible the moment you can see they are two minds parsing differently, not two people being difficult.</p>
+          </div>
+        </div>
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">V</div>
+          <div>
+            <h3>Where You're Strong Together</h3>
+            <p>The picture no single mind on the team can hold alone. The combined coverage is the actual reason to keep these people in a room together.</p>
+          </div>
+        </div>
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">VI</div>
+          <div>
+            <h3>The Translation Layer</h3>
+            <p>How to signal a mode-switch in a real meeting, so a person can say "I'm reading this from proven ground" and have it land as information instead of a standoff.</p>
+          </div>
+        </div>
+        <div class="recv-item" data-reveal>
+          <div class="recv-num">VII</div>
+          <div>
+            <h3>How to Use It</h3>
+            <p>How to carry the map into planning, staffing, and the next hard decision, so it stays a working document rather than a one-time read.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="head-block">
+        <div class="eyebrow" data-reveal>How It Works</div>
+        <h2 class="s-title" data-reveal>Three steps.</h2>
+      </div>
+      <div class="steps">
+        <div class="step" data-reveal>
+          <div class="step-i">i</div>
+          <div>
+            <h3>Each member completes a Parser Profile.</h3>
+            <p>Every person on the team takes the same individual assessment, separately. <span class="note">This is the underlying mechanism — the input, not the point.</span></p>
+          </div>
+        </div>
+        <div class="step" data-reveal>
+          <div class="step-i">ii</div>
+          <div>
+            <h3>The Team Coverage Map is prepared.</h3>
+            <p>From the full set of profiles, the team's map is written specifically for your group, covering all seven sections above.</p>
+          </div>
+        </div>
+        <div class="step" data-reveal>
+          <div class="step-i">iii</div>
+          <div>
+            <h3>The team goes through it together.</h3>
+            <p>A collective walkthrough, not a manager's private file. The team sees its own shape together, in one room. An optional facilitated session with J.D. Mercer is available as a premium add-on for teams that want the map walked through live.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head-block" style="margin-bottom:40px;">
+        <div class="eyebrow" data-reveal>Who It's For</div>
+        <h2 class="s-title" data-reveal>Any intact team of two or more.</h2>
+      </div>
+      <p class="body" data-reveal>Project teams who keep relearning the same misfires. Leadership teams that need to know where their collective blind spot is before the market finds it for them. Founding teams deciding who covers what before the hiring starts. Any group of two or more people who have to take things in, decide, and act together — and who would rather see their coverage on purpose than discover it by accident.</p>
+      <div class="chips" data-reveal>
+        <span class="chip">Project teams</span>
+        <span class="chip">Leadership teams</span>
+        <span class="chip">Founding teams</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE INVITATION -->
+  <section class="section alt invite" id="inquire">
+    <div class="wrap">
+      <div class="bezel" data-reveal>
+        <div class="bezel-core invite-core">
+          <div class="invite-copy">
+            <div class="eyebrow">The Invitation</div>
+            <h2>Bring this to your team.</h2>
+            <p>There is one way in, and it is a conversation. Tell us about your team and we will show you what the Coverage Map would reveal — and how to roll it out. Pricing and rollout are discussed on inquiry, scaled to the size and shape of your group.</p>
+            <div class="inq-fallback">Prefer email? <a href="mailto:inquire@cognitionblocksllc.com?subject=Parser%20Frame%20briefing">inquire@cognitionblocksllc.com</a></div>
+          </div>
+          <div class="invite-form">
+            <form id="inquireForm" novalidate>
+              <div class="inq-grid">
+                <div class="inq-field">
+                  <label for="f-name">Name <span class="req">*</span></label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" required>
+                </div>
+                <div class="inq-field">
+                  <label for="f-email">Work email <span class="req">*</span></label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="inq-field">
+                  <label for="f-org">Organization</label>
+                  <input id="f-org" name="organization" type="text" autocomplete="organization">
+                </div>
+                <div class="inq-field">
+                  <label for="f-role">Your role</label>
+                  <input id="f-role" name="role" type="text" autocomplete="organization-title">
+                </div>
+                <div class="inq-field">
+                  <label for="f-size">Team size</label>
+                  <select id="f-size" name="teamSize">
+                    <option value="">Select…</option>
+                    <option>2–5</option>
+                    <option>6–12</option>
+                    <option>13–25</option>
+                    <option>26–50</option>
+                    <option>50+</option>
+                  </select>
+                </div>
+                <div class="inq-field">
+                  <label for="f-type">Team type</label>
+                  <select id="f-type" name="teamType">
+                    <option value="">Select…</option>
+                    <option>Project team</option>
+                    <option>Leadership team</option>
+                    <option>Founding team</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="inq-field full">
+                  <label for="f-msg">Tell us about your team</label>
+                  <textarea id="f-msg" name="message" placeholder="What prompted this, and what you're hoping the map will help with."></textarea>
+                </div>
+                <div class="inq-field full honeypot" aria-hidden="true">
+                  <label for="f-curl">Company URL</label>
+                  <input id="f-curl" name="company_url" type="text" tabindex="-1" autocomplete="off">
+                </div>
+              </div>
+              <div class="inq-error" id="inqError"></div>
+              <div class="inq-actions">
+                <button type="submit" class="cta" id="inqSubmit">Request a briefing <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+                <span class="inq-note">No scores, no rankings — a conversation about your team.</span>
+              </div>
+            </form>
+            <div class="inq-success" id="inqSuccess" role="status" aria-live="polite">
+              <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+              <h3>Thank you — your note is in.</h3>
+              <p>We'll be in touch shortly to set up the conversation and show you what the Coverage Map would reveal for your team.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="f-top">
+        <div>
+          <div class="wordmark">J.D. Mercer</div>
+          <div class="sub">Cognition Blocks of Intelligence</div>
+        </div>
+        <div class="f-meta">
+          © 2026 Cognition Blocks LLC<br>
+          U.S. Copyright TXu 2-497-721<br>
+          <a href="/clinicians.html">For Clinicians →</a>
+        </div>
+      </div>
+      <div class="disclaimer">
+        Parser Frame for Professionals is a non-clinical, educational service. It is not therapy, diagnosis, or treatment of any medical or mental health condition. If you are in crisis or need clinical support, please contact a licensed professional.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    var root = document.documentElement;
+    if (!root.classList.contains('js-anim') || !('IntersectionObserver' in window)) return;
+    var els = [].slice.call(document.querySelectorAll('[data-reveal]'));
+    if (!els.length) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          var t = e.target, p = t.parentNode, i = p ? [].indexOf.call(p.children, t) : 0;
+          t.style.transitionDelay = (Math.min(i, 6) * 70) + 'ms';
+          t.classList.add('in');
+          io.unobserve(t);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+  </script>
+
+  <script>
+  (function(){
+    var form = document.getElementById('inquireForm');
+    if (!form) return;
+    var errEl = document.getElementById('inqError');
+    var btn = document.getElementById('inqSubmit');
+    var success = document.getElementById('inqSuccess');
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      errEl.style.display = 'none';
+      var data = Object.fromEntries(new FormData(form).entries());
+      if (!data.name || !data.name.trim() || !emailRe.test((data.email || '').trim())) {
+        errEl.textContent = 'Please add your name and a valid work email.';
+        errEl.style.display = 'block';
+        return;
+      }
+      btn.disabled = true; btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none';
+      try {
+        var r = await fetch('/api/inquire', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        var j = await r.json().catch(function(){ return {}; });
+        if (r.ok && j.success) {
+          form.classList.add('sent');
+          success.classList.add('show');
+          if (success.scrollIntoView) success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          throw new Error(j.error || 'Something went wrong on our end.');
+        }
+      } catch (err) {
+        errEl.textContent = (err && err.message) ? err.message : 'Could not send right now — please email us directly.';
+        errEl.style.display = 'block';
+        btn.disabled = false; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
