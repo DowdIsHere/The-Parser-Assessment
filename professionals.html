@@ -190,10 +190,46 @@
     .chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
     .chip { font-family: var(--font-mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-2); background: var(--bg-alt); border: 1px solid var(--line-2); border-radius: 999px; padding: 9px 16px; }
 
-    /* ── INVITATION ── */
-    .invite .bezel-core { padding: 72px 64px; }
-    .invite h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1.0; letter-spacing: -0.035em; margin: 22px 0 24px; }
-    .invite p { color: var(--muted); font-size: 1.12rem; line-height: 1.74; max-width: 60ch; margin-bottom: 40px; }
+    /* ── INVITATION + FORM ── */
+    .invite-core { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 56px; align-items: start; padding: 60px 60px; }
+    .invite-copy h2 { font-size: clamp(2rem, 3.4vw, 2.8rem); line-height: 1.02; letter-spacing: -0.035em; margin: 20px 0 20px; }
+    .invite-copy p { color: var(--muted); font-size: 1.05rem; line-height: 1.72; max-width: 42ch; margin-bottom: 24px; }
+    .inq-fallback { font-size: 0.88rem; color: var(--muted-2); }
+    .inq-fallback a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-line); }
+    .inq-fallback a:hover { border-bottom-color: var(--accent); }
+
+    .inq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+    .inq-field { display: flex; flex-direction: column; gap: 8px; }
+    .inq-field.full { grid-column: 1 / -1; }
+    .inq-field label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
+    .inq-field label .req { color: var(--accent); }
+    .inq-field input, .inq-field select, .inq-field textarea {
+      font-family: var(--font-body); font-size: 0.98rem; color: var(--ink);
+      background: var(--bg); border: 1px solid var(--line-2); border-radius: 12px;
+      padding: 13px 15px; width: 100%;
+      transition: border-color 0.25s var(--ease-drawer), box-shadow 0.25s, background 0.25s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .inq-field textarea { resize: vertical; min-height: 116px; line-height: 1.6; }
+    .inq-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2352525B' stroke-width='1.75'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center; background-size: 18px; padding-right: 40px; cursor: pointer;
+    }
+    .inq-field input:focus, .inq-field select:focus, .inq-field textarea:focus {
+      outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .inq-field input::placeholder, .inq-field textarea::placeholder { color: var(--muted-2); }
+    .inq-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 22px; }
+    .inq-note { font-size: 0.8rem; color: var(--muted-2); max-width: 30ch; line-height: 1.5; }
+    .inq-error { color: #9F2A2F; font-size: 0.9rem; margin-top: 16px; display: none; }
+    .honeypot { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    form.sent { display: none; }
+    .inq-success { display: none; }
+    .inq-success.show { display: block; }
+    .inq-success h3 { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .inq-success p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 48ch; }
+    .inq-success .tick { width: 46px; height: 46px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent-line); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .inq-success .tick svg { width: 22px; height: 22px; stroke: var(--accent); stroke-width: 2; fill: none; }
 
     /* ── FOOTER ── */
     footer { background: var(--ink); color: rgba(255,255,255,0.62); padding: 72px 0 40px; }
@@ -221,6 +257,7 @@
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
       .split { grid-template-columns: 1fr; gap: 40px; }
       .line-row-grid { grid-template-columns: 1fr; gap: 16px; }
+      .invite-core { grid-template-columns: 1fr; gap: 40px; }
       nav a:not(.nav-cta) { display: none; }
     }
     @media (max-width: 768px) {
@@ -229,7 +266,8 @@
       .section { padding: 84px 0; }
       .hero { padding: 56px 0 72px; min-height: auto; }
       .recv-item, .step { grid-template-columns: 1fr; gap: 10px; }
-      .invite .bezel-core { padding: 44px 26px; }
+      .invite-core { padding: 40px 24px; gap: 32px; }
+      .inq-grid { grid-template-columns: 1fr; }
       .bezel-core { padding: 30px; }
       .f-top { flex-direction: column; }
       .f-meta { text-align: left; }
@@ -545,11 +583,74 @@
   <section class="section alt invite" id="inquire">
     <div class="wrap">
       <div class="bezel" data-reveal>
-        <div class="bezel-core">
-          <div class="eyebrow">The Invitation</div>
-          <h2>Bring this to your team.</h2>
-          <p>There is one way in, and it is a conversation. Tell us about your team and we will show you what the Coverage Map would reveal — and how to roll it out. Pricing and rollout are discussed on inquiry, scaled to the size and shape of your group.</p>
-          <a href="mailto:inquire@cognitionblocksllc.com?subject=Parser%20Frame%20briefing" class="cta">Request a briefing <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <div class="bezel-core invite-core">
+          <div class="invite-copy">
+            <div class="eyebrow">The Invitation</div>
+            <h2>Bring this to your team.</h2>
+            <p>There is one way in, and it is a conversation. Tell us about your team and we will show you what the Coverage Map would reveal — and how to roll it out. Pricing and rollout are discussed on inquiry, scaled to the size and shape of your group.</p>
+            <div class="inq-fallback">Prefer email? <a href="mailto:inquire@cognitionblocksllc.com?subject=Parser%20Frame%20briefing">inquire@cognitionblocksllc.com</a></div>
+          </div>
+          <div class="invite-form">
+            <form id="inquireForm" novalidate>
+              <div class="inq-grid">
+                <div class="inq-field">
+                  <label for="f-name">Name <span class="req">*</span></label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" required>
+                </div>
+                <div class="inq-field">
+                  <label for="f-email">Work email <span class="req">*</span></label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="inq-field">
+                  <label for="f-org">Organization</label>
+                  <input id="f-org" name="organization" type="text" autocomplete="organization">
+                </div>
+                <div class="inq-field">
+                  <label for="f-role">Your role</label>
+                  <input id="f-role" name="role" type="text" autocomplete="organization-title">
+                </div>
+                <div class="inq-field">
+                  <label for="f-size">Team size</label>
+                  <select id="f-size" name="teamSize">
+                    <option value="">Select…</option>
+                    <option>2–5</option>
+                    <option>6–12</option>
+                    <option>13–25</option>
+                    <option>26–50</option>
+                    <option>50+</option>
+                  </select>
+                </div>
+                <div class="inq-field">
+                  <label for="f-type">Team type</label>
+                  <select id="f-type" name="teamType">
+                    <option value="">Select…</option>
+                    <option>Project team</option>
+                    <option>Leadership team</option>
+                    <option>Founding team</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="inq-field full">
+                  <label for="f-msg">Tell us about your team</label>
+                  <textarea id="f-msg" name="message" placeholder="What prompted this, and what you're hoping the map will help with."></textarea>
+                </div>
+                <div class="inq-field full honeypot" aria-hidden="true">
+                  <label for="f-curl">Company URL</label>
+                  <input id="f-curl" name="company_url" type="text" tabindex="-1" autocomplete="off">
+                </div>
+              </div>
+              <div class="inq-error" id="inqError"></div>
+              <div class="inq-actions">
+                <button type="submit" class="cta" id="inqSubmit">Request a briefing <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+                <span class="inq-note">No scores, no rankings — a conversation about your team.</span>
+              </div>
+            </form>
+            <div class="inq-success" id="inqSuccess" role="status" aria-live="polite">
+              <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+              <h3>Thank you — your note is in.</h3>
+              <p>We'll be in touch shortly to set up the conversation and show you what the Coverage Map would reveal for your team.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -592,6 +693,47 @@
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     els.forEach(function(el){ io.observe(el); });
+  })();
+  </script>
+
+  <script>
+  (function(){
+    var form = document.getElementById('inquireForm');
+    if (!form) return;
+    var errEl = document.getElementById('inqError');
+    var btn = document.getElementById('inqSubmit');
+    var success = document.getElementById('inqSuccess');
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      errEl.style.display = 'none';
+      var data = Object.fromEntries(new FormData(form).entries());
+      if (!data.name || !data.name.trim() || !emailRe.test((data.email || '').trim())) {
+        errEl.textContent = 'Please add your name and a valid work email.';
+        errEl.style.display = 'block';
+        return;
+      }
+      btn.disabled = true; btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none';
+      try {
+        var r = await fetch('/api/inquire', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        var j = await r.json().catch(function(){ return {}; });
+        if (r.ok && j.success) {
+          form.classList.add('sent');
+          success.classList.add('show');
+          if (success.scrollIntoView) success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          throw new Error(j.error || 'Something went wrong on our end.');
+        }
+      } catch (err) {
+        errEl.textContent = (err && err.message) ? err.message : 'Could not send right now — please email us directly.';
+        errEl.style.display = 'block';
+        btn.disabled = false; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+      }
+    });
   })();
   </script>
 

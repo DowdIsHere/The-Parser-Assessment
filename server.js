@@ -668,6 +668,89 @@ app.post('/api/notify-completion', async (req, res) => {
 });
 
 // ============================================================================
+// PROFESSIONAL INQUIRY (Parser Frame for Professionals)
+// ============================================================================
+
+function escapeHtml(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+async function dbInsertInquiry(fields) {
+    if (!supabase) return;
+    const { error } = await supabase.from('parser_inquiries').insert({
+        name: fields.name, email: fields.email,
+        organization: fields.organization || null, role: fields.role || null,
+        team_size: fields.teamSize || null, team_type: fields.teamType || null,
+        message: fields.message || null, source: 'professionals'
+    });
+    if (error) throw error;
+}
+
+app.post('/api/inquire', async (req, res) => {
+    const { name, email, organization, role, teamSize, teamType, message, company_url } = req.body || {};
+
+    // Honeypot — bots fill hidden fields. Accept silently and drop.
+    if (company_url) return res.json({ success: true });
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!name || !name.trim() || !email || !emailRe.test(String(email).trim())) {
+        return res.status(400).json({ success: false, error: 'Please provide your name and a valid email.' });
+    }
+
+    const fields = {
+        name: name.trim().slice(0, 200),
+        email: email.trim().slice(0, 200),
+        organization: (organization || '').trim().slice(0, 200),
+        role: (role || '').trim().slice(0, 200),
+        teamSize: (teamSize || '').trim().slice(0, 100),
+        teamType: (teamType || '').trim().slice(0, 100),
+        message: (message || '').trim().slice(0, 4000)
+    };
+
+    // Persist (best-effort — never blocks the response)
+    try {
+        await dbInsertInquiry(fields);
+    } catch (e) {
+        console.error('[inquire] DB insert failed:', e.message);
+    }
+
+    // Notify the team
+    const transporter = createTransporter();
+    if (transporter) {
+        try {
+            await transporter.sendMail({
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
+                to: process.env.INQUIRY_TO || 'profile.library@cognitionblocksllc.com',
+                replyTo: fields.email,
+                subject: `Parser Frame inquiry — ${fields.name}${fields.organization ? ' · ' + fields.organization : ''}`,
+                html: `
+                    <h2>New Parser Frame for Professionals inquiry</h2>
+                    <p><strong>Name:</strong> ${escapeHtml(fields.name)}</p>
+                    <p><strong>Email:</strong> ${escapeHtml(fields.email)}</p>
+                    <p><strong>Organization:</strong> ${escapeHtml(fields.organization) || '—'}</p>
+                    <p><strong>Role:</strong> ${escapeHtml(fields.role) || '—'}</p>
+                    <p><strong>Team size:</strong> ${escapeHtml(fields.teamSize) || '—'}</p>
+                    <p><strong>Team type:</strong> ${escapeHtml(fields.teamType) || '—'}</p>
+                    <p><strong>About the team:</strong></p>
+                    <p style="white-space:pre-wrap;">${escapeHtml(fields.message) || '—'}</p>
+                    <hr>
+                    <p style="color:#888;font-size:12px;">Received ${new Date().toISOString()}</p>
+                `
+            });
+            console.log(`[INQUIRE] ${fields.name} <${fields.email}>${fields.organization ? ' · ' + fields.organization : ''}`);
+        } catch (err) {
+            console.error('[INQUIRE] email failed:', err.message);
+        }
+    } else {
+        console.warn('[INQUIRE] Email not configured — inquiry from', fields.email, 'was', supabase ? 'saved to DB only.' : 'NOT captured.');
+    }
+
+    res.json({ success: true });
+});
+
+// ============================================================================
 // PROMO CODE VALIDATION
 // ============================================================================
 
