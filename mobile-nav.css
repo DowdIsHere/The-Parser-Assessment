@@ -54,6 +54,21 @@
     margin-top: 14px; border-bottom: 0; text-align: center; justify-content: center;
   }
 
+  /* dropdowns flatten into indented groups inside the drawer */
+  header nav .nav-dd { display: block; width: 100%; }
+  header nav .nav-dd-top { display: flex; align-items: center; }
+  header nav .nav-dd-caret { display: none; }
+  header nav .nav-dd-menu {
+    position: static; opacity: 1; visibility: visible; transform: none; pointer-events: auto;
+    background: transparent; border: 0; box-shadow: none;
+    min-width: 0; margin: 0; padding: 2px 0 8px 16px; gap: 0; max-height: none;
+  }
+  header nav .nav-dd-menu a {
+    font-family: inherit; text-transform: none; letter-spacing: normal;
+    font-size: 0.96rem; color: #2a2a30; padding: 12px 4px;
+    border-bottom: 1px solid rgba(20,20,25,0.05);
+  }
+
   /* full-viewport scrim, sits below the header bar so the logo stays crisp */
   .nav-scrim {
     display: block; position: fixed; inset: 0;
