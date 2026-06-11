@@ -29,6 +29,21 @@ export const intuitiveProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments where social perception is the job\n- Coaching, therapy, organizational consulting, mediation, diplomacy\n- Human-centered design, any role requiring understanding of how people work together\n- Behind leaders who lack relational intelligence, translating dynamics into strategy\n\nWhere you suffocate:\n- Environments that deny the validity of interpersonal perception\n- Highly technical cultures that dismiss \"soft skills\"\n- Organizations that pretend politics don't exist\n- Environments so chaotic with interpersonal information you can't filter or recover",
 
+  "topCareers": [
+    {
+      "title": "Organizational Consultant / Dynamics Advisor",
+      "description": "You walk into a room and understand the relational landscape—who trusts whom, who's pretending, where the real alliances lie. Organizational consulting pays for exactly that: translating the dynamics you perceive whole and wordless into strategy a leader can act on. You see the politics others pretend don't exist. The knowing that arrives without investigation, that you \"have no business\" having, becomes the consultant's most valuable read."
+    },
+    {
+      "title": "Coach / Therapist",
+      "description": "You know things about people immediately, by perception rather than deduction, and you're almost always right. Coaching and therapy run on that—reading what's actually going on beneath what someone's presenting and meeting it directly. You receive the relational truth instead of analyzing your way to it. The \"soft skill\" that technical cultures dismissed is, in this work, the entire hard skill."
+    },
+    {
+      "title": "Mediator / Diplomat",
+      "description": "You read the alliances beneath the official ones and feel where the real tension sits before anyone admits it. Mediation and diplomacy reward that immediate social perception—understanding how people actually work together so you can move them toward each other. You can't switch the channel off, so you may as well be paid for it. The interpersonal radar that chaotic or denial-based environments overwhelmed becomes, here, the core instrument."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Social Signal Processing (your native mode)\n- Pattern Recognition (abstract relational patterns)\n- Perceptual Discrimination (social signals and cues)\n\nLikely Moderate-Accessibility Blocks:\n- Generative Creation (perceiving relational possibility)\n- Symbolic Manipulation (conceptual processing of social data)\n- Sequential Processing (tracking how dynamics unfold)\n\nLikely Lower-Accessibility Blocks:\n- Self-Reference Processing (attention flows outward, not inward)\n- Spatial Relationships (abstract orientation de-emphasizes concrete spatial processing)\n\nThis pattern suggests your cognitive architecture is optimized for social intelligence and relational systems perception. Your developmental opportunities lie in self-reference—building capacity to turn inward with the same quality of attention you naturally give others.\n\nINTUITIVE",
 
   "strengths": [

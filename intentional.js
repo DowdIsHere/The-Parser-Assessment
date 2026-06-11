@@ -29,6 +29,21 @@ export const intentionalProfile = {
 
   "workEnvironments": "Where you thrive:\n- Individual achievement rewarded\n- Clear advancement paths\n- What you do determines where you go\n- Meritocratic—results matter more than politics\n- Autonomy over method\n- Effort connected to outcome\n\nWhere you suffocate:\n- Advancement opaque or political\n- Success dependent on factors you can't control\n- Promotion by seniority not performance\n- Roles that cap your growth\n- Bureaucracy that punishes initiative",
 
+  "topCareers": [
+    {
+      "title": "Entrepreneur / Founder",
+      "description": "You see your future self more clearly than your present one, and you don't wait for it—you build it, brick by brick. That's the founder's engine: not luck, but the thousand deliberate decisions that positioned you before the opportunity showed up. You thrive where effort connects directly to outcome and you own the method. The \"luck\" people credited was always architecture, and entrepreneurship is the arena that finally pays you for building deliberately instead of drifting."
+    },
+    {
+      "title": "Product / Project Architect",
+      "description": "You don't drift or hope—you architect, turning a vision of what should exist into the concrete sequence that builds it. Product and project leadership reward exactly that: holding a clear future and laying the bricks toward it in order, today. You're at your best with autonomy over the how and a result that's unmistakably yours. The discipline of converting a future self into present action, your native move, is the whole job of building something that didn't exist before."
+    },
+    {
+      "title": "Self-Directed Specialist / Independent Professional",
+      "description": "You positioned yourself for opportunities before they arrived and called it preparation while others called it luck. Independent and self-directed work rewards that meritocratic engine—where what you do determines where you go, with no political ceiling on your growth. You set the trajectory and execute it without waiting to be told. The forward-built, self-authored drive that chafed against seniority and bureaucracy is, here, the entire basis of how you advance."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Sequential Processing (planning and execution)\n- Self-Reference Processing (strong personal goal orientation)\n- Pattern Recognition (reverse-engineering success paths)\n\nLikely Moderate-Accessibility Blocks:\n- Perceptual Discrimination (concrete detail tracking)\n- Spatial Relationships (practical application)\n\nLikely Lower-Accessibility Blocks:\n- Social Signal Processing (other-focus less emphasized)\n- Symbolic Manipulation (abstract reasoning without concrete application)\n\nThis pattern suggests your cognitive architecture is optimized for personal achievement, goal execution, and deliberate self-development.\n\nINTENTIONAL",
 
   "strengths": [

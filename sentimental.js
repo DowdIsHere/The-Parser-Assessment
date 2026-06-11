@@ -29,6 +29,21 @@ export const sentimentalProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value depth, reflection, and emotional intelligence\n- Writing, counseling, therapy, coaching (especially around life review)\n- Spiritual direction, creative fields where emotional truth matters\n- Roles working with memoir or personal narrative\n- Permission to process, depth valued over speed\n\nWhere you suffocate:\n- Environments demanding constant forward motion without reflection\n- Cultures that dismiss emotional processing as soft or irrelevant\n- Fast-paced environments that never pause for meaning-making",
 
+  "topCareers": [
+    {
+      "title": "Writer / Memoirist",
+      "description": "You don't just remember—you feel backward through time, storing the past as meaning and emotional resonance that stays alive in you. Writing and memoir are exactly that gift on the page: the remembered moment turned over until it gives up what it signified. You can return to who you were before you knew how things turned out and make a reader recognize themselves there. The depth others rushed past becomes, here, the entire substance of the work."
+    },
+    {
+      "title": "Therapist / Life-Review Counselor",
+      "description": "A song from fifteen years ago doesn't remind you of a period—it returns you there, complete. Counseling, especially around life review, runs on that capacity to sit inside emotional history and extract its meaning. You help people make their own past coherent because you've always processed yours for significance, not just sequence. The \"too much feeling, too much looking back\" that fast cultures dismissed is, in this work, precisely the instrument."
+    },
+    {
+      "title": "Spiritual Director / Creative Guide",
+      "description": "You extract the significance beneath events—what they meant, what they revealed—where others just catalog what happened. Spiritual direction and creative mentorship are built for that meaning-making: helping someone find the thread running through their lived experience. You give the past somewhere to land instead of letting it sit as inert fact. The reflective depth that needed permission to exist becomes the whole point of the role."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Self-Reference Processing (continuous self-excavation)\n- Pattern Recognition (seeing meaning patterns across time and experience)\n- Symbolic Manipulation (working with abstract emotional meaning)\n\nLikely Moderate-Accessibility Blocks:\n- Social Signal Processing (accessible when you extend attention to others)\n- Generative Creation (generating narrative meaning from experience)\n\nLikely Lower-Accessibility Blocks:\n- Sequential Processing (concrete step-by-step may be less emphasized)\n- Perceptual Discrimination (present-moment sensory detail may be under-attended)\n- Spatial Relationships (concrete spatial processing may be less developed)\n\nThis pattern suggests your cognitive architecture is optimized for emotional wisdom and deep self-knowledge. Your developmental opportunities lie in present-moment awareness and future engagement.\n\nSENTIMENTAL",
 
   "strengths": [

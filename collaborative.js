@@ -29,6 +29,21 @@ export const collaborativeProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value collective achievement over individual competition\n- Community organizing, partnership development, cooperative enterprises\n- Team leadership focused on enablement rather than control\n- Facilitation roles and any position where building collective capacity is the primary work\n\nWhere you suffocate:\n- Environments that reward individual competition over collective success\n- Cultures that don't recognize coordination labor\n- Isolation from collaborative relationship\n- Hierarchical structures where collaboration is merely instrumental to individual advancement",
 
+  "topCareers": [
+    {
+      "title": "Community Organizer / Partnership Builder",
+      "description": "You think in \"we\"—you see the coalition that wants to form before it knows it wants to. Community organizing and partnership work are that native frame made into a job: scanning for alignment, turning fragmented efforts into shared ones, building the group that doesn't exist yet. While others calculate individual advantage, you map collective potential. The instinct to combine separate goals into a common one is the entire engine of building something together."
+    },
+    {
+      "title": "Team Lead (Enablement) / Cooperative Builder",
+      "description": "You lead by enabling, not controlling—your win is the group's combined capacity, not your personal territory. Team leadership focused on enablement, and cooperative enterprise, reward exactly that orientation: building collective capability and being measured by what the group becomes. You see the shared potential currently scattered across people and pull it together. The coordination labor that often goes unrecognized is, in these roles, the recognized core of the work."
+    },
+    {
+      "title": "Facilitator / Coalition Strategist",
+      "description": "You scan any room for who could build with whom, and you can make the latent \"we\" real. Facilitation and coalition work pay for that—holding a future the group could reach together and assembling the alignment to get there. You're energized by collective achievement in a way pure individual competition never gave you. The \"what could we accomplish together\" that drove you becomes the explicit job of turning isolated goals into collective ones."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Social Signal Processing (continuous attention to others' needs and potential contributions)\n- Pattern Recognition (seeing coalition potential and alignment patterns)\n- Sequential Processing (coordinating complex collaborative logistics)\n\nLikely Moderate-Accessibility Blocks:\n- Spatial Relationships (mapping how people and groups relate)\n- Symbolic Manipulation (working with frameworks for collaboration)\n- Generative Creation (imagining collaborative futures)\n\nLikely Lower-Accessibility Blocks:\n- Self-Reference Processing (other-orientation may under-develop self-attention)\n- Perceptual Discrimination (present-moment sensory detail may be less attended than social-future perception)\n\nThis pattern suggests your cognitive architecture is optimized for collective vision and coalition-building. Your developmental opportunities lie in self-reference—building the capacity to track your own needs, wants, and contributions with the same attention you bring to tracking others'. The most sustainable collaborators are those who know how to include themselves in the collective they're building.\n\nCOLLABORATIVE",
 
   "strengths": [

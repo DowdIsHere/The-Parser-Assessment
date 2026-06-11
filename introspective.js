@@ -29,6 +29,21 @@ export const introspectiveProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value reflection, depth, and contemplative engagement\n- Philosophy, psychology, contemplative traditions, writing, counseling\n- Any role allowing extended engagement with abstract internal experience\n- Protected reflection time, depth over breadth, meaning orientation\n\nWhere you suffocate:\n- Environments prioritizing speed over depth, action over reflection\n- Roles requiring constant external responsiveness without reflective space\n- Surface engagement without meaningful exploration",
 
+  "topCareers": [
+    {
+      "title": "Psychologist / Depth Therapist",
+      "description": "Your inner world is more vivid than most people's outer one—you observe the observer, aware of your awareness as native mode. Psychology and depth therapy run on exactly that: unusual access to the operations of mind, the ability to map interior terrain others can't sustain attention on. You go where the meaning lives instead of skimming the surface. The relentless inward attention that isolated you socially becomes, here, the very instrument of the work."
+    },
+    {
+      "title": "Philosopher / Contemplative Writer",
+      "description": "You live in meta-awareness—thinking about thinking—as a place you inhabit, not a practice you do. Philosophy and contemplative writing reward that depth: extended engagement with abstract internal experience that most people can only touch briefly. You can stay with a question past the point where others need an answer. The depth-over-breadth orientation that surface-fast environments couldn't use is the entire foundation of this kind of work."
+    },
+    {
+      "title": "Counselor / Contemplative Guide",
+      "description": "You have rare access to your own interior, and that's exactly what lets you guide someone into theirs. Counseling and contemplative guidance pay for the capacity to dive instead of skim—to sit with the depth of an inner state and help someone make sense of it. You need protected reflection time, and in this work that's a feature, not a flaw. The intensity of self-observation that felt like too much becomes the thing people come to you for."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Self-Reference Processing (your native mode)\n- Pattern Recognition (abstract internal patterns)\n- Symbolic Manipulation (philosophical reasoning)\n\nLikely Moderate-Accessibility Blocks:\n- Generative Creation (internal ideation)\n- Spatial Relationships (abstract conceptual space)\n\nLikely Lower-Accessibility Blocks:\n- Sequential Processing (external task execution)\n- Perceptual Discrimination (concrete external details)\n- Social Signal Processing (other-focus may be underdeveloped)\n\nThis pattern suggests your cognitive architecture is optimized for contemplative depth and philosophical intelligence, with developmental opportunities in external engagement and social awareness.\n\nINTROSPECTIVE",
 
   "strengths": [

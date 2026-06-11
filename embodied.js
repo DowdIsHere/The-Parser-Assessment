@@ -29,6 +29,21 @@ export const embodiedProfile = {
 
   "workEnvironments": "Where you thrive:\n- Hands-on roles where body-based intelligence is the point, not a quirk\n- Trades, athletics, crafts, bodywork, kitchens, emergency response\n- Places where you prove it by doing it, in front of people, right now\n- Work that involves making, fixing, growing, moving\n- Rooms where your body is an asset instead of something to apologize for\n\nWhere you suffocate:\n- Sedentary, verbal, abstract days\n- A desk and a wall of meetings\n- Settings that score you on how well you talk about the work\n- Roles that treat your body as beside the point\n- Cultures that only count the worked-out-on-paper kind of knowing",
 
+  "topCareers": [
+    {
+      "title": "Skilled Trades / Craftsperson",
+      "description": "Your hands knew before your head did, and you've spent your life being told to \"think more\" when your body was already doing the math. Trades and craftwork count that kind of knowing as the real thing—you prove it by doing it, in front of people, right now. The tightness behind your sternum that says something's off, the half-inch your shoulders drop when it's right—that's a calibrated instrument, not a mood. Here your body is the asset instead of the thing to apologize for."
+    },
+    {
+      "title": "Athletics / Bodywork / Movement",
+      "description": "You live in the body other people merely inhabit, reading sensation as information with an accuracy nobody gives you credit for. Athletics, coaching, and bodywork run entirely on that channel—the felt sense of when something's loaded wrong, the present-moment read of a body under stress. You don't talk about the work; you do it and feel it. The intelligence they couldn't see because it didn't happen in words is exactly what this field measures."
+    },
+    {
+      "title": "Emergency Response / Hands-On Frontline",
+      "description": "When it goes sideways, you're already moving—your gut processed it before the briefing could. Emergency and frontline work is built for the person who knows in the body and acts now, with no layer of abstraction between perceiving and doing. You're right more often than the deliberators, and faster, because the information arrives as sensation instead of a sentence. The channel they couldn't count becomes the thing that holds when seconds matter."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Perceptual Discrimination (high-resolution sensory processing)\n- Spatial Relationships (physical space navigation)\n- Self-Reference Processing (strong interoceptive awareness)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (procedural physical skills)\n- Pattern Recognition (through physical channel)\n\nLikely Lower-Accessibility Blocks:\n- Symbolic Manipulation (abstract reasoning)\n- Generative Creation (conceptual ideation)\n- Social Signal Processing (other-focus less emphasized)\n\nThis pattern suggests your cognitive architecture is optimized for physical intelligence, somatic awareness, and present-moment engagement.\n\nEMBODIED",
 
   "strengths": [

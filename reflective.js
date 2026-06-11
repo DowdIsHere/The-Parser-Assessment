@@ -29,6 +29,21 @@ export const reflectiveProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value thoughtfulness, nuanced understanding, and considered judgment\n- Analysis, research, writing, editing, consulting (especially post-project review)\n- Evaluation, organizational learning, any role where understanding what happened informs what should happen next\n\nWhere you suffocate:\n- Environments demanding constant real-time response\n- Cultures that dismiss reflection as delay\n- Fast-paced environments that never pause to learn from experience",
 
+  "topCareers": [
+    {
+      "title": "Analyst / Researcher",
+      "description": "You see clearly in the rearview mirror—you understand a situation fully only after it's unfolded, and then you understand it deeply. Analysis and research reward that exactly: the balanced, thoughtful gaze that extracts what happened and what it means once the dust settles. You're not interested in the raw facts so much as the pattern beneath them. The reflection that fast-paced rooms called delay is, in this work, the entire method."
+    },
+    {
+      "title": "Evaluator / Organizational Learning Lead",
+      "description": "You're the one who, after the project ends, can say what actually happened and why—and turn it into something the next round can use. Evaluation and organizational learning pay for that post-hoc clarity: understanding the past well enough to inform what should happen next. You hold the lessons without the heat, balanced rather than wounded. The instinct to pause and learn from experience that impatient cultures dismissed becomes the function you're hired for."
+    },
+    {
+      "title": "Writer / Editor / Consultant",
+      "description": "You find the patterns in what has been and lay them out as considered judgment rather than hot takes. Writing, editing, and reflective consulting run on that—seeing the throughline only visible in retrospect and articulating it cleanly. You bring wisdom from reflection, not reaction, which is rarer and more durable than speed. The thoughtfulness that looked like slowness becomes, here, the quality people actually pay for."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (seeing abstract patterns across time and experience)\n- Symbolic Manipulation (working with meaning and significance)\n- Self-Reference Processing (accessible through balanced integration)\n- Social Signal Processing (accessible through balanced perspective-taking)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (organizing reflection into coherent understanding)\n- Generative Creation (producing articulated insight from processed experience)\n\nLikely Lower-Accessibility Blocks:\n- Perceptual Discrimination (present-moment sensory detail may be under-attended)\n- Spatial Relationships (concrete spatial processing may be less emphasized)\n\nThis pattern suggests your cognitive architecture is optimized for wise understanding through careful retrospection. Your developmental opportunities lie in present-moment engagement and timely action.\n\nREFLECTIVE",
 
   "strengths": [

@@ -29,6 +29,21 @@ export const harmoniousProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value integration and long-term thinking\n- Strategy, facilitation, organizational development, diplomacy, mediation\n- Roles requiring multi-stakeholder consideration and complex synthesis\n- Systems design and any role holding multiple perspectives while building toward better futures\n\nWhere you suffocate:\n- Rigid either/or thinking and short-term orientation\n- Chronic conflict that can't resolve\n- Political environments where positioning matters more than problem-solving\n- Any context that punishes nuanced thinking",
 
+  "topCareers": [
+    {
+      "title": "Strategy / Systems Designer",
+      "description": "Where others have accepted the tradeoff and chosen sides, you're still seeing the configuration that honors everyone—not naively, but because you can actually see it. Strategy and systems design reward that: holding competing needs as a puzzle with an unfound solution rather than a permanent limitation. You synthesize toward a better future without flattening anyone's stake in it. The \"what if we could have both\" that frustrated either/or rooms is, in this work, the entire creative act."
+    },
+    {
+      "title": "Organizational Development / Facilitation",
+      "description": "You hold multiple perspectives at once and build toward a future that fits more of them than people thought possible. Organizational development and facilitation pay for exactly that integrative move—getting stakeholders who'd declared the conflict irreconcilable to a configuration none of them had found. You're the one still looking for synthesis after everyone else stopped. The nuance that rigid environments punished becomes, here, the thing that unlocks the stuck system."
+    },
+    {
+      "title": "Diplomat / Mediator",
+      "description": "You see how everything could fit together, across sides and across time, and you don't accept zero-sum as the final word. Diplomacy and mediation are built for that balancer's mind—honoring competing values while building toward something better for all of them. You hold many viewpoints without collapsing into one, which is why opposed parties trust where you're steering. The refusal to pick a winner that read as indecision is exactly what lets you broker the thing nobody else could."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (seeing integrative patterns across domains and stakeholders)\n- Spatial Relationships (mapping how pieces fit together in future configurations)\n- Social Signal Processing (balanced reference gives access to interpersonal dynamics)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (accessible for implementation planning)\n- Symbolic Manipulation (working with frameworks for integration)\n- Self-Reference Processing (available but balanced with other-reference)\n- Generative Creation (imagining integrative futures)\n\nLikely Lower-Accessibility Blocks:\n- Perceptual Discrimination (present-moment sensory detail may be less attended than future-oriented perception)\n\nThis pattern suggests your cognitive architecture is optimized for integrative strategy and multi-stakeholder synthesis. Your developmental opportunities lie in present-moment grounding—building comfort with what is before reaching for what could be—and in clarity about your own distinct position when integration requires you to hold ground rather than bridge differences.\n\nHARMONIOUS",
 
   "strengths": [
