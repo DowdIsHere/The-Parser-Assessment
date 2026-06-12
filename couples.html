@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Couples Parser Analysis | J.D. Mercer</title>
-  <meta name="description" content="A 90-minute session and written analysis that names what is actually happening between two minds.">
+  <meta name="description" content="A 30–60 Minute Parser Frame Overview and written analysis that names what is actually happening between two minds.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -121,7 +121,6 @@
     @media (max-width: 760px) {
       .contents-grid { grid-template-columns: 1fr; }
       .excerpt-block { padding: 32px 24px; }
-      nav a:not(.btn) { display: none; }
       .f-top { flex-direction: column; }
     }
     /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
@@ -138,6 +137,7 @@
     }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 <body>
 
@@ -147,14 +147,19 @@
         <span class="wordmark">J.D. Mercer</span>
         <span class="sub">Cognition Blocks of Intelligence</span>
       </a>
-      <nav>
+      <nav id="siteNav">
         <a href="/index.html">Home</a>
         <a href="/individual.html">Individual</a>
+        <a href="/professionals.html">For Teams</a>
         <a href="/clinicians.html">For Clinicians</a>
         <a href="#pricing" class="btn">Book Analysis</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim"></div>
 
   <section class="hero">
     <div class="hero-inner">
@@ -403,5 +408,6 @@
   })();
   </script>
 
+  <script src="/mobile-nav.js" defer></script>
 </body>
 </html>

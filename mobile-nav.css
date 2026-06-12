@@ -1,0 +1,87 @@
+/* ============================================================
+   Mobile navigation drawer — taste-skill methodology
+   - iOS-like easing: cubic-bezier(0.16, 1, 0.3, 1)
+   - fixed full-viewport scrim layer beneath the panel
+   - :focus-visible states, no emoji, line icon (~2px stroke)
+   Desktop nav is left untouched; this only engages <= 860px.
+   Shared by every page; state class `mn-open` lives on <html>.
+   ============================================================ */
+:root { --mn-ease: cubic-bezier(0.16, 1, 0.3, 1); }
+
+.nav-toggle { display: none; }
+.nav-scrim  { display: none; }
+
+@media (max-width: 860px) {
+  /* hamburger button (line icon, animates to X) */
+  .nav-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 44px; height: 44px; margin-left: auto; padding: 0;
+    background: transparent; border: 0; border-radius: 10px; cursor: pointer;
+    color: inherit; position: relative; z-index: 120;
+  }
+  .nav-toggle .bar {
+    width: 22px; height: 2px; border-radius: 2px; background: currentColor;
+    transition: transform .4s var(--mn-ease), opacity .25s var(--mn-ease);
+  }
+  .nav-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* the existing <nav> becomes a slide-down drawer panel */
+  header nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: stretch; gap: 0;
+    background: #ffffff; border-top: 1px solid rgba(20,20,25,0.08);
+    box-shadow: 0 26px 44px -22px rgba(15,15,20,0.30);
+    padding: 8px 24px 20px;
+    max-height: 78dvh; overflow-y: auto;
+    transform: translateY(-14px); opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .42s var(--mn-ease), transform .42s var(--mn-ease), visibility .42s;
+    z-index: 115;
+  }
+  html.mn-open header nav {
+    transform: translateY(0); opacity: 1; visibility: visible; pointer-events: auto;
+  }
+  header nav a {
+    display: block; width: 100%;
+    padding: 15px 4px; font-size: 1.05rem; color: #17171b;
+    border-bottom: 1px solid rgba(20,20,25,0.07);
+  }
+  header nav a:focus-visible { outline: 2px solid #17171b; outline-offset: 2px; }
+  /* the CTA pill keeps its identity, full-width at the bottom of the sheet */
+  header nav a.btn, header nav a.cta, header nav a.nav-cta {
+    margin-top: 14px; border-bottom: 0; text-align: center; justify-content: center;
+  }
+
+  /* dropdowns flatten into indented groups inside the drawer */
+  header nav .nav-dd { display: block; width: 100%; }
+  header nav .nav-dd-top { display: flex; align-items: center; }
+  header nav .nav-dd-caret { display: none; }
+  header nav .nav-dd-menu {
+    position: static; opacity: 1; visibility: visible; transform: none; pointer-events: auto;
+    background: transparent; border: 0; box-shadow: none;
+    min-width: 0; margin: 0; padding: 2px 0 8px 16px; gap: 0; max-height: none;
+  }
+  header nav .nav-dd-menu a {
+    font-family: inherit; text-transform: none; letter-spacing: normal;
+    font-size: 0.96rem; color: #2a2a30; padding: 12px 4px;
+    border-bottom: 1px solid rgba(20,20,25,0.05);
+  }
+
+  /* full-viewport scrim, sits below the header bar so the logo stays crisp */
+  .nav-scrim {
+    display: block; position: fixed; inset: 0;
+    background: rgba(12,12,16,0.42);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .42s var(--mn-ease), visibility .42s;
+    z-index: 90;
+  }
+  html.mn-open .nav-scrim { opacity: 1; visibility: visible; pointer-events: auto; }
+
+  html.mn-open { overflow: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header nav, .nav-scrim, .nav-toggle .bar { transition: none !important; }
+}

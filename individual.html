@@ -94,7 +94,6 @@
 
     @media (max-width: 760px) {
       .what-grid { grid-template-columns: 1fr; }
-      nav a:not(.btn) { display: none; }
       .f-top { flex-direction: column; }
     }
     /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
@@ -111,6 +110,7 @@
     }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 <body>
 
@@ -120,14 +120,19 @@
         <span class="wordmark">J.D. Mercer</span>
         <span class="sub">Cognition Blocks of Intelligence</span>
       </a>
-      <nav>
+      <nav id="siteNav">
         <a href="/index.html">Home</a>
         <a href="/couples.html">Couples</a>
+        <a href="/professionals.html">For Teams</a>
         <a href="/clinicians.html">For Clinicians</a>
-        <a href="#pricing" class="btn">Get Your Profile</a>
+        <a href="#pricing" class="btn">Parser Profile</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim"></div>
 
   <section class="hero">
     <div class="hero-inner">
@@ -261,5 +266,6 @@
   })();
   </script>
 
+  <script src="/mobile-nav.js" defer></script>
 </body>
 </html>

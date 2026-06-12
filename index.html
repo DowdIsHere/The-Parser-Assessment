@@ -110,6 +110,29 @@
     }
     nav a.cta:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
+    /* ── NAV DROPDOWNS ── */
+    .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .nav-dd-caret { width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none; opacity: 0.65; transition: transform 0.25s ease; }
+    .nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-dd-menu {
+      position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 184px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-md); padding: 7px;
+      display: flex; flex-direction: column; gap: 1px;
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; z-index: 200;
+    }
+    .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .nav-dd-menu a {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: none;
+      color: var(--text-soft); padding: 10px 12px; border-radius: 8px; white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+    }
+    .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold-pale); }
+    [id^="group-"], [id^="collide-"] { scroll-margin-top: 96px; }
+
     /* ── HERO ── */
     .hero {
       padding: 120px 0 96px;
@@ -735,11 +758,11 @@
     @media (max-width: 640px) {
       .container { padding: 0 20px; }
       .container-narrow { padding: 0 20px; }
-      nav a:not(.cta) { display: none; }
     }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 
 <body>
@@ -754,16 +777,49 @@
           <div class="sub">Cognition Blocks Intelligence</div>
         </div>
       </a>
-      <nav>
-        <a href="#parsers">The 27</a>
-        <a href="#collisions">Collisions</a>
+      <nav id="siteNav">
+        <div class="nav-dd">
+          <a href="#parsers" class="nav-dd-top">The 27 <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="#group-closeup">Close-Up</a>
+            <a href="#group-adjustable">Adjustable</a>
+            <a href="#group-wideangle">Wide-Angle</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="#collisions" class="nav-dd-top">Collisions <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="#collide-professional">Professional</a>
+            <a href="#collide-parenting">Parenting</a>
+            <a href="#collide-romantic">Couples</a>
+            <a href="#collide-social">Social</a>
+          </div>
+        </div>
         <a href="/individual.html">Individual</a>
-        <a href="/couples.html">Couples</a>
-        <a href="/clinicians.html">For Clinicians</a>
-        <a href="/individual.html" class="cta">Get Your Profile</a>
+        <div class="nav-dd">
+          <a href="/couples.html" class="nav-dd-top">Relationships <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/couples.html">Couples</a>
+            <a href="/couples.html">Social</a>
+            <a href="/parent-login.html">Children</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/clinicians.html" class="nav-dd-top">Professional <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/clinicians.html">Clinicians</a>
+            <a href="/professionals.html">Teams</a>
+            <a href="/professionals.html#line">Billets</a>
+          </div>
+        </div>
+        <a href="/individual.html" class="cta">Parser Profile</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim"></div>
 
   <!-- HERO -->
   <section class="hero">
@@ -816,7 +872,7 @@
       </div>
 
       <!-- GROUP 1: CLOSE-UP LENSES -->
-      <div class="group-header">
+      <div class="group-header" id="group-closeup">
         <div>
           <div class="section-eyebrow" style="margin-bottom:12px;">Group One</div>
           <div class="group-name"><em>Close-Up</em><br>Lenses</div>
@@ -889,7 +945,7 @@
       </div>
 
       <!-- GROUP 2: ADJUSTABLE LENSES -->
-      <div class="group-header" style="margin-top:64px;">
+      <div class="group-header" id="group-adjustable" style="margin-top:64px;">
         <div>
           <div class="section-eyebrow" style="margin-bottom:12px;">Group Two</div>
           <div class="group-name"><em>Adjustable</em><br>Lenses</div>
@@ -962,7 +1018,7 @@
       </div>
 
       <!-- GROUP 3: WIDE-ANGLE LENSES -->
-      <div class="group-header" style="margin-top:64px;">
+      <div class="group-header" id="group-wideangle" style="margin-top:64px;">
         <div>
           <div class="section-eyebrow" style="margin-bottom:12px;">Group Three</div>
           <div class="group-name"><em>Wide-Angle</em><br>Lenses</div>
@@ -1050,7 +1106,7 @@
       </div>
 
       <!-- PROFESSIONAL -->
-      <div class="collision-domain-header">
+      <div class="collision-domain-header" id="collide-professional">
         <div class="collision-domain-eyebrow">Domain One</div>
         <h3 class="collision-domain-title">Professional<br>Collisions</h3>
       </div>
@@ -1168,7 +1224,7 @@
       </div>
 
       <!-- PARENTING -->
-      <div class="collision-domain-header" style="margin-top:80px;">
+      <div class="collision-domain-header" id="collide-parenting" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Two</div>
         <h3 class="collision-domain-title">Parenting<br>Collisions</h3>
       </div>
@@ -1398,7 +1454,7 @@
       </div>
 
       <!-- SOCIAL -->
-      <div class="collision-domain-header" style="margin-top:80px;">
+      <div class="collision-domain-header" id="collide-social" style="margin-top:80px;">
         <div class="collision-domain-eyebrow">Domain Four</div>
         <h3 class="collision-domain-title">Social<br>Collisions</h3>
       </div>
@@ -1534,7 +1590,7 @@
         Parser Frame™ · Cognition Blocks Intelligence Framework<br>
         U.S. Copyright TXu 2-497-721<br>
         © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
-        <a href="/individual.html">Get Your Profile →</a>
+        <a href="/individual.html">Parser Profile →</a>
       </div>
       <div class="f-disclaimer">
         Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · © 2025–2026 Cognition Blocks LLC
@@ -1590,5 +1646,6 @@
     });
   </script>
 
+  <script src="/mobile-nav.js" defer></script>
 </body>
 </html>
