@@ -1,6 +1,6 @@
 # CBI Tennis — Block Development from Match Stats
 
-**Version 1.0**
+**Version 1.1**
 
 *Companion instrument to the "CBI Tennis Parser Behavior Playbook." The playbook reads* **orientation** *(the Parser — which blocks a player reaches for). This document reads* **development** *(how trained those blocks have become). Different question, different data, deliberately kept apart so match stats never get mistaken for Parser identity.*
 
@@ -70,6 +70,37 @@ Runs the whole model on its own.
 
 -----
 
+## 1.5 The Capture Method: Self-Charting
+
+**This instrument is built on self-charting, not scraped data.** Public stats only exist for tour-level players, are inconsistent on winners/unforced errors, and dry up entirely below the tour — exactly where the players we'd assess (juniors, clients, developing pros) live. Tier 3 (Hawkeye-class) data is proprietary and effectively unobtainable. So we don't chase it.
+
+The win: **you don't log 30 stats — you log one point at a time, and derive the rest.** A simple courtside point log produces the entire Tier 1 box score and most of Tier 2 automatically, with a winner/UFE definition that's finally *consistent* because it's yours.
+
+### Minimum Viable Capture — the point log
+
+For each point, record:
+
+| Field | Values | Derives |
+|---|---|---|
+| `server` | A / B | hold %, break %, service/return splits |
+| `serve` | ace / double-fault / 1st-in / 2nd-in | 1st-serve %, DF rate, aces, 1st-/2nd-serve points won |
+| `rally_length` | shot count (or bucket 0–4 / 5–8 / 9+) | rally-length distribution |
+| `point_end` | winner / unforced error / forced error | winner:UFE ratio (your consistent definition) |
+| `won_by` | A / B | every points-won %, BP save/convert, deciding sets, behind/ahead, first-point |
+
+Five fields. From them you compute essentially all of Tier 1 and the situational half of Tier 2 — no separate stat sheet needed.
+
+**Optional add-ons** (one tap more per relevant point, for finer block mapping):
+
+- `wing` (FH / BH) on winners and errors → sharpens the Generative Creation vs. Sequential read
+- `net` flag (point involved a net approach) → net-points-won %, feeds Spatial Relationships
+
+### What we deliberately drop
+
+Serve speed, spin, distance run, tempo, exact placement — all Tier 3. Not chartable by eye, not worth a guess. The model runs without them; they were only ever a sharpening layer for Symbolic Manipulation, which the optional `wing`/`net` flags and rally shape approximate well enough.
+
+-----
+
 ## 2. Stat → Block Map
 
 | Stat | Block(s) it indexes |
@@ -126,8 +157,8 @@ Pull the player's profile block indicators (native-high / likely-low). Compare t
 
 ## 5. Cleanest Summary
 
-- The capture unit is the **tagged match**, not the stat.
-- Tier 1 box score runs the model; Tiers 2–3 sharpen clutch and tactical blocks.
+- The capture unit is the **tagged match**, not the stat — captured by **self-charting**, not scraping.
+- You log **five fields per point** and derive the whole Tier 1 box score plus most of Tier 2; Tier 3 is dropped as unobtainable.
 - Stats are a proxy for **block development**, not Parser identity.
 - Development = **level that survives hostile conditions**, read across matches.
 - Overlay the Parser's accessibility map to read the **gap** — trained native, wasted native, or deliberately built non-native.
@@ -135,6 +166,6 @@ Pull the player's profile block indicators (native-high / likely-low). Compare t
 
 -----
 
-*CBI Tennis — Block Development from Match Stats v1.0*
+*CBI Tennis — Block Development from Match Stats v1.1*
 *Developed by J.D. Mercer | Based on the Cognition Blocks Intelligence (CBI) Framework*
 *© 2026 Cognition Blocks LLC. All rights reserved.*
