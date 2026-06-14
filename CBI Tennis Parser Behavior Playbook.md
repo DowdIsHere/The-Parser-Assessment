@@ -1,8 +1,8 @@
 # CBI Tennis Parser Behavior Playbook
 
-**Version 2.1**
+**Version 2.2**
 
-*Companion to the per-profile reference, "Parser Profiles — Tennis Players (Book Reference)." That document tells you what each of the 27 Parsers* is *as a player. This one is the engine: how to* read *a Parser from behavior, then predict the matchup.*
+*Companion to the per-profile reference, "Parser Profiles — Tennis Players (Book Reference)." That document tells you what each of the 27 Parsers* is *as a player. This one is the engine: how to* read *a Parser from behavior — as one integrated stance, not three separate dials — and predict the matchup.*
 
 -----
 
@@ -26,7 +26,7 @@ Hold three things at once:
 
 ## 1. Parser → Tennis Behavior Mapping
 
-Each gradient expresses as one observable behavior set on court.
+Each dimension expresses as one observable behavior set on court. You observe them separately (Section 2), but they never *run* separately (Section 3).
 
 ### Reference — *Who is the match organized around?*
 
@@ -41,7 +41,7 @@ Organizes around the opponent. Reads discomfort, habits, openings, reactions, vu
 **Balanced = The Flow**
 Organizes through the exchange itself — neither purely imposing nor purely reacting. Moves with the match as it develops.
 *Question:* "What is the point asking for now?"
-*Distinction from the Options Player:* The Flow operates in the **live exchange** — it reads what the rally is becoming as it unfolds. The Options Player operates in **possibility space** — it weighs which lines are playable. The Flow is present-tense engagement; the Options Player steps back to assess. They can look similar from the outside but resolve differently under pressure: The Flow stays inside the moment; the Options Player steps back to choose.
+*Distinction from the Options Player:* The Flow operates in the **live exchange** — it reads what the rally is becoming as it unfolds. The Options Player operates in **possibility space** — it weighs which lines are playable. The Flow is present-tense engagement; the Options Player steps back to assess.
 
 -----
 
@@ -78,13 +78,13 @@ Works from confirmed circumstances — established patterns, known positions, pr
 *Question:* "Given what's confirmed, what sequence follows?"
 *Risk:* Needs the board to stay stable long enough for the sequence to mature.
 
-> **v2.1 note.** Earlier drafts named the Spatial poles "Ambitious / Calculated / Chess Player." Those are retired. "Chess Player" wrongly implied the *concrete* pole was the strategist, when point-construction at altitude is the *abstract* end; and "Calculated" had imported conditions (surface, fatigue, score) into what must be a pure abstraction stance. Conditions now live only in the read steps below, never in the Parser definition.
+> **v2.1 note.** Earlier drafts named the Spatial poles "Ambitious / Calculated / Chess Player." Those are retired. "Chess Player" wrongly implied the *concrete* pole was the strategist, when point-construction at altitude is the *abstract* end; and "Calculated" had imported conditions (surface, fatigue, score) into what must be a pure abstraction stance. Conditions now live only in the read steps, never in the Parser definition.
 
 -----
 
 ## 2. Reading the Parser from Behavior
 
-This is the evaluation engine. Watch the player for a set or two and answer each gradient independently. Read what **recurs**, not what a single point shows.
+Watch the player for a set or two and answer each dimension. Read what **recurs**, not what a single point shows. You read them one at a time because that's the only way to *observe* — Section 3 puts them back together.
 
 ### Reference: Force Game vs Play Other's Game vs The Flow
 
@@ -122,9 +122,9 @@ This is the evaluation engine. Watch the player for a set or two and answer each
 
 -----
 
-### Synthesis
+### Synthesis — *fuse, don't sum*
 
-Stack the three reads into one Parser:
+Don't stack the three reads like a label. Collapse them back into the single live stance they came from (Section 3):
 
 > Spatial • Temporal • Reference
 > e.g., **Possibility Player • Proactive • Force Game** = Abstract • Future • Self = **Visionary** (The Point Architect)
@@ -134,11 +134,65 @@ Cross-reference the resulting code to the 27 profiles in the companion reference
 
 -----
 
-## 3. How to Read a Match
+## 3. How the Three Dimensions Work Together
+
+A Parser is **one architecture made of three dimensions** — Spatial, Temporal, Reference. The dimensions are not three separate parsers; they are facets of a single stance.
+
+You read those dimensions one at a time because that's the only way to observe them. But the player never *runs* them one at a time. In real time all three fire at once and shape each other — what reaches the court is their **product, not their sum.** Reading a Parser well means collapsing the three observations back into the single thing they came from.
+
+Four things to hold.
+
+### 3.1 Each dimension changes what the others mean
+
+The same pole behaves differently depending on its partners. "Force Game" (Self) is not one behavior — it's a *direction* (the match is about me) that the other two dimensions give a shape:
+
+- **Force Game + Proactive** imposes by **first-striking** — taking time away, ending points forward (Intentional).
+- **Force Game + Reactive** imposes by **counterpunching on its own grooved terms** — daring you into the pattern it has run a thousand times (Sharp).
+- **Force Game + Vibing** imposes by **rhythm** — the zone player whose imposition is pure feel, untouchable until the feel goes (Embodied).
+
+Same Self pole. Three completely different opponents to play. Reference tells you *who the match is about*; Temporal and Spatial tell you *how that gets enacted*. Read any dimension in isolation and you'll mistake one Parser for another.
+
+It runs the other way too. "Possibility Player" (Abstract) means:
+
+- **+ Future** → manufactures toward a constructed finish you can't see yet (Visionary).
+- **+ Present** → manufactures on a live read, inventing off what the opponent shows right now (Intuitive).
+- **+ Past** → manufactures from a deep memory of which inspired shots have worked before (Sentimental, Reflective).
+
+### 3.2 One dimension leads; the other two serve it
+
+In the open court a player blends all three. Under load the architecture **simplifies** — one dimension fires first and the other two bend around it. That lead is what the player reaches for when everything is on the line, and it's the single most useful thing to identify.
+
+**Find the lead at the biggest points** — break point, set point, 4–4 in the third. Watch which *question* the player answers first:
+
+- Goes harder into **their own game regardless of the opponent** → **Reference-led (Self).**
+- Starts **hunting the opponent's nerve or weakness** → **Reference-led (Other).**
+- **Speeds up to end it**, takes the ball earlier → **Temporal-led (Future).**
+- Retreats to the **safe, proven pattern** → **Temporal-led (Past)** fused with **Spatial (Concrete).**
+- Reaches for the **spectacular, low-percentage opener** → **Spatial-led (Abstract).**
+- Simply **plays the next ball on feel**, unmoved → **Temporal-led (Present).**
+
+The lead is the spine. The other two are how the spine moves.
+
+### 3.3 Some Parsers are coherent; some carry tension
+
+The three dimensions can pull the same way or against each other, and that internal geometry *is* the player's character.
+
+- **Reinforcing (the cube's corners).** Visionary (Abstract • Future • Self) points every dimension the same direction — away from the concrete present opponent, toward a self-authored future. The result is relentless and one-directional: enormous when the vision is right, blind to the now when it isn't. Coherent Parsers are intense and predictable.
+- **In tension.** Sentimental (Abstract • Past • Self) reaches *forward* into possibility and meaning while anchoring *backward* into memory — the Self holds both at once. That internal pull is the architecture, not a flaw: it's why the meaning-keeper plays inspired tennis only when the match carries weight and goes flat when it doesn't. Parsers with a "Balanced" pole, or with Spatial and Temporal pulling opposite ways, contain a contradiction that makes them adaptable but harder to read.
+
+Knowing whether a Parser reinforces or holds tension tells you how it behaves when squeezed: coherent Parsers double down on their one direction; tension Parsers oscillate between their poles.
+
+### 3.4 Read the whole, then use the parts
+
+The collision rules in Sections 5–7 are **component diagnostics** — they tell you what happens along one axis with everything else held still. Real matches never hold anything still. So use them the right way round: form the **integrated read first** — each player's lead, how their three dimensions fuse, whether they reinforce or hold tension — then drop to the collision rules to sharpen the specific seam where the loop will break. The tally of three axis-duels is never the answer; it's an input to the one call about whose integrated stance the conditions reward.
+
+-----
+
+## 4. How to Read a Match
 
 ### Step 1: Read each player's Parser from behavior
 
-Use Section 2. Identify each gradient from what recurs across opponents and pressure. Don't lock a read from a single condition-forced stretch — confirm it repeats when the player is free to play their own way.
+Use Section 2 to observe each dimension, then Section 3 to fuse them into one integrated stance and name the lead. Confirm the read repeats when the player is free to play their own way — don't lock it from a single condition-forced stretch.
 
 ### Step 2: Add the conditions
 
@@ -170,7 +224,9 @@ The scoreboard is noise unless it connects to the loop. The real questions:
 
 -----
 
-## 4. Temporal Collision Rules
+## 5. Temporal Collision Rules
+
+*Component diagnostic — one axis, everything else held still. Feed the result into the integrated call (Section 3.4).*
 
 ### Future vs Past
 Future moves with trajectory. Past turns behavior into record.
@@ -195,7 +251,9 @@ When both players share temporal orientation, the temporal dimension becomes inv
 
 -----
 
-## 5. Spatial Collision Rules
+## 6. Spatial Collision Rules
+
+*Component diagnostic — one axis, everything else held still.*
 
 ### Possibility Player vs Sequence Player (Abstract vs Concrete)
 Possibility changes the trajectory. Sequence builds from confirmed steps.
@@ -220,7 +278,9 @@ When both players share spatial orientation, the spatial dimension becomes invis
 
 -----
 
-## 6. Reference Collision Rules
+## 7. Reference Collision Rules
+
+*Component diagnostic — one axis, everything else held still.*
 
 ### Force Game vs Play Other's Game (Self vs Other)
 Force Game imposes. Play Other's Game reads.
@@ -245,13 +305,15 @@ When both players share reference orientation, the reference dimension becomes i
 
 -----
 
-## 7. Match Read Template
+## 8. Match Read Template
 
 Use this for every match.
 
 ### Player A
 
 **Parser (read from behavior):** Spatial • Temporal • Reference
+**Lead dimension:** "…" — *the one that fires first under pressure (Section 3.2)*
+**Geometry:** reinforcing / in tension — *(Section 3.3)*
 
 **Tennis behavior:**
 - Possibility Player / Options Player / Sequence Player
@@ -267,6 +329,8 @@ Use this for every match.
 ### Player B
 
 **Parser (read from behavior):** Spatial • Temporal • Reference
+**Lead dimension:** "…"
+**Geometry:** reinforcing / in tension
 
 **Tennis behavior:**
 - Possibility Player / Options Player / Sequence Player
@@ -283,6 +347,7 @@ Use this for every match.
 
 **Player A is trying to:** "…"
 **Player B is trying to:** "…"
+**Which axes are live, which cancel:** "…" — *(shared poles go invisible; the differing axes decide)*
 **The predictable misread:** "…"
 **The match favors Player A if:** "…"
 **The match favors Player B if:** "…"
@@ -290,14 +355,66 @@ Use this for every match.
 
 -----
 
-## 8. Core Warnings
+## 9. Worked Examples
+
+Two full reads through the template, showing the dimensions fused rather than tallied.
+
+### Example A — Visionary vs Sharp (reinforcing vs reinforcing)
+
+**Player A — read from behavior**
+Goes for shots that aren't there yet (**Possibility Player / Abstract**); takes the ball early and plays toward a finish two shots ahead (**Proactive / Future**); runs the same construction regardless of opponent, problem-solves inward (**Force Game / Self**). → **Abstract • Future • Self = Visionary** (The Point Architect).
+- **Lead:** at set point he *constructs* — reaches for the engineered opener. Spatial+Future fused leads; Self serves it.
+- **Geometry:** reinforcing corner — relentless, one-directional.
+- *Available first:* the finish, two shots early. *Under pressure:* presses for the constructed winner. *May miss:* the simple ball, and the fact the opponent isn't playing his point. *Amplified by:* fast surface, indoors. *Punished by:* slow/heavy court, long rallies, one-more-ball tennis.
+
+**Player B — read from behavior**
+Runs proven patterns to completion, needs the board stable (**Sequence Player / Concrete**); counterpunches, waits for the known shape, "seen this before" (**Reactive / Past**); plays his own grooved game regardless of opponent (**Force Game / Self**). → **Concrete • Past • Self = Sharp** (The Seasoned Ball-Striker).
+- **Lead:** under pressure he retreats to the proven pattern. Past+Concrete fused leads.
+- **Geometry:** reinforcing — stubbornly one-directional, toward the archived percentage.
+- *Available first:* the recognized situation. *Under pressure:* the high-margin grooved play. *May miss:* the genuinely novel shot with no precedent. *Amplified by:* slow court, long matches (more history to archive). *Punished by:* fast surface, short points, no time to recognize.
+
+**Collision**
+- **Live vs cancelled:** Reference is **Self vs Self → cancels** (mutual imposition). The match resolves on Spatial and Temporal — and both ask the *same* fused question: can A change the board faster than B can archive it?
+- Because the deciding axes collapse to one question, the match collapses to **tempo and surface**.
+- **Misread:** A reads B's repetition as passivity and over-presses into B's grooved counterpunch; B waits for a pattern A keeps mutating and falls behind early on a fast court.
+- **Favors A if:** fast surface, short points, A keeps mutating before B archives.
+- **Favors B if:** slow court, extended rallies, A's patterns repeat enough to read.
+- **Trajectory call:** quick indoor → A by the constructed point; slow clay → B by attrition.
+
+### Example B — Equanimous vs Empathetic (two axes shared, one decides)
+
+This is the case the integration model is built for: when two of three axes match, the player does **not** "tie 2–2." The whole architecture is organized so the single differing axis becomes decisive — and you only see that by reading the integrated whole.
+
+**Player A — read from behavior**
+Several looks, plan B mid-point, shifts cleanly (**Options Player / Balanced**); rhythm and feel, lives point to point, carries nothing (**Vibing / Present**); neither a fixed plan nor an opponent-target — lets the rally set terms (**The Flow / Balanced**). → **Balanced • Present • Balanced = Equanimous** (The Witness).
+- **Lead:** under pressure, stays level and plays the next ball. Present+Flow fused leads; nothing surges.
+- **Geometry:** maximally balanced — no spine to attack, but no spike to win with.
+- *Available first:* the rally's current shape. *Under pressure:* clean reset, even keel. *May miss:* the moment to grab the match by the collar. *Amplified by:* long matches, hostile crowds (nothing to rattle). *Punished by:* a player who builds and rides a wave.
+
+**Player B — read from behavior**
+Several looks (**Options Player / Balanced**); feel and momentum-driven (**Vibing / Present**); shot selection tracks the opponent, reads body language, feeds off emotion (**Play Other's Game / Other**). → **Balanced • Present • Other = Empathetic** (The Holder).
+- **Lead:** under pressure, reads the person and rides emotion. Reference/Other leads.
+- **Geometry:** Present+Balanced fused with an Other spine — warm and dangerous, but dependent on a readable opponent and a live emotional field.
+- *Available first:* the opponent's emotional state. *Under pressure:* feeds on crowd or cause, leans on the read. *May miss:* the match where there's no read to take. *Amplified by:* a crowd, an emotional opponent, a cause. *Punished by:* a stone-faced, illegible opponent; a flat, empty arena.
+
+**Collision**
+- **Live vs cancelled:** Spatial **Balanced vs Balanced → cancels.** Temporal **Present vs Present → cancels.** The match resolves entirely on **Reference: Other vs Flow.**
+- Section 7 says Other wins if the opponent becomes a stable target; Flow wins by staying illegible. Now read it *integrated*: A's whole architecture — Flow + Present + Options — is **built to never become a stable target.** A reads the rally, not a plan, so there is no signature for B to map. B's lead (Other) is starved at exactly the point where A is strongest. That's the integration thesis in one line: A's *other two* dimensions are what make A illegible, so the Reference duel is already decided before it starts.
+- **Misread:** B keeps waiting for an emotional or behavioral read that the even-keel Witness never provides, presses harder hunting a tell that isn't there, and hands A the steady rally A thrives in.
+- **Favors A if:** quiet arena, A stays illegible — no person-pattern, just one more ball.
+- **Favors B if:** a crowd or an A error-streak gives B an emotional foothold and a readable target.
+- **Trajectory call:** in a neutral, low-emotion setting, A — the Witness gives the Holder nothing to hold.
+
+-----
+
+## 10. Core Warnings
 
 **Read the Parser from behavior — never from a condition.** Conditions describe the situation, not the architecture.
 
 **Do not say:**
 - "He's young, so he's Future."
 - "She plays clay, so she's Concrete."
-- "He's ranked higher, so he's Options."
+- "He's ranked higher, so he's an Options Player."
 - "She's left-handed, so she's a Sequence Player."
 
 Those are conditions wearing a Parser's clothes.
@@ -308,22 +425,24 @@ Those are conditions wearing a Parser's clothes.
 - "He runs the same two patterns to completion and needs the court stable — Sequence Player."
 
 **And keep the read honest:**
+- Read the whole, not the parts — a dimension seen in isolation will name the wrong Parser (Section 3.1).
 - Don't lock a Parser from a single condition-forced stretch — a player buried at 0–5 or eaten alive by a bad matchup will briefly mimic another Parser.
 - Confirm the read by watching what **recurs** when the player is free to play their own way.
 - Don't mistake a one-off response for a standing pattern, and don't keep reading a player you've already caused to change.
 
 -----
 
-## 9. Cleanest Summary
+## 11. Cleanest Summary
 
 - Parser identity is architecture — and you read it from behavior that recurs.
-- Parser behavior is architecture under pressure.
+- The three dimensions don't take turns; they fire together and shape each other. Read the whole, then use the parts.
+- Under pressure one dimension leads and the other two serve it. Find the lead at the biggest points.
 - Conditions shape expression; they don't define the Parser.
-- The opponent's Parser predicts the misread.
-- The match resolves when one player's Parser is operating in conditions that reward it **and** they understand the causal loop the opponent is missing.
+- The opponent's Parser predicts the misread — and shared poles cancel, so the differing axis decides.
+- The match resolves when one player's integrated stance is operating in conditions that reward it **and** they understand the causal loop the opponent is missing.
 
 -----
 
-*CBI Tennis Parser Behavior Playbook v2.1*
+*CBI Tennis Parser Behavior Playbook v2.2*
 *Developed by J.D. Mercer | Based on the Cognition Blocks Intelligence (CBI) Framework*
 *© 2026 Cognition Blocks LLC. All rights reserved.*
