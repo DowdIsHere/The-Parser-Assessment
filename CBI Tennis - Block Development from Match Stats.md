@@ -1,8 +1,8 @@
 # CBI Tennis — Block Development from Match Stats
 
-**Version 1.1**
+**Version 1.2**
 
-*Companion instrument to the "CBI Tennis Parser Behavior Playbook." The playbook reads* **orientation** *(the Parser — which blocks a player reaches for). This document reads* **development** *(how trained those blocks have become). Different question, different data, deliberately kept apart so match stats never get mistaken for Parser identity.*
+*Companion instrument to the "CBI Tennis Parser Behavior Playbook." The playbook reads* **orientation** *(the Parser — which blocks a player reaches for). This document reads* **development** *(how trained those blocks have become) from established public datasets, kept apart from Parser orientation so match stats never get mistaken for Parser identity.*
 
 -----
 
@@ -10,162 +10,136 @@
 
 Two different things, two different sources:
 
-- **The Parser** (three dimensions) is *orientation* — which CBI blocks become available first. It is a constant. You read it from **behavior**, never from stats.
-- **A CBI block** is a *capacity* — a processing engine that can be trained. Capacity shows up in **execution quality**, and percentage stats are aggregate execution quality. So stats are a **proxy for block development**.
+- **The Parser** (three dimensions) is *orientation* — which CBI blocks become available first. A constant. Read from **behavior**, never from stats.
+- **A CBI block** is a *capacity* — a processing engine that can be trained. Capacity shows up in **execution quality**, and the right stats are a proxy for it.
 
-Put simply: **the Parser tells you which blocks a player reaches for; the stats tell you how developed those blocks have become.**
+Put simply: **the Parser tells you which blocks a player reaches for; the stats tell you how developed those blocks have become.** The payoff is the **accessibility-vs-development gap** — checking whether native blocks were trained, low-accessibility blocks left wasted, or non-native blocks deliberately built up over a season. The Parser is the constant; the stat trend is the developmental arc made measurable.
 
-The payoff is the **accessibility-vs-development gap**: every profile's block indicators already name a player's native-high and likely-low blocks. Stats let you check whether the native blocks were actually trained, whether a low-accessibility block was left undeveloped, or whether a non-native block has been deliberately built up over a season. The Parser is the constant; the stat trend is the developmental arc made measurable.
-
-> **Note on the eight blocks.** This instrument uses the block set as named in the profile/career content: **Sequential Processing, Spatial Relationships, Perceptual Discrimination, Pattern Recognition, Symbolic Manipulation, Self-Reference Processing, Social Signal Processing, Generative Creation.** The framework's clinical reference also names an **Executive** block (control / flexibility); in the profile content that function is carried by **Self-Reference Processing** (regulation under load) and **Generative Creation** (tactical flexibility), so clutch and adjustment stats map there.
+> **Note on the eight blocks.** This instrument uses the block set named in the profile/career content: **Sequential Processing, Spatial Relationships, Perceptual Discrimination, Pattern Recognition, Symbolic Manipulation, Self-Reference Processing, Social Signal Processing, Generative Creation.** The framework's clinical reference also names an **Executive** block (control / flexibility); in the profile content that function is carried by **Self-Reference Processing** (regulation under load) and **Generative Creation** (tactical flexibility).
 
 -----
 
-## 1. What We Capture
+## 1. The Data Source: Established Datasets
 
-### The capture unit is the *tagged match*
+We use existing public data — **Jeff Sackmann's `tennis_atp` / `tennis_wta` and the Match Charting Project, plus official ATP/WTA box scores and Grand Slam point-by-point.** No self-charting required.
 
-A stat without context can't measure development — the same first-serve % means opposite things against different opponents on different surfaces. So every stat is logged **per match, with condition tags**, and development is read from how the number behaves *across* tags, not from a single average.
+This is only possible because of the metric decision in Section 2. The thing that *forced* people toward hand-charting was the winner/unforced-error count — subjective, inconsistently scored, often unpublished. Drop that contaminated construct in favor of objective serve metrics, and the established datasets already contain everything the model needs.
 
-**Tag layer (every match):**
+**Coverage and its limits, stated honestly:**
 
-| Field | Notes |
-|---|---|
-| `date` | for longitudinal trend |
-| `surface` | hard / clay / grass / indoor-hard |
-| `environment` | indoor / outdoor |
-| `opponent` | name/id |
-| `opponent_parser` | if known — lets us test robustness against specific orientations |
-| `round_stakes` | qualifier … final; pressure context |
-| `score` / `result` | sets and games |
-| `retirement` | flag — exclude or weight down |
-| `fatigue_context` | days since last match, third match in three days, etc. |
-
-### Tier 1 — Core box score (always captured)
-
-Runs the whole model on its own.
-
-- **Serve:** aces, double faults, 1st-serve % (in), 1st-serve points won %, 2nd-serve points won %, service points won %, service games / holds (hold %), break points faced / saved (save %)
-- **Return:** 1st-serve return points won %, 2nd-serve return points won %, return points won %, break points / converted (conversion %), return games won (break %)
-- **Rally:** winners, unforced errors, forced errors, winner:UFE ratio, net points won %, total points won
-
-### Tier 2 — Situational / clutch (from point-by-point)
-
-- Points won by **rally-length bucket**: 0–4 (short), 5–8 (mid), 9+ (long)
-- Deuce/ad point conversion
-- Tiebreaks won
-- Deciding-set record
-- Performance **after losing a set** (resilience)
-- First-point-of-game won %
-- Points won when **behind vs. ahead**
-
-### Tier 3 — Tracking / advanced (optional, Hawkeye-class)
-
-- Serve **placement** (wide/body/T) and won % by location
-- Return depth and court position
-- Shot speed and spin (rpm)
-- Distance run and recovery time
-- **Tempo** — time between points
-- **Shot-pattern sequences** — the only real window into Symbolic Manipulation (point geometry and sequence design)
+- **Match-level totals** (serve %, double faults, break points, points won) — broad coverage, tour main draw, back decades.
+- **Point-by-point** (needed for situational splits) — Grand Slams and the Match Charting Project: a large but partial subset, skewed toward well-known players.
+- **Below the tour** (juniors, club, developing pros) — little to nothing exists. For an individual uncovered player, self-charting remains the only fallback, but it is no longer the primary method.
 
 -----
 
-## 1.5 The Capture Method: Self-Charting
+## 2. The Lead Metric: Serve Pressure-Delta
 
-**This instrument is built on self-charting, not scraped data.** Public stats only exist for tour-level players, are inconsistent on winners/unforced errors, and dry up entirely below the tour — exactly where the players we'd assess (juniors, clients, developing pros) live. Tier 3 (Hawkeye-class) data is proprietary and effectively unobtainable. So we don't chase it.
+### Why the serve
 
-The win: **you don't log 30 stats — you log one point at a time, and derive the rest.** A simple courtside point log produces the entire Tier 1 box score and most of Tier 2 automatically, with a winner/UFE definition that's finally *consistent* because it's yours.
+The serve is the **only shot the opponent doesn't touch.** Every other stat is contaminated by who's across the net; the serve is the one moment that is pure Self. That makes serve metrics the **least confounded read of a player's own architecture** — exactly what you want when isolating block development from matchup noise.
 
-### Minimum Viable Capture — the point log
+### Why "winner" is out
 
-For each point, record:
+A winner is an *outcome label*, not a block manifestation. The same ball is scored a winner whether it came from **Generative Creation** (manufactured), **Spatial Relationships** (geometry), raw pace, *or* simply because the opponent fed a sitter. Several blocks plus the opponent's contribution collapse into one word — you cannot back out a block from it. Demoted to color, never a metric.
 
-| Field | Values | Derives |
-|---|---|---|
-| `server` | A / B | hold %, break %, service/return splits |
-| `serve` | ace / double-fault / 1st-in / 2nd-in | 1st-serve %, DF rate, aces, 1st-/2nd-serve points won |
-| `rally_length` | shot count (or bucket 0–4 / 5–8 / 9+) | rally-length distribution |
-| `point_end` | winner / unforced error / forced error | winner:UFE ratio (your consistent definition) |
-| `won_by` | A / B | every points-won %, BP save/convert, deciding sets, behind/ahead, first-point |
+### Why the double fault is in
 
-Five fields. From them you compute essentially all of Tier 1 and the situational half of Tier 2 — no separate stat sheet needed.
+The **double fault is the only unforced error recorded objectively and unambiguously.** No judgment call, no scorer's opinion, present in every dataset. It is *literally* an unforced error, stripped of the subjectivity that made the broadcast UFE untrustworthy.
 
-**Optional add-ons** (one tap more per relevant point, for finer block mapping):
+### The metric
 
-- `wing` (FH / BH) on winners and errors → sharpens the Generative Creation vs. Sequential read
-- `net` flag (point involved a net approach) → net-points-won %, feeds Spatial Relationships
+Two objective, dataset-native stats:
 
-### What we deliberately drop
+- **Double-fault rate**
+- **2nd-serve points won %**
 
-Serve speed, spin, distance run, tempo, exact placement — all Tier 3. Not chartable by eye, not worth a guess. The model runs without them; they were only ever a sharpening layer for Symbolic Manipulation, which the optional `wing`/`net` flags and rally shape approximate well enough.
+measured as a **pressure-delta** — the value in high-load states minus the baseline:
+
+> **Pressure-delta = (stat under load) − (stat at baseline)**
+> *Load states:* break points faced, deciding sets, immediately after losing a set, extended deuce games.
+
+The raw rate is the floor; **the size of the collapse under load is the read.** A small delta = a developed, pressure-proof block. A sharp delta = a block that's present but untrained for load.
+
+**Block tie:** **Sequential Processing** (the grooved motor program) × **Self-Reference Processing** (regulation under load).
+
+*Resolution note:* the full pressure-delta needs point-by-point (Slams + Match Charting Project). A coarse version — deciding-set DF rate vs. overall DF rate — runs on match-level data alone, and is enough to start.
 
 -----
 
-## 2. Stat → Block Map
+## 3. Predicting the Break
+
+The pressure-delta isn't only a static development score. **Tracked live across a match, its trajectory predicts *when* a block gives — the break window.**
+
+Accumulating load — rising break-point exposure, lengthening service games, momentum running against — drives the delta. When a player's 2nd-serve points won and double-fault behavior cross **their own known collapse threshold**, the breakdown is imminent. That is bounded behavioral prediction in action: not *who wins* (too many confounds), but **when the break lands, inside the controlled space of this match and the controlled time of this load window.**
+
+> A break arriving a few seconds before the call is the model working, not failing — the threshold crossed a hair early. Tighten the window; the thesis holds. The architecture predicts the **signature and the break**, not the scoreline.
+
+-----
+
+## 4. Supporting Stat → Block Map
+
+The serve pressure-delta leads. These triangulate the rest of the blocks:
 
 | Stat | Block(s) it indexes |
 |---|---|
-| 1st-serve %, double-fault rate, hold % | **Sequential Processing** (grooved motor program) × **Self-Reference Processing** (composure) |
-| Break-point conversion / save % | **Self-Reference Processing** (clutch regulation) + **Pattern Recognition** (reading the big point) |
-| Winner : unforced-error ratio | **Generative Creation** (shotmaking) against **Sequential Processing** (error suppression) |
-| Return points won / reading the serve | **Perceptual Discrimination** + **Pattern Recognition** + **Social Signal Processing** (anticipation) |
+| **Double-fault pressure-delta + 2nd-serve points won %** *(lead)* | **Sequential Processing** × **Self-Reference Processing** |
+| Break-point conversion / save % | **Self-Reference Processing** (clutch regulation) + **Pattern Recognition** |
+| Return points won / reading the serve | **Perceptual Discrimination** + **Pattern Recognition** + **Social Signal Processing** |
 | Net / approach points won | **Spatial Relationships** + **Perceptual Discrimination** |
-| Points won in 9+ shot rallies | **Self-Reference Processing** (sustained composure) + **Pattern Recognition** (point construction) |
-| Between-set tactical shift / variety | **Generative Creation** + **Pattern Recognition** (+ **Symbolic Manipulation** for game-theory reads) |
+| Points won in 9+ shot rallies | **Self-Reference Processing** (sustained composure) + **Pattern Recognition** |
 | Deciding-set / tiebreak record | **Self-Reference Processing** under maximum load |
-| Serve placement / point geometry (Tier 3) | **Symbolic Manipulation** + **Spatial Relationships** |
+| Serve placement / point geometry *(where point-by-point exists)* | **Symbolic Manipulation** + **Spatial Relationships** |
+| ~~Winner count~~ | *demoted — outcome label, not block-clean* |
 
-Most blocks are over-determined — several stats touch them. Triangulate: a block is well-evidenced when *multiple* stats that index it move together.
-
------
-
-## 3. From Stats to a Development Read
-
-### Step 1 — One match is noise
-
-A single match's numbers are confounded by opponent, surface, and luck. Never read development from one match, the same way you never read a Parser from one point.
-
-### Step 2 — Build a per-block index
-
-For each block, aggregate the stats that index it (Section 2) across the captured matches. This gives a rough level — but level alone isn't development.
-
-### Step 3 — Development = level **and** robustness
-
-A block is **developed** when its stats hold up *as conditions turn hostile* — across surfaces, against tougher opponents, deep in deciding sets. It is **fragile / underdeveloped** when the number is fine in easy conditions but **collapses** under pressure or against a specific style.
-
-> Capture the variance, not just the mean. High mean + low collapse = developed. High mean + sharp collapse under load = a block that's present but untrained for pressure.
-
-### Step 4 — Overlay the Parser to read the gap
-
-Pull the player's profile block indicators (native-high / likely-low). Compare to what the stats show developed:
-
-- **High accessibility + high development** → a trained native weapon. The stat is elite *and* condition-proof.
-- **High accessibility + low development** → wasted architecture. The capacity is native but never built (the Visionary with gorgeous Pattern Recognition but an unforced-error count that screams untrained Sequential Processing).
-- **Low accessibility + rising development** → deliberate, hard-won training. A non-native block being built up — and a stat that **climbs over a season is the development happening in front of you.** This is the longitudinal payoff: block growth made measurable.
+A block is well-evidenced when *multiple* stats that index it move together. Triangulate; don't conclude from one.
 
 -----
 
-## 4. Cautions
+## 5. From Stats to a Development Read
 
-- **Stats measure development, not orientation.** Never infer a Parser from these numbers — that re-blurs the conditions-vs-architecture line. Orientation comes from behavior (the playbook); these stats only tell you how trained the blocks are.
-- **Confounds are real.** Opponent quality, surface, altitude, and small samples all distort. The tag layer exists precisely so you can hold conditions roughly constant before comparing.
-- **Exclude or down-weight** retirements, tanked dead rubbers, and severe-weather matches.
-- **Sample size.** Robustness needs enough matches *per condition* to be meaningful — a block isn't "fragile on clay" off one bad clay match.
-- **Triangulate before concluding.** One stat moving is noise; the cluster of stats that share a block moving together is signal.
-
------
-
-## 5. Cleanest Summary
-
-- The capture unit is the **tagged match**, not the stat — captured by **self-charting**, not scraping.
-- You log **five fields per point** and derive the whole Tier 1 box score plus most of Tier 2; Tier 3 is dropped as unobtainable.
-- Stats are a proxy for **block development**, not Parser identity.
-- Development = **level that survives hostile conditions**, read across matches.
-- Overlay the Parser's accessibility map to read the **gap** — trained native, wasted native, or deliberately built non-native.
-- A stat trending up across a season is block development you can actually watch.
+1. **One match is noise** — confounded by opponent, surface, luck. Read across matches, never from one.
+2. **Build a per-block index** — aggregate the stats that index each block (Section 4) across captured matches.
+3. **Development = level *and* robustness** — a block is developed when its stats (and small pressure-delta) hold up *as conditions turn hostile*; fragile when they collapse under load. Capture the variance, not just the mean.
+4. **Overlay the Parser to read the gap** — pull the profile's native-high / likely-low blocks and compare to what's developed:
+   - **High accessibility + high development** → trained native weapon (elite *and* condition-proof).
+   - **High accessibility + low development** → wasted architecture (native but never built).
+   - **Low accessibility + rising development** → deliberate training — and a stat climbing across a season is the development happening in front of you.
 
 -----
 
-*CBI Tennis — Block Development from Match Stats v1.1*
+## 6. Is It Predictive? — Yes, on the Side It Can Carry
+
+Known data + CBI is genuinely predictive of **behavioral tendencies, block development, and the break window** — *how* a player's blocks express and *where/when* they give. It is **not** predictive of scorelines (level, surface, draw dominate). Keep the claim there and it's strong; let it drift to "predicts the winner" and it's falsifiable in the bad way.
+
+**It's testable with the established data:**
+
+- Cluster players on objective serve/return signatures (DF pressure-delta, 2nd-serve %, BP save/convert, return-points-won) and see whether profile-shaped groupings fall out.
+- The cleaner test: **does the serve pressure-delta track the Self-Reference accessibility the Parser predicts?** If the profiles with high Self-Reference accessibility show the smallest collapse under load, the methodology earns its keep.
+
+-----
+
+## 7. Cautions
+
+- **Stats measure development, not orientation.** Never infer a Parser from these numbers — that re-blurs the conditions-vs-architecture line.
+- **Predicts behavior in bounded space and time, not outcomes.** The break window inside a match is fair game; the result is not.
+- **Confounds are real** — opponent quality, surface, altitude, small samples. The tag context exists to hold conditions roughly constant before comparing.
+- **Exclude or down-weight** retirements, dead rubbers, severe-weather matches.
+- **Triangulate before concluding** — one stat moving is noise; the cluster sharing a block moving together is signal.
+
+-----
+
+## 8. Cleanest Summary
+
+- Source: **established public datasets** (Sackmann, Match Charting Project, official box scores) — no self-charting needed.
+- **Drop "winner"** (block-arbitrary outcome label); **lead with the double-fault pressure-delta + 2nd-serve points won %** — objective, dataset-native, serve = pure Self.
+- The serve is the only opponent-free shot, so it's the cleanest signal of a player's own block development.
+- Development = **level that survives hostile conditions**; the pressure-delta *is* that read.
+- Tracked live, the pressure-delta predicts **the break window** — bounded behavior in controlled space and time.
+- The architecture predicts the **signature and the break, not the scoreline** — and it's testable.
+
+-----
+
+*CBI Tennis — Block Development from Match Stats v1.2*
 *Developed by J.D. Mercer | Based on the Cognition Blocks Intelligence (CBI) Framework*
 *© 2026 Cognition Blocks LLC. All rights reserved.*
