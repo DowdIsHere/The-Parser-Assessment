@@ -380,7 +380,7 @@
     <script>
         // Dimension rules based on aperture settings
         const spatialRules = {
-            concrete: { // 0-35
+            concrete: { // 0-32
                 must: [
                     "Every abstract label must have its concrete referent in the same sentence or the one before",
                     "Sentences must stand alone with merit - meaning clear without surrounding context",
@@ -398,7 +398,7 @@
                 ],
                 format: "Structured prose with clear discrete points. NOT bullet-pointed to death, but each paragraph addresses one specific thing."
             },
-            balanced: { // 36-64
+            balanced: { // 33-66
                 must: [
                     "Balance abstract concepts with concrete examples",
                     "Abstract labels acceptable if grounded within 2 sentences",
@@ -412,7 +412,7 @@
                 ],
                 format: "Hybrid - prose that moves between concept and example fluidly."
             },
-            abstract: { // 65-100
+            abstract: { // 67-100
                 must: [
                     "Conceptual frameworks and pattern names are primary",
                     "Ideas build on each other across paragraphs",
@@ -431,7 +431,7 @@
         };
         
         const temporalRules = {
-            past: { // 0-35
+            past: { // 0-32
                 must: [
                     "Ground everything in lived experience: 'You remember when...'",
                     "Past tense anchoring: 'You watched...', 'You saw...'",
@@ -448,7 +448,7 @@
                 ],
                 vocabulary: ["remember", "watched", "saw", "learned", "experienced", "proven", "established", "before", "when you", "that time"]
             },
-            present: { // 36-64
+            present: { // 33-66
                 must: [
                     "Focus on current state and immediate reality",
                     "What IS, not what was or might be",
@@ -461,7 +461,7 @@
                 ],
                 vocabulary: ["now", "currently", "today", "this moment", "right now", "as it stands", "what's in front of you"]
             },
-            future: { // 65-100
+            future: { // 67-100
                 must: [
                     "Projection and possibility as primary frame",
                     "Where things are heading, what could emerge",
@@ -480,7 +480,7 @@
         };
         
         const referenceRules = {
-            other: { // 0-35
+            other: { // 0-32
                 must: [
                     "Far distance vocabulary - observing from outside",
                     "Social context as meaning-maker",
@@ -495,7 +495,7 @@
                 ],
                 distance: "Camera OUTSIDE watching them interact with others. Third-person feel even in second person."
             },
-            balanced: { // 36-64
+            balanced: { // 33-66
                 must: [
                     "Flexible distance - sometimes close, sometimes observational",
                     "Both internal experience and external impact",
@@ -507,7 +507,7 @@
                 ],
                 distance: "Camera moves - sometimes inside, sometimes outside. Situational."
             },
-            self: { // 65-100
+            self: { // 67-100
                 must: [
                     "Close/intimate distance vocabulary",
                     "Inside the experience, not observing it",
@@ -528,18 +528,18 @@
         
         function getCategory(value, dimension) {
             if (dimension === 'spatial') {
-                if (value <= 35) return 'concrete';
-                if (value >= 65) return 'abstract';
+                if (value < 33) return 'concrete';
+                if (value > 66) return 'abstract';
                 return 'balanced';
             }
             if (dimension === 'temporal') {
-                if (value <= 35) return 'past';
-                if (value >= 65) return 'future';
+                if (value < 33) return 'past';
+                if (value > 66) return 'future';
                 return 'present';
             }
             if (dimension === 'reference') {
-                if (value <= 35) return 'other';
-                if (value >= 65) return 'self';
+                if (value < 33) return 'other';
+                if (value > 66) return 'self';
                 return 'balanced';
             }
         }
@@ -547,7 +547,7 @@
         function getIndicatorText(value, dimension) {
             const cat = getCategory(value, dimension);
             const intensity = value <= 20 || value >= 80 ? 'Strong ' : 
-                             value <= 35 || value >= 65 ? '' : 'Balanced';
+                             value < 33 || value > 66 ? '' : 'Balanced';
             
             if (dimension === 'spatial') {
                 if (cat === 'concrete') return intensity + 'Concrete';
