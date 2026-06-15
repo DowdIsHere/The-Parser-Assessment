@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parser Calculators | CBI Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-input: #20202c;
+  --text-primary: #f0f0f5;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6a6a7a;
+  --accent-spatial: #00d4aa;
+  --accent-temporal: #ffc857;
+  --accent-reference: #a855f7;
+  --accent-tennis: #ff6b35;
+  --accent-tennis-2: #4a9eff;
+  --spatial-dim: rgba(0, 212, 170, 0.15);
+  --temporal-dim: rgba(255, 200, 87, 0.15);
+  --reference-dim: rgba(168, 85, 247, 0.15);
+  --tennis-dim: rgba(255, 107, 53, 0.15);
+  --tennis-dim-2: rgba(74, 158, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.mesh-bg {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 20% 0%, rgba(0,212,170,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 100%, rgba(168,85,247,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 50%, rgba(255,107,53,0.04) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; position: relative; z-index: 1; }
+header { text-align: center; padding: 30px 0 20px; }
+.logo { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 600; }
+.logo span {
+  background: linear-gradient(135deg, var(--accent-spatial), var(--accent-temporal), var(--accent-reference));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.tagline { color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px; }
+.tabs {
+  display: flex; gap: 8px; background: var(--bg-card); padding: 6px;
+  border-radius: 14px; margin: 0 auto 28px; border: 1px solid var(--border); max-width: 600px;
+}
+.tab {
+  flex: 1; padding: 14px 20px; background: transparent; color: var(--text-secondary);
+  border: none; border-radius: 10px; font-family: inherit; font-size: 0.95rem;
+  font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+.tab:hover { color: var(--text-primary); }
+.tab.active { background: var(--bg-input); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.tab.active.parser-tab { color: var(--accent-spatial); }
+.tab.active.tennis-tab { color: var(--accent-tennis); }
+.calculator {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 36px; display: none; max-width: 720px; margin: 0 auto;
+}
+.calculator.tennis { max-width: 1100px; }
+.calculator.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.calc-header { text-align: center; margin-bottom: 32px; }
+.calc-title { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 8px; }
+.calc-subtitle { color: var(--text-secondary); font-size: 0.95rem; }
+.section-divider {
+  text-align: center; margin: 28px 0 20px; font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted);
+  font-weight: 700; position: relative;
+}
+.section-divider::before, .section-divider::after {
+  content: ''; position: absolute; top: 50%; width: 30%; height: 1px; background: var(--border);
+}
+.section-divider::before { left: 0; } .section-divider::after { right: 0; }
+.tennis-vs-container { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: start; }
+.player-section { min-width: 0; }
+.player-header {
+  text-align: center; margin-bottom: 20px; padding: 14px;
+  border-radius: 12px; font-family: 'Fraunces', serif;
+  font-size: 1.3rem; font-weight: 600;
+}
+.player-header.player-1 { background: var(--tennis-dim); color: var(--accent-tennis); border: 1px solid rgba(255,107,53,0.3); }
+.player-header.player-2 { background: var(--tennis-dim-2); color: var(--accent-tennis-2); border: 1px solid rgba(74,158,255,0.3); }
+.vs-divider {
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700;
+  padding-top: 70px;
+  background: linear-gradient(135deg, var(--accent-tennis), var(--accent-tennis-2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.dimension-group {
+  margin-bottom: 16px; padding: 16px; background: var(--bg-secondary);
+  border-radius: 12px; border: 1px solid var(--border);
+}
+.dimension-label {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.dimension-label.spatial { color: var(--accent-spatial); }
+.dimension-label.temporal { color: var(--accent-temporal); }
+.dimension-label.reference { color: var(--accent-reference); }
+.dimension-icon { font-size: 1.1rem; }
+.option-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.tennis-vs-container .option-row { grid-template-columns: 1fr; }
+.option-btn {
+  padding: 11px 8px; background: var(--bg-input);
+  border: 2px solid transparent; border-radius: 10px;
+  color: var(--text-secondary); font-family: inherit;
+  font-size: 0.85rem; font-weight: 500; cursor: pointer;
+  transition: all 0.2s ease; text-align: center;
+}
+.option-btn:hover { color: var(--text-primary); }
+.option-btn.selected.spatial { border-color: var(--accent-spatial); background: var(--spatial-dim); color: var(--accent-spatial); }
+.option-btn.selected.temporal { border-color: var(--accent-temporal); background: var(--temporal-dim); color: var(--accent-temporal); }
+.option-btn.selected.reference { border-color: var(--accent-reference); background: var(--reference-dim); color: var(--accent-reference); }
+.option-btn.selected.tennis-1 { border-color: var(--accent-tennis); background: var(--tennis-dim); color: var(--accent-tennis); }
+.option-btn.selected.tennis-2 { border-color: var(--accent-tennis-2); background: var(--tennis-dim-2); color: var(--accent-tennis-2); }
+.result-section {
+  margin-top: 20px; padding: 22px;
+  background: linear-gradient(135deg, rgba(0,212,170,0.06), rgba(168,85,247,0.06));
+  border: 1px solid var(--border); border-radius: 14px;
+  text-align: center; display: none;
+}
+.result-section.active { display: block; animation: fadeIn 0.4s ease; }
+.result-section.tennis-1-result { background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(255,200,87,0.06)); }
+.result-section.tennis-2-result { background: linear-gradient(135deg, rgba(74,158,255,0.08), rgba(168,85,247,0.06)); }
+.result-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 6px; }
+.result-name { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 4px; }
+.parser-result-section .result-name {
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--accent-spatial), var(--accent-temporal), var(--accent-reference));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.tennis-1-result .result-name {
+  background: linear-gradient(135deg, var(--accent-tennis), var(--accent-temporal));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.tennis-2-result .result-name {
+  background: linear-gradient(135deg, var(--accent-tennis-2), var(--accent-reference));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.result-code { color: var(--text-muted); font-size: 0.9rem; letter-spacing: 0.05em; margin-bottom: 14px; }
+.result-tagline {
+  font-family: 'Fraunces', serif; font-style: italic;
+  color: var(--text-secondary); font-size: 0.95rem; margin-top: 8px; line-height: 1.5;
+}
+.block-list { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.block-tier { font-size: 0.7rem; text-align: left; margin-bottom: 6px; }
+.block-tier-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-right: 6px; }
+.block-tier-items { color: var(--text-secondary); }
+.reset-btn {
+  margin-top: 16px; padding: 8px 20px; background: transparent;
+  color: var(--text-muted); border: 1px solid var(--border);
+  border-radius: 50px; font-family: inherit; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.reset-btn:hover { color: var(--text-primary); border-color: var(--text-muted); }
+.reset-all-btn {
+  display: block; margin: 24px auto 0;
+  padding: 10px 28px; background: transparent;
+  color: var(--text-secondary); border: 1px solid var(--border);
+  border-radius: 50px; font-family: inherit; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.reset-all-btn:hover { color: var(--text-primary); border-color: var(--text-muted); }
+.empty-state { text-align: center; padding: 24px 16px; color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
+.collision-section {
+  margin-top: 32px; padding: 28px;
+  background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(74,158,255,0.05));
+  border: 1px solid var(--border); border-radius: 16px; display: none;
+}
+.collision-section.active { display: block; animation: fadeIn 0.4s ease; }
+.collision-header { text-align: center; margin-bottom: 20px; }
+.collision-title { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 6px; }
+.collision-matchup { color: var(--text-secondary); font-size: 1rem; }
+.matchup-name { font-weight: 600; }
+.matchup-name.player-1-name { color: var(--accent-tennis); }
+.matchup-name.player-2-name { color: var(--accent-tennis-2); }
+.collision-note { margin-top: 14px; font-size: 0.8rem; color: var(--text-muted); font-style: italic; max-width: 560px; margin-left: auto; margin-right: auto; }
+.collision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+.collision-cell { padding: 14px; background: var(--bg-input); border-radius: 10px; border: 1px solid var(--border); text-align: center; }
+.collision-dim { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 6px; }
+.collision-vs { font-family: 'Fraunces', serif; font-size: 0.85rem; color: var(--text-primary); line-height: 1.4; }
+.collision-status { margin-top: 6px; font-size: 0.75rem; font-weight: 600; }
+.collision-status.opposed { color: var(--accent-tennis); }
+.collision-status.same { color: var(--accent-spatial); }
+.collision-status.adjacent { color: var(--accent-temporal); }
+footer { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 0.8rem; }
+@media (max-width: 900px) {
+  .tennis-vs-container { grid-template-columns: 1fr; }
+  .vs-divider { padding-top: 0; padding: 12px 0; }
+  .tennis-vs-container .option-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .container { padding: 16px; } .calculator { padding: 24px; }
+  .option-row, .tennis-vs-container .option-row { grid-template-columns: 1fr; }
+  .collision-grid { grid-template-columns: 1fr; }
+  .parser-result-section .result-name { font-size: 2.2rem; }
+  .tab { padding: 12px 14px; font-size: 0.85rem; }
+}
+</style>
+</head>
+<body>
+<div class="mesh-bg"></div>
+<div class="container">
+  <header>
+    <div class="logo"><span>Parser Identifier</span></div>
+    <div class="tagline">Cognition Blocks Intelligence (CBI) Framework</div>
+  </header>
+  <div class="tabs">
+    <button class="tab parser-tab active" onclick="switchTab('parser')">◈ Parser Profile</button>
+    <button class="tab tennis-tab" onclick="switchTab('tennis')">🎾 Tennis Read</button>
+  </div>
+
+  <!-- PARSER CALCULATOR -->
+  <div class="calculator active" id="parserCalc">
+    <div class="calc-header">
+      <h2 class="calc-title">Parser Profile</h2>
+      <p class="calc-subtitle">Pick your three coordinates to find your profile and its CBI block pattern.</p>
+    </div>
+    <div class="dimension-group">
+      <div class="dimension-label spatial"><span class="dimension-icon">◈</span><span>Spatial</span></div>
+      <div class="option-row" data-dim="spatial">
+        <button class="option-btn" data-value="concrete">Concrete</button>
+        <button class="option-btn" data-value="balanced">Balanced</button>
+        <button class="option-btn" data-value="abstract">Abstract</button>
+      </div>
+    </div>
+    <div class="dimension-group">
+      <div class="dimension-label temporal"><span class="dimension-icon">◷</span><span>Temporal</span></div>
+      <div class="option-row" data-dim="temporal">
+        <button class="option-btn" data-value="past">Past</button>
+        <button class="option-btn" data-value="present">Present</button>
+        <button class="option-btn" data-value="future">Future</button>
+      </div>
+    </div>
+    <div class="dimension-group">
+      <div class="dimension-label reference"><span class="dimension-icon">◉</span><span>Reference</span></div>
+      <div class="option-row" data-dim="reference">
+        <button class="option-btn" data-value="self">Self</button>
+        <button class="option-btn" data-value="balanced">Balanced</button>
+        <button class="option-btn" data-value="other">Other</button>
+      </div>
+    </div>
+    <div class="result-section parser-result-section" id="parserResult">
+      <div class="result-label">Your Parser Profile</div>
+      <div class="result-name" id="parserName">—</div>
+      <div class="result-code" id="parserCode">—</div>
+      <div class="result-tagline" id="parserTagline">—</div>
+      <div class="block-list" id="parserBlocks"></div>
+      <button class="reset-btn" onclick="resetParser()">Clear Selection</button>
+    </div>
+    <div class="empty-state" id="parserEmpty">Select all three dimensions to reveal your profile</div>
+  </div>
+
+  <!-- TENNIS READ -->
+  <div class="calculator tennis" id="tennisCalc">
+    <div class="calc-header">
+      <h2 class="calc-title">Tennis Read</h2>
+      <p class="calc-subtitle">Read each player's architecture and see where the two collide. A descriptive lens — not a prediction.</p>
+    </div>
+
+    <div class="section-divider">Player Architectures</div>
+
+    <div class="tennis-vs-container">
+      <!-- PLAYER 1 -->
+      <div class="player-section" id="player1Section">
+        <div class="player-header player-1">Player 1</div>
+        <div class="dimension-group">
+          <div class="dimension-label spatial"><span class="dimension-icon">◈</span><span>Spatial Behavior</span></div>
+          <div class="option-row" data-dim="spatial-p1">
+            <button class="option-btn" data-value="concrete">Sequence Player</button>
+            <button class="option-btn" data-value="balanced">Options Player</button>
+            <button class="option-btn" data-value="abstract">Possibility Player</button>
+          </div>
+        </div>
+        <div class="dimension-group">
+          <div class="dimension-label temporal"><span class="dimension-icon">◷</span><span>Temporal Behavior</span></div>
+          <div class="option-row" data-dim="temporal-p1">
+            <button class="option-btn" data-value="past">Reactive</button>
+            <button class="option-btn" data-value="present">Vibing</button>
+            <button class="option-btn" data-value="future">Proactive</button>
+          </div>
+        </div>
+        <div class="dimension-group">
+          <div class="dimension-label reference"><span class="dimension-icon">◉</span><span>Reference Behavior</span></div>
+          <div class="option-row" data-dim="reference-p1">
+            <button class="option-btn" data-value="self">Force Game</button>
+            <button class="option-btn" data-value="balanced">The Flow</button>
+            <button class="option-btn" data-value="other">Play Other's Game</button>
+          </div>
+        </div>
+        <div class="result-section tennis-1-result" id="tennis1Result">
+          <div class="result-label">Player 1 Profile</div>
+          <div class="result-name" id="tennis1Name">—</div>
+          <div class="result-code" id="tennis1Code">—</div>
+          <div class="result-tagline" id="tennis1Tagline">—</div>
+          <div class="block-list" id="tennis1Blocks"></div>
+        </div>
+        <div class="empty-state" id="tennis1Empty">Select all three behaviors</div>
+      </div>
+
+      <div class="vs-divider">VS</div>
+
+      <!-- PLAYER 2 -->
+      <div class="player-section" id="player2Section">
+        <div class="player-header player-2">Player 2</div>
+        <div class="dimension-group">
+          <div class="dimension-label spatial"><span class="dimension-icon">◈</span><span>Spatial Behavior</span></div>
+          <div class="option-row" data-dim="spatial-p2">
+            <button class="option-btn" data-value="concrete">Sequence Player</button>
+            <button class="option-btn" data-value="balanced">Options Player</button>
+            <button class="option-btn" data-value="abstract">Possibility Player</button>
+          </div>
+        </div>
+        <div class="dimension-group">
+          <div class="dimension-label temporal"><span class="dimension-icon">◷</span><span>Temporal Behavior</span></div>
+          <div class="option-row" data-dim="temporal-p2">
+            <button class="option-btn" data-value="past">Reactive</button>
+            <button class="option-btn" data-value="present">Vibing</button>
+            <button class="option-btn" data-value="future">Proactive</button>
+          </div>
+        </div>
+        <div class="dimension-group">
+          <div class="dimension-label reference"><span class="dimension-icon">◉</span><span>Reference Behavior</span></div>
+          <div class="option-row" data-dim="reference-p2">
+            <button class="option-btn" data-value="self">Force Game</button>
+            <button class="option-btn" data-value="balanced">The Flow</button>
+            <button class="option-btn" data-value="other">Play Other's Game</button>
+          </div>
+        </div>
+        <div class="result-section tennis-2-result" id="tennis2Result">
+          <div class="result-label">Player 2 Profile</div>
+          <div class="result-name" id="tennis2Name">—</div>
+          <div class="result-code" id="tennis2Code">—</div>
+          <div class="result-tagline" id="tennis2Tagline">—</div>
+          <div class="block-list" id="tennis2Blocks"></div>
+        </div>
+        <div class="empty-state" id="tennis2Empty">Select all three behaviors</div>
+      </div>
+    </div>
+
+    <!-- COLLISION (descriptive only) -->
+    <div class="collision-section" id="collisionSection">
+      <div class="collision-header">
+        <div class="collision-title">⚡ The Collision</div>
+        <div class="collision-matchup">
+          <span class="matchup-name player-1-name" id="collisionP1Name">—</span>
+          <span style="color: var(--text-muted); margin: 0 12px;">vs</span>
+          <span class="matchup-name player-2-name" id="collisionP2Name">—</span>
+        </div>
+        <div class="collision-note">Shows where the two architectures align, oppose, or sit adjacent on each axis. A map of the matchup — it does not call a winner.</div>
+      </div>
+      <div class="collision-grid">
+        <div class="collision-cell">
+          <div class="collision-dim">Spatial</div>
+          <div class="collision-vs" id="collisionSpatial">—</div>
+          <div class="collision-status" id="collisionSpatialStatus">—</div>
+        </div>
+        <div class="collision-cell">
+          <div class="collision-dim">Temporal</div>
+          <div class="collision-vs" id="collisionTemporal">—</div>
+          <div class="collision-status" id="collisionTemporalStatus">—</div>
+        </div>
+        <div class="collision-cell">
+          <div class="collision-dim">Reference</div>
+          <div class="collision-vs" id="collisionReference">—</div>
+          <div class="collision-status" id="collisionReferenceStatus">—</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="reset-all-btn" onclick="resetTennisAll()">Clear All</button>
+  </div>
+
+  <footer>
+    <p>Parser Profile™ developed by J.D. Mercer</p>
+    <p style="margin-top: 4px; font-size: 0.75rem;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
+    <p style="margin-top: 12px;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+// ============================================================================
+// PROFILE LOOKUP — name + tagline
+// ============================================================================
+const profiles = {
+  'concrete-past-self':       { name: 'Sharp',         tagline: 'The detail keeper who remembers everything specific' },
+  'concrete-past-balanced':   { name: 'Seasoned',      tagline: 'The experience-grounded processor who learned the hard way' },
+  'concrete-past-other':      { name: 'Legacy',        tagline: 'The keeper of collective memory and traditions' },
+  'concrete-present-self':    { name: 'Embodied',      tagline: 'The somatic processor who knows through the body' },
+  'concrete-present-balanced':{ name: 'Grounded',      tagline: 'The pragmatist who deals with what is, right now' },
+  'concrete-present-other':   { name: 'Attuned',       tagline: 'The social radar that reads rooms in real time' },
+  'concrete-future-self':     { name: 'Intentional',   tagline: 'The personal architect building toward chosen futures' },
+  'concrete-future-balanced': { name: 'Resilient',     tagline: 'The practical strategist preparing for what\'s coming' },
+  'concrete-future-other':    { name: 'Reliable',      tagline: 'The dependable builder of futures others can count on' },
+  'balanced-past-self':       { name: 'Integrated',    tagline: 'The self-knowing processor who learned from their own history' },
+  'balanced-past-balanced':   { name: 'Coherent',      tagline: 'The wisdom keeper who sees how things fit together over time' },
+  'balanced-past-other':      { name: 'Reconciled',    tagline: 'The bridge-builder who mediates between past and present' },
+  'balanced-present-self':    { name: 'Centered',      tagline: 'The self-anchored processor in the live moment' },
+  'balanced-present-balanced':{ name: 'Equanimous',    tagline: 'The steady mind that holds it all in balance' },
+  'balanced-present-other':   { name: 'Empathetic',    tagline: 'The present-moment connector to others\' experience' },
+  'balanced-future-self':     { name: 'Actualized',    tagline: 'The personal becomer working toward who they\'re meant to be' },
+  'balanced-future-balanced': { name: 'Harmonious',    tagline: 'The systems thinker building futures that work for everyone' },
+  'balanced-future-other':    { name: 'Collaborative', tagline: 'The future-building partner who creates with others' },
+  'abstract-past-self':       { name: 'Sentimental',   tagline: 'The keeper of personal meaning across time' },
+  'abstract-past-balanced':   { name: 'Reflective',    tagline: 'The contemplative who finds patterns in lived experience' },
+  'abstract-past-other':      { name: 'Idealized',     tagline: 'The keeper of principles drawn from collective history' },
+  'abstract-present-self':    { name: 'Introspective', tagline: 'The inner observer of their own processing' },
+  'abstract-present-balanced':{ name: 'Mindful',       tagline: 'The awareness keeper who sees the texture of now' },
+  'abstract-present-other':   { name: 'Intuitive',     tagline: 'The social reader who knows before being told' },
+  'abstract-future-self':     { name: 'Visionary',     tagline: 'The architect of futures only they can see' },
+  'abstract-future-balanced': { name: 'Foresighted',   tagline: 'The trajectory tracker who sees where things are heading' },
+  'abstract-future-other':    { name: 'Altruistic',    tagline: 'The future-focused servant of collective good' }
+};
+
+// ============================================================================
+// BLOCK ACCESSIBILITY DATASET
+// ============================================================================
+const profileBlocks = {
+  'Actualized':   { high: ['Self-Reference Processing','Pattern Recognition','Sequential Processing'], moderate: ['Symbolic Manipulation','Generative Creation','Spatial Relationships'], low: ['Social Signal Processing','Perceptual Discrimination'] },
+  'Altruistic':   { high: ['Pattern Recognition','Social Signal Processing','Generative Creation'], moderate: ['Symbolic Manipulation','Self-Reference Processing'], low: ['Sequential Processing','Perceptual Discrimination','Spatial Relationships'] },
+  'Attuned':      { high: ['Social Signal Processing','Perceptual Discrimination','Self-Reference Processing'], moderate: ['Sequential Processing','Spatial Relationships'], low: ['Pattern Recognition','Generative Creation','Symbolic Manipulation'] },
+  'Centered':     { high: ['Self-Reference Processing','Perceptual Discrimination','Pattern Recognition'], moderate: ['Sequential Processing','Social Signal Processing'], low: ['Generative Creation','Symbolic Manipulation'] },
+  'Coherent':     { high: ['Pattern Recognition','Sequential Processing','Symbolic Manipulation'], moderate: ['Self-Reference Processing','Social Signal Processing','Perceptual Discrimination'], low: ['Generative Creation','Spatial Relationships'] },
+  'Collaborative':{ high: ['Social Signal Processing','Pattern Recognition','Sequential Processing'], moderate: ['Spatial Relationships','Symbolic Manipulation','Generative Creation'], low: ['Self-Reference Processing','Perceptual Discrimination'] },
+  'Embodied':     { high: ['Perceptual Discrimination','Spatial Relationships','Self-Reference Processing'], moderate: ['Sequential Processing','Pattern Recognition'], low: ['Symbolic Manipulation','Generative Creation','Social Signal Processing'] },
+  'Empathetic':   { high: ['Social Signal Processing','Perceptual Discrimination','Pattern Recognition'], moderate: ['Sequential Processing','Symbolic Manipulation'], low: ['Self-Reference Processing','Generative Creation'] },
+  'Equanimous':   { high: ['Pattern Recognition','Perceptual Discrimination','Social Signal Processing'], moderate: ['Sequential Processing','Symbolic Manipulation','Self-Reference Processing'], low: ['Generative Creation'] },
+  'Foresighted':  { high: ['Pattern Recognition','Symbolic Manipulation','Generative Creation'], moderate: ['Self-Reference Processing','Social Signal Processing','Sequential Processing'], low: ['Perceptual Discrimination','Spatial Relationships'] },
+  'Grounded':     { high: ['Perceptual Discrimination','Sequential Processing','Social Signal Processing'], moderate: ['Spatial Relationships','Self-Reference Processing'], low: ['Pattern Recognition','Generative Creation','Symbolic Manipulation'] },
+  'Harmonious':   { high: ['Pattern Recognition','Spatial Relationships','Social Signal Processing'], moderate: ['Sequential Processing','Symbolic Manipulation','Self-Reference Processing','Generative Creation'], low: ['Perceptual Discrimination'] },
+  'Idealized':    { high: ['Pattern Recognition','Social Signal Processing','Symbolic Manipulation'], moderate: ['Self-Reference Processing','Sequential Processing','Generative Creation'], low: ['Perceptual Discrimination','Spatial Relationships'] },
+  'Integrated':   { high: ['Self-Reference Processing','Pattern Recognition','Sequential Processing'], moderate: ['Symbolic Manipulation','Perceptual Discrimination','Generative Creation'], low: ['Social Signal Processing','Spatial Relationships'] },
+  'Intentional':  { high: ['Sequential Processing','Self-Reference Processing','Pattern Recognition'], moderate: ['Perceptual Discrimination','Spatial Relationships'], low: ['Social Signal Processing','Symbolic Manipulation'] },
+  'Introspective':{ high: ['Self-Reference Processing','Pattern Recognition','Symbolic Manipulation'], moderate: ['Generative Creation','Spatial Relationships'], low: ['Sequential Processing','Perceptual Discrimination','Social Signal Processing'] },
+  'Intuitive':    { high: ['Social Signal Processing','Pattern Recognition','Perceptual Discrimination'], moderate: ['Generative Creation','Symbolic Manipulation','Sequential Processing'], low: ['Self-Reference Processing','Spatial Relationships'] },
+  'Legacy':       { high: ['Sequential Processing','Social Signal Processing','Self-Reference Processing'], moderate: ['Pattern Recognition','Perceptual Discrimination'], low: ['Generative Creation','Symbolic Manipulation','Spatial Relationships'] },
+  'Mindful':      { high: ['Pattern Recognition','Self-Reference Processing','Social Signal Processing'], moderate: ['Perceptual Discrimination','Symbolic Manipulation','Generative Creation'], low: ['Sequential Processing','Spatial Relationships'] },
+  'Reconciled':   { high: ['Social Signal Processing','Pattern Recognition','Sequential Processing'], moderate: ['Perceptual Discrimination','Symbolic Manipulation'], low: ['Self-Reference Processing','Generative Creation','Spatial Relationships'] },
+  'Reflective':   { high: ['Pattern Recognition','Symbolic Manipulation','Self-Reference Processing','Social Signal Processing'], moderate: ['Sequential Processing','Generative Creation'], low: ['Perceptual Discrimination','Spatial Relationships'] },
+  'Reliable':     { high: ['Sequential Processing','Social Signal Processing','Pattern Recognition'], moderate: ['Perceptual Discrimination','Spatial Relationships'], low: ['Self-Reference Processing','Generative Creation'] },
+  'Resilient':    { high: ['Sequential Processing','Pattern Recognition','Perceptual Discrimination'], moderate: ['Self-Reference Processing','Social Signal Processing'], low: ['Generative Creation','Symbolic Manipulation'] },
+  'Seasoned':     { high: ['Perceptual Discrimination','Sequential Processing','Pattern Recognition'], moderate: ['Self-Reference Processing','Social Signal Processing'], low: ['Generative Creation','Symbolic Manipulation'] },
+  'Sentimental':  { high: ['Self-Reference Processing','Pattern Recognition','Symbolic Manipulation'], moderate: ['Social Signal Processing','Generative Creation'], low: ['Sequential Processing','Perceptual Discrimination','Spatial Relationships'] },
+  'Sharp':        { high: ['Perceptual Discrimination','Sequential Processing','Self-Reference Processing'], moderate: ['Pattern Recognition','Spatial Relationships'], low: ['Generative Creation','Symbolic Manipulation','Social Signal Processing'] },
+  'Visionary':    { high: ['Pattern Recognition','Generative Creation','Symbolic Manipulation'], moderate: ['Self-Reference Processing','Spatial Relationships'], low: ['Sequential Processing','Perceptual Discrimination','Social Signal Processing'] }
+};
+
+const codeMap = {
+  spatial: { concrete:'Concrete', balanced:'Balanced', abstract:'Abstract' },
+  temporal:{ past:'Past', present:'Present', future:'Future' },
+  reference:{ self:'Self', balanced:'Balanced', other:'Other' }
+};
+// Tennis-facing behavior labels (Spatial axis updated: Sequence / Options / Possibility)
+const tennisBehaviors = {
+  spatial: { concrete:'Sequence Player', balanced:'Options Player', abstract:'Possibility Player' },
+  temporal:{ past:'Reactive', present:'Vibing', future:'Proactive' },
+  reference:{ self:'Force Game', balanced:'The Flow', other:"Play Other's Game" }
+};
+
+// STATE
+let parserSelections = { spatial: null, temporal: null, reference: null };
+let tennis1 = { spatial: null, temporal: null, reference: null };
+let tennis2 = { spatial: null, temporal: null, reference: null };
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.calculator').forEach(c => c.classList.remove('active'));
+  if (tab === 'parser') {
+    document.querySelector('.parser-tab').classList.add('active');
+    document.getElementById('parserCalc').classList.add('active');
+  } else {
+    document.querySelector('.tennis-tab').classList.add('active');
+    document.getElementById('tennisCalc').classList.add('active');
+  }
+}
+
+function renderBlockList(profileName, containerId) {
+  const blocks = profileBlocks[profileName];
+  if (!blocks) { document.getElementById(containerId).innerHTML = ''; return; }
+  let html = '';
+  if (blocks.high && blocks.high.length) html += `<div class="block-tier"><span class="block-tier-label">High:</span><span class="block-tier-items">${blocks.high.join(', ')}</span></div>`;
+  if (blocks.moderate && blocks.moderate.length) html += `<div class="block-tier"><span class="block-tier-label">Mod:</span><span class="block-tier-items">${blocks.moderate.join(', ')}</span></div>`;
+  if (blocks.low && blocks.low.length) html += `<div class="block-tier"><span class="block-tier-label">Low:</span><span class="block-tier-items">${blocks.low.join(', ')}</span></div>`;
+  document.getElementById(containerId).innerHTML = html;
+}
+
+// ============================================================================
+// PARSER CALCULATOR
+// ============================================================================
+document.querySelectorAll('#parserCalc .option-row').forEach(row => {
+  const dim = row.dataset.dim;
+  row.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      row.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected', 'spatial', 'temporal', 'reference'));
+      btn.classList.add('selected', dim);
+      parserSelections[dim] = btn.dataset.value;
+      updateParserResult();
+    });
+  });
+});
+
+function updateParserResult() {
+  const { spatial, temporal, reference } = parserSelections;
+  if (spatial && temporal && reference) {
+    const profile = profiles[`${spatial}-${temporal}-${reference}`];
+    if (profile) {
+      document.getElementById('parserName').textContent = profile.name;
+      document.getElementById('parserCode').textContent =
+        `${codeMap.spatial[spatial]} • ${codeMap.temporal[temporal]} • ${codeMap.reference[reference]}`;
+      document.getElementById('parserTagline').textContent = `"${profile.tagline}"`;
+      renderBlockList(profile.name, 'parserBlocks');
+      document.getElementById('parserResult').classList.add('active');
+      document.getElementById('parserEmpty').style.display = 'none';
+    }
+  }
+}
+
+function resetParser() {
+  parserSelections = { spatial: null, temporal: null, reference: null };
+  document.querySelectorAll('#parserCalc .option-btn').forEach(btn => {
+    btn.classList.remove('selected', 'spatial', 'temporal', 'reference');
+  });
+  document.getElementById('parserResult').classList.remove('active');
+  document.getElementById('parserEmpty').style.display = 'block';
+}
+
+// ============================================================================
+// TENNIS READ — two player architectures + descriptive collision
+// ============================================================================
+function setupTennisPlayer(playerNum) {
+  const selector = `#player${playerNum}Section`;
+  const sel = playerNum === 1 ? tennis1 : tennis2;
+  const tc = `tennis-${playerNum}`;
+  document.querySelectorAll(`${selector} .option-row`).forEach(row => {
+    const dim = row.dataset.dim.replace(`-p${playerNum}`, '');
+    row.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected', 'tennis-1', 'tennis-2'));
+        btn.classList.add('selected', tc);
+        sel[dim] = btn.dataset.value;
+        updateTennisResult(playerNum);
+        updateCollision();
+      });
+    });
+  });
+}
+setupTennisPlayer(1);
+setupTennisPlayer(2);
+
+function updateTennisResult(playerNum) {
+  const sel = playerNum === 1 ? tennis1 : tennis2;
+  const { spatial, temporal, reference } = sel;
+  if (spatial && temporal && reference) {
+    const profile = profiles[`${spatial}-${temporal}-${reference}`];
+    if (profile) {
+      document.getElementById(`tennis${playerNum}Name`).textContent = profile.name;
+      document.getElementById(`tennis${playerNum}Code`).textContent =
+        `${codeMap.spatial[spatial]} • ${codeMap.temporal[temporal]} • ${codeMap.reference[reference]}`;
+      document.getElementById(`tennis${playerNum}Tagline`).textContent = `"${profile.tagline}"`;
+      renderBlockList(profile.name, `tennis${playerNum}Blocks`);
+      document.getElementById(`tennis${playerNum}Result`).classList.add('active');
+      document.getElementById(`tennis${playerNum}Empty`).style.display = 'none';
+    }
+  }
+}
+
+function getDimensionRelation(v1, v2, dim) {
+  if (v1 === v2) return { status: 'Same', class: 'same' };
+  const opp = {
+    spatial: { concrete:'abstract', abstract:'concrete' },
+    temporal:{ past:'future', future:'past' },
+    reference:{ self:'other', other:'self' }
+  };
+  if (opp[dim][v1] === v2) return { status: 'Opposed', class: 'opposed' };
+  return { status: 'Adjacent', class: 'adjacent' };
+}
+
+function updateCollision() {
+  const p1c = tennis1.spatial && tennis1.temporal && tennis1.reference;
+  const p2c = tennis2.spatial && tennis2.temporal && tennis2.reference;
+  if (!p1c || !p2c) {
+    document.getElementById('collisionSection').classList.remove('active');
+    return;
+  }
+  const p1Profile = profiles[`${tennis1.spatial}-${tennis1.temporal}-${tennis1.reference}`];
+  const p2Profile = profiles[`${tennis2.spatial}-${tennis2.temporal}-${tennis2.reference}`];
+  document.getElementById('collisionP1Name').textContent = p1Profile.name;
+  document.getElementById('collisionP2Name').textContent = p2Profile.name;
+  ['spatial','temporal','reference'].forEach(dim => {
+    const rel = getDimensionRelation(tennis1[dim], tennis2[dim], dim);
+    const cap = dim.charAt(0).toUpperCase() + dim.slice(1);
+    document.getElementById(`collision${cap}`).textContent =
+      `${tennisBehaviors[dim][tennis1[dim]]} vs ${tennisBehaviors[dim][tennis2[dim]]}`;
+    const statusEl = document.getElementById(`collision${cap}Status`);
+    statusEl.textContent = rel.status;
+    statusEl.className = `collision-status ${rel.class}`;
+  });
+  document.getElementById('collisionSection').classList.add('active');
+}
+
+function resetTennisAll() {
+  tennis1 = { spatial: null, temporal: null, reference: null };
+  tennis2 = { spatial: null, temporal: null, reference: null };
+  document.querySelectorAll('#tennisCalc .option-btn').forEach(btn => {
+    btn.classList.remove('selected', 'tennis-1', 'tennis-2');
+  });
+  document.getElementById('tennis1Result').classList.remove('active');
+  document.getElementById('tennis2Result').classList.remove('active');
+  document.getElementById('collisionSection').classList.remove('active');
+  document.getElementById('tennis1Empty').style.display = 'block';
+  document.getElementById('tennis2Empty').style.display = 'block';
+}
+</script>
+</body>
+</html>
