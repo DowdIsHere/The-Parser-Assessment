@@ -400,8 +400,9 @@
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.5); z-index: 1000;
-            display: none; align-items: center; justify-content: center;
+            display: none;
             padding: 20px; backdrop-filter: blur(4px);
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
@@ -409,6 +410,7 @@
             max-width: 480px; width: 100%; padding: 40px;
             border: 1px solid var(--border); position: relative;
             box-shadow: var(--shadow-lg);
+            margin: auto;
         }
         .modal-close {
             position: absolute; top: 16px; right: 16px;
