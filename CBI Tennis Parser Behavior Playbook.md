@@ -324,7 +324,8 @@ Use this for every match.
 **What they are likely to do under pressure:** "…"
 **What they may miss:** "…"
 **What conditions amplify their architecture:** "…"
-**What conditions punish their architecture:** "…"
+**What conditions punish their architecture:** "…"  *(sub-threshold — early warning)*
+**What conditions break their architecture:** "…"  *(threshold crossed — see The Coupling Engine)*
 
 ### Player B
 
@@ -341,7 +342,8 @@ Use this for every match.
 **What they are likely to do under pressure:** "…"
 **What they may miss:** "…"
 **What conditions amplify their architecture:** "…"
-**What conditions punish their architecture:** "…"
+**What conditions punish their architecture:** "…"  *(sub-threshold — early warning)*
+**What conditions break their architecture:** "…"  *(threshold crossed — see The Coupling Engine)*
 
 ### Collision
 
