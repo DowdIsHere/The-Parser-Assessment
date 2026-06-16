@@ -78,7 +78,9 @@ def build(tour="m", min_pts=2000, min_short=400, min_long=150):
             if mid not in pairs:
                 continue
             p1, p2 = pairs[mid]
-            me, opp = (p1, p2) if row["player"] == "1" else (p2, p1)
+            # overview 'player' column holds the NAME, not "1"/"2"
+            me = row["player"]
+            opp = p1 if me == p2 else p2
             try:
                 sp = int(row["serve_pts"]); rp = int(row["return_pts"])
                 ufe = int(row["unforced"]); win = int(row["winners"])
@@ -146,8 +148,7 @@ def build(tour="m", min_pts=2000, min_short=400, min_long=150):
             mid = row["match_id"]
             if mid not in pairs:
                 continue
-            p1, p2 = pairs[mid]
-            nm = p1 if row["player"] == "1" else p2
+            nm = row["player"]   # overview 'player' is the NAME
             try:
                 aces[nm] += int(row["aces"])
             except (ValueError, KeyError):
@@ -183,8 +184,7 @@ def future_steal(tour="m", min_shots=3000):
             mid = row["match_id"]
             if mid not in pairs:
                 continue
-            p1, p2 = pairs[mid]
-            nm = p1 if row["player"] == "1" else p2
+            nm = row["player"]   # shot-types 'player' is the NAME
             try:
                 shots[nm][row["row"]] += int(row["shots"])
             except (ValueError, KeyError):
