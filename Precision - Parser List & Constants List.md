@@ -68,6 +68,39 @@ Tested against the player's **own** opponent-adjusted baseline, so weapons/level
 
 ---
 
+## MATCH-SHAPE / COUPLING findings
+
+*What happens when two elite **readers** collide. These are about the matchup, not the player — they belong to the Coupling Engine, not the identity list.*
+
+### ✅ Finding 1 — The awkward seam is the **set-2 restart**, not the set-1 close *(clean on both tours)*
+Break rate by match phase (MCP point-by-point, 2020s; break = returner wins the game, tiebreaks excluded):
+
+| phase | MEN | WOMEN |
+|---|---|---|
+| S1 early (games 1–6) | 19.5% | 33.1% |
+| **S1 late (7+) — "end of set 1"** | **15.8%** ⬇ lowest | **30.6%** ⬇ lowest |
+| **S2 open (1–3) — "start of set 2"** | **20.7%** ⬆ highest | **34.2%** ⬆ highest |
+| S2 rest (4+) | 18.5% | 32.7% |
+| S3+ | 19.7% | 33.7% |
+
+- **"Beginning of set 2 is awkward" → confirmed.** S2's opening games are the most break-prone phase of the match, both tours.
+- **"End of set 1 is awkward" → reversed.** Set-1 closing games are the *calmest* phase — when a set is on the line, people hold. They get awkward *reopening,* not closing.
+- **The refined law:** *openings are volatile, closings are calm, and set 2's opening is the most volatile of all.* The disruption lands on the **far side** of the set break — the read survives the close of set 1 and breaks at the restart.
+- **Caveat:** S1 early is also high — set openings in general are break-prone (cold serve, no rhythm). So this is "set-2 restart is the peak of a general openings-effect," not "set 2 is uniquely magic."
+
+### Coupling fingerprint — faint but consistent *(elite-vs-elite proxy for "two readers")*
+Across **six** independent comparisons (3-set rate ↑, set-1 conversion ↓, set-1-loser-wins-decider ↑ — men & women each), **all six lean the predicted way** (~1.6% if pure chance). But every effect is *small* (1–4pp) and **confounded with closeness** — evenly matched players go long and split early reads mechanically, no reading required.
+- **Strong claim** ("the read was *wrong* → the player who was read wins the decider") → **NOT supported.** Set-1 winner keeps a small edge even into a decider (set-1 loser wins ~48%).
+- **Weak claim** ("between two readers the early read is worth *less*") → **directionally supported,** consistently, but faint.
+- Consistent with Robert's **chess-game** refinement: two great readers countering each other to a near-draw produce exactly these whisper-off-50% numbers. A balanced chess game has *no edge in it* — an edge needs a *residual asymmetry* (one type reliably out-reading the other), which can only be tested with **type labels.**
+
+### ⏳ Hypothesis logged (untested) — the early phase is **pressure reconnaissance**
+Robert: early set 1, the **Future** player is *stress-testing the opponent's natural reflexes and behavior under pressure* — banking how the opponent responds when pushed — *to spend it later when it gets heated.* So "set 1 looks like a legit game" because Future is **sandbagging on purpose**, collecting clutch-response data.
+- **What it would predict (testable once types are labeled):** the Future player **over-performs in high-pressure moments later** — break points, tiebreaks, deciders — *relative to his own baseline,* because he pre-loaded the opponent's pressure tells in set 1. Future's clutch edge should *grow* as the match heats up.
+- Not yet tested — needs the Parser labels.
+
+---
+
 ## Where we are
 - ✅ Two types chosen; discriminator agreed; opponent-adjustment built & validated.
 - ✅ Win:UFE locked to Parser List (as a *point-length* instrument, with its limit named).
