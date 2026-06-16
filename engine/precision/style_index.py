@@ -161,6 +161,39 @@ def build(min_pts=2000, min_short=400, min_long=150):
             "steal": steal, "zW": zW, "zR": zR, "zF": zF}
 
 
+def future_steal(min_shots=3000):
+    """Split the two Future-Self types by 'steal' = (drop + lob) per 1000 shots.
+
+    HIGH steal -> INTENTIONAL (Concrete-Future, "The Architect"): takes the gap
+      with a decisive, executed, concrete shot. Alcaraz p92, Musetti p97, Rune p91.
+    LOW steal  -> VISIONARY (Abstract-Future, "The Pattern-Seer"): orchestrates
+      the pattern / where-it's-going, doesn't snatch points. Sinner p31.
+
+    Direction is fixed by the framework author's ground truth (Alcaraz = Intentional,
+    confirmed as one of the highest steal records). Only meaningful AMONG Future/Self
+    aggressors -- it does not type grinders (the style index / steal-gate do that).
+    """
+    pairs = _meta_pairs()
+    shots = collections.defaultdict(lambda: collections.defaultdict(int))
+    with open(ensure("m_shottypes"), encoding="utf-8", errors="replace") as f:
+        for row in csv.DictReader(f):
+            mid = row["match_id"]
+            if mid not in pairs:
+                continue
+            p1, p2 = pairs[mid]
+            nm = p1 if row["player"] == "1" else p2
+            try:
+                shots[nm][row["row"]] += int(row["shots"])
+            except (ValueError, KeyError):
+                continue
+    out = {}
+    for nm, d in shots.items():
+        t = d.get("Total", 0)
+        if t >= min_shots:
+            out[nm] = 1000 * (d.get("Dr", 0) + d.get("Lo", 0)) / t
+    return out
+
+
 def classify_legacy(r, index_min=1.0, steal_max=12.0):
     """Gated classifier: ranks into the Legacy pole AND doesn't steal.
 
@@ -199,6 +232,17 @@ def main():
     print(f"  CONFIRMED ({len(confirmed)}): " + ", ".join(confirmed[:8]))
     print(f"  DISQUALIFIED by steal-gate: " +
           ", ".join(f"{p}({r['steal'][p]:.0f})" for p in disqualified))
+
+    fs = future_steal()
+    vals = sorted(fs.values())
+    fpct = lambda v: sum(1 for x in vals if x < v) / len(vals) * 100
+    print("\nFuture-type split -- steal (drop+lob)/1000: HIGH=Intentional, LOW=Visionary")
+    for nm in ("Carlos Alcaraz", "Lorenzo Musetti", "Holger Rune",
+               "Jannik Sinner", "Grigor Dimitrov"):
+        for p in fs:
+            if nm.lower() in p.lower():
+                print(f"  {p:20s} {fs[p]:5.1f} (p{fpct(fs[p]):3.0f})")
+                break
 
 
 if __name__ == "__main__":

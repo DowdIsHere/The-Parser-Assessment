@@ -16,8 +16,9 @@ BASE = "https://raw.githubusercontent.com/JeffSackmann/tennis_MatchChartingProje
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "mcp")
 
 FILES = {
-    "m_overview": "charting-m-stats-Overview.csv",
-    "m_rally":    "charting-m-stats-Rally.csv",
+    "m_overview":  "charting-m-stats-Overview.csv",
+    "m_rally":     "charting-m-stats-Rally.csv",
+    "m_shottypes": "charting-m-stats-ShotTypes.csv",
     "m_matches":  "charting-m-matches.csv",
     "w_matches":  "charting-w-matches.csv",
     "m_points":   "charting-m-points-2020s.csv",
