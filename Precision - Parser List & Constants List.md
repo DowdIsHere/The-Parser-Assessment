@@ -60,11 +60,32 @@ Tested against the player's **own** opponent-adjusted baseline, so weapons/level
 
 ---
 
+## ✅ VICTORY — the Style Identifier (detects the Legacy / Pda pole from data)
+
+*We were killing UFE by looking at the wrong column. A player's **own** UFE runs backwards, but the UFE he **forces from the opponent** is a live, polar, identifying tell — and it agrees with two others.* Code: `engine/precision/style_index.py`.
+
+**Three independent, opponent-adjusted tells, all pointing at the same poles:**
+- **A. Win:UFE ratio** (high = first-strike, low = attrition)
+- **B. rally-length differential** — long-rally win% − short-rally win% (+ = attrition)
+- **C. forced-UFE** — how much you make the opponent miss (+ = attrition)
+
+**They agree:** C vs −A **+0.62**, B vs C **+0.39**, B vs −A **+0.29** (same direction, not redundant). Fused into one composite, the poles are clean and *named:*
+
+| Defensive-aggressive (Legacy / Pda) pole | First-strike pole |
+|---|---|
+| Chung, Navone, Schwartzman, Baez, Fognini, Ruusuvuori | Isner, Rinderknech, Opelka, Kyrgios, Roddick, Anderson |
+
+**What it identifies:** the **defensive-aggressive Legacy (Pda)** type — cleanly, from data alone, no eye needed. *This is the first data-only identifier of one of the two target types.*
+**What it does NOT:** find **Visionary** — those sit mid-field (Sinner p76, Alcaraz p72, Djokovic p57), because Visionary is a *temporal orientation,* not a *style pole.* **So we can detect one of the two types, not both — and that asymmetry is itself the finding.**
+
+---
+
 ## Kill log (tested, failed — do not revive)
 
 | Tell | Where it failed | Evidence |
 |---|---|---|
-| **Raw UFE/100** as a *parser/identity* tell | Doesn't separate Visionary from Legacy | Kyrgios (most shotmaker) **lowest** UFE p7; Schwartzman (most grinder) **highest** p97 — backwards. Held even **after** opponent-adjustment. It measures weapons-vs-no-weapons, not type. |
+| **Raw *self*-UFE/100** as a *parser/identity* tell | A player's *own* errors don't separate the types | Kyrgios (most shotmaker) **lowest** UFE p7; Schwartzman (most grinder) **highest** p97 — backwards, even after opponent-adjustment. *NOTE: this killed **self**-UFE only — **forced**-UFE (errors you cause) is alive; see Victory above. We were looking in the wrong column.* |
+| **"Low UFE = Legacy"** | Contradicted | corr(attrition-lean, UFE) = **+0.13** — attrition players miss *slightly more,* not less. Legacy grinds *and* errs (can't end points cheaply). |
 
 ---
 
