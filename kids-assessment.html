@@ -175,6 +175,11 @@
                 <div class="profile-name" id="profileName">Loading...</div>
                 <p class="profile-description" id="profileDescription"></p>
 
+                <div class="result-section" id="kidSuperpowersSection" style="display:none;">
+                    <h3>⭐ Your Superpowers</h3>
+                    <div id="kidSuperpowers"></div>
+                </div>
+
                 <div class="result-section">
                     <h3>🧩 How You See Things</h3>
                     <div class="score-bar-container">
@@ -214,6 +219,21 @@
                     </div>
                 </div>
 
+                <div class="result-section" id="kidLearnSection" style="display:none;">
+                    <h3>📚 How You Learn Best</h3>
+                    <p class="profile-description" id="kidLearn" style="font-size:1.05rem;"></p>
+                </div>
+
+                <div class="result-section" id="kidWatchOutsSection" style="display:none;">
+                    <h3>🧭 Things to Watch For</h3>
+                    <div id="kidWatchOuts"></div>
+                </div>
+
+                <div class="result-section" id="kidGrownUpsSection" style="display:none;">
+                    <h3>👨‍👩‍👧 For Grown-Ups</h3>
+                    <p class="profile-description" id="kidGrownUps" style="font-size:1rem;"></p>
+                </div>
+
                 <div id="customerIdDisplay" style="display:none;margin:16px 0;padding:12px 20px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;text-align:center;">
                     <div style="font-size:0.75rem;color:#64748b;margin-bottom:4px;">Customer ID</div>
                     <div id="customerIdValue" style="font-weight:700;font-size:1.1rem;letter-spacing:0.08em;color:#2563eb;font-family:'IBM Plex Mono', monospace;"></div>
@@ -223,7 +243,9 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { visionaryKidsProfile } from './visionarykids.js';
+
         // 9 Questions for Kids Assessment
         const questions = [
             // SPATIAL QUESTIONS (3)
@@ -386,6 +408,45 @@
             'mid-mid-mid': { name: 'The Balanced Thinker', desc: 'You\'re flexible in every way! You can think big or small, about past or future, about yourself or others. You adapt to any situation!' }
         };
 
+        // The real Parser archetype for each score key — the same 27 used in the
+        // grown-up assessment. (spatial: low=Concrete/big-step-by-step, high=Big-Picture;
+        // temporal: low=Past, high=Future; reference: low=Others, high=Self.)
+        const archetypeByKey = {
+            'high-high-high': 'Visionary',
+            'high-high-mid': 'Foresighted',
+            'high-high-low': 'Altruistic',
+            'high-mid-high': 'Introspective',
+            'high-mid-mid': 'Mindful',
+            'high-mid-low': 'Intuitive',
+            'high-low-high': 'Sentimental',
+            'high-low-mid': 'Reflective',
+            'high-low-low': 'Idealized',
+            'mid-high-high': 'Actualized',
+            'mid-high-mid': 'Harmonious',
+            'mid-high-low': 'Collaborative',
+            'mid-mid-high': 'Centered',
+            'mid-mid-mid': 'Equanimous',
+            'mid-mid-low': 'Empathetic',
+            'mid-low-high': 'Integrated',
+            'mid-low-mid': 'Coherent',
+            'mid-low-low': 'Reconciled',
+            'low-high-high': 'Intentional',
+            'low-high-mid': 'Resilient',
+            'low-high-low': 'Reliable',
+            'low-mid-high': 'Embodied',
+            'low-mid-mid': 'Grounded',
+            'low-mid-low': 'Attuned',
+            'low-low-high': 'Sharp',
+            'low-low-mid': 'Seasoned',
+            'low-low-low': 'Legacy'
+        };
+
+        // Full kid-edition profiles. Each archetype gets fleshed out over time;
+        // until then the assessment falls back to the short blurb above.
+        const kidsProfiles = {
+            'Visionary': visionaryKidsProfile
+        };
+
         function startAssessment() {
             document.getElementById('welcomeScreen').classList.remove('active');
             document.getElementById('questionScreen').classList.add('active');
@@ -460,14 +521,19 @@
             const getLevel = (pct) => pct < 33 ? 'low' : pct > 66 ? 'high' : 'mid';
             const profileKey = `${getLevel(spatialPercent)}-${getLevel(temporalPercent)}-${getLevel(referencePercent)}`;
 
-            const profile = profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid'];
+            // Map the score to the real Parser archetype (e.g. Big-Picture+Future+Self = Visionary)
+            const archetype = archetypeByKey[profileKey] || 'Balanced Thinker';
+            const blurb = (profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid']).desc;
+            // Full kid profile content when available; otherwise the short blurb
+            const rich = kidsProfiles[archetype] || null;
+            const description = rich ? rich.overview : blurb;
 
             // Log completion — generates customer ID and sends notification
             fetch('/api/log-completion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    profileName: profile.name + ' (Kids)',
+                    profileName: archetype + ' (Kids)',
                     profileCode: profileKey,
                     scores: {
                         spatial: Math.round(spatialPercent),
@@ -476,7 +542,7 @@
                     },
                     emailProvided: false,
                     assessmentType: 'kids',
-                    overview: profile.desc || ''
+                    overview: description || ''
                 })
             }).then(r => r.json()).then(data => {
                 if (data.customerId) {
@@ -489,8 +555,9 @@
             document.getElementById('questionScreen').classList.remove('active');
             document.getElementById('resultsScreen').classList.add('active');
 
-            document.getElementById('profileName').textContent = profile.name;
-            document.getElementById('profileDescription').textContent = profile.desc;
+            document.getElementById('profileName').textContent = archetype;
+            document.getElementById('profileDescription').textContent = description;
+            renderKidProfile(rich);
 
             document.getElementById('spatialBar').style.width = spatialPercent + '%';
             document.getElementById('temporalBar').style.width = temporalPercent + '%';
@@ -509,7 +576,46 @@
             document.getElementById('welcomeScreen').classList.add('active');
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('progressText').textContent = 'Ready to start!';
+            renderKidProfile(null);
         }
+
+        // Render the rich kid-profile sections (superpowers, learning, watch-outs,
+        // grown-up note). Each section only shows when the matched profile has that
+        // content; otherwise it's hidden and only the name + blurb appear.
+        function renderKidProfile(rich) {
+            const card = (title, body) =>
+                `<div style="background:var(--slate-100);border-radius:12px;padding:14px 16px;margin-bottom:10px;text-align:left;">
+                    <div style="font-weight:700;color:var(--blue-500);margin-bottom:4px;">${title}</div>
+                    <div style="font-size:1rem;color:var(--text-secondary);">${body}</div>
+                 </div>`;
+
+            const hasSuperpowers = !!(rich && rich.superpowers && rich.superpowers.length);
+            if (hasSuperpowers) {
+                document.getElementById('kidSuperpowers').innerHTML =
+                    rich.superpowers.map(s => card('⭐ ' + s.title, s.description)).join('');
+            }
+            document.getElementById('kidSuperpowersSection').style.display = hasSuperpowers ? 'block' : 'none';
+
+            const hasLearn = !!(rich && rich.howYouLearn);
+            if (hasLearn) document.getElementById('kidLearn').textContent = rich.howYouLearn;
+            document.getElementById('kidLearnSection').style.display = hasLearn ? 'block' : 'none';
+
+            const hasWatch = !!(rich && rich.watchOuts && rich.watchOuts.length);
+            if (hasWatch) {
+                document.getElementById('kidWatchOuts').innerHTML =
+                    rich.watchOuts.map(w => card(w.title, w.tip)).join('');
+            }
+            document.getElementById('kidWatchOutsSection').style.display = hasWatch ? 'block' : 'none';
+
+            const hasGrownUps = !!(rich && rich.forGrownUps);
+            if (hasGrownUps) document.getElementById('kidGrownUps').textContent = rich.forGrownUps;
+            document.getElementById('kidGrownUpsSection').style.display = hasGrownUps ? 'block' : 'none';
+        }
+
+        // This script is a module, so inline onclick handlers need to be on window.
+        window.startAssessment = startAssessment;
+        window.nextQuestion = nextQuestion;
+        window.restartAssessment = restartAssessment;
     </script>
 </body>
 </html>
