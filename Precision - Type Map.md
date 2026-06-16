@@ -28,8 +28,8 @@ All **13 men + Świątek** ground-truth anchors classify correctly:
 
 ## Honest status
 - **Filters 1–3 are clean** — anchor-validated and face-valid.
-- **Filter 4 (Legacy-outlaster) is leaky.** It catches aggressive players who merely *win* the long rallies they get pulled into — e.g. **Ostapenko, Rublev, Agassi, Giorgi, Danielle Collins** land here but are *bashers,* not grinders. So the outlaster bucket is **not yet a trustworthy Legacy list.** Needs tighter calibration (and ground-truth on those names).
-- **The eye pool is the clean deliverable.** Everyone in it is *either* Legacy or Visionary, nothing else — the data narrowed 186 → 59 (men) and 132 → 45 (women). The eye now makes one binary Past/Future call on a short, pure list.
+- **Filter 4 (Legacy-outlaster) is unvalidated for non-anchor names.** It catches "wins 9+ ≫ 1–4." The Legacy anchors (Nadal, Simon) land here correctly. Other names (Ostapenko, Rublev, Agassi…) also land here — **whether that's wrong is a CBI question, not a tennis one.** "Basher" is *not* a CBI trait; a Concrete-Past-Other player can hit hard. So these are **not** demonstrable false positives — they're simply un-ground-truthed. Needs Robert's CBI labels to confirm or reject, not a power/style eyeball.
+- **The eye pool is the residual** — everyone in it is Legacy or Visionary. Data narrowed 186 → 59 (men), 132 → 45 (women); the eye makes the final Past/Future call.
 
 ## The eye pool — split these by eye (Past=Legacy / Future=Visionary)
 
