@@ -1,3 +1,5 @@
+> ⚠️ **RETRACTED.** Every filter in this cascade was arbitrary scaffolding, not CBI. Selection is CBI-only; these metrics are for H2H against an already-CBI-filtered list. Superseded by the everybody list (`Precision - Everybody Measurements.csv`) + `engine/precision/profile.py`. Kept for history.
+
 # Precision — Type Map (cascade classifier)
 
 *The method realized: throw in everyone, **disqualify type by type** until the target survives. No single metric splits Legacy from Visionary — the filters strip away everything that *isn't* one of them, and the eye makes the final binary call on a pre-filtered pool. Code: `engine/precision/classify.py`.*

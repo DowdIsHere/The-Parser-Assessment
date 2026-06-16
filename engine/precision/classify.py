@@ -1,4 +1,12 @@
 """
+[RETRACTED — DO NOT USE FOR SELECTION]
+Every filter in this cascade (First-strike index cut, Pda forces cut, Intentional
+steal cut, outlaster gap, the style-index composite, the cascade order) was
+arbitrary scaffolding I invented, not CBI. Selection / Parser identification is
+CBI-only. These metrics are for H2H matchup analysis AGAINST AN ALREADY-CBI-
+FILTERED LIST — never to filter or select a Parser. Kept for history; superseded
+by profile.py (measurements, no filters).
+
 CASCADE CLASSIFIER -- the filter chain that realizes the Precision method.
 
 Design (Robert's): throw in everyone, then DISQUALIFY type by type until only
