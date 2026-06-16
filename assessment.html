@@ -401,8 +401,9 @@
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.5); z-index: 1000;
             display: none;
-            padding: 20px; backdrop-filter: blur(4px);
+            padding: 20px 20px calc(140px + env(safe-area-inset-bottom, 0px)); backdrop-filter: blur(4px);
             overflow-y: auto; -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
@@ -555,7 +556,7 @@
             </div>
             <div class="header-right">
                 <a href="/parent-login.html" class="explore-link">Kids Assessment</a>
-                <a href="https://cognitionblocksllc.com/the-cognition-block/" class="explore-link" target="_blank">Explore CBI →</a>
+                <a href="/index.html" class="explore-link">Explore CBI →</a>
             </div>
         </header>
 
@@ -573,22 +574,9 @@
                 <h1>Parser Profile™ Assessment</h1>
                 <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px;">Right now, your brain is doing something remarkable.</p>
                 <p>It's not just taking the world in—it's quietly <em style="color: var(--accent-spatial);">filtering</em> it, deciding in a split second what you notice, what you skip, and why some things click instantly while others feel like work.</p>
-                <div class="dimensions-preview">
-                    <div class="dimension-item spatial">
-                        <div class="icon">◈</div>
-                        <div class="label">Spatial</div>
-                        <div class="dimension-desc">Concrete ↔ Abstract</div>
-                    </div>
-                    <div class="dimension-item temporal">
-                        <div class="icon">◷</div>
-                        <div class="label">Temporal</div>
-                        <div class="dimension-desc">Past ↔ Future</div>
-                    </div>
-                    <div class="dimension-item reference">
-                        <div class="icon">◉</div>
-                        <div class="label">Reference</div>
-                        <div class="dimension-desc">Self ↔ Other</div>
-                    </div>
+                <div class="parser-text" style="margin: 32px 0;">
+                    <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.3rem, 4.6vw, 1.6rem); line-height: 1.32; color: var(--text-primary); margin-bottom: 10px;">3 Trivial Questions Reveal What No One Could Possibly.</p>
+                    <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(1.3rem, 4.6vw, 1.6rem); line-height: 1.32; color: var(--accent-spatial); margin: 0;">Yet What You'll See is Only the Beginning.</p>
                 </div>
                 <p style="font-size: 0.95rem;">Two people can look at the exact same thing and walk away with completely different takes—not because one is smarter, but because they each <strong style="color: var(--accent-temporal);">notice different things</strong>.</p>
                 <p style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; color: var(--text-primary); margin-bottom: 8px;">See how your mind actually works.</p>
@@ -720,7 +708,7 @@
             </div>
 
             <div class="cta-card">
-                <div class="price">$79.99 <span>USD</span></div>
+                <div class="price">$79 <span>USD</span></div>
                 <div class="price-note">One-time • Full Assessment &amp; Profile • Instant access</div>
                 <button class="btn-primary" style="width:100%; max-width:320px;" onclick="openPaymentModal()">🔓 Unlock the Full Assessment &amp; Profile</button>
             </div>
@@ -999,7 +987,7 @@
                     <div class="feature-item"><span class="check">✓</span><span>Energy Patterns</span></div>
                     <div class="feature-item"><span class="check">✓</span><span>Optimal Environments</span></div>
                 </div>
-                <div class="price">$79.99 <span>USD</span></div>
+                <div class="price">$79 <span>USD</span></div>
                 <div class="price-note">One-time purchase • Instant access </div>
                 <button class="btn-primary" style="width: 100%; max-width: 300px;" onclick="openPaymentModal()">Get Full Report</button>
             </div>
@@ -1014,7 +1002,7 @@
                     <p>Create your account and unlock your full Parser Profile™</p>
                 </div>
                 <div class="modal-price">
-                    <span class="amount" id="display-price">$79.99</span>
+                    <span class="amount" id="display-price">$79</span>
                     <span class="currency">USD</span>
                     <div id="discount-badge" style="display: none; margin-top: 8px; font-size: 0.8rem; color: var(--accent-spatial); background: var(--accent-spatial-dim); padding: 4px 12px; border-radius: 12px; display: inline-block;"></div>
                 </div>
@@ -1061,7 +1049,7 @@
                     <div id="card-element"></div>
                     <div id="card-errors" role="alert"></div>
                     <button type="submit" id="card-button" class="btn-primary" style="width: 100%; margin-top: 16px;">
-                        Pay $79.99
+                        Pay $79
                     </button>
                 </form>
                 <div id="payment-status"></div>
@@ -1070,7 +1058,7 @@
         </div>
 
         <footer>
-            <a href="https://cognitionblocksllc.com/the-cognition-block/" class="explore-cta" target="_blank">Explore CBI</a>
+            <a href="/index.html" class="explore-cta">Explore CBI</a>
             <p>Parser Profile™ developed by J.D. Mercer</p>
             <p style="margin-top: 4px; font-size: 0.75rem;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
             <p style="margin-top: 12px;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
@@ -2028,7 +2016,7 @@ const questions = [
                     } else {
                         const newPrice = (data.newAmount / 100).toFixed(2);
                         statusEl.textContent = `Promo applied — ${data.discount}% off!`;
-                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$79.99</s> $${newPrice}`;
+                        document.getElementById('display-price').innerHTML = `<s style="color: var(--text-muted); font-size: 0.7em;">$79</s> $${newPrice}`;
                         document.getElementById('discount-badge').textContent = `${data.discount}% OFF`;
                         document.getElementById('discount-badge').style.display = 'inline-block';
                         document.getElementById('card-button').textContent = `Pay $${newPrice}`;
@@ -2088,7 +2076,7 @@ const questions = [
                 currency: 'usd',
                 total: {
                     label: 'Parser Profile™ Full Report',
-                    amount: activePromo?.newAmount || 7999,
+                    amount: activePromo?.newAmount || 7900,
                 },
                 requestPayerEmail: true,
             });
@@ -2307,7 +2295,7 @@ const questions = [
                 statusEl.className = 'error';
             } finally {
                 submitButton.disabled = false;
-                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$79.99';
+                const btnPrice = activePromo?.type === 'discount' ? '$' + (activePromo.newAmount / 100).toFixed(2) : '$79';
                 submitButton.textContent = activePromo?.type === 'free' ? 'Unlock Full Report' : `Pay ${btnPrice}`;
             }
         }
@@ -2332,16 +2320,16 @@ const questions = [
             document.getElementById('applyPromoBtn').disabled = false;
             document.getElementById('applyPromoBtn').style.opacity = '1';
             document.getElementById('promo-status').textContent = '';
-            document.getElementById('display-price').textContent = '$79.99';
+            document.getElementById('display-price').textContent = '$79';
             document.getElementById('discount-badge').style.display = 'none';
             // Reset payment elements visibility
             document.getElementById('payment-request-button').style.display = '';
             document.getElementById('payment-divider').style.display = '';
             document.getElementById('card-element').style.display = '';
             document.getElementById('card-errors').style.display = '';
-            document.getElementById('card-button').textContent = 'Pay $79.99';
+            document.getElementById('card-button').textContent = 'Pay $79';
             // Reset Payment Request amount
-            updatePaymentRequestAmount(7999);
+            updatePaymentRequestAmount(7900);
         }
 
         // ============================================================================
