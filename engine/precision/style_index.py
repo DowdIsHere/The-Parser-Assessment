@@ -66,11 +66,11 @@ def _corr(d1, d2):
             / (statistics.pstdev(xs) * statistics.pstdev(ys)))
 
 
-def build(min_pts=2000, min_short=400, min_long=150):
+def build(tour="m", min_pts=2000, min_short=400, min_long=150):
     pairs = _meta_pairs()
     obsU, obsW = [], []
     pts_by = collections.defaultdict(int)
-    with open(ensure("m_overview"), encoding="utf-8", errors="replace") as f:
+    with open(ensure(f"{tour}_overview"), encoding="utf-8", errors="replace") as f:
         for row in csv.DictReader(f):
             if row["set"] != "Total":
                 continue
@@ -96,7 +96,7 @@ def build(min_pts=2000, min_short=400, min_long=150):
 
     short = collections.defaultdict(lambda: [0, 0])
     longr = collections.defaultdict(lambda: [0, 0])
-    with open(ensure("m_rally"), encoding="utf-8", errors="replace") as f:
+    with open(ensure(f"{tour}_rally"), encoding="utf-8", errors="replace") as f:
         for row in csv.DictReader(f):
             mid = row["match_id"]
             if mid not in pairs:
@@ -126,7 +126,7 @@ def build(min_pts=2000, min_short=400, min_long=150):
     short_win = collections.defaultdict(int)
     aces = collections.defaultdict(int)
     tot_pts = collections.defaultdict(int)
-    with open(ensure("m_rally"), encoding="utf-8", errors="replace") as f:
+    with open(ensure(f"{tour}_rally"), encoding="utf-8", errors="replace") as f:
         for row in csv.DictReader(f):
             mid = row["match_id"]
             if mid not in pairs:
@@ -139,7 +139,7 @@ def build(min_pts=2000, min_short=400, min_long=150):
                     tot_pts[p1] += int(row["pts"]); tot_pts[p2] += int(row["pts"])
             except (ValueError, KeyError):
                 continue
-    with open(ensure("m_overview"), encoding="utf-8", errors="replace") as f:
+    with open(ensure(f"{tour}_overview"), encoding="utf-8", errors="replace") as f:
         for row in csv.DictReader(f):
             if row["set"] != "Total":
                 continue
@@ -157,11 +157,14 @@ def build(min_pts=2000, min_short=400, min_long=150):
     zW, zR, zF = _zscore(win_ufe), _zscore(rally_d), _zscore(forced)
     # attrition/Pda-positive composite: Win:UFE flipped (high = first-strike)
     index = {p: (-zW[p] + zR[p] + zF[p]) / 3 for p in qual}
+    adj_ufe = {p: muU + aU[p] for p in qual}      # opponent-adjusted self-UFE/100
+    forces_opp = {p: bU[p] for p in qual}          # opponent-effect: errors you force
     return {"index": index, "win_ufe": win_ufe, "rally_d": rally_d, "forced": forced,
-            "steal": steal, "zW": zW, "zR": zR, "zF": zF}
+            "steal": steal, "adj_ufe": adj_ufe, "forces_opp": forces_opp,
+            "zW": zW, "zR": zR, "zF": zF}
 
 
-def future_steal(min_shots=3000):
+def future_steal(tour="m", min_shots=3000):
     """Split the two Future-Self types by 'steal' = (drop + lob) per 1000 shots.
 
     HIGH steal -> INTENTIONAL (Concrete-Future, "The Architect"): takes the gap
@@ -175,7 +178,7 @@ def future_steal(min_shots=3000):
     """
     pairs = _meta_pairs()
     shots = collections.defaultdict(lambda: collections.defaultdict(int))
-    with open(ensure("m_shottypes"), encoding="utf-8", errors="replace") as f:
+    with open(ensure(f"{tour}_shottypes"), encoding="utf-8", errors="replace") as f:
         for row in csv.DictReader(f):
             mid = row["match_id"]
             if mid not in pairs:
