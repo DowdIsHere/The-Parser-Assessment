@@ -120,11 +120,62 @@ def build(min_pts=2000, min_short=400, min_long=150):
     rally_d = {p: 100 * longr[p][0] / longr[p][1] - 100 * short[p][0] / short[p][1] for p in qual}
     forced = {p: bU[p] for p in qual}
 
+    # DISQUALIFIER: steal rate = short-rally (1-3) winners + aces, per 100 points.
+    # A true Legacy earns points by pattern/attrition; stealing cheap points
+    # (improvised, risk-taken) disqualifies it. corr(index, steal) = -0.59.
+    short_win = collections.defaultdict(int)
+    aces = collections.defaultdict(int)
+    tot_pts = collections.defaultdict(int)
+    with open(ensure("m_rally"), encoding="utf-8", errors="replace") as f:
+        for row in csv.DictReader(f):
+            mid = row["match_id"]
+            if mid not in pairs:
+                continue
+            p1, p2 = pairs[mid]
+            try:
+                if row["row"] == "1-3":
+                    short_win[p1] += int(row["pl1_winners"]); short_win[p2] += int(row["pl2_winners"])
+                elif row["row"] == "Total":
+                    tot_pts[p1] += int(row["pts"]); tot_pts[p2] += int(row["pts"])
+            except (ValueError, KeyError):
+                continue
+    with open(ensure("m_overview"), encoding="utf-8", errors="replace") as f:
+        for row in csv.DictReader(f):
+            if row["set"] != "Total":
+                continue
+            mid = row["match_id"]
+            if mid not in pairs:
+                continue
+            p1, p2 = pairs[mid]
+            nm = p1 if row["player"] == "1" else p2
+            try:
+                aces[nm] += int(row["aces"])
+            except (ValueError, KeyError):
+                continue
+    steal = {p: 100 * (short_win[p] + aces[p]) / tot_pts[p] for p in qual if tot_pts[p]}
+
     zW, zR, zF = _zscore(win_ufe), _zscore(rally_d), _zscore(forced)
     # attrition/Pda-positive composite: Win:UFE flipped (high = first-strike)
     index = {p: (-zW[p] + zR[p] + zF[p]) / 3 for p in qual}
     return {"index": index, "win_ufe": win_ufe, "rally_d": rally_d, "forced": forced,
-            "zW": zW, "zR": zR, "zF": zF}
+            "steal": steal, "zW": zW, "zR": zR, "zF": zF}
+
+
+def classify_legacy(r, index_min=1.0, steal_max=12.0):
+    """Gated classifier: ranks into the Legacy pole AND doesn't steal.
+
+    Returns (confirmed, disqualified) name lists. The steal-gate throws out
+    impostors that score Legacy-ish on the composite but snatch cheap points
+    (e.g. Bergs idx +1.41 / steal 16.2 -> disqualified).
+    """
+    idx, steal = r["index"], r["steal"]
+    confirmed, disqualified = [], []
+    for p in idx:
+        if idx[p] >= index_min and p in steal:
+            (disqualified if steal[p] > steal_max else confirmed).append(p)
+    confirmed.sort(key=lambda p: -idx[p])
+    disqualified.sort(key=lambda p: -idx[p])
+    return confirmed, disqualified
 
 
 def main():
@@ -142,6 +193,12 @@ def main():
     print("  first-strike pole:")
     for p in sorted(qual, key=lambda x: idx[x])[:10]:
         print(f"    {p:22s} {idx[p]:+.2f}")
+
+    confirmed, disqualified = classify_legacy(r)
+    print(f"\nGated Legacy classifier (index>=1.0 AND steal<=12/100):")
+    print(f"  CONFIRMED ({len(confirmed)}): " + ", ".join(confirmed[:8]))
+    print(f"  DISQUALIFIED by steal-gate: " +
+          ", ".join(f"{p}({r['steal'][p]:.0f})" for p in disqualified))
 
 
 if __name__ == "__main__":

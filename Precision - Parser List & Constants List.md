@@ -78,6 +78,12 @@ Tested against the player's **own** opponent-adjusted baseline, so weapons/level
 **What it identifies:** the **defensive-aggressive Legacy (Pda)** type — cleanly, from data alone, no eye needed. *This is the first data-only identifier of one of the two target types.*
 **What it does NOT:** find **Visionary** — those sit mid-field (Sinner p76, Alcaraz p72, Djokovic p57), because Visionary is a *temporal orientation,* not a *style pole.* **So we can detect one of the two types, not both — and that asymmetry is itself the finding.**
 
+### ✅ DISQUALIFIER — "steal points" (turns the spectrum into a gated classifier)
+A true Legacy *earns* points by pattern/attrition; **stealing** cheap points (short-rally winners, aces — improvised, risk-taken) is first-strike behavior and **disqualifies Legacy.** Ruling *out* is more reliable than ruling *in.*
+- **Steal rate** = (1–3-shot-rally winners + aces) per 100 points. corr(Legacy index, steal) = **−0.59** (firm; disqualifier wants negative).
+- Legacy pole steal ≈ 4–9/100; first-strike pole ≈ 14–24/100 (Kyrgios 24, Isner 22, Opelka 21).
+- **Gate** (`classify_legacy`, index ≥ 1.0 **and** steal ≤ 12/100): **15 confirmed**, and it threw out **impostors hiding in the Legacy pole** — Bergs (steal 16), Karatsev (15), Basilashvili (14), Korda (13): rank Legacy-ish but bash. The composite ranks in; the steal-gate ejects the fakes. Code in `engine/precision/style_index.py`.
+
 ---
 
 ## Kill log (tested, failed — do not revive)
