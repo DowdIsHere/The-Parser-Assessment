@@ -770,7 +770,7 @@ app.post('/api/validate-promo', (req, res) => {
     }
 
     if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-        const newAmount = Math.round(1999 * 0.85); // 15% off $19.99
+        const newAmount = Math.round(7900 * 0.85); // 15% off $79.00
         return res.json({ success: true, type: 'discount', discount: 15, newAmount });
     }
 
@@ -787,7 +787,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 7999; // $79.99 in cents
+        let amount = 7900; // $79.00 in cents
         if (promoCode) {
             const promoFree = process.env.PROMO_FREE || '';
             const promoDiscount = process.env.PROMO_DISCOUNT || '';
@@ -799,7 +799,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
             }
 
             if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(7999 * 0.85); // 15% off
+                amount = Math.round(7900 * 0.85); // 15% off
             }
         }
 
