@@ -99,6 +99,12 @@ Robert: early set 1, the **Future** player is *stress-testing the opponent's nat
 - **What it would predict (testable once types are labeled):** the Future player **over-performs in high-pressure moments later** — break points, tiebreaks, deciders — *relative to his own baseline,* because he pre-loaded the opponent's pressure tells in set 1. Future's clutch edge should *grow* as the match heats up.
 - Not yet tested — needs the Parser labels.
 
+### ⏳ Clutch instrument (v0.1) — "grip tightness, and which side lifts"
+Robert's distillation of the edge: both types can grab the clutch, so the only edge lives in **(a) whose grip is tighter** (magnitude of lift above baseline) and **(b) when even, which side lifts first** (offensive ledger = *taking* the point via BP conversion / tiebreak aggression; defensive ledger = *saving* the point via BP save / holding under siege) **and at what pressure threshold** (regular → break point → deciding set).
+- **Built (v0.1):** per player from MCP point data — `DEF grip` = BP-save% − serve-point-win%; `OFF grip` = BP-convert% − return-point-win%; plus both recomputed **inside the deciding set** ("@heated") to see if the grip tightens or fades when it's hot. It renders distinct signatures (Kyrgios = tight, offense-led, tightens when heated; Gauff = offense in general but flips to *defense* when heated; Swiatek = defensive lift only at deepest pressure).
+- **⚠️ Bias to fix before ranking:** break points are a **selected** game-state (the returner already won 2–3 points), so raw deltas are biased — *every* DEF grip reads negative, *most* OFF grips positive, partly as artifact. Extremes (Kyrgios) are real; the middle is muddy. **Per standing law, opponent-and-state adjust before "whose grip is tighter" is trustworthy.**
+- **The prize:** if Future cashes the *offensive* ledger and Past/defensive-aggressive cashes the *defensive* ledger — and one reliably lifts *first* — that's a **residual asymmetry,** the only thing that could pay. Tested by running this instrument on the **sealed type labels.**
+
 ---
 
 ## Where we are
