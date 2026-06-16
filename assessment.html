@@ -547,6 +547,19 @@
     </style>
 </head>
 <body>
+    <script>
+      // Always open the assessment at the top. Some in-app/mobile browsers
+      // carry the scroll offset from the previous page (e.g. the "Begin Your
+      // Assessment" button partway down the 27 Parsers page), landing the user
+      // mid-page. Disable scroll restoration and force the top on every load.
+      (function () {
+        try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+        var toTop = function () { window.scrollTo(0, 0); };
+        window.addEventListener('pageshow', toTop);
+        window.addEventListener('load', toTop);
+        document.addEventListener('DOMContentLoaded', toTop);
+      })();
+    </script>
     <div class="mesh-bg"></div>
     <div class="container">
         <header>
