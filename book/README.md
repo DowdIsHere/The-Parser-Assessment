@@ -17,6 +17,7 @@
 | # | Title | Status |
 |---|-------|--------|
 | 1 | Logan — the origin story | ✅ in. The three observed behaviors map cleanly onto the gradients (categorical storage = Spatial-Concrete; structural/whole-before-parts memory = the Temporal/Spatial read; "needs the framework before the parts" = Abstract pull). Watch: surname "Mercer"/"JD" vs author "Robert Dowd" — fictionalized framing, keep it deliberate & consistent; the three gradients aren't *named* here yet (correct for Ch.1 — it shows the phenomenon, Ch.9 names it) |
+| 2 | The Personal Crisis That Transformed Alfred Binet | ✅ in. The historical spine under Ch.1's Binet callbacks. Dates/claims are cited (1879, 1887, 1904, 1911, 1916). Watch: Alice = "Marguerite" pseudonym + the *brouillard* belong to **Alice** here — Ch.1 also pins the fog to Alice; keep them the same daughter everywhere. Two-daughter contrast (Madeleine methodical / Alice intuitive) prefigures the gradients without naming them — good restraint |
 | 9 | The Three Gradients — How the Brain Receives What Exists | ✅ in. Axis assignments match Ch.19 exactly. Watch: balanced-middle not named; reference is the thinnest leg |
 | 19 | The Architecture of Mind — How Gradients Shape Your Eight Blocks | ✅ in, Temporal section corrected (Present = direction, not duration) |
 
