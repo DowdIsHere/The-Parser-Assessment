@@ -1849,6 +1849,15 @@ const questions = [
             // Get the actual profile data (life-stage aware: 'early' = young adult variant)
             const profile = getProfileForStage(name, selectedLifeStage);
 
+            // Persist to the signed-in member's account so they can revisit it later.
+            if (hasPaid) {
+                fetch('/api/profile/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profileName: name, profileCode: key, scores: scores, lifeStage: selectedLifeStage, assessmentType: 'adult' })
+                }).catch(function () {});
+            }
+
             // Log completion — generates customer ID and sends full notification to library
             completionLogPromise = fetch('/api/log-completion', {
                 method: 'POST',

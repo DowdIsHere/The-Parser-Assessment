@@ -240,6 +240,89 @@ app.post('/api/auth/logout', (req, res) => {
     res.json({ success: true });
 });
 
+// ============================================================================
+// MEMBER PROFILE — revisit your Parser Profile after signing in
+// ============================================================================
+
+function getAuthUser(req) {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return null;
+    try { return jwt.verify(token, JWT_SECRET); }
+    catch { return null; }
+}
+
+// Retrieve the signed-in user's saved Parser Profile.
+// Supabase: their most recent completion (stored with their email at finish).
+// Local file mode: the profile saved onto their account record.
+async function dbGetUserProfile(email) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_completions')
+            .select('profile_name, profile_code, scores, assessment_type')
+            .eq('email', normalized)
+            .not('profile_name', 'is', null)
+            .order('id', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+        if (error) throw error;
+        if (!data) return null;
+        return { profileName: data.profile_name, profileCode: data.profile_code, scores: data.scores, assessmentType: data.assessment_type, lifeStage: null };
+    }
+    const accounts = loadAccounts();
+    const u = accounts.users.find(x => x.email === normalized);
+    return (u && u.profile) ? u.profile : null;
+}
+
+// Persist the profile onto the account (local file mode). On Supabase the
+// completion row already carries it, so this is a no-op there.
+async function dbSaveUserProfile(email, profile) {
+    if (supabase) return { ok: true };
+    const normalized = email.toLowerCase().trim();
+    const accounts = loadAccounts();
+    const u = accounts.users.find(x => x.email === normalized);
+    if (!u) return { ok: false };
+    u.profile = {
+        profileName: profile.profileName || null,
+        profileCode: profile.profileCode || null,
+        scores: profile.scores || null,
+        lifeStage: profile.lifeStage || null,
+        assessmentType: profile.assessmentType || 'adult',
+        savedAt: new Date().toISOString()
+    };
+    saveAccounts(accounts);
+    return { ok: true };
+}
+
+app.get('/api/profile/me', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ authenticated: false });
+    try {
+        const profile = await dbGetUserProfile(payload.email);
+        res.json({
+            authenticated: true,
+            user: { email: payload.email, firstName: payload.firstName, lastName: payload.lastName, role: payload.role },
+            profile: profile || null
+        });
+    } catch (e) {
+        console.error('[profile/me] error:', e.message);
+        res.status(500).json({ authenticated: true, profile: null, error: 'Could not load your profile.' });
+    }
+});
+
+app.post('/api/profile/save', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ success: false, error: 'Not signed in' });
+    const { profileName, profileCode, scores, lifeStage, assessmentType } = req.body || {};
+    try {
+        await dbSaveUserProfile(payload.email, { profileName, profileCode, scores, lifeStage, assessmentType });
+        res.json({ success: true });
+    } catch (e) {
+        console.error('[profile/save] error:', e.message);
+        res.status(500).json({ success: false, error: 'Could not save your profile.' });
+    }
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
