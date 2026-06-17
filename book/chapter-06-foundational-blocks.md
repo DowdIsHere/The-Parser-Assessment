@@ -26,4 +26,4 @@ Binet observed different natural relationships to these same gradients in his da
 
 None of this diminishes the three gradient-proximate blocks — they matter, and their early observability is genuine. It only suggests they aren't the bottom of the architecture.
 
-What these gradients are, how they direct signals, and what observable outputs emerge when blocks operate within their directional flows is the subject of the next chapter.
+What these gradients are, how they direct signals, what observable outputs emerge when blocks operate within their directional flow — and what the third gradient turns out to be — is the subject of the next chapter.
