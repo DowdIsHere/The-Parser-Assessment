@@ -580,12 +580,12 @@ app.post('/api/send-results', async (req, res) => {
         <div style="padding: 40px 30px; text-align: center; background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));">
             <h3 style="color: #1a1a24; font-size: 20px; margin: 0 0 12px 0;">Want to Learn More?</h3>
             <p style="color: #4a4a5a; font-size: 14px; margin: 0 0 24px 0;">Discover the framework behind your Parser Profile™ and explore the full CBI model.</p>
-            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
+            <a href="https://cognitionblocksllc.com/" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
         </div>
 
         <!-- Footer -->
         <div style="padding: 30px; text-align: center; background-color: #0a0a0f;">
-            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; color: #00d4aa; border: 2px solid #00d4aa; padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 20px;">Explore CBI</a>
+            <a href="https://cognitionblocksllc.com/" style="display: inline-block; color: #00d4aa; border: 2px solid #00d4aa; padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 20px;">Explore CBI</a>
             <p style="color: #a0a0b0; font-size: 12px; margin: 16px 0 0 0;">Parser Profile™ developed by J.D. Mercer</p>
             <p style="color: #6a6a7a; font-size: 11px; margin: 4px 0 0 0;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
             <p style="color: #6a6a7a; font-size: 11px; margin: 12px 0 0 0;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
