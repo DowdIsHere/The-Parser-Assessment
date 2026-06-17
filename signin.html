@@ -3,72 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In | Parser Profile™</title>
-  <meta name="description" content="Sign in to your Parser Profile™ account.">
+  <title>Sign In | The Cognition Block</title>
+  <meta name="description" content="Sign in to The Cognition Block.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* Design ported from The Cognition Block — dark-first, electric-blue accent. */
-    :root, html.light {
-      --accent:#2657E8; --accent-strong:#1C46C9; --accent-bright:#3B6BFF;
-      --accent-soft:rgba(38,87,232,0.10); --accent-line:rgba(38,87,232,0.22);
-      --text-primary:#0E1525; --text-secondary:#3F4A63; --text-muted:#6B768F;
-      --bg-page:#EDF0F6; --bg-card:#FFFFFF; --bg-inset:#F3F5FA;
-      --border:rgba(14,21,37,0.08); --border-strong:rgba(14,21,37,0.15);
-      --ring-highlight:inset 0 1px 0 rgba(255,255,255,0.65);
-      --shadow-lg:0 24px 50px -18px rgba(16,24,40,0.22);
-      --accent-glow:0 8px 22px -8px rgba(38,87,232,0.45);
-      --status-compromised-bg:#FDECEC; --status-compromised-text:#D23A3A;
-      --status-preserved-bg:#E8F8F0; --status-preserved-text:#0E9466;
-      --focus-ring:0 0 0 3px rgba(38,87,232,0.22);
-      --font-display:'Source Serif 4',Georgia,serif;
+    /* Auth layout ported from The Cognition Block; rethemed to the Parser
+       Profile palette (Editorial Luxury — warm cream + gold, light). */
+    :root {
+      --accent:#9A7B2E; --accent-strong:#8A6D24; --accent-bright:#B8922A;
+      --accent-soft:rgba(154,123,46,0.10); --accent-line:rgba(154,123,46,0.24);
+      --gold-pale:#D8B45E;
+      --text-primary:#1E1813; --text-secondary:#4A3F35; --text-muted:#8A7E6E;
+      --bg-page:#FAF7F0; --bg-card:#FFFDF9; --bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12); --border-strong:rgba(60,45,25,0.22);
+      --ring-highlight:inset 0 1px 0 rgba(255,255,255,0.7);
+      --shadow-lg:0 16px 40px rgba(60,40,15,0.12);
+      --accent-glow:0 8px 22px -8px rgba(154,123,46,0.40);
+      --status-compromised-bg:#FBEAEA; --status-compromised-text:#B3261E;
+      --status-preserved-bg:#E8F4EC; --status-preserved-text:#0E7A52;
+      --focus-ring:0 0 0 3px rgba(154,123,46,0.18);
+      --font-display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
       --font-ui:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
       --font-mono:'IBM Plex Mono',ui-monospace,monospace;
-      --r-input:12px; --r-btn:12px; --r-panel:20px;
-      --ambient:radial-gradient(60rem 40rem at 12% -8%, rgba(38,87,232,0.06), transparent 60%),
-                radial-gradient(50rem 36rem at 100% 0%, rgba(124,58,237,0.05), transparent 55%);
+      --r-input:12px; --r-btn:12px; --r-panel:18px;
       color-scheme:light;
     }
-    @media (prefers-color-scheme: dark){
-      :root:not(.light){
-        --accent:#5B86FF; --accent-strong:#7AA0FF; --accent-bright:#88AAFF;
-        --accent-soft:rgba(91,134,255,0.14); --accent-line:rgba(91,134,255,0.30);
-        --text-primary:#EAEDF5; --text-secondary:#A6B0C8; --text-muted:#717B96;
-        --bg-page:#070A12; --bg-card:#11151F; --bg-inset:#0B0F18;
-        --border:rgba(255,255,255,0.08); --border-strong:rgba(255,255,255,0.15);
-        --ring-highlight:inset 0 1px 0 rgba(255,255,255,0.07);
-        --shadow-lg:0 28px 64px -22px rgba(0,0,0,0.75);
-        --accent-glow:0 8px 26px -8px rgba(91,134,255,0.45);
-        --status-compromised-bg:rgba(248,113,113,0.14); --status-compromised-text:#FB8585;
-        --status-preserved-bg:rgba(59,213,146,0.13); --status-preserved-text:#3BD592;
-        --focus-ring:0 0 0 3px rgba(91,134,255,0.30);
-        --ambient:radial-gradient(64rem 44rem at 8% -10%, rgba(91,134,255,0.10), transparent 60%),
-                  radial-gradient(52rem 40rem at 102% -4%, rgba(124,58,237,0.09), transparent 58%);
-        color-scheme:dark;
-      }
-    }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:var(--font-ui);background:var(--bg-page);color:var(--text-primary);min-height:100dvh;line-height:1.6;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--ambient);}
+    body{font-family:var(--font-ui);background:var(--bg-page);color:var(--text-primary);min-height:100dvh;line-height:1.6;letter-spacing:0.005em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    /* Parser-signature grain */
+    body::before{content:'';position:fixed;inset:0;z-index:300;pointer-events:none;opacity:0.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
     .auth-page{display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:24px;position:relative;overflow:hidden;z-index:1;}
     .auth-page::before{content:'';position:absolute;inset:0;pointer-events:none;
       background:radial-gradient(48rem 36rem at 50% -10%, var(--accent-soft), transparent 60%),
-                 radial-gradient(40rem 30rem at 90% 110%, rgba(124,58,237,0.12), transparent 60%);}
+                 radial-gradient(40rem 30rem at 90% 110%, rgba(216,180,94,0.12), transparent 60%);}
     .auth-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-panel);padding:44px 38px;width:100%;max-width:432px;box-shadow:var(--ring-highlight), var(--shadow-lg);}
-    .auth-logo{font-family:var(--font-display);font-size:1.4rem;font-weight:700;letter-spacing:-0.025em;color:var(--text-primary);text-align:center;margin-bottom:4px;}
+    .auth-logo{font-family:var(--font-display);font-size:1.7rem;font-weight:700;letter-spacing:-0.01em;color:var(--text-primary);text-align:center;margin-bottom:4px;}
     .auth-logo-sub{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);text-align:center;margin-bottom:34px;}
-    .auth-title{font-family:var(--font-display);font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;color:var(--text-primary);text-align:center;margin-bottom:26px;}
+    .auth-title{font-family:var(--font-display);font-size:1.9rem;font-weight:600;letter-spacing:-0.01em;color:var(--text-primary);text-align:center;margin-bottom:26px;}
     .auth-error{background:var(--status-compromised-bg);color:var(--status-compromised-text);padding:11px 14px;border-radius:var(--r-input);font-size:0.85rem;font-weight:500;margin-bottom:16px;text-align:center;}
     .auth-form{display:flex;flex-direction:column;gap:16px;}
     .auth-field{display:flex;flex-direction:column;gap:7px;}
-    label{font-family:var(--font-ui);font-size:0.82rem;font-weight:600;letter-spacing:-0.005em;color:var(--text-secondary);}
+    label{font-family:var(--font-ui);font-size:0.82rem;font-weight:600;letter-spacing:0.005em;color:var(--text-secondary);}
     input{background:var(--bg-inset);border:1px solid var(--border);border-radius:var(--r-input);color:var(--text-primary);font-family:var(--font-ui);font-size:0.9rem;padding:12px 15px;width:100%;}
     input:focus{outline:none;border-color:var(--accent);box-shadow:var(--focus-ring);background:var(--bg-card);}
     input::placeholder{color:var(--text-muted);opacity:1;}
-    .btn{font-family:var(--font-ui);padding:10px 20px;border-radius:var(--r-btn);font-size:0.875rem;font-weight:700;letter-spacing:-0.01em;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;text-decoration:none;transition:transform .16s cubic-bezier(0.16,1,0.3,1), box-shadow .26s cubic-bezier(0.16,1,0.3,1);}
+    .btn{font-family:var(--font-ui);padding:10px 20px;border-radius:var(--r-btn);font-size:0.875rem;font-weight:700;letter-spacing:0.005em;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;text-decoration:none;transition:transform .18s cubic-bezier(0.22,1,0.36,1), box-shadow .26s cubic-bezier(0.22,1,0.36,1), background-color .2s;}
     .btn-primary{background:linear-gradient(180deg,var(--accent-bright),var(--accent));color:#fff;box-shadow:var(--accent-glow),inset 0 1px 0 rgba(255,255,255,0.25);}
-    .btn-primary:hover{transform:translateY(-1px);}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 26px -8px rgba(154,123,46,0.5),inset 0 1px 0 rgba(255,255,255,0.3);}
     .btn-primary:active{transform:translateY(0) scale(0.98);}
     .btn-primary:disabled{opacity:0.55;cursor:not-allowed;transform:none;box-shadow:none;}
     .btn-secondary{background:var(--bg-inset);color:var(--text-primary);border:1px solid var(--border);}
@@ -87,8 +71,8 @@
 <body>
   <div class="auth-page">
     <div class="auth-card">
-      <div class="auth-logo">Parser Profile™</div>
-      <div class="auth-logo-sub">Cognition Blocks Intelligence</div>
+      <div class="auth-logo">The Cognition Block</div>
+      <div class="auth-logo-sub">Let's talk about it…</div>
 
       <!-- AUTH FORM -->
       <div id="formWrap">
