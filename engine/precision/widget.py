@@ -21,14 +21,12 @@ midpoint of its pair, and normalize so +1 == sitting on the PM-win centroid,
 -1 == the PM-lose centroid. Average across the metrics present -> >0 predicts
 the PM, <0 the FC.
 
-CONDITIONS are a SEPARATE second read (the dials are season averages, so
-surface is already partly baked in -- never trust a conditions-only flip).
+Metrics only for now -- the conditions layer is held off.
 
 Run:  python3 engine/precision/widget.py
 """
 import csv
 import os
-import statistics
 
 CSV = os.path.join(os.path.dirname(__file__), "..", "..",
                    "ATP Insights - Performance (TennisViz).csv")
@@ -42,11 +40,6 @@ PROFILE = {
     "steal": (3.6,  1.3),
     "ufc":   (-3.9, -2.2),
 }
-STRIKE = ("r14", "conv")          # conditions lens keys off the strike gap
-SURFACE_TEMPO = {"grass": 0.6, "indoor": 0.4, "hard": 0.0, "clay": -0.6}
-COND_K = 0.15
-
-
 def load_pool():
     rows = {}
     with open(CSV, encoding="utf-8") as f:
@@ -63,21 +56,12 @@ def find(pool, name):
     return None
 
 
-def conditions_tempo(surface="hard", wind=False, cold=False, hot_dry=False,
-                     altitude=False):
-    t = SURFACE_TEMPO.get(surface, 0.0)
-    if wind:     t -= 0.2
-    if cold:     t -= 0.2
-    if hot_dry:  t += 0.2
-    if altitude: t += 0.2
-    return max(-1.0, min(1.0, t))
-
-
-def calc(pm, fc, tempo=0.0):
+def calc(pm, fc):
     """pm, fc = dicts of native metric values. Returns the calculator read.
 
     A call is STOOD BY only when all six metrics are present. With anything
     missing it is INCOMPLETE -> no verdict (author does not stand by partials).
+    Metrics only -- no conditions layer (held off for now).
     """
     per = {}
     tot = 0.0; n = 0; votes = 0
@@ -96,9 +80,6 @@ def calc(pm, fc, tempo=0.0):
     agg = tot / n if n else 0.0
     complete = (n == len(PROFILE))
 
-    strike_gap = sum(pm[m] - fc[m] for m in STRIKE if m in pm and m in fc)
-    cond = agg + tempo * COND_K * (1 if strike_gap >= 0 else -1)
-
     def verdict(s):
         win = "PM" if s >= 0 else "FC"
         a = abs(s)
@@ -106,9 +87,7 @@ def calc(pm, fc, tempo=0.0):
         return win, conf, a
     return {"per": per, "n": n, "votes": votes, "complete": complete,
             "missing": [m for m in PROFILE if m not in per],
-            "raw": verdict(agg), "cond": verdict(cond),
-            "agree": verdict(agg)[0] == verdict(cond)[0],
-            "agg": agg, "condscore": cond}
+            "raw": verdict(agg), "agg": agg}
 
 
 # Winning requirements per architecture (gap measured in the WINNER's frame:
@@ -164,9 +143,8 @@ def from_pool(pool, name, extra=None):
 
 def main():
     pool = load_pool()
-    tempo = conditions_tempo(surface="grass")
-    print("Calculator: verified 6-metric profile. A call is STOOD BY only "
-          "with all six metrics.\n")
+    print("Calculator: verified 6-metric profile (metrics only). A call is "
+          "STOOD BY only with all six metrics.\n")
     card = [
         ("de Minaur", "Shapovalov"),
         ("Medvedev", "Atmane"),
@@ -178,7 +156,7 @@ def main():
     for pm_name, fc_name in card:
         kp, pm = from_pool(pool, pm_name)
         kf, fc = from_pool(pool, fc_name)
-        r = calc(pm, fc, tempo)
+        r = calc(pm, fc)
         miss = ", ".join(r["missing"])
         print(f"  {kp.split()[-1]:12s} v {kf.split()[-1]:14s} "
               f"INCOMPLETE -> not stood by (missing: {miss})")
@@ -188,7 +166,7 @@ def main():
                "steal": 36.7, "ufc": 19.5}
     fc_dump = {"r14": 50.5, "conv": 68.2, "oufe": 18.0, "r9": 49.0,
                "steal": 31.3, "ufc": 21.0}
-    r = calc(pm_dump, fc_dump, tempo)
+    r = calc(pm_dump, fc_dump)
     w, c, a = r["raw"]
     print(f"  verdict: {w} [{c} {a:.2f}]  (votes {r['votes']}/{r['n']}, "
           f"complete={r['complete']})")
