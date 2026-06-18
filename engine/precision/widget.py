@@ -101,8 +101,10 @@ REQUIRE = {
            "steal": ("exceed", 3.6), "ufc": ("errcap", 3.9)},
     "FC": {"r14": ("exceed", 2.3), "conv": ("exceed", 0.5),
            "oufe": ("trail", 0.8), "r9": ("trail", 0.6),
-           "steal": ("trail", 1.3), "ufc": ("exceed", 2.2)},
+           "steal": ("trail", 1.3), "ufc": ("errcap", 2.8)},
 }
+# UFE is "must not exceed" in BOTH directions (own errors flagged only when too
+# high). PM cap 3.9, FC cap 2.8 (failure line; winning FCs sit ~+2.2, just under).
 
 
 def gap_report(pm, fc):

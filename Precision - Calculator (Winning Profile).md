@@ -43,6 +43,11 @@ Decision boundary per metric = midpoint of the pair:
 - **Steal**: verified **+3.6 / +1.3** (the handwritten −5.3 is superseded).
 - **UFC FC-side**: verified **−2.2** (the handwritten +2.8 is superseded;
   matches the independent charting re-derivation).
+- **UFC is "must not exceed" in BOTH directions** — own unforced errors are
+  flagged only when they run **too high**, never too low. It is an error CAP,
+  not an exceed-target. Gap-report caps: **PM ≤ +3.9**, **FC ≤ +2.8** (the
+  failure line; winning FCs sit ~+2.2, just under). The verified −3.9 / −2.2
+  pair is the decision centroid; the cap is the separate failure boundary.
 
 ## Metric → gradient (reference only; literature kept separate/proprietary)
 1-4 / 9+ = Temporal · Conv = Abstract-Spatial · Steal = Concrete-Spatial ·
