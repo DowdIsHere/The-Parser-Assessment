@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Parser Profile™</title>
+  <meta name="description" content="Your saved Parser Profile™.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Profile reader — ported from The Cognition Block, rethemed to the Parser
+       Profile palette (Editorial Luxury — warm cream + gold, light). */
+    :root {
+      --accent:#9A7B2E; --accent-strong:#8A6D24; --accent-bright:#B8922A;
+      --accent-soft:rgba(154,123,46,0.10); --accent-line:rgba(154,123,46,0.24);
+      --gold-pale:#D8B45E;
+      --text-primary:#1E1813; --text-secondary:#4A3F35; --text-muted:#8A7E6E;
+      --bg-page:#FAF7F0; --bg-card:#FFFDF9; --bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12); --border-strong:rgba(60,45,25,0.22);
+      --ring-highlight:inset 0 1px 0 rgba(255,255,255,0.7);
+      --shadow-sm:0 1px 3px rgba(60,40,15,0.06); --shadow-md:0 6px 20px rgba(60,40,15,0.08); --shadow-lg:0 16px 40px rgba(60,40,15,0.12);
+      --accent-glow:0 8px 22px -8px rgba(154,123,46,0.40);
+      --focus-ring:0 0 0 3px rgba(154,123,46,0.18);
+      --hero-grad:linear-gradient(150deg,#211A12 0%,#2E2419 55%,#3A2E1E 100%);
+      --font-display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+      --font-ui:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+      --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+      --r-input:12px; --r-btn:12px; --r-card:16px; --r-panel:18px;
+      color-scheme:light;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-ui);background:var(--bg-page);color:var(--text-primary);min-height:100dvh;line-height:1.65;letter-spacing:0.005em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    body::before{content:'';position:fixed;inset:0;z-index:300;pointer-events:none;opacity:0.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+
+    /* Top bar */
+    header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,0.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+    .h-inner{max-width:880px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .wordmark{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text-primary);text-decoration:none;letter-spacing:-0.01em;}
+    .wordmark span{color:var(--accent);}
+    .h-links{display:flex;align-items:center;gap:18px;}
+    .h-links a{font-size:0.85rem;font-weight:600;color:var(--text-muted);text-decoration:none;cursor:pointer;}
+    .h-links a:hover{color:var(--accent);}
+
+    .wrap{max-width:880px;margin:0 auto;padding:28px 24px 80px;position:relative;z-index:1;}
+
+    /* States */
+    .state{text-align:center;padding:80px 24px;}
+    .state .icon{font-size:2.2rem;margin-bottom:14px;opacity:0.7;}
+    .state h2{font-family:var(--font-display);font-size:1.7rem;font-weight:600;margin-bottom:10px;}
+    .state p{color:var(--text-secondary);max-width:44ch;margin:0 auto 24px;}
+    .btn{font-family:var(--font-ui);padding:13px 26px;border-radius:var(--r-btn);font-size:0.95rem;font-weight:700;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:transform .18s var(--ease,ease),box-shadow .26s;}
+    .btn-primary{background:linear-gradient(180deg,var(--accent-bright),var(--accent));color:#fff;box-shadow:var(--accent-glow),inset 0 1px 0 rgba(255,255,255,0.25);}
+    .btn-primary:hover{transform:translateY(-1px);}
+    .btn-secondary{background:var(--bg-inset);color:var(--text-primary);border:1px solid var(--border);}
+
+    /* Profile header card */
+    .phead{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-panel);overflow:hidden;box-shadow:var(--ring-highlight), var(--shadow-md);margin-bottom:28px;}
+    .pcover{height:104px;background:var(--hero-grad);position:relative;}
+    .pcover::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%, rgba(184,146,42,0.22) 0%, transparent 60%), radial-gradient(ellipse at 85% 30%, rgba(216,180,94,0.16) 0%, transparent 55%);}
+    .pinfo{padding:0 32px 30px;margin-top:-44px;position:relative;}
+    .pavatar{width:88px;height:88px;border-radius:999px;background:linear-gradient(140deg,var(--accent-bright),var(--accent-strong));color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:2rem;font-weight:700;border:4px solid var(--bg-card);box-shadow:var(--shadow-sm);}
+    .pname{font-family:var(--font-display);font-size:1.7rem;font-weight:700;letter-spacing:-0.01em;margin-top:14px;}
+    .ptag{display:inline-block;margin-top:8px;font-family:var(--font-mono);font-size:0.66rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent-strong);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:6px 14px;}
+    .ptagline{margin-top:14px;color:var(--text-secondary);font-family:var(--font-display);font-style:italic;font-size:1.15rem;line-height:1.5;}
+
+    /* Report sections */
+    .section{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-card);padding:30px 30px;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+    .eyebrow{font-family:var(--font-mono);font-size:0.66rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent-strong);margin-bottom:12px;}
+    .section h3{font-family:var(--font-display);font-size:1.5rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:14px;}
+    .section p{color:var(--text-secondary);margin-bottom:1em;}
+    .section p:last-child{margin-bottom:0;}
+    .callout{background:linear-gradient(135deg, var(--accent-soft), rgba(216,180,94,0.10));border:1px solid var(--accent-line);border-radius:var(--r-card);padding:28px 30px;margin-bottom:20px;}
+    .callout p{font-family:var(--font-display);font-size:1.4rem;line-height:1.4;color:var(--text-primary);font-style:italic;margin:0;}
+    .rcard{background:var(--bg-inset);border:1px solid var(--border);border-radius:var(--r-card);padding:20px 22px;margin-bottom:14px;position:relative;}
+    .rcard:last-child{margin-bottom:0;}
+    .rcard h4{font-family:var(--font-display);font-size:1.2rem;font-weight:600;margin-bottom:7px;color:var(--text-primary);}
+    .rcard p{color:var(--text-secondary);font-size:0.98rem;margin-bottom:0.7em;}
+    .rcard p:last-child{margin-bottom:0;}
+    .rcard .remedy{color:var(--text-primary);}
+    .rcard .remedy strong{color:var(--accent-strong);}
+    .cnum{font-family:var(--font-display);font-size:1.1rem;color:var(--accent);font-weight:700;margin-bottom:4px;}
+    .loading{text-align:center;color:var(--text-muted);padding:80px 24px;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;}
+    .hidden{display:none !important;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="wordmark">Parser <span>Profile</span>™</a>
+      <div class="h-links">
+        <a href="/index.html">The 27</a>
+        <a id="signOutLink">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="loading" id="loading">Loading your profile…</div>
+
+    <!-- No profile yet -->
+    <div class="state hidden" id="emptyState">
+      <div class="icon">✦</div>
+      <h2>No profile saved yet</h2>
+      <p>Once you complete the full Parser Profile™ assessment, it lives here for you to revisit anytime.</p>
+      <a class="btn btn-primary" href="/assessment.html">Take the Assessment</a>
+    </div>
+
+    <!-- The profile -->
+    <div class="hidden" id="profileView"></div>
+  </div>
+
+  <script type="module">
+    import { getProfileForStage, getProfileByName } from './index.js';
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const prose = (t) => !t ? '' : esc(t).split('\n\n').map(p => '<p>' + p.replace(/\n/g, '<br>') + '</p>').join('');
+
+    function initials(first, last, email) {
+      const a = (first || '').trim(), b = (last || '').trim();
+      if (a || b) return ((a[0] || '') + (b[0] || '')).toUpperCase() || (email || '?')[0].toUpperCase();
+      return (email || '?')[0].toUpperCase();
+    }
+
+    function section(eyebrow, title, html) {
+      if (!html) return '';
+      return `<div class="section"><div class="eyebrow">${esc(eyebrow)}</div><h3>${esc(title)}</h3>${html}</div>`;
+    }
+
+    function render(user, saved, profile) {
+      const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || (user.email || 'Your Profile');
+      const archetype = (profile && profile.name) ? profile.name : (saved.profileName || 'Your Parser');
+      const code = (profile && profile.code) ? profile.code : (saved.profileCode || '');
+
+      let html = '';
+      // Header card
+      html += `<div class="phead">
+        <div class="pcover"></div>
+        <div class="pinfo">
+          <div class="pavatar">${esc(initials(user.firstName, user.lastName, user.email))}</div>
+          <div class="pname">${esc(name)}</div>
+          <div class="ptag">${esc(archetype)}${code ? ' · ' + esc(code) : ''}</div>
+          ${profile && profile.tagline ? `<div class="ptagline">${esc(profile.tagline)}</div>` : ''}
+        </div>
+      </div>`;
+
+      if (!profile) {
+        html += `<div class="section"><p>Your saved profile is <strong>${esc(archetype)}</strong>. The full written report for this profile isn't available to display here right now — please check the report we emailed you, or retake the assessment.</p></div>`;
+        $('profileView').innerHTML = html;
+        return;
+      }
+
+      // Overview
+      html += section('Profile Overview', 'Who you are', prose(profile.overview));
+      // Phrase
+      if (profile.phrase) html += `<div class="callout"><p>${esc(profile.phrase)}</p></div>`;
+      // Strengths
+      if (Array.isArray(profile.strengths) && profile.strengths.length) {
+        const cards = profile.strengths.map(s => `<div class="rcard"><h4>${esc(s.title)}</h4><p>${esc(s.description)}</p></div>`).join('');
+        html += section('Cognitive Strengths', 'What your mind does well', cards);
+      }
+      html += section('How You Learn', 'How you take knowledge in', prose(profile.howYouLearn));
+      html += section('How You Communicate', 'How you come across', prose(profile.howYouCommunicate));
+      html += section('The Secret You’ve Carried', 'The unspoken part', prose(profile.secret));
+      html += section('What Others Get Wrong', 'The misread', prose(profile.whatOthersGetWrong));
+      html += section('Your Hidden Superpower', 'The rare thing you do', prose(profile.hiddenSuperpower));
+      html += section('Your Blind Spot', 'What’s hard to see from inside', prose(profile.blindSpot));
+      // Challenges
+      if (Array.isArray(profile.challenges) && profile.challenges.length) {
+        const cards = profile.challenges.map(c => `<div class="rcard"><h4>${esc(c.title)}</h4><p>${esc(c.challenge)}</p><p class="remedy"><strong>Remedy:</strong> ${esc(c.remedy)}</p></div>`).join('');
+        html += section('Natural Challenges', 'The shadow side, with remedies', cards);
+      }
+      html += section('Friction Patterns', 'Where you rub up against others', prose(profile.frictionPatterns));
+      html += section('Energy Patterns', 'What drains and what charges you', prose(profile.energyPatterns));
+      html += section('Optimal Work Environments', 'Where you thrive', prose(profile.workEnvironments));
+      // Careers
+      if (Array.isArray(profile.topCareers) && profile.topCareers.length) {
+        const cards = profile.topCareers.map((c, i) => `<div class="rcard"><div class="cnum">${i + 1}</div><h4>${esc(c.title)}</h4><p>${esc(c.description)}</p></div>`).join('');
+        html += section('Your Top 3 Careers', 'Where this architecture pays', cards);
+      }
+      html += section('Cognitive Block Indicators', 'Your CBI accessibility pattern', prose(profile.blockIndicators));
+
+      $('profileView').innerHTML = html;
+    }
+
+    $('signOutLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      fetch('/api/auth/logout', { method: 'POST' }).finally(() => { location.href = '/signin.html'; });
+    });
+
+    (async function () {
+      let data;
+      try {
+        const res = await fetch('/api/profile/me');
+        if (res.status === 401) { location.href = '/signin.html'; return; }
+        data = await res.json();
+      } catch (_) {
+        location.href = '/signin.html'; return;
+      }
+      $('loading').classList.add('hidden');
+
+      if (!data || !data.authenticated) { location.href = '/signin.html'; return; }
+
+      if (!data.profile || !data.profile.profileName) {
+        $('emptyState').classList.remove('hidden');
+        return;
+      }
+
+      const saved = data.profile;
+      const stage = saved.lifeStage || 'established';
+      let profile = null;
+      try { profile = getProfileForStage(saved.profileName, stage) || getProfileByName(saved.profileName); }
+      catch (_) { profile = null; }
+
+      $('profileView').classList.remove('hidden');
+      render(data.user, saved, profile);
+    })();
+  </script>
+</body>
+</html>

@@ -240,6 +240,89 @@ app.post('/api/auth/logout', (req, res) => {
     res.json({ success: true });
 });
 
+// ============================================================================
+// MEMBER PROFILE — revisit your Parser Profile after signing in
+// ============================================================================
+
+function getAuthUser(req) {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return null;
+    try { return jwt.verify(token, JWT_SECRET); }
+    catch { return null; }
+}
+
+// Retrieve the signed-in user's saved Parser Profile.
+// Supabase: their most recent completion (stored with their email at finish).
+// Local file mode: the profile saved onto their account record.
+async function dbGetUserProfile(email) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_completions')
+            .select('profile_name, profile_code, scores, assessment_type')
+            .eq('email', normalized)
+            .not('profile_name', 'is', null)
+            .order('id', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+        if (error) throw error;
+        if (!data) return null;
+        return { profileName: data.profile_name, profileCode: data.profile_code, scores: data.scores, assessmentType: data.assessment_type, lifeStage: null };
+    }
+    const accounts = loadAccounts();
+    const u = accounts.users.find(x => x.email === normalized);
+    return (u && u.profile) ? u.profile : null;
+}
+
+// Persist the profile onto the account (local file mode). On Supabase the
+// completion row already carries it, so this is a no-op there.
+async function dbSaveUserProfile(email, profile) {
+    if (supabase) return { ok: true };
+    const normalized = email.toLowerCase().trim();
+    const accounts = loadAccounts();
+    const u = accounts.users.find(x => x.email === normalized);
+    if (!u) return { ok: false };
+    u.profile = {
+        profileName: profile.profileName || null,
+        profileCode: profile.profileCode || null,
+        scores: profile.scores || null,
+        lifeStage: profile.lifeStage || null,
+        assessmentType: profile.assessmentType || 'adult',
+        savedAt: new Date().toISOString()
+    };
+    saveAccounts(accounts);
+    return { ok: true };
+}
+
+app.get('/api/profile/me', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ authenticated: false });
+    try {
+        const profile = await dbGetUserProfile(payload.email);
+        res.json({
+            authenticated: true,
+            user: { email: payload.email, firstName: payload.firstName, lastName: payload.lastName, role: payload.role },
+            profile: profile || null
+        });
+    } catch (e) {
+        console.error('[profile/me] error:', e.message);
+        res.status(500).json({ authenticated: true, profile: null, error: 'Could not load your profile.' });
+    }
+});
+
+app.post('/api/profile/save', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ success: false, error: 'Not signed in' });
+    const { profileName, profileCode, scores, lifeStage, assessmentType } = req.body || {};
+    try {
+        await dbSaveUserProfile(payload.email, { profileName, profileCode, scores, lifeStage, assessmentType });
+        res.json({ success: true });
+    } catch (e) {
+        console.error('[profile/save] error:', e.message);
+        res.status(500).json({ success: false, error: 'Could not save your profile.' });
+    }
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
@@ -580,12 +663,12 @@ app.post('/api/send-results', async (req, res) => {
         <div style="padding: 40px 30px; text-align: center; background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));">
             <h3 style="color: #1a1a24; font-size: 20px; margin: 0 0 12px 0;">Want to Learn More?</h3>
             <p style="color: #4a4a5a; font-size: 14px; margin: 0 0 24px 0;">Discover the framework behind your Parser Profile™ and explore the full CBI model.</p>
-            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
+            <a href="https://cognitionblocksllc.com/" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
         </div>
 
         <!-- Footer -->
         <div style="padding: 30px; text-align: center; background-color: #0a0a0f;">
-            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; color: #00d4aa; border: 2px solid #00d4aa; padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 20px;">Explore CBI</a>
+            <a href="https://cognitionblocksllc.com/" style="display: inline-block; color: #00d4aa; border: 2px solid #00d4aa; padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 20px;">Explore CBI</a>
             <p style="color: #a0a0b0; font-size: 12px; margin: 16px 0 0 0;">Parser Profile™ developed by J.D. Mercer</p>
             <p style="color: #6a6a7a; font-size: 11px; margin: 4px 0 0 0;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
             <p style="color: #6a6a7a; font-size: 11px; margin: 12px 0 0 0;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
@@ -770,7 +853,7 @@ app.post('/api/validate-promo', (req, res) => {
     }
 
     if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-        const newAmount = Math.round(7900 * 0.85); // 15% off $79.00
+        const newAmount = Math.round(2000 * 0.85); // 15% off $20.00
         return res.json({ success: true, type: 'discount', discount: 15, newAmount });
     }
 
@@ -787,7 +870,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 7900; // $79.00 in cents
+        let amount = 2000; // $20.00 in cents
         if (promoCode) {
             const promoFree = process.env.PROMO_FREE || '';
             const promoDiscount = process.env.PROMO_DISCOUNT || '';
@@ -799,7 +882,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
             }
 
             if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(7900 * 0.85); // 15% off
+                amount = Math.round(2000 * 0.85); // 15% off
             }
         }
 
