@@ -111,31 +111,43 @@ def calc(pm, fc, tempo=0.0):
             "agg": agg, "condscore": cond}
 
 
-def gap_report(pm, fc):
-    """Metrics that EXCEED (are on the predicted winner's side of the line)
-    but DO NOT MEET the winning threshold -- trending right, still short.
+# Winning requirements per architecture (gap measured in the WINNER's frame:
+# PM-winner -> PM-FC ; FC-winner -> FC-PM). kinds:
+#   "exceed" v -> must lead by >= v        (short of threshold if gap < v)
+#   "trail"  v -> may trail by <= v        (beyond deficit if gap < -v)
+#   "errcap" v -> own-error gap <= v       (beyond deficit if gap > v)
+REQUIRE = {
+    "PM": {"r14": ("exceed", 1.1), "conv": ("exceed", 1.4),
+           "oufe": ("exceed", 3.5), "r9": ("exceed", 5.9),
+           "steal": ("exceed", 3.6), "ufc": ("errcap", 3.9)},
+    "FC": {"r14": ("exceed", 2.3), "conv": ("exceed", 0.5),
+           "oufe": ("trail", 0.8), "r9": ("trail", 0.6),
+           "steal": ("trail", 1.3), "ufc": ("exceed", 2.2)},
+}
 
-    For each such metric: the shortfall to threshold, in native units.
+
+def gap_report(pm, fc):
+    """Only two categories, per spec:
+      EXCEEDS BUT SHORT      -- a must-exceed metric that does not meet threshold.
+      BEYOND ALLOWED DEFICIT -- a capped metric that breaches its cap.
+    Everything that meets threshold / stays within cap is silent.
     Only meaningful on a COMPLETE (stood-by) call.
     """
     r = calc(pm, fc)
     if not r["complete"]:
         return {"complete": False, "missing": r["missing"]}
     winner = r["raw"][0]
-    rows = []
-    floor_breaks = []
-    for m, p in r["per"].items():
-        # winner-frame score: +1 == at winner centroid, 0 == decision line
-        s = p["norm"] if winner == "PM" else -p["norm"]
-        center = p["win"] if winner == "PM" else p["lose"]
-        if s <= 0:
-            floor_breaks.append((m, p["gap"], center))       # on loser's side
-        elif s < 1:
-            short = (1 - s) * p["half"]                       # native shortfall
-            rows.append((m, p["gap"], center, short))
-    return {"complete": True, "winner": winner, "rows": rows,
-            "floor": floor_breaks, "clean": [m for m, p in r["per"].items()
-                if (p["norm"] if winner == "PM" else -p["norm"]) >= 1]}
+    short, beyond = [], []
+    for m, (kind, v) in REQUIRE[winner].items():
+        gap = (pm[m] - fc[m]) if winner == "PM" else (fc[m] - pm[m])
+        if kind == "exceed" and gap < v:
+            short.append((m, gap, v, v - gap))            # shortfall to threshold
+        elif kind == "trail" and gap < -v:
+            beyond.append((m, gap, -v, (-v) - gap))       # how far past the cap
+        elif kind == "errcap" and gap > v:
+            beyond.append((m, gap, v, gap - v))           # own-error overage
+    return {"complete": True, "winner": winner,
+            "short": short, "beyond": beyond}
 
 
 def from_pool(pool, name, extra=None):
@@ -181,17 +193,37 @@ def main():
     print(f"  verdict: {w} [{c} {a:.2f}]  (votes {r['votes']}/{r['n']}, "
           f"complete={r['complete']})")
     gr = gap_report(pm_dump, fc_dump)
-    print(f"  winner = {gr['winner']}.  clean (meet/exceed threshold): "
-          f"{', '.join(gr['clean']) or 'none'}")
-    if gr["rows"]:
-        print("  GAP REPORT -- exceeds the line but short of threshold:")
-        for m, gap, center, short in gr["rows"]:
-            print(f"     {m:6s} gap {gap:+5.1f}  threshold {center:+5.1f}  "
-                  f"short by {short:.2f}")
-    if gr["floor"]:
-        print("  BELOW FLOOR (on the loser's side, worse than a gap):")
-        for m, gap, center in gr["floor"]:
-            print(f"     {m:6s} gap {gap:+5.1f}  needs {center:+5.1f}")
+    print(f"  winner = {gr['winner']}")
+    print("  EXCEEDS BUT SHORT (must-exceed, under threshold):")
+    for m, gap, thr, sh in gr["short"]:
+        print(f"     {m:6s} gap {gap:+5.1f}  threshold +{thr:.1f}  short by {sh:.2f}")
+    if not gr["short"]:
+        print("     (none)")
+    print("  BEYOND ALLOWED DEFICIT (capped metric breached):")
+    for m, gap, cap, over in gr["beyond"]:
+        print(f"     {m:6s} gap {gap:+5.1f}  cap {cap:+.1f}  beyond by {over:.2f}")
+    if not gr["beyond"]:
+        print("     (none)")
+
+    print("\nSECOND EXAMPLE -- an FC win that breaches a deficit cap:")
+    pm2 = {"r14": 50.0, "conv": 68.0, "oufe": 18.0, "r9": 49.0,
+           "steal": 35.0, "ufc": 20.0}
+    fc2 = {"r14": 53.5, "conv": 69.2, "oufe": 17.6, "r9": 48.6,
+           "steal": 32.0, "ufc": 22.5}
+    r2 = calc(pm2, fc2)
+    gr2 = gap_report(pm2, fc2)
+    print(f"  verdict: {r2['raw'][0]} [{r2['raw'][1]} {r2['raw'][2]:.2f}]  "
+          f"winner = {gr2['winner']}")
+    print("  EXCEEDS BUT SHORT:")
+    for m, gap, thr, sh in gr2["short"]:
+        print(f"     {m:6s} gap {gap:+5.1f}  threshold +{thr:.1f}  short by {sh:.2f}")
+    if not gr2["short"]:
+        print("     (none)")
+    print("  BEYOND ALLOWED DEFICIT:")
+    for m, gap, cap, over in gr2["beyond"]:
+        print(f"     {m:6s} gap {gap:+5.1f}  cap {cap:+.1f}  beyond by {over:.2f}")
+    if not gr2["beyond"]:
+        print("     (none)")
 
 
 if __name__ == "__main__":
