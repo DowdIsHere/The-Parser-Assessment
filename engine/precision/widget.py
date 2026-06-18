@@ -88,26 +88,38 @@ def flavor(stats):
 
 
 def call_match(pool, a_name, b_name, tempo, arch=None):
+    """Return dict with both reads: metrics-only (tempo 0) and metrics+conditions.
+
+    The dials are season-long averages -> conditions are ALREADY partly baked
+    in. So we report the raw read separately from the conditions-adjusted read.
+    Agreement = robust call; disagreement = the conditions layer is either
+    adding signal or double-counting -> flag, don't trust blind.
+    """
     ka, sa = find(pool, a_name)
     kb, sb = find(pool, b_name)
     if not sa or not sb:
         miss = a_name if not sa else b_name
-        return f"  {a_name} vs {b_name}: -- not in pool ({miss})"
+        return {"miss": f"{a_name} vs {b_name} -- not in pool ({miss})"}
     aA = (arch or {}).get(ka) or flavor(sa)
     aB = (arch or {}).get(kb) or flavor(sb)
-    za = win_score(sa, aA, tempo)
-    zb = win_score(sb, aB, tempo)
-    win = ka if za >= zb else kb
-    d = abs(za - zb)
-    conf = "HIGH" if d >= 0.5 else "MED" if d >= 0.2 else "LEAN"
-    return (f"  {ka:22s}({aA}) {za:+.2f}  vs  {kb:22s}({aB}) {zb:+.2f}"
-            f"   ->  {win.split()[-1]:12s} [{conf} Δ{d:.2f}]")
+
+    def read(t):
+        za, zb = win_score(sa, aA, t), win_score(sb, aB, t)
+        win = ka if za >= zb else kb
+        d = abs(za - zb)
+        conf = "HIGH" if d >= 0.5 else "MED" if d >= 0.2 else "LEAN"
+        return win, d, conf
+
+    w0, d0, c0 = read(0.0)        # metrics only
+    w1, d1, c1 = read(tempo)      # metrics + conditions
+    return {"a": ka, "b": kb, "aA": aA, "aB": aB,
+            "raw": (w0, d0, c0), "cond": (w1, d1, c1),
+            "agree": w0 == w1}
 
 
 def main():
     pool = load_pool()
     tempo = conditions_tempo(surface="grass")   # Halle + Queen's = grass
-    print(f"Conditions: grass, tempo={tempo:+.2f} (rewards the strike dial)\n")
     card = [
         ("de Minaur", "Shapovalov"),
         ("Atmane", "Medvedev"),
@@ -115,14 +127,21 @@ def main():
         ("Nakashima", "Buse"),
         ("Hijikata", "Lehecka"),
     ]
-    print("CROSS-POLARITY MATCHES (grass tempo applied):")
+    print(f"Conditions: grass, tempo={tempo:+.2f} (rewards the strike dial)")
+    print("Dials are season averages -> conditions partly baked in already.\n")
+    print(f"{'MATCH':<34}{'METRICS ONLY':<22}{'+ CONDITIONS':<22}{'':<6}")
     for a, b in card:
-        print(call_match(pool, a, b, tempo))
-
-    print("\nSame matches at NEUTRAL tempo (hard court, tempo 0):")
-    for a, b in card:
-        print(call_match(pool, a, b, 0.0))
+        r = call_match(pool, a, b, tempo)
+        if "miss" in r:
+            print("  " + r["miss"]); continue
+        w0, d0, c0 = r["raw"]; w1, d1, c1 = r["cond"]
+        raw = f"{w0.split()[-1]} [{c0} {d0:.2f}]"
+        cnd = f"{w1.split()[-1]} [{c1} {d1:.2f}]"
+        flag = "agree" if r["agree"] else "** FLIPS **"
+        label = f"{r['a'].split()[-1]}({r['aA']}) v {r['b'].split()[-1]}({r['aB']})"
+        print(f"  {label:<32}{raw:<22}{cnd:<22}{flag}")
 
 
 if __name__ == "__main__":
     main()
+
