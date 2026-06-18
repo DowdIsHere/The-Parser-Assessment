@@ -119,6 +119,10 @@ def gap_report(pm, fc):
         return {"complete": False, "missing": r["missing"]}
     winner = r["raw"][0]
     short, beyond = [], []
+    # BOUNDARY IS INCLUSIVE: a gap sitting exactly on the published value PASSES
+    # (it is a real winning/within value -- the players who DEFINED the metric
+    # must not be excluded). Keep the comparisons strict (<, >) -- do NOT change
+    # to <= / >=, or the boundary-definers get wrongly flagged.
     for m, (kind, v) in REQUIRE[winner].items():
         gap = (pm[m] - fc[m]) if winner == "PM" else (fc[m] - pm[m])
         if kind == "exceed" and gap < v:
