@@ -1,5 +1,32 @@
 # Precision — The Calculator (Winning Profile)
 
+## THE RULE (win determination — author's framework, confirmed)
+The thresholds are the **average winning gaps from a survey of 700+ matches** —
+every PM victory averaged into the PM prescribed gaps, every FC victory into the
+FC prescribed gaps. Every single victory had this shape; the thresholds are the
+average of them.
+
+A parser **wins** only by satisfying the prescribed set under **two gates, on
+each metric**:
+
+1. **SIGN gate** — be on the correct side. Positive where the metric must be
+   led (exceed metrics); within the allowed deficit band on a trail metric.
+   **Wrong side (negative) = zero edge — not even "considered."** He doesn't
+   have it in the slightest.
+2. **THRESHOLD gate** — `gap ≥ threshold` = **full edge** (at/above the average
+   winner's margin). `0 ≤ gap < threshold` = **"considered"** — a real, partial
+   edge that still counts (decisive in close calls).
+
+A winner must carry the **whole prescribed set** this way — **not** win on one
+standout metric while underwater elsewhere. (Brooksby had a full 9+ but was
+negative on conv and steal → failed the sign gate there → no winning shape → he
+loses, despite the 9+.)
+
+> ⚠️ The engine helpers I wrote earlier — `WIN_ABS` (absolute bars),
+> `resolve()` (clear-more-counting), `same_parser()` — are **approximations I
+> invented, not this rule.** Do not treat them as the framework. The rule above
+> is the framework.
+
 > ⚠️ **DATA RULE: ONE CONSISTENT CONVENTION — DON'T MIX.** The calculator is
 > gap-based (winner − loser), so an additive opponent-baseline offset **cancels
 > in the difference** and does not bias the verdict — *as long as the same
