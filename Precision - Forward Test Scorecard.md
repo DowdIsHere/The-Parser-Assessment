@@ -7,8 +7,9 @@ one graded call at a time. A call counts only when made before the match.*
 |---|------|---------|------|------|-----|--------|--------|
 | 1 | Jun 19 | Shelton vs Fritz (Halle) | FC vs FC (same-parser) | **Fritz** | grind edge, 9+ +3.1 → +11.0 | Fritz 56% | ✅ **WIN** — Fritz 6-7(5) 7-6(8) 7-6(3), all 3 tiebreaks |
 | 2 | Jun 19 | Zverev vs Collignon (Halle) | win-metrics | **Zverev** | clears 4/5 win-metrics vs Collignon 3/5 | Zverev ~84% | ✅ **WIN** — Zverev 7-6(10) 7-6(7), both tiebreaks |
+| 3 | Jun 19 | Brooksby vs Cerúndolo (London) | two-gate rule | **Cerúndolo** | Brooksby negative on conv & steal → no winning shape (fails sign gate) | Cerúndolo fav | ✅ **WIN** — Cerúndolo 6-0 6-4 |
 
-**Record: 2–0.** Both calls on matches decided in tiebreaks; both times the higher-win-metrics (cleaner/steadier) player took the margins.
+**Record: 3–0.** Note on #3: the *correct rule* called Cerúndolo; my invented `resolve()` would have called Brooksby (3/5) and **been wrong** — Brooksby was bageled. The framework beat my approximation.
 
 ## Notes
 - **Same-parser resolution** (`engine/precision/widget.py` → `same_parser`):
