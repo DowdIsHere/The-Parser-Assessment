@@ -137,6 +137,23 @@ CANON = {
 }
 
 
+# Baseline profiles -- stand-in opponent when the competitor's metrics are
+# unknown. Absolute values for a winning PM and a winning FC. A known player of
+# type T is placed against the baseline of the OPPOSITE type.
+BASELINE = {
+    "PM": {"r14": 51.3, "conv": 70.3, "oufe": 17.7, "r9": 51.5, "steal": 33.8, "ufc": 15.5},
+    "FC": {"r14": 50.8, "conv": 68.8, "oufe": 17.1, "r9": 49.1, "steal": 32.2, "ufc": 18.6},
+}
+
+
+def vs_baseline(player, arch):
+    """Run a known player (CBI type `arch`) against the baseline stand-in
+    opponent of the opposite type."""
+    if arch == "PM":
+        return profile(player, BASELINE["FC"], "PM")
+    return profile(BASELINE["PM"], player, "FC")
+
+
 def main():
     print("Verdict = profile gate; gap report records every shortfall "
           "(negatives recorded, not disqualified).\n")
@@ -148,6 +165,13 @@ def main():
         print(f"{pm_name} (PM) vs {fc_name} (FC):   CALL: {v['call']}")
         _show(pm_name, "PM", v["PM"])
         _show(fc_name, "FC", v["FC"])
+        print()
+
+    print("vs BASELINE (unknown-opponent stand-in):")
+    for name, arch in [("Tien", "PM"), ("Auger", "FC"),
+                       ("Hurkacz", "FC"), ("Altmaier", "PM")]:
+        r = vs_baseline(CANON[name], arch)
+        _show(name, arch, r)
         print()
 
 

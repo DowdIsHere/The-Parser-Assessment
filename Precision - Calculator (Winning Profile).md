@@ -52,3 +52,24 @@ Decision boundary per metric = midpoint of the pair:
 ## Metric → gradient (reference only; literature kept separate/proprietary)
 1-4 / 9+ = Temporal · Conv = Abstract-Spatial · Steal = Concrete-Spatial ·
 OUFE = Reference · UFC = Spatial.
+
+---
+
+## Baseline profiles (stand-in opponent when the competitor is unknown)
+Absolute metric values for a winning PM and a winning FC. When an opponent's
+metrics are unknown, fill their side with the baseline of **their** type
+(your PM faces the FC baseline; your FC faces the PM baseline), then run the
+normal gap profile.
+
+| metric | PM win | FC win |
+|---|---|---|
+| 1-4 (r14)     | 51.3 | 50.8 |
+| conv          | 70.3 | 68.8 |
+| oppUFE (oufe) | 17.7 | 17.1 |
+| 9+ (r9)       | 51.5 | 49.1 |
+| steal         | 33.8 | 32.2 |
+| ownUFE (ufc)  | 15.5 | 18.6 |
+
+Higher = better on all except **ownUFE** (lower = better). Note the PM baseline
+is the cleaner one (ownUFE 15.5 vs FC 18.6) and the heavier grinder (9+ 51.5 vs
+49.1) — the architecture difference, in absolute numbers.
