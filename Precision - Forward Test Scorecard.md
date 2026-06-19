@@ -5,7 +5,9 @@ one graded call at a time. A call counts only when made before the match.*
 
 | # | Date | Matchup | Type | Call | Why | Market | Result |
 |---|------|---------|------|------|-----|--------|--------|
-| 1 | Jun 19 | Shelton vs Fritz (Halle) | FC vs FC (same-parser) | **Fritz** | grind edge, 9+ +3.1 → +11.0 | Fritz 56% | _pending_ |
+| 1 | Jun 19 | Shelton vs Fritz (Halle) | FC vs FC (same-parser) | **Fritz** | grind edge, 9+ +3.1 → +11.0 | Fritz 56% | ✅ **WIN** — Fritz 6-7(5) 7-6(8) 7-6(3), all 3 tiebreaks |
+
+**Record: 1–0.**
 
 ## Notes
 - **Same-parser resolution** (`engine/precision/widget.py` → `same_parser`):
