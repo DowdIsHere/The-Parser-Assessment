@@ -43,18 +43,64 @@ import {
 } from './profiles-group-4.js';
 
 // Young Adult (18–29 / "early" life stage) profile variants.
-// Only profiles with a dedicated YA variant appear here; everything else
-// falls back to the standard profile via getProfileForStage().
-import { sharpyaProfile } from './sharpya.js';
-import { embodiedyaProfile } from './embodiedya.js';
-import { integratedyaProfile } from './integratedya.js';
+// Every archetype now has a dedicated YA variant; getProfileForStage()
+// returns it for the 'early' life stage.
+import { actualizedyaProfile } from './actualizedya.js';
+import { altruisticyaProfile } from './altruisticya.js';
+import { attunedyaProfile } from './attunedya.js';
+import { centeredyaProfile } from './centeredya.js';
 import { coherentyaProfile } from './coherentya.js';
+import { collaborativeyaProfile } from './collaborativeya.js';
+import { embodiedyaProfile } from './embodiedya.js';
+import { empatheticyaProfile } from './empatheticya.js';
+import { equanimousyaProfile } from './equanimousya.js';
+import { foresightedyaProfile } from './foresightedya.js';
+import { groundedyaProfile } from './groundedya.js';
+import { harmoniousyaProfile } from './harmoniousya.js';
+import { idealizedyaProfile } from './idealizedya.js';
+import { integratedyaProfile } from './integratedya.js';
+import { intentionalyaProfile } from './intentionalya.js';
+import { introspectiveyaProfile } from './introspectiveya.js';
+import { intuitiveyaProfile } from './intuitiveya.js';
+import { legacyyaProfile } from './legacyya.js';
+import { mindfulyaProfile } from './mindfulya.js';
+import { reconciledyaProfile } from './reconciledya.js';
+import { reflectiveyaProfile } from './reflectiveya.js';
+import { reliableyaProfile } from './reliableya.js';
+import { resilientyaProfile } from './resilientya.js';
+import { seasonedyaProfile } from './seasonedya.js';
+import { sentimentalyaProfile } from './sentimentalya.js';
+import { sharpyaProfile } from './sharpya.js';
+import { visionaryyaProfile } from './visionaryya.js';
 
 const youngAdultProfiles = {
-  SHARP: sharpyaProfile,
-  EMBODIED: embodiedyaProfile,
-  INTEGRATED: integratedyaProfile,
+  ACTUALIZED: actualizedyaProfile,
+  ALTRUISTIC: altruisticyaProfile,
+  ATTUNED: attunedyaProfile,
+  CENTERED: centeredyaProfile,
   COHERENT: coherentyaProfile,
+  COLLABORATIVE: collaborativeyaProfile,
+  EMBODIED: embodiedyaProfile,
+  EMPATHETIC: empatheticyaProfile,
+  EQUANIMOUS: equanimousyaProfile,
+  FORESIGHTED: foresightedyaProfile,
+  GROUNDED: groundedyaProfile,
+  HARMONIOUS: harmoniousyaProfile,
+  IDEALIZED: idealizedyaProfile,
+  INTEGRATED: integratedyaProfile,
+  INTENTIONAL: intentionalyaProfile,
+  INTROSPECTIVE: introspectiveyaProfile,
+  INTUITIVE: intuitiveyaProfile,
+  LEGACY: legacyyaProfile,
+  MINDFUL: mindfulyaProfile,
+  RECONCILED: reconciledyaProfile,
+  REFLECTIVE: reflectiveyaProfile,
+  RELIABLE: reliableyaProfile,
+  RESILIENT: resilientyaProfile,
+  SEASONED: seasonedyaProfile,
+  SENTIMENTAL: sentimentalyaProfile,
+  SHARP: sharpyaProfile,
+  VISIONARY: visionaryyaProfile,
 };
 
 // Profile lookup by name
