@@ -75,17 +75,19 @@ OUFE = Reference · UFC = Spatial.
 ---
 
 ## File → calculator mapping (Everybody Measurements)
-Pull the six metrics like this — **no forces, no adjustment math**:
+Pull these from the file:
 - **1-4** = `short_win%`
 - **9+** = `long_win%`
 - **ownUFE** = `adjUFE`
-- **oppUFE** = `adjUFE` + `WinUFE`
 - **conv** = TennisViz conversion (NOT the file's `BP_conv%` — different stat)
 - **steal** = TennisViz steal (NOT the file's `steal_droplob` — different stat)
 
-Verified: ownUFE/oppUFE reproduce the canonical numbers within ~1 for Tien,
-Hurkacz, Altmaier (Auger's file row is a data outlier, ~2.5 off — flag it). The
-small oppUFE overshoot is ~constant and cancels in the gap.
+- **oppUFE** = the **actual measured opponent UFE**, supplied raw (NOT
+  constructed). `adjUFE + WinUFE` was tried and rejected — `WinUFE` is ~+0.9 for
+  everyone (not the UFE differential), so that formula can only make oppUFE
+  *larger* than ownUFE and can't represent a player who forces *fewer* errors
+  than he makes (Auger forces 15.4 while making 19.5). `forces_oppUFE` is the
+  wrong scale. So oppUFE is the one metric that comes straight from the source.
 
 ## Baseline profiles (stand-in opponent when the competitor is unknown)
 Absolute metric values for a winning PM and a winning FC. When an opponent's
