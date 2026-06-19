@@ -1,13 +1,14 @@
 # Precision — The Calculator (Winning Profile)
 
-> ⚠️ **DATA SOURCE RULE: RAW NUMBERS ONLY.** The calculator runs on the
-> author's **raw** TennisViz metrics (ownUFE, oppUFE, 1-4, 9+, steal, conv).
-> The file `Precision - Everybody Measurements.csv` and the engine
-> `style_index.py` are **opponent-ADJUSTED** (two-way model: `adjUFE`,
-> `forces_oppUFE`, Win:UFE) — that is the "weird math" the author rejected.
-> Those adjusted artifacts are **NOT** the calculator's source and must not be
-> used to fill metrics. Raw conv/steal = the TennisViz CSV; raw UFE pair +
-> 1-4/9+ = the author. When in doubt, ask for the raw number — never derive.
+> ⚠️ **DATA RULE: ONE CONSISTENT CONVENTION — DON'T MIX.** The calculator is
+> gap-based (winner − loser), so an additive opponent-baseline offset **cancels
+> in the difference** and does not bias the verdict — *as long as the same
+> convention is used on both sides AND matches how the thresholds were set.*
+> The only real error is **mixing**: adjusted data against raw-calibrated
+> thresholds (or vice versa). That mismatch — not the adjustment itself — is
+> what caused every earlier disagreement. Pick the convention the thresholds
+> were calibrated on, apply it to both players every time, and never mix raw and
+> adjusted inside one comparison.
 
 *The observed, **verified** thresholds that separate winner from loser in a
 Pattern-Matcher vs. Forecaster head-to-head. Source: framework author's
