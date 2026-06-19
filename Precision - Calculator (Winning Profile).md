@@ -40,9 +40,11 @@ Decision boundary per metric = midpoint of the pair:
 | UFC | −3.05 |
 
 ## The pass bar (count model)
-A side wins by **meeting a count** of its six metrics, not all of them:
-- **Pattern Matcher must pass 5 of 6** (may carry 1 on the gap report).
-- **Forecaster must pass 3 of 6** (may carry up to 3 on the gap report).
+**oppUFE is NOT a gate metric** (no independent source — see the mapping note).
+The gate runs on the **five** sourceable metrics: 1-4, conv, 9+, steal, ownUFE.
+oppUFE is **display-only** in the H2H. A side wins by meeting a count:
+- **Pattern Matcher must pass 4 of 5** (may carry 1 on the gap report).
+- **Forecaster must pass 3 of 5** (may carry up to 2 on the gap report).
 
 This asymmetry is the architecture: the PM has to be near-complete to win; the
 FC wins off its few strike metrics while bleeding the grind ones. Verdict:

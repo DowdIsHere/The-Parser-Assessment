@@ -33,13 +33,15 @@ METRICS = list(COLMAP)
 #   "exceed" v -> must lead by >= v
 #   "trail"  v -> may trail by <= v
 #   "errcap" v -> own-error gap must be <= v   (UFE: must-not-exceed both ways)
+# NOTE: oppUFE (oufe) is NOT a gate metric -- it has no independent source in the
+# data (see calculator doc). It is DISPLAY-ONLY in the H2H. Five gate metrics.
 REQUIRE = {
     "PM": {"r14": ("exceed", 1.1), "conv": ("exceed", 1.4),
-           "oufe": ("exceed", 3.5), "r9": ("exceed", 5.9),
-           "steal": ("exceed", 3.6), "ufc": ("errcap", 3.9)},
+           "r9": ("exceed", 5.9), "steal": ("exceed", 3.6),
+           "ufc": ("errcap", 3.9)},
     "FC": {"r14": ("exceed", 2.3), "conv": ("exceed", 0.5),
-           "oufe": ("trail", 0.8), "r9": ("trail", 0.6),
-           "steal": ("trail", 1.3), "ufc": ("errcap", 2.2)},
+           "r9": ("trail", 0.6), "steal": ("trail", 1.3),
+           "ufc": ("errcap", 2.2)},
 }
 # UFE caps = verified magnitudes: PM 3.9, FC 2.2 (own errors flagged only when high).
 
@@ -101,9 +103,10 @@ def profile(pm, fc, arch):
     return {"clean": clean, "short": short, "beyond": beyond, "met": met}
 
 
-# Pass bar: how many of the six metrics a side must meet to win.
-# PM must pass 5 of 6; FC must pass 3 of 6 (the architectural asymmetry).
-PASS = {"PM": 5, "FC": 3}
+# Pass bar: how many of the FIVE gate metrics a side must meet to win.
+# oppUFE is no longer gated, so the pools are 5 each. PM bar held at "1 miss
+# allowed" -> 4 of 5; FC bar held at 3 of 5.
+PASS = {"PM": 4, "FC": 3}
 
 
 def verdict(pm, fc):
@@ -178,6 +181,11 @@ def main():
         print(f"{pm_name} (PM) vs {fc_name} (FC):   CALL: {v['call']}")
         _show(pm_name, "PM", v["PM"])
         _show(fc_name, "FC", v["FC"])
+        # oppUFE: DISPLAY ONLY (not gated). Shown when both sides have it.
+        if "oufe" in pm and "oufe" in fc:
+            print(f"      [display] oppUFE  {pm_name} {pm['oufe']:.1f}  vs  "
+                  f"{fc_name} {fc['oufe']:.1f}  (gap {pm['oufe']-fc['oufe']:+.1f}, "
+                  f"not in verdict)")
         print()
 
     print("vs BASELINE (unknown-opponent stand-in):")
