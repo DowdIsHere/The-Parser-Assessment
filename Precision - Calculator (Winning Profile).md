@@ -1,5 +1,14 @@
 # Precision — The Calculator (Winning Profile)
 
+> ⚠️ **DATA SOURCE RULE: RAW NUMBERS ONLY.** The calculator runs on the
+> author's **raw** TennisViz metrics (ownUFE, oppUFE, 1-4, 9+, steal, conv).
+> The file `Precision - Everybody Measurements.csv` and the engine
+> `style_index.py` are **opponent-ADJUSTED** (two-way model: `adjUFE`,
+> `forces_oppUFE`, Win:UFE) — that is the "weird math" the author rejected.
+> Those adjusted artifacts are **NOT** the calculator's source and must not be
+> used to fill metrics. Raw conv/steal = the TennisViz CSV; raw UFE pair +
+> 1-4/9+ = the author. When in doubt, ask for the raw number — never derive.
+
 *The observed, **verified** thresholds that separate winner from loser in a
 Pattern-Matcher vs. Forecaster head-to-head. Source: framework author's
 calibrated calculator (IMG_1699), verified column. Six observable success
