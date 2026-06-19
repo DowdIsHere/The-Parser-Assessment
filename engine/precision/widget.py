@@ -68,45 +68,41 @@ def find(pool, name):
 
 
 def profile(pm, fc, arch):
-    """Check ONE side against its winning profile, directional-gate model.
+    """Check ONE side against its winning profile and record every shortfall.
 
-    To be ON the gap report a side must CLEAR EVERY metric directionally:
-      - "+" (exceed) metrics  -> gap must be positive (ahead)
-      - "-" (deficit / errcap) -> gap must stay within the allowed cap
-    Break direction on any one metric -> OFF-PROFILE (not on the report).
-    For a side that clears all directions, the report shows by how much it
-    still LACKS to reach the full winning threshold on each "+" metric.
-    Boundary inclusive on the full threshold (gap == threshold = met).
+    Nothing disqualifies a side from the report -- a metric that runs negative
+    or pushes past its cap is RECORDED (that magnitude is the variance), not
+    removed. Two kinds of lacking:
+      short  -- a "+" (exceed) metric below its threshold (incl. negative gaps)
+      beyond -- a "-" (deficit / errcap) metric past its allowed cap
+    A side is CLEAN (a winner) only when it records neither.
+    Boundary inclusive: gap exactly on the threshold / cap counts as met.
     """
-    offdir, lacking, met = [], [], []
+    short, beyond, met = [], [], []
     for m, (kind, v) in REQUIRE[arch].items():
         gap = (pm[m] - fc[m]) if arch == "PM" else (fc[m] - pm[m])
         if kind == "exceed":
-            if gap <= 0:
-                offdir.append((m, gap, v))            # wrong side of the line
-            elif gap < v:
-                lacking.append((m, gap, v, v - gap))  # ahead but short of threshold
+            if gap < v:
+                short.append((m, gap, v, v - gap))        # how far below threshold
             else:
                 met.append((m, gap, v))
         elif kind == "trail":
             if gap < -v:
-                offdir.append((m, gap, -v))           # breached the deficit cap
+                beyond.append((m, gap, -v, (-v) - gap))   # how far past the cap
             else:
                 met.append((m, gap, -v))
         elif kind == "errcap":
             if gap > v:
-                offdir.append((m, gap, v))            # own errors past the cap
+                beyond.append((m, gap, v, gap - v))       # own-error overage
             else:
                 met.append((m, gap, v))
-    qualified = not offdir          # on the report at all
-    clean = qualified and not lacking
-    return {"qualified": qualified, "clean": clean,
-            "offdir": offdir, "lacking": lacking, "met": met}
+    clean = not short and not beyond
+    return {"clean": clean, "short": short, "beyond": beyond, "met": met}
 
 
 def verdict(pm, fc):
     """Profile gate. pm = the CBI Pattern Matcher, fc = the CBI Forecaster.
-    A side wins only by being qualified AND clean (clears all, lacks nothing)."""
+    A side wins only when its report is empty (clean)."""
     P = profile(pm, fc, "PM")
     F = profile(pm, fc, "FC")
     if P["clean"] and not F["clean"]:
@@ -121,16 +117,14 @@ def verdict(pm, fc):
 
 
 def _show(name, arch, res):
-    if not res["qualified"]:
-        bad = ", ".join(f"{m}({gap:+.1f})" for m, gap, *_ in res["offdir"])
-        print(f"   {name} as {arch}: OFF-PROFILE — broke direction on: {bad}")
-        return
     if res["clean"]:
         print(f"   {name} as {arch}: CLEAN — meets every threshold")
         return
-    lack = ", ".join(f"{m} short {sh:.1f} (gap {gap:+.1f}, need +{v})"
-                     for m, gap, v, sh in res["lacking"])
-    print(f"   {name} as {arch}: ON REPORT — lacking: {lack}")
+    print(f"   {name} as {arch}:")
+    for m, gap, v, sh in res["short"]:
+        print(f"      exceeds-short  {m:6s} gap {gap:+6.1f}  need >= +{v}  (short {sh:.1f})")
+    for m, gap, cap, ov in res["beyond"]:
+        print(f"      beyond-deficit {m:6s} gap {gap:+6.1f}  cap {cap:+.1f}  (over {ov:.1f})")
 
 
 # Canonical hand-verified numbers (author's definitions). Columns:
@@ -144,7 +138,8 @@ CANON = {
 
 
 def main():
-    print("Verdict = profile gate; gap report = directional-clear sides only.\n")
+    print("Verdict = profile gate; gap report records every shortfall "
+          "(negatives recorded, not disqualified).\n")
     # (PM name, FC name) -- author's CBI labels
     matchups = [("Tien", "Auger"), ("Altmaier", "Hurkacz")]
     for pm_name, fc_name in matchups:
