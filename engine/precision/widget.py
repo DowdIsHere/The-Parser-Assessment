@@ -100,31 +100,43 @@ def profile(pm, fc, arch):
     return {"clean": clean, "short": short, "beyond": beyond, "met": met}
 
 
+# Pass bar: how many of the six metrics a side must meet to win.
+# PM must pass 5 of 6; FC must pass 3 of 6 (the architectural asymmetry).
+PASS = {"PM": 5, "FC": 3}
+
+
 def verdict(pm, fc):
-    """Profile gate. pm = the CBI Pattern Matcher, fc = the CBI Forecaster.
-    A side wins only when its report is empty (clean)."""
+    """Profile gate, COUNT model. pm = CBI Pattern Matcher, fc = CBI Forecaster.
+    A side wins by meeting at least PASS[type] of its six metrics."""
     P = profile(pm, fc, "PM")
     F = profile(pm, fc, "FC")
-    if P["clean"] and not F["clean"]:
+    P_met = len(REQUIRE["PM"]) - len(P["short"]) - len(P["beyond"])
+    F_met = len(REQUIRE["FC"]) - len(F["short"]) - len(F["beyond"])
+    P_pass = P_met >= PASS["PM"]
+    F_pass = F_met >= PASS["FC"]
+    if P_pass and not F_pass:
         call = "PM"
-    elif F["clean"] and not P["clean"]:
+    elif F_pass and not P_pass:
         call = "FC"
-    elif P["clean"] and F["clean"]:
-        call = "BOTH CLEAN (flag)"
+    elif P_pass and F_pass:
+        call = "BOTH PASS (flag)"
     else:
         call = "NO CALL"
-    return {"call": call, "PM": P, "FC": F}
+    return {"call": call, "PM": P, "FC": F,
+            "PM_met": P_met, "FC_met": F_met,
+            "PM_pass": P_pass, "FC_pass": F_pass}
 
 
 def _show(name, arch, res):
-    if res["clean"]:
-        print(f"   {name} as {arch}: CLEAN — meets every threshold")
-        return
-    print(f"   {name} as {arch}:")
+    fails = len(res["short"]) + len(res["beyond"])
+    met = len(REQUIRE[arch]) - fails
+    bar = PASS[arch]
+    print(f"   {name} as {arch}: met {met}/{len(REQUIRE[arch])} "
+          f"(needs {bar}) -> {'PASS' if met >= bar else 'fail'}")
     for m, gap, v, sh in res["short"]:
-        print(f"      exceeds-short  {m:6s} gap {gap:+6.1f}  need >= +{v}  (short {sh:.1f})")
+        print(f"      short  {m:6s} gap {gap:+6.1f}  need >= +{v}  (short {sh:.1f})")
     for m, gap, cap, ov in res["beyond"]:
-        print(f"      beyond-deficit {m:6s} gap {gap:+6.1f}  cap {cap:+.1f}  (over {ov:.1f})")
+        print(f"      beyond {m:6s} gap {gap:+6.1f}  cap {cap:+.1f}  (over {ov:.1f})")
 
 
 # Canonical hand-verified numbers (author's definitions). Columns:

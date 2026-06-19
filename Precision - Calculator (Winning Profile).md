@@ -39,6 +39,16 @@ Decision boundary per metric = midpoint of the pair:
 | Steal | +2.45 |
 | UFC | −3.05 |
 
+## The pass bar (count model)
+A side wins by **meeting a count** of its six metrics, not all of them:
+- **Pattern Matcher must pass 5 of 6** (may carry 1 on the gap report).
+- **Forecaster must pass 3 of 6** (may carry up to 3 on the gap report).
+
+This asymmetry is the architecture: the PM has to be near-complete to win; the
+FC wins off its few strike metrics while bleeding the grind ones. Verdict:
+one side passes its bar and the other doesn't → that side wins; neither → NO
+CALL; both → flag.
+
 ## How to read it
 - The **PM wins** when its (PM−FC) gaps sit on the PM side of the midpoints —
   i.e. PM is adding the strike (1-4, conv) on top of native grind (9+, steal,
