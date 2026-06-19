@@ -170,30 +170,26 @@ def vs_baseline(player, arch):
     return profile(BASELINE["PM"], player, "FC")
 
 
-def main():
-    print("Verdict = profile gate; gap report records every shortfall "
-          "(negatives recorded, not disqualified).\n")
-    # (PM name, FC name) -- author's CBI labels
-    matchups = [("Tien", "Auger"), ("Altmaier", "Hurkacz")]
-    for pm_name, fc_name in matchups:
-        pm, fc = CANON[pm_name], CANON[fc_name]
-        v = verdict(pm, fc)
-        print(f"{pm_name} (PM) vs {fc_name} (FC):   CALL: {v['call']}")
-        _show(pm_name, "PM", v["PM"])
-        _show(fc_name, "FC", v["FC"])
-        # oppUFE: DISPLAY ONLY (not gated). Shown when both sides have it.
-        if "oufe" in pm and "oufe" in fc:
-            print(f"      [display] oppUFE  {pm_name} {pm['oufe']:.1f}  vs  "
-                  f"{fc_name} {fc['oufe']:.1f}  (gap {pm['oufe']-fc['oufe']:+.1f}, "
-                  f"not in verdict)")
-        print()
+def h2h_table(pm_name, pm, fc_name, fc, title=""):
+    """Print the H2H in chart format: player | ownUFE | oppUFE | 1-4 | 9+ |
+    steal | conv, then the call. oppUFE shown (display-only)."""
+    v = verdict(pm, fc)
+    print(f"### {pm_name} (PM) vs {fc_name} (FC){title}")
+    print("| player | ownUFE | oppUFE | 1-4 | 9+ | steal | conv |")
+    print("|---|---|---|---|---|---|---|")
+    for nm, d, lbl in [(pm_name, pm, "PM"), (fc_name, fc, "FC")]:
+        opp = f"{d['oufe']:.1f}" if "oufe" in d else "—"
+        print(f"| {nm} ({lbl}) | {d['ufc']:.1f} | {opp} | {d['r14']:.1f} | "
+              f"{d['r9']:.1f} | {d['steal']:.1f} | {d['conv']:.1f} |")
+    print(f"**CALL: {v['call']}**  (PM {v['PM_met']}/{len(REQUIRE['PM'])} "
+          f"need {PASS['PM']}, FC {v['FC_met']}/{len(REQUIRE['FC'])} need {PASS['FC']})")
+    return v
 
-    print("vs BASELINE (unknown-opponent stand-in):")
-    for name, arch in [("Tien", "PM"), ("Auger", "FC"),
-                       ("Hurkacz", "FC"), ("Altmaier", "PM")]:
-        r = vs_baseline(CANON[name], arch)
-        _show(name, arch, r)
-        print()
+
+def main():
+    h2h_table("Tien", CANON["Tien"], "Auger", CANON["Auger"], "  — Halle")
+    print()
+    h2h_table("Altmaier", CANON["Altmaier"], "Hurkacz", CANON["Hurkacz"], "  — Halle")
 
 
 if __name__ == "__main__":
