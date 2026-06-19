@@ -84,12 +84,12 @@ Pull these from the file:
 - **conv** = TennisViz conversion (NOT the file's `BP_conv%` — different stat)
 - **steal** = TennisViz steal (NOT the file's `steal_droplob` — different stat)
 
-- **oppUFE** = the **actual measured opponent UFE**, supplied raw (NOT
-  constructed). `adjUFE + WinUFE` was tried and rejected — `WinUFE` is ~+0.9 for
-  everyone (not the UFE differential), so that formula can only make oppUFE
-  *larger* than ownUFE and can't represent a player who forces *fewer* errors
-  than he makes (Auger forces 15.4 while making 19.5). `forces_oppUFE` is the
-  wrong scale. So oppUFE is the one metric that comes straight from the source.
+- **oppUFE** = `adjUFE` + `WinUFE` (the column right before adjUFE is `forces_oppUFE`;
+  the author's oppUFE is the **adjUFE + WinUFE** sum, baked into the metrics). This
+  is **display-only** in the H2H — it is NOT a gate metric. Note: WinUFE ≈ +0.9 for
+  everyone, so oppUFE ≈ ownUFE + ~0.9 — largely redundant with ownUFE, which is why
+  it doesn't gate. The earlier per-match chart oppUFE values (e.g. Tien 19.4) are
+  **superseded/wrong**; the computed adjUFE + WinUFE is the metric that counts.
 
 ## Baseline profiles (stand-in opponent when the competitor is unknown)
 Absolute metric values for a winning PM and a winning FC. When an opponent's
