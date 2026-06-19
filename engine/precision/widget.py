@@ -39,8 +39,9 @@ REQUIRE = {
            "steal": ("exceed", 3.6), "ufc": ("errcap", 3.9)},
     "FC": {"r14": ("exceed", 2.3), "conv": ("exceed", 0.5),
            "oufe": ("trail", 0.8), "r9": ("trail", 0.6),
-           "steal": ("trail", 1.3), "ufc": ("errcap", 2.8)},
+           "steal": ("trail", 1.3), "ufc": ("errcap", 2.2)},
 }
+# UFE caps = verified magnitudes: PM 3.9, FC 2.2 (own errors flagged only when high).
 
 
 def load_pool():

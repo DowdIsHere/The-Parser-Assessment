@@ -65,9 +65,8 @@ CALL; both → flag.
   matches the independent charting re-derivation).
 - **UFC is "must not exceed" in BOTH directions** — own unforced errors are
   flagged only when they run **too high**, never too low. It is an error CAP,
-  not an exceed-target. Gap-report caps: **PM ≤ +3.9**, **FC ≤ +2.8** (the
-  failure line; winning FCs sit ~+2.2, just under). The verified −3.9 / −2.2
-  pair is the decision centroid; the cap is the separate failure boundary.
+  not an exceed-target. Gap-report caps = the verified magnitudes:
+  **PM ≤ +3.9**, **FC ≤ +2.2**.
 
 ## Metric → gradient (reference only; literature kept separate/proprietary)
 1-4 / 9+ = Temporal · Conv = Abstract-Spatial · Steal = Concrete-Spatial ·
