@@ -63,6 +63,38 @@ def same_parser(a, b, arch):
     return sum(bd.values()), bd
 
 
+# ABSOLUTE WIN-METRICS (beat-the-hardest). The PM-win / FC-win profiles are the
+# bar to beat the HARDEST opposite-pole parser; everyone else is in the middle.
+# So a player who clears the win-metrics beats anyone -- no opponent label needed.
+# 5 metrics (oppUFE display-only); higher better except ufc (lower better).
+WIN_ABS = {
+    "FC": {"r14": 50.8, "conv": 68.8, "r9": 49.1, "steal": 32.2, "ufc": 18.6},
+    "PM": {"r14": 51.3, "conv": 70.3, "r9": 51.5, "steal": 33.8, "ufc": 15.5},
+}
+
+
+def win_strength(p):
+    """How many win-metrics a player clears, at the pole he best fits.
+    Returns (pole, count, metrics_met)."""
+    best = None
+    for pole, w in WIN_ABS.items():
+        ms = [k for k in w if (p[k] <= w[k] if k == "ufc" else p[k] >= w[k])]
+        if best is None or len(ms) > best[1]:
+            best = (pole, len(ms), ms)
+    return best
+
+
+def resolve(a_name, a, b_name, b):
+    """Call a matchup with no labels needed: whoever clears more win-metrics
+    wins (ties -> toss-up, fall back to within-parser if same pole)."""
+    sa, sb = win_strength(a), win_strength(b)
+    if sa[1] > sb[1]:
+        return a_name, sa, sb
+    if sb[1] > sa[1]:
+        return b_name, sa, sb
+    return "TOSS-UP", sa, sb
+
+
 def load_pool():
     """The pool = players in Everybody Measurements with ALL SIX metrics."""
     pool = {}
