@@ -45,6 +45,23 @@ REQUIRE = {
 }
 # UFE caps = verified magnitudes: PM 3.9, FC 2.2 (own errors flagged only when high).
 
+# SAME-PARSER resolution: winner-minus-loser gaps WITHIN each type (5 gate
+# metrics; oppUFE excluded). For a same-type matchup the winner is whoever is
+# more "winner-like," weighted by how much each metric separates that type's
+# winners from its losers. FC is decided by grind (9+ heaviest); PM by strike.
+WITHIN = {
+    "FC": {"r14": 0.6, "conv": -0.1, "r9": 3.5, "steal": 2.0, "ufc": -0.8},
+    "PM": {"r14": 2.8, "conv": 1.9, "r9": 1.8, "steal": 0.4, "ufc": -0.8},
+}
+
+
+def same_parser(a, b, arch):
+    """Both players are CBI type `arch`. Returns (score, breakdown); score > 0
+    means player a is the more winner-like and wins."""
+    g = WITHIN[arch]
+    bd = {m: g[m] * (a[m] - b[m]) for m in g}
+    return sum(bd.values()), bd
+
 
 def load_pool():
     """The pool = players in Everybody Measurements with ALL SIX metrics."""
