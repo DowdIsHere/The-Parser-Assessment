@@ -31,14 +31,14 @@ LABEL = {"r14": "1-4", "conv": "conv", "r9": "9+", "steal": "steal", "ufc": "ufc
 
 
 def state(kind, gap, v):
+    # SUCCESS metric (exceed): MET only if gap >= threshold. Short of it -- even
+    # positive -- is NO-EDGE. No "considered" zone on success metrics (PM or FC).
     if kind == "exceed":
-        if gap >= v:
-            return "FULL"
-        if gap >= 0:
-            return "considered"
-        return "NO-EDGE"
+        return "MET" if gap >= v else "NO-EDGE"
+    # ALLOWED gap (trail): held if within the allowed deficit, else NO-EDGE.
     if kind == "trail":
         return "hold" if gap >= -v else "NO-EDGE"
+    # own-error cap: held if not exceeding by more than v, else NO-EDGE.
     if kind == "cap":
         return "hold" if gap <= v else "NO-EDGE"
     return "?"
@@ -62,9 +62,11 @@ def chart(name, player, pole, opp):
                 else f">= -{r['thr']} (trail)" if r["kind"] == "trail"
                 else f"<= +{r['thr']} (cap)")
         print(f"    {r['metric']:6s} gap {r['gap']:+6.1f}  need {need:18s} {r['state']}")
-    holds = sum(r["state"] in ("FULL", "considered", "hold") for r in rows)
-    print(f"    -> holds {holds}/5 (FULL/considered/hold); "
-          f"NO-EDGE on: {[r['metric'] for r in rows if r['state']=='NO-EDGE'] or 'none'}")
+    success_met = [r["metric"] for r in rows
+                   if r["kind"] == "exceed" and r["state"] == "MET"]
+    no_edge = [r["metric"] for r in rows if r["state"] == "NO-EDGE"]
+    print(f"    -> success MET: {success_met or 'none'};  "
+          f"NO-EDGE: {no_edge or 'none'}")
 
 
 if __name__ == "__main__":

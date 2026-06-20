@@ -13,9 +13,13 @@ each metric**:
    led (exceed metrics); within the allowed deficit band on a trail metric.
    **Wrong side (negative) = zero edge — not even "considered."** He doesn't
    have it in the slightest.
-2. **THRESHOLD gate** — `gap ≥ threshold` = **full edge** (at/above the average
-   winner's margin). `0 ≤ gap < threshold` = **"considered"** — a real, partial
-   edge that still counts (decisive in close calls).
+2. **THRESHOLD gate** — depends on metric type:
+   - **SUCCESS metrics (must-exceed)** are **met-or-nothing**: `gap ≥ threshold`
+     = edge (MET); anything less, *even positive*, = **NO-EDGE**. There is **no
+     "considered" zone on success metrics** (PM and FC alike).
+   - **ALLOWED-gap metrics** (the deficits a type may carry — e.g. an FC's 9+,
+     steal, oppUFE; the own-error cap) are **held** while within the allowed
+     band, **NO-EDGE** once breached. The tolerance lives here, not on success.
 
 A winner must carry the **whole prescribed set** this way — **not** win on one
 standout metric while underwater elsewhere. (Brooksby had a full 9+ but was
