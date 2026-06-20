@@ -11,6 +11,16 @@ one graded call at a time. A call counts only when made before the match.*
 
 **Record: 3–0.** Note on #3: the *correct rule* called Cerúndolo; my invented `resolve()` would have called Brooksby (3/5) and **been wrong** — Brooksby was bageled. The framework beat my approximation.
 
+## Methodology (keep these separate)
+- **WIN RATE** — the only number that holds water for this venture — is bound
+  **strictly to the research-captured metrics** (the 700-match prescribed
+  thresholds), applied as the framework prescribes. Nothing observed or invented
+  is allowed to alter it.
+- **SUCCESS-VARIABLES-MET** — a **separate bin**. We record when a player meets a
+  success variable (e.g. conv) as observation only. It is logged alongside but
+  **does NOT feed the win rate.** Exploratory; may inform future recalibration,
+  never the headline number.
+
 ## Notes
 - **Same-parser resolution** (`engine/precision/widget.py` → `same_parser`):
   FC-vs-FC decided by grind (9+ heaviest), PM-vs-PM by strike. oppUFE not used.
