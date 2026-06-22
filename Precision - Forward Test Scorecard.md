@@ -38,42 +38,47 @@ and Medvedev's oppUFE breach (−3.6) — are unchanged. No match flipped to
 all-green.*
 
 ## VARIABLE-SUCCESSES log (for correlation, NOT the win rate)
-conv/steal MET (+) or not (−), each side; result. Question for later: does
-meeting more variables correlate with winning?
+**Source: authoritative TennisViz conv/steal (`Precision - Variables
+(TennisViz).csv`, pulled 2026-06-22).** Supersedes the earlier estimated entries.
+Structured the way the framework treats them for an FC: **conv** is the variable
+**success** metric (exceed +0.5); **steal** is an **allowed-gap** (trail 3.3) —
+its states are *hold* / *breach*, not met/unmet. "+" = conv MET, "−" = conv short.
 
-| Match | Winner-side vars | Loser-side vars | "more vars" matched result? |
+| Match (winner first) | Winner conv | Loser conv | conv picked winner? |
 |---|---|---|---|
-| Fritz v Shelton | Fritz conv+ steal+ | Shelton conv− steal+ | ✓ |
-| Zverev v Collignon | Zverev conv− steal+ | Collignon conv− steal+ | tie |
-| Cerúndolo v Brooksby | Cerúndolo conv+ steal+ | Brooksby conv− steal− | ✓ |
-| Fritz v Zverev | Fritz conv− steal− | Zverev conv+ steal+ | ✗ |
-| Altmaier v Medvedev | Altmaier conv− steal− | Medvedev conv+ steal+ | ✗ |
-| Cerúndolo v Nakashima | Cerúndolo conv− steal+ | Nakashima conv+ steal− | tie |
-| Paul v Humbert | Paul conv+ steal+ | Humbert conv− steal− | ✓ |
+| Fritz v Shelton | − (tie 68.8) | − (tie 68.8) | neither met |
+| Zverev v Collignon | − (70.2) | **+ (70.7)** | ✗ (loser met) |
+| Cerúndolo v Brooksby | **+ (68.0)** | − (66.2) | ✓ |
+| Fritz v Zverev | − (68.8) | **+ (70.2)** | ✗ (loser met) |
+| Altmaier v Medvedev | − (67.7) | **+ (68.5)** | ✗ (loser met) |
+| Cerúndolo v Nakashima | − (68.0) | − (68.4) | neither met |
+| Paul v Humbert | **+ (69.2)** | − (67.4) | ✓ |
 
-So far variables: **3 matched, 2 missed, 2 ties** — both misses were upsets
-(Fritz over Zverev, Altmaier over Medvedev). Recorded for correlation, no
-conclusion drawn.
+**conv as a win-signal: 2 picked the winner, 3 picked the loser, 2 neither.**
+On real data conv is *worse* than the earlier estimate suggested — it points at
+the loser as often as the winner. All three "loser met conv" cases include the
+two upsets (Fritz/Zverev, Altmaier/Medvedev). Recorded for correlation; the
+read (held loosely): **conv is not a win condition.**
 
 ## VARIABLE-FAILURES log (what it takes to break)
-Record where variable status and outcome **diverge** — these are the break
-points. Two kinds: a **winner who WON with a variable failed** (that variable
-wasn't load-bearing) and a **loser who LOST with a variable met** (that variable
-didn't hold).
+Where variable status and outcome **diverge** — the break points. For FC, the
+two break kinds: a **winner who breached the steal trail and still won**, and a
+**loser who met conv / held steal and still lost.**
 
-| Match | Winner won despite failing | Loser lost despite meeting |
+| Match | Winner broke steal & won | Loser met conv / held steal & lost |
 |---|---|---|
 | Fritz v Shelton | — | — |
-| Zverev v Collignon | **conv** (Zverev won conv−) | — |
+| Zverev v Collignon | — | **conv** (Collignon met +0.5, lost) |
 | Cerúndolo v Brooksby | — | — |
-| Fritz v Zverev | **conv + steal** (Fritz won both−) | **conv + steal** (Zverev lost both+) |
-| Altmaier v Medvedev | **conv + steal** (Altmaier won both−) | **conv + steal** (Medvedev lost both+) |
-| Cerúndolo v Nakashima | **conv** (Cerúndolo won conv−) | **conv** (Nakashima lost conv+) |
-| Paul v Humbert | — | — |
+| Fritz v Zverev | **steal** (Fritz −5.5, won) | **conv** (Zverev met, lost) |
+| Altmaier v Medvedev | **steal** (Altmaier −5.8, won) | **conv** (Medvedev met, lost) |
+| Cerúndolo v Nakashima | — | **steal** (Nakashima breached −4.5, lost) |
+| Paul v Humbert | — | **steal** (Humbert breached −7.5, lost) |
 
-**What's breaking so far:** twice a player **met BOTH variables and still lost**
-(Zverev, Medvedev), and twice a player **failed BOTH and still won** (Fritz,
-Altmaier). conv is the most frequent break — won-while-failed in 3 of 7. Early
-read (held loosely): the variables are **not** holding as win conditions. Data
-only; the framework win rate is untouched by this.
+**What's breaking (real data):** twice the winner **breached the steal trail and
+won anyway** (Fritz, Altmaier — both upsets); three times the loser **met conv
+and lost** (Collignon, Zverev, Medvedev). Steal breaches landed on both winners
+(2) and losers (2) — not outcome-determining. Early read (held loosely):
+**neither variable is holding as a win condition** on this sample. Data only —
+the framework win rate (0 calls) is untouched by any of this.
 

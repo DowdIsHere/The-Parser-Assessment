@@ -112,8 +112,11 @@ Pull these from the file:
 - **1-4** = `short_win%`
 - **9+** = `long_win%`
 - **ownUFE** = `adjUFE`
-- **conv** = TennisViz conversion (NOT the file's `BP_conv%` — different stat)
-- **steal** = TennisViz steal (NOT the file's `steal_droplob` — different stat)
+- **conv** = TennisViz conversion (NOT the file's `BP_conv%` — different stat).
+  Source: `Precision - Variables (TennisViz).csv`, `conv` column (pulled 2026-06-22).
+- **steal** = TennisViz steal (NOT the file's `steal_droplob` — different stat).
+  Source: `Precision - Variables (TennisViz).csv`, `steal` column. These two are
+  the **variable bin** — separate from the win rate (see scorecard methodology).
 
 - **oppUFE** = `adjUFE` + `WinUFE` (the column right before adjUFE is `forces_oppUFE`;
   the author's oppUFE is the **adjUFE + WinUFE** sum, baked into the metrics). This
