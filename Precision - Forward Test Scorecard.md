@@ -1,29 +1,47 @@
 # Precision — Forward Test Scorecard
 
-*Honest record of every committed call and its result. Trust is earned here,
-one graded call at a time. A call counts only when made before the match.*
-
-| # | Date | Matchup | Type | Call | Why | Market | Result |
-|---|------|---------|------|------|-----|--------|--------|
-| 1 | Jun 19 | Shelton vs Fritz (Halle) | FC vs FC (same-parser) | **Fritz** | grind edge, 9+ +3.1 → +11.0 | Fritz 56% | ✅ **WIN** — Fritz 6-7(5) 7-6(8) 7-6(3), all 3 tiebreaks |
-| 2 | Jun 19 | Zverev vs Collignon (Halle) | win-metrics | **Zverev** | clears 4/5 win-metrics vs Collignon 3/5 | Zverev ~84% | ✅ **WIN** — Zverev 7-6(10) 7-6(7), both tiebreaks |
-| 3 | Jun 19 | Brooksby vs Cerúndolo (London) | two-gate rule | **Cerúndolo** | Brooksby negative on conv & steal → no winning shape (fails sign gate) | Cerúndolo fav | ✅ **WIN** — Cerúndolo 6-0 6-4 |
-
-**Record: 3–0.** Note on #3: the *correct rule* called Cerúndolo; my invented `resolve()` would have called Brooksby (3/5) and **been wrong** — Brooksby was bageled. The framework beat my approximation.
+*Honest record. Trust is earned one graded call at a time.*
 
 ## Methodology (keep these separate)
-- **WIN RATE** — the only number that holds water for this venture — is bound
-  **strictly to the research-captured metrics** (the 700-match prescribed
-  thresholds), applied as the framework prescribes. Nothing observed or invented
-  is allowed to alter it.
-- **SUCCESS-VARIABLES-MET** — a **separate bin**. We record when a player meets a
-  success variable (e.g. conv) as observation only. It is logged alongside but
-  **does NOT feed the win rate.** Exploratory; may inform future recalibration,
-  never the headline number.
+- **WIN RATE = FRAMEWORK** — bound strictly to the research-captured metrics
+  (1-4, 9+, oppUFE, UFE), applied **all-green**: a side is a framework call only
+  if its success metric is met **AND** every allowed gap is held. Otherwise the
+  framework **abstains (NO CALL).** Nothing observed or invented alters this.
+- **VARIABLES (conv, steal)** — logged separately for **future correlation
+  analysis**. They do **NOT** feed the win rate.
 
-## Notes
-- **Same-parser resolution** (`engine/precision/widget.py` → `same_parser`):
-  FC-vs-FC decided by grind (9+ heaviest), PM-vs-PM by strike. oppUFE not used.
-- Earlier reads NOT counted as clean forward calls: Djere–Ofner (baseline-
-  assisted), Altmaier–Hurkacz (retro/test).
-- The instrument is **untested** until this scorecard shows a track record.
+## FRAMEWORK calls (the validated win rate)
+**0 calls so far.** Across the 7 qualifying matches below, **no side went
+all-green** — the framework abstained on every one. (Prior "3–0" / "1–3" tallies
+were produced by an incorrect higher-count rule I invented; **void.**)
+
+| Match | Framework | Actual |
+|---|---|---|
+| Fritz–Shelton | NO CALL | Fritz |
+| Zverev–Collignon | NO CALL (1-4 met, 9+ breached 0.4) | Zverev |
+| Brooksby–Cerúndolo | NO CALL | Cerúndolo |
+| Fritz–Zverev | NO CALL | Fritz |
+| Altmaier–Medvedev | NO CALL (Medvedev 1-4 met, oppUFE breached) | Altmaier |
+| Cerúndolo–Nakashima | NO CALL | Cerúndolo |
+| Paul–Humbert | NO CALL | Paul |
+
+**Framework record: 0–0 (0 calls, 7 abstentions).** No edge claimed; none earned
+yet. The instrument is strict and has not fired.
+
+## VARIABLE-SUCCESSES log (for correlation, NOT the win rate)
+conv/steal MET (+) or not (−), each side; result. Question for later: does
+meeting more variables correlate with winning?
+
+| Match | Winner-side vars | Loser-side vars | "more vars" matched result? |
+|---|---|---|---|
+| Fritz v Shelton | Fritz conv+ steal+ | Shelton conv− steal+ | ✓ |
+| Zverev v Collignon | Zverev conv− steal+ | Collignon conv− steal+ | tie |
+| Cerúndolo v Brooksby | Cerúndolo conv+ steal+ | Brooksby conv− steal− | ✓ |
+| Fritz v Zverev | Fritz conv− steal− | Zverev conv+ steal+ | ✗ |
+| Altmaier v Medvedev | Altmaier conv− steal− | Medvedev conv+ steal+ | ✗ |
+| Cerúndolo v Nakashima | Cerúndolo conv− steal+ | Nakashima conv+ steal− | tie |
+| Paul v Humbert | Paul conv+ steal+ | Humbert conv− steal− | ✓ |
+
+So far variables: **3 matched, 2 missed, 2 ties** — both misses were upsets
+(Fritz over Zverev, Altmaier over Medvedev). Recorded for correlation, no
+conclusion drawn.
