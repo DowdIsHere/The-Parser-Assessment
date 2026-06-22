@@ -30,6 +30,13 @@ were produced by an incorrect higher-count rule I invented; **void.**)
 **Framework record: 0–0 (0 calls, 9 abstentions).** No edge claimed; none earned
 yet. The instrument is strict and has not fired in 9 qualifying matches.
 
+*Re-run 2026-06-22 on the refreshed form data (Sackmann snapshot, 321→333
+players, single consistent ≥2000-point pipeline): every verdict held. The
+UFE family moved a hair on the fresh opponent-adjustment, but the binding
+constraints — the 1-4 success shortfalls (Fritz +2.0/+0.5 vs +2.3, Auger +1.9)
+and Medvedev's oppUFE breach (−3.6) — are unchanged. No match flipped to
+all-green.*
+
 ## VARIABLE-SUCCESSES log (for correlation, NOT the win rate)
 conv/steal MET (+) or not (−), each side; result. Question for later: does
 meeting more variables correlate with winning?
