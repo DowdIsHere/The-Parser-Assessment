@@ -45,3 +45,26 @@ meeting more variables correlate with winning?
 So far variables: **3 matched, 2 missed, 2 ties** — both misses were upsets
 (Fritz over Zverev, Altmaier over Medvedev). Recorded for correlation, no
 conclusion drawn.
+
+## VARIABLE-FAILURES log (what it takes to break)
+Record where variable status and outcome **diverge** — these are the break
+points. Two kinds: a **winner who WON with a variable failed** (that variable
+wasn't load-bearing) and a **loser who LOST with a variable met** (that variable
+didn't hold).
+
+| Match | Winner won despite failing | Loser lost despite meeting |
+|---|---|---|
+| Fritz v Shelton | — | — |
+| Zverev v Collignon | **conv** (Zverev won conv−) | — |
+| Cerúndolo v Brooksby | — | — |
+| Fritz v Zverev | **conv + steal** (Fritz won both−) | **conv + steal** (Zverev lost both+) |
+| Altmaier v Medvedev | **conv + steal** (Altmaier won both−) | **conv + steal** (Medvedev lost both+) |
+| Cerúndolo v Nakashima | **conv** (Cerúndolo won conv−) | **conv** (Nakashima lost conv+) |
+| Paul v Humbert | — | — |
+
+**What's breaking so far:** twice a player **met BOTH variables and still lost**
+(Zverev, Medvedev), and twice a player **failed BOTH and still won** (Fritz,
+Altmaier). conv is the most frequent break — won-while-failed in 3 of 7. Early
+read (held loosely): the variables are **not** holding as win conditions. Data
+only; the framework win rate is untouched by this.
+
