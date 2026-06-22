@@ -24,9 +24,11 @@ were produced by an incorrect higher-count rule I invented; **void.**)
 | Altmaier–Medvedev | NO CALL (Medvedev 1-4 met, oppUFE breached) | Altmaier |
 | Cerúndolo–Nakashima | NO CALL | Cerúndolo |
 | Paul–Humbert | NO CALL | Paul |
+| Borges–Mannarino | NO CALL | Borges |
+| Sonego–Navone | NO CALL | Sonego |
 
-**Framework record: 0–0 (0 calls, 7 abstentions).** No edge claimed; none earned
-yet. The instrument is strict and has not fired.
+**Framework record: 0–0 (0 calls, 9 abstentions).** No edge claimed; none earned
+yet. The instrument is strict and has not fired in 9 qualifying matches.
 
 ## VARIABLE-SUCCESSES log (for correlation, NOT the win rate)
 conv/steal MET (+) or not (−), each side; result. Question for later: does
