@@ -15,6 +15,22 @@ An earlier draft split them out as "variables, not in the win rate"; the author'
 own grid color-codes all six as pass/fail, so that split is **void.** (FC UFE cap
 held at the engine's verified +2.2; the image's +2.8 is stale.)*
 
+## Verdict statuses (the only three)
+Every side lands in exactly one. **"Variable" is a verdict, not a set of metrics**
+— there is no "variable half," no conv/steal "bin."
+
+- **CALL** — all six metrics measured **and** all six green (every threshold met).
+- **VARIABLE** — all six metrics measured, but **one or more thresholds failed**
+  (≥1 red). The side has the full recipe present; it just didn't pass it. This is
+  the abstain bucket (NO CALL) for fully-measured sides.
+- **NOT GRADABLE** — one or more of the six metrics is **missing** (a player absent
+  from Everybody Measurements or the TennisViz Variables file). A side missing
+  metrics is **not** "Variable" — you can't fail a threshold you never measured.
+
+So conv/steal are simply two of the six metrics. A match that lacks a player's
+Rally/UFE numbers is NOT GRADABLE, full stop — it has no partial "variable"
+standing, even if conv/steal happen to exist.
+
 Engine: `engine/precision/twogate.py` (the recipe) + `engine/precision/recipe.py`
 (assembles the six metrics from the two sources and runs all-green on a matchup).
 

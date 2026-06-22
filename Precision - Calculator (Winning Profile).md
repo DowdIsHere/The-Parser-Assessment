@@ -81,6 +81,15 @@ single factor wins — it's a recipe; only together they win.
 display-only. The author's grid gates OUFE-A and color-codes all six. Conv and
 steal are gates here too — not a separate "variables" bin.*
 
+**Verdict statuses (the only three).** "Variable" is a verdict, **not** a set of
+metrics — there is no "variable half."
+- **CALL** — all six measured and all six green.
+- **VARIABLE** — all six measured, but ≥1 threshold failed (≥1 red). Full recipe
+  present, didn't pass it. This is the NO-CALL bucket for fully-measured sides.
+- **NOT GRADABLE** — one or more of the six is missing (player absent from a
+  source file). Missing metrics ≠ Variable; you can't fail a threshold you never
+  measured. conv/steal existing alone does **not** grant "variable" standing.
+
 FC thresholds (Success gap, gap = side − opp), from IMG_1757:
 | metric | kind | FC threshold |
 |---|---|---|
