@@ -70,17 +70,31 @@ Decision boundary per metric = midpoint of the pair:
 | Steal | +2.45 |
 | UFC | −3.05 |
 
-## The pass bar (count model)
-**oppUFE is NOT a gate metric** (no independent source — see the mapping note).
-The gate runs on the **five** sourceable metrics: 1-4, conv, 9+, steal, ownUFE.
-oppUFE is **display-only** in the H2H. A side wins by meeting a count:
-- **Pattern Matcher must pass 4 of 5** (may carry 1 on the gap report).
-- **Forecaster must pass 3 of 5** (may carry up to 2 on the gap report).
+## The pass bar — ALL-GREEN over SIX (author's calculator, IMG_1757)
+**No count model. No "display-only" metric.** All **six** are gates, including
+**OUFE-A** (oppUFE = adjUFE + WinUFE): **1-4, Convs, OUFE-A, 9+, Steal, UFE.**
+A metric is **green** when it meets its threshold, **red** when it doesn't. A
+side is a **CALL** only when **all six are green**; otherwise **NO CALL.** No
+single factor wins — it's a recipe; only together they win.
 
-This asymmetry is the architecture: the PM has to be near-complete to win; the
-FC wins off its few strike metrics while bleeding the grind ones. Verdict:
-one side passes its bar and the other doesn't → that side wins; neither → NO
-CALL; both → flag.
+*Superseded: the earlier "4-of-5 / 3-of-5 count" and the claim that oppUFE is
+display-only. The author's grid gates OUFE-A and color-codes all six. Conv and
+steal are gates here too — not a separate "variables" bin.*
+
+FC thresholds (Success gap, gap = side − opp), from IMG_1757:
+| metric | kind | FC threshold |
+|---|---|---|
+| 1-4 Rally | exceed | ≥ +2.3 |
+| Convs | exceed | ≥ +0.5 |
+| OUFE-A | trail | ≥ −0.8 |
+| 9+ Rally | trail | ≥ −0.6 |
+| Steal | trail | ≥ −3.3 |
+| UFE | cap | ≤ +2.2 (engine-verified; image's +2.8 stale) |
+
+PM thresholds carry from the calibrated calculator: 1-4 ≥ +1.1, Convs ≥ +1.4,
+OUFE-A ≥ +3.5, 9+ ≥ +5.9, Steal ≥ +3.6, UFE ≤ +3.9. (PM side confirmed off the
+FC-only image only where it overlaps; OUFE-A PM gate uses the verified +3.5
+PM-win gap.)
 
 ## How to read it
 - The **PM wins** when its (PM−FC) gaps sit on the PM side of the midpoints —
@@ -112,18 +126,17 @@ Pull these from the file:
 - **1-4** = `short_win%`
 - **9+** = `long_win%`
 - **ownUFE** = `adjUFE`
-- **conv** = TennisViz conversion (NOT the file's `BP_conv%` — different stat).
-  Source: `Precision - Variables (TennisViz).csv`, `conv` column (pulled 2026-06-22).
+- **conv** (Convs) = TennisViz conversion (NOT the file's `BP_conv%` — different
+  stat). Source: `Precision - Variables (TennisViz).csv`, `conv` column.
 - **steal** = TennisViz steal (NOT the file's `steal_droplob` — different stat).
-  Source: `Precision - Variables (TennisViz).csv`, `steal` column. These two are
-  the **variable bin** — separate from the win rate (see scorecard methodology).
+  Source: `Precision - Variables (TennisViz).csv`, `steal` column. conv and steal
+  are **gates in the recipe**, not a separate bin.
 
-- **oppUFE** = `adjUFE` + `WinUFE` (the column right before adjUFE is `forces_oppUFE`;
-  the author's oppUFE is the **adjUFE + WinUFE** sum, baked into the metrics). This
-  is **display-only** in the H2H — it is NOT a gate metric. Note: WinUFE ≈ +0.9 for
-  everyone, so oppUFE ≈ ownUFE + ~0.9 — largely redundant with ownUFE, which is why
-  it doesn't gate. The earlier per-match chart oppUFE values (e.g. Tien 19.4) are
-  **superseded/wrong**; the computed adjUFE + WinUFE is the metric that counts.
+- **OUFE-A** (oppUFE) = `adjUFE` + `WinUFE` — opponent UFE forced. This **IS a
+  gate** (one of the six). The author's grid (IMG_1757) reads e.g. Zverev 17.9 =
+  16.9 + ~1.0, Fritz 17.0 = 15.9 + ~1.1 — exactly adjUFE + WinUFE. The earlier
+  per-match chart oppUFE values (e.g. Tien 19.4) are **superseded/wrong**; the
+  computed adjUFE + WinUFE is the metric that gates.
 
 ## Baseline profiles (stand-in opponent when the competitor is unknown)
 Absolute metric values for a winning PM and a winning FC. When an opponent's
