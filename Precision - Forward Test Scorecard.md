@@ -84,3 +84,12 @@ fired, and these near-misses are not calls.
 Two one-red near-misses, no call. A match is only gradable with **both** halves
 present — Rally/UFE *and* conv/steal; one ingredient is never a call.
 
+## Variables (logged)
+Graded sides that abstained (≥1 red, no all-green) — no separate "True Variable"
+status; market-confirmed toss-ups just sit here.
+
+| Match | Status | Note |
+|---|---|---|
+| Altmaier vs Kovacevic | Variable | market 53¢/48¢ toss-up; **Altmaier won** (slight fav). Metrics partial — Kovacevic has conv/steal but no Rally/UFE — so logged on the market read, not a full grade. |
+
+
