@@ -1,9 +1,12 @@
 # Grading Prompt — six-metric all-green recipe (automation-ready)
 
-Drop this into a fresh Claude (Cowork/Code) session pointed at this repo. It
-encodes the recipe, thresholds, pole rule, verdicts, and output format so the
-agent runs without re-deriving anything. Paste matchups under `MATCHUPS:` to run
-in one shot.
+Drop this into a Claude Cowork session pointed at this repo. It encodes the
+recipe, thresholds, pole rule, verdicts, and output format so the agent runs
+without re-deriving anything.
+
+USAGE (recurring list every 6h): set Cowork to run this prompt on a 6-hour
+schedule. Cowork has schedule access, so it fetches the day's matchups itself —
+no input needed. (For a one-off, you can still paste matchups under `MATCHUPS:`.)
 
 ---
 
@@ -11,7 +14,9 @@ You are grading ATP singles matchups with the six-metric all-green recipe.
 Work in the repo; the engine lives at engine/precision/twogate.py (recipe) and
 engine/precision/recipe.py (loader). Reuse them — do not reinvent the math.
 
-INPUT: a list of matchups, one per line ("Player A vs Player B").
+STEP 0 — GET THE MATCHUPS: fetch today's and the next ~24h of ATP singles order
+of play (you have schedule access). Collect every singles matchup with both
+player names. If a `MATCHUPS:` list is provided below, use that instead.
 
 DATA SOURCES (the only rosters):
 - "Precision - Everybody Measurements.csv"  cols: tour,player,WinUFE,short_win%,
@@ -67,14 +72,11 @@ VARIABLE, and list NOT GRADABLE matches with the missing player(s). End with:
 "ALL-GREEN CALLS: <list or NONE>".
 
 Market odds, if mentioned, are external context only — they never change a grade.
-Report faithfully: if nothing goes all-green, say 0 calls.
+Report faithfully: if nothing goes all-green, say 0 calls. Lead the run with the
+date/time and a one-line headline (e.g. "N gradable, M all-green calls"), so a
+quick glance tells the whole story.
 
-SCHEDULE (optional): if asked to fetch the week's matchups yourself, try it — but
-results/schedule pages (ATP, Flashscore, Wikipedia) may return HTTP 403 to
-automated fetch. If they do, say so and ask for the matchups pasted instead of
-guessing.
-
-MATCHUPS:
+MATCHUPS (optional — leave blank to auto-fetch in Step 0):
 <!-- paste one matchup per line, e.g.
 Jack Draper vs Brandon Nakashima
 Fabian Marozsan vs Alejandro Tabilo
