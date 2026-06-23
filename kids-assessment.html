@@ -224,9 +224,29 @@
                     <p class="profile-description" id="kidLearn" style="font-size:1.05rem;"></p>
                 </div>
 
+                <div class="result-section" id="kidBasicsSection" style="display:none;">
+                    <h3>🏫 Learning the Basics at School</h3>
+                    <p class="profile-description" id="kidBasics" style="font-size:1.05rem;"></p>
+                </div>
+
+                <div class="result-section" id="kidEnergySection" style="display:none;">
+                    <h3>⚡ What Fills You Up & Wears You Out</h3>
+                    <div id="kidEnergy" style="white-space:pre-line;font-size:1.02rem;color:var(--text-secondary);text-align:left;"></div>
+                </div>
+
+                <div class="result-section" id="kidFrictionSection" style="display:none;">
+                    <h3>🤝 Where You Bump Heads</h3>
+                    <p class="profile-description" id="kidFriction" style="font-size:1.05rem;"></p>
+                </div>
+
                 <div class="result-section" id="kidWatchOutsSection" style="display:none;">
                     <h3>🧭 Things to Watch For</h3>
                     <div id="kidWatchOuts"></div>
+                </div>
+
+                <div class="result-section" id="kidBlocksSection" style="display:none;">
+                    <h3>🧠 Your Thinking Blocks</h3>
+                    <div id="kidBlocks" style="white-space:pre-line;font-size:1.02rem;color:var(--text-secondary);text-align:left;"></div>
                 </div>
 
                 <div class="result-section" id="kidGrownUpsSection" style="display:none;">
@@ -652,12 +672,28 @@
             if (hasLearn) document.getElementById('kidLearn').textContent = rich.howYouLearn;
             document.getElementById('kidLearnSection').style.display = hasLearn ? 'block' : 'none';
 
+            const hasBasics = !!(rich && rich.learningBasics);
+            if (hasBasics) document.getElementById('kidBasics').textContent = rich.learningBasics;
+            document.getElementById('kidBasicsSection').style.display = hasBasics ? 'block' : 'none';
+
+            const hasEnergy = !!(rich && rich.energyPatterns);
+            if (hasEnergy) document.getElementById('kidEnergy').textContent = rich.energyPatterns;
+            document.getElementById('kidEnergySection').style.display = hasEnergy ? 'block' : 'none';
+
+            const hasFriction = !!(rich && rich.frictionPatterns);
+            if (hasFriction) document.getElementById('kidFriction').textContent = rich.frictionPatterns;
+            document.getElementById('kidFrictionSection').style.display = hasFriction ? 'block' : 'none';
+
             const hasWatch = !!(rich && rich.watchOuts && rich.watchOuts.length);
             if (hasWatch) {
                 document.getElementById('kidWatchOuts').innerHTML =
                     rich.watchOuts.map(w => card(w.title, w.tip)).join('');
             }
             document.getElementById('kidWatchOutsSection').style.display = hasWatch ? 'block' : 'none';
+
+            const hasBlocks = !!(rich && rich.blockIndicators);
+            if (hasBlocks) document.getElementById('kidBlocks').textContent = rich.blockIndicators;
+            document.getElementById('kidBlocksSection').style.display = hasBlocks ? 'block' : 'none';
 
             const hasGrownUps = !!(rich && rich.forGrownUps);
             if (hasGrownUps) document.getElementById('kidGrownUps').textContent = rich.forGrownUps;
