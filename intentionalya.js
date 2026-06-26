@@ -1,0 +1,106 @@
+// INTENTIONAL Profile — Young Adult (18–29)
+// Parser Profile™ © 2026 Cognition Blocks LLC
+
+export const intentionalyaProfile = {
+  "name": "INTENTIONAL",
+  "tagline": "The one who's already building what others are still wishing for",
+
+  "overview": "You can see who you're going to be more clearly than who you are right now. That future version of you—the one with the degree, the apartment, the thing you've been working toward—feels more real than the person reading this. And you're not sitting around waiting for that future to show up. You're building it. One choice, one shift, one saved paycheck at a time.\n\nThey'll call it luck when it works out. They won't have seen the two years of prep before the opportunity showed up. The thousand tiny decisions that put you exactly where you needed to be—skipping the night out to finish the application, taking the unglamorous job because of where it led. They'll see the result and think it just happened to you. You know you made it happen.\n\nYou don't drift. You don't just hope. You build.\n\nWhile your friends are waiting to see what life does to them, you're engineering it. Not vague \"someday\" stuff—actual goals with actual dates. Not wishful thinking—a plan worked backward from what you want, broken into steps you can do this week. The gap between wanting a thing and having it is, to you, basically just a to-do list nobody's written yet.\n\nThey tell you to \"relax\" and \"go with the flow.\" But you've watched where the flow takes people. Nowhere they meant to go. You're not stressed about the future—you're building it. There's a difference, even if it doesn't always look like one from the outside.",
+
+  "howYouLearn": "The class clicked the second you saw how it connected to what you're building. Until then it was just info floating loose, and info that doesn't attach to the goal slides off you fast. \"Why does this actually matter?\" isn't you being a jerk when you ask it—it's a filter. You're checking whether this belongs in the thing you're assembling or whether it's a detour you can't afford.\n\nYou learned more from the one person who'd actually done the thing you're chasing than from any teacher with the credentials and none of the real-world miles. Someone standing where you want to stand can hand you the actual route—the order to do things in, the step that looks skippable and isn't. The expert who never made the trip themselves had nothing you could use to set up your next move.\n\nStuff that serves the goal becomes permanent; stuff with no use fades by next week. You've reread the same page of a book twenty times because it held the exact thing you needed for the stretch in front of you—and skipped whole chapters that didn't apply. You don't read for completeness. You read for whatever moves the build forward.\n\nTeaching yourself is where you actually thrive, because the structure that wrecks other people is the part you supply yourself. Motivation is never your problem—you can see the future the learning unlocks clearly enough to build your own plan and hold yourself to it, no syllabus required, no one checking your work.",
+
+  "howYouCommunicate": "Conversations are rarely just idle for you—you're building something, learning something, or connecting two things that needed connecting. \"So what's the takeaway?\" lives in your head even when you're polite enough not to say it. You're always quietly sorting talk into useful and not, waiting for the part that moves something forward.\n\nYou can lay out where you're going and exactly how you plan to get there with a clarity that either lights people up or wears them out. The same detailed map that makes one friend want to come along makes another feel kind of steamrolled by how sure you are. You're not trying to bulldoze anyone—you just genuinely see the path that clearly, and it's hard to fake that you don't.\n\nSmall talk is fine but never really natural. You can do the weekend and the weather, but part of you is idling, waiting for the conversation to land on a point. In a group you're the one who eventually goes, \"okay, so what are we actually doing here?\"—the question that turns a loose hangout into a decision with a next step.\n\nYou say what you need and ask for what you want, and you move toward settling things instead of circling them. You'd rather just name the thing and resolve it than let it hang. An open loop is a small drag on the trajectory, and you can feel it pulling.",
+
+  "phrase": "You're not a control freak. You're just not willing to leave your future to chance when a little preparation is right there on the table.",
+
+  "secret": "Your future self feels more real than your current self. You're not really living in now—you're living toward then. And that's cost you things.\n\nMoments you should've actually been in, you passed through on your way to somewhere else. Friendships you should've kept up, you let drift because they didn't fit the timeline. Rest you should've taken, you skipped because there was always more to build. You've been so locked on becoming that you've sometimes forgotten to just be.\n\nYou've hit goals that impressed everyone and felt weirdly hollow about it. The thing you reached wasn't the point—the next thing was already in focus before you'd even finished celebrating. Arriving never lands as hard as chasing does. You've never quite figured out how to make it otherwise.\n\nThere's a fear you don't really look at: what happens if you stop? Who are you without the plan, without the next step, without the trajectory? The constant forward motion isn't only strategy—it's also a way of not sitting still long enough to feel something you're not ready to feel.\n\nThe deepest part: you've quietly wondered if you're even capable of being happy now, or if you're just wired for the chase—if the finish line is always going to slide a little further out every time you get close.",
+
+  "whatOthersGetWrong": "They call you a control freak when you're really just prepared. They mix up planning ahead with being scared—reading all your careful positioning as anxiety, when it's the opposite: you're calm precisely because you already built the thing that would otherwise be a reason to panic. \"Obsessed with your goals,\" they say, like having a clear direction is some kind of flaw instead of the whole advantage.\n\nThey tell you to relax, often right in the middle of cleaning up a preventable mess you warned them about months ago. From where you're sitting, \"relax\" is the advice that made the mess—the refusal to look ahead, dressed up as being chill. You weren't tense. You were just the only one who'd done the prep.\n\nThey think your future-focus means you're checked out of right now. It actually runs the other way: you see more of the present than they do, because you can see where each piece of it leads. This moment isn't less real to you—it's heavier, because you can read what it turns into. \"Workaholic\" gets thrown at you by people who don't get that when the work lines up with where you're going, it doesn't even feel like work.\n\nAnd they assume you're never satisfied because there's always a next goal. But you are satisfied—by the progress, by the trajectory itself. The arrival was never the prize; the building is. They mistake your forward motion for being chronically unhappy, when it's actually the thing you most enjoy.",
+
+  "hiddenSuperpower": "You can take any goal and reverse-engineer it into actual steps—and then actually do them. While everyone else is dreaming vaguely about \"someday,\" you've got the timeline, the checkpoints, and the thing-to-do-today mapped out. You turn fuzzy wants into real outcomes through pure deliberate intention.\n\nWhat looks like crazy willpower to other people is just alignment for you. You're not fighting yourself to do the work. You're doing the obvious thing given where you're going. The resistance everyone else white-knuckles through, you mostly skipped, because the clarity does the heavy lifting.\n\nYou've pulled off things that looked impossible because nobody saw the work you put in before it got visible. Years of quiet prep that looks, from the outside, like overnight success. They see the tip; you built the whole iceberg underneath it.\n\nSetbacks are data, not verdicts. A delay is just a revised timeline. A failure is intel for the next attempt. Your eyes-on-the-future thing makes present obstacles feel temporary—because, honestly, they usually are.",
+
+  "blindSpot": "There's a friendship you let go because it didn't fit the plan—and from inside the plan, that decision looked totally reasonable. That's the trap. Your whole system optimizes hard for the trajectory, which means the stuff that doesn't push it forward can get quietly cut before you even feel the cost. That person wasn't an inefficiency. But your system filed them as one.\n\nYou miss the moment in front of you because you're already somewhere else in your head—standing in a future you're building while the actual present happens without you watching. You can climb the ladder fast and efficient and then look up one day and realize you skipped most of what was supposed to make the climb worth it. The happiness you keep deferring sits on a horizon that moves back every time you get close.\n\nThere's an opportunity you can't see because it's not on your map. Your plan is a powerful tool and also a narrow one—it sharpens your focus toward the goal and dims everything off to the sides, including the better thing that would've required you to look up from the blueprint for a second.\n\nAnd the one that's hardest to catch from the inside: the people around you sometimes feel like obstacles in your way instead of people on the journey with you. You don't mean them that way. But when someone slows the build, your gut read is friction, not friendship—and they can feel which one they are to you, even when you'd never actually say it.",
+
+  "frictionPatterns": "You rub up against the present-focused people who seem genuinely fine with right now while you're busy building toward then. Their ease can look like drift to you, and your drive can look like an inability to ever just chill to them. The past-focused ones frustrate you differently—they want to know what worked before, you want to know what could work next, and you're basically facing opposite directions across the same table.\n\n\"Just go with the flow\" is the advice that grates the most, especially from someone whose flow has visibly led nowhere. You've seen where unstructured drifting ends up, and it's not somewhere you want to be. So when somebody offers it like wisdom, it lands as the exact opposite—a suggestion to ditch the one thing that's actually gotten you anywhere.\n\nAnyone who reads your clarity as rigidity, or your prep as anxiety, creates friction just by mislabeling what you're doing. And the people who've mistaken their own lack of direction for being \"flexible\" tend to bristle around you, because your trajectory quietly exposes the difference between being open and being adrift.\n\nWhat you bring to that friction is momentum and direction—you can take a vague group wish and turn it into an actual sequence of moves. Your growth edge is remembering that being present-focused or people-focused isn't a failure of ambition. The friend savoring right now, or tracking how everyone's actually holding up, is reading something real that your forward-lean tends to blow right past.",
+
+  "energyPatterns": "What drains you:\n- A job or program with no clear way up or forward\n- Being stuck waiting on other people's timelines\n- Time getting wasted that you could've invested\n- People who don't even take their own goals seriously\n- Having to slow down for group process when you could just move\n- Goals blocked by stuff totally outside your control\n\nWhat charges you:\n- Real progress toward something you actually defined\n- Running your own trajectory, on your own terms\n- Hitting a milestone—and then beating the next one\n- The discipline of waiting finally paying off\n- A clear line from where you are to where you're going\n- Watching a plan you made actually come true",
+
+  "workEnvironments": "Where you thrive:\n- Places where individual effort actually gets rewarded\n- A clear path to advance\n- What you do directly decides where you go\n- Merit over politics—results matter more than who you know\n- Freedom over how you do the work, with effort that visibly connects to outcome\n\nWhere you suffocate:\n- Advancement that's vague or all about office politics\n- Success that depends on stuff you can't control\n- Getting promoted by how long you've been there, not how good you are\n- Roles with a hard ceiling on how far you can grow\n- Bureaucracy that punishes you for taking initiative",
+
+  "topCareers": [
+    {
+      "title": "Founder / Starting Your Own Thing",
+      "description": "You see your future self more clearly than your present one, and you don't wait around for it—you build it, one brick at a time. That's the whole engine of starting something: not luck, but the thousand deliberate decisions that positioned you before the opportunity even showed up. You thrive where effort connects straight to outcome and you own how it gets done. The \"luck\" people credited was always architecture, and starting your own thing—even a small side hustle first—is the arena that finally pays you for building on purpose instead of drifting."
+    },
+    {
+      "title": "Project / Product Coordinator",
+      "description": "You don't drift or just hope—you build, turning a vision of what should exist into the actual sequence that gets you there. Entry-level project and product coordination rewards exactly that: holding a clear future and laying the steps toward it in order, today. You're at your best with some freedom over the how and a result that's clearly yours. The discipline of converting a future self into present action, which is just how your brain already works, is basically the whole job of building something that didn't exist before."
+    },
+    {
+      "title": "Self-Directed / Freelance Professional",
+      "description": "You positioned yourself for opportunities before they showed up and called it preparation while everyone else called it luck. Freelance and self-directed work rewards that merit-based engine—where what you do determines where you go, with no seniority ceiling on your growth. You set the trajectory and execute it without waiting to be told. The forward-built, self-authored drive that chafed against \"wait your turn\" and red tape is, here, the entire basis for how you actually get ahead."
+    }
+  ],
+
+  "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Sequential Processing (planning and execution)\n- Self-Reference Processing (strong personal goal orientation)\n- Pattern Recognition (reverse-engineering the path to what you want)\n\nLikely Moderate-Accessibility Blocks:\n- Perceptual Discrimination (concrete detail tracking)\n- Spatial Relationships (practical application)\n\nLikely Lower-Accessibility Blocks:\n- Social Signal Processing (other-focus less emphasized)\n- Symbolic Manipulation (abstract reasoning without a concrete application)\n\nThis pattern suggests your cognitive architecture is optimized for personal achievement, executing on goals, and building yourself on purpose, with room to grow in staying present and tuning into the people on the journey with you.\n\nINTENTIONAL",
+
+  "strengths": [
+    {
+      "title": "Working Backward From the Goal",
+      "description": "You take any goal and reverse it into the actual steps it'll take. Where your friends see some far-off outcome and feel overwhelmed by the gap, you see a plan. You're already mapping the route from here to there while everyone else is still staring at how far away it looks."
+    },
+    {
+      "title": "Playing the Long Game",
+      "description": "You can put in the work now for a payoff later without losing motivation. The future reward is real enough to you that skipping the thing tonight feels like investing, not missing out. Most people can't hold the future solid enough to trade present fun for it. You can, and it compounds."
+    },
+    {
+      "title": "Actually Doing It",
+      "description": "You don't just plan—you execute. Day after day, step by step, you do the thing against your goals with a consistency that piles up into real results. It's not the white-knuckle willpower other people feel. For you it's alignment—you're just doing what obviously makes sense given where you're headed."
+    },
+    {
+      "title": "Breaking It Into Pieces",
+      "description": "You naturally chop a huge goal into checkpoints you can actually measure. That makes an overwhelming thing manageable and gives you a steady read on whether you're making progress. While everyone else is paralyzed staring at the whole mountain, you're just focused on the next step up."
+    },
+    {
+      "title": "Not Wasting Anything",
+      "description": "Time, money, energy, attention—you treat all of it as stuff to spend on purpose toward where you're going. Waste actually bothers you. Pointless inefficiency frustrates you. You're constantly optimizing, not because you're uptight, but because you're clear about what you're building."
+    },
+    {
+      "title": "Betting on Yourself",
+      "description": "You put real resources into your own growth because you get how it compounds. A skill you build now pays off for years. You invest in yourself the way smart people invest money—patiently, on purpose, knowing it appreciates while everyone else spends it all on right now."
+    }
+  ],
+
+  "challenges": [
+    {
+      "title": "The Now You Skipped",
+      "challenge": "Your future-focus turned the present into a construction site. Moments that deserved your full attention got passed through on the way to somewhere else. Joy got deferred because it didn't move anything forward. By the time you arrived, you'd kind of missed the whole journey there.",
+      "remedy": "Schedule being present on purpose. Block out time for things with no goal except actually experiencing them. The future you're building needs a version of you that can actually live in it once you get there."
+    },
+    {
+      "title": "When People Feel Like Obstacles",
+      "challenge": "People started feeling like things in your way—slowing you down, pulling resources, complicating a clean plan. You ended up treating relationships like something to optimize, and lost connection that can't be scheduled or earned back later.",
+      "remedy": "Reframe people as part of the build, not friction against it. The ones who matter aren't obstacles—they're a big part of what makes the goal even worth hitting. Getting to the top alone isn't actually winning."
+    },
+    {
+      "title": "When the Plan Broke",
+      "challenge": "Something blew up your path—a layoff, a breakup, a move you didn't choose—and you felt totally unmoored. Your whole system runs on a future you can roughly predict. When that future shifted hard, your biggest strength suddenly became a liability.",
+      "remedy": "Build flexibility into the plan itself. Add backup options. Practice pivoting on the small disruptions so the big ones don't wreck you. Your planning strength doesn't actually require a fixed destination—it works just as well for navigating ground that keeps shifting."
+    },
+    {
+      "title": "Their Timeline, Not Yours",
+      "challenge": "You're running on a longer timeline than the people around you. They want results now; you're building for later. They see your investment phase as you stalling, your prep as you procrastinating, and it's exhausting to keep explaining.",
+      "remedy": "Just spell out your timeline. Help people see the structure you're building and where it leads. When your timeline clashes with theirs, negotiate it—but don't shrink your longer horizon down to match their shorter one."
+    },
+    {
+      "title": "When You Become the Goal",
+      "challenge": "Missing a goal stopped feeling like a missed outcome and started feeling like you failed as a person. The goal quietly became who you are instead of just what you're doing. So changing course got painful, and falling short got devastating.",
+      "remedy": "Pull your identity back out of the outcome. You are not your goals—you're someone who's good at setting and chasing them. That ability sticks around no matter how any single goal turns out. The builder is more permanent than any one thing you build."
+    },
+    {
+      "title": "Comparing to Everyone Else",
+      "challenge": "Clear goals created clear numbers, and clear numbers invited comparison. Someone else hitting it faster generated this nagging dissatisfaction that quietly poisoned the very thing you actually cared about.",
+      "remedy": "Measure against your own starting line, not other people's results. Progress is personal. The only fair comparison is yesterday's you against today's you—everyone else is running a different race on a different track."
+    }
+  ]
+};
