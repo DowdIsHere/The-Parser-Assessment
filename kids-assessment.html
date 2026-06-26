@@ -578,6 +578,26 @@
             }
         }
 
+        function renderBlocks(kidCode) {
+            const helpers = window.parserBlocks;
+            if (!helpers) return;
+            const data = helpers.getBlocksByKidCode(kidCode);
+            if (!data) return;
+            const labels = helpers.blockKidLabels || {};
+            const renderList = (id, items) => {
+                document.getElementById(id).innerHTML = items.map(b => `
+                    <li>
+                        <span class="block-kid-label">${labels[b] || b}</span>
+                        <span class="block-tech-label">(${b})</span>
+                    </li>
+                `).join('');
+            };
+            renderList('blocksHigh', data.high);
+            renderList('blocksModerate', data.moderate);
+            renderList('blocksLow', data.low);
+            document.getElementById('blocksSection').style.display = 'block';
+        }
+
         function showResults() {
             // Calculate average scores for each dimension (1-5 scale)
             const avgSpatial = scores.spatial.reduce((a, b) => a + b, 0) / scores.spatial.length;
@@ -599,6 +619,8 @@
             // Full kid profile content when available; otherwise the short blurb
             const rich = kidsProfiles[archetype] || null;
             const description = rich ? rich.overview : blurb;
+
+            renderBlocks(profileKey);
 
             // Log completion — generates customer ID and sends notification
             fetch('/api/log-completion', {
