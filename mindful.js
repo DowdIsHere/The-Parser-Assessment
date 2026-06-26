@@ -29,6 +29,21 @@ export const mindfulProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments where quality of attention matters\n- Contemplative settings, therapeutic contexts, facilitation\n- Roles involving holding space for others\n- Work requiring nuanced perception of present dynamics\n- Meditation instruction, hospice care, any role where presence itself is the contribution\n\nWhere you suffocate:\n- Environments that fragment attention relentlessly\n- Roles requiring rapid task-switching without presence\n- Cultures that equate busyness with value\n- High-noise, low-signal environments",
 
+  "topCareers": [
+    {
+      "title": "Meditation / Mindfulness Teacher",
+      "description": "You inhabit the present at a resolution most people never reach—the quality of attention in a room, the subtle shift beneath the obvious. Meditation and mindfulness instruction are that perception made teachable: helping others access the texture of now that you live in natively. You hold balanced attention between yourself and others without losing either. The presence that fragmented, busy cultures couldn't value becomes, here, the entire offering."
+    },
+    {
+      "title": "Hospice / Palliative Care",
+      "description": "You can hold space without needing to fill it, perceiving what's actually happening beneath what's being said. Hospice and palliative work depend on exactly that—presence itself as the contribution, attention as the gift. You don't rush the moment or flee its weight; you stay, at full resolution. The capacity to simply be fully present that high-noise environments wasted is precisely what this work asks for."
+    },
+    {
+      "title": "Facilitator / Contemplative Practitioner",
+      "description": "You perceive the felt sense of a conversation and the meaningful shift before it's named. Facilitation and contemplative practice reward that quality of attention—holding a room with presence so the real thing can surface. You bring nuanced perception of present dynamics without tipping toward self or other. The attentiveness that busyness-equals-value cultures couldn't count becomes the skill the whole role rests on."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (perceiving patterns as they form)\n- Self-Reference Processing (through balanced attention that includes self)\n- Social Signal Processing (through balanced attention that includes other)\n\nLikely Moderate-Accessibility Blocks:\n- Perceptual Discrimination (abstract rather than concrete, but still perceptive)\n- Symbolic Manipulation (conceptual processing of present-moment data)\n- Generative Creation (witnessing as active, not merely passive)\n\nLikely Lower-Accessibility Blocks:\n- Sequential Processing (present-focus may resist temporal sequencing)\n- Spatial Relationships (abstract orientation may de-emphasize concrete spatial processing)\n\nThis pattern suggests your cognitive architecture is optimized for present-moment awareness and nuanced perception of quality. Your developmental opportunities lie in temporal extension—learning to track patterns across time without abandoning present-focus.\n\nMINDFUL",
 
   "strengths": [

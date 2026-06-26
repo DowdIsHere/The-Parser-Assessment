@@ -29,6 +29,21 @@ export const idealizedProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that value history, principles, and institutional integrity\n- Organizational ethics, compliance (especially mission-based), institutional history\n- Values-based consulting, religious or philosophical communities\n- Heritage organizations, roles focused on organizational culture and integrity\n- Any role where maintaining integrity over time matters\n\nWhere you suffocate:\n- Environments that treat the past as irrelevant\n- Cultures that celebrate disruption without honoring what's disrupted\n- Relentlessly future-focused organizations with no interest in origin or purpose",
 
+  "topCareers": [
+    {
+      "title": "Ethics / Integrity Officer",
+      "description": "You remember what things were supposed to mean—the promise underneath the event, the principle that was at stake. Ethics and integrity work is exactly that: holding the present accountable to the ideal it claims to serve. You track what was signified, the values expressed, and you notice when an organization drifts from what it said it stood for. The \"why are you so hung up on principle\" that impatient rooms threw at you is, here, the entire mandate."
+    },
+    {
+      "title": "Mission-Based / Values Consultant",
+      "description": "You carry a vision of how things should have been, drawn from the best of what was, and you hold institutions to it. Values-based and mission-driven consulting reward that: helping an organization stay true to its founding purpose instead of letting it erode into convenience. You see the principles beneath the surface where others only see operations. The idealism that read as impractical becomes the thing mission-led organizations most need to keep."
+    },
+    {
+      "title": "Institutional Historian / Culture Steward",
+      "description": "You know what the original commitment pointed toward, and you won't let it quietly disappear. Institutional history and culture-stewardship work is built for that—keeping the meaning and integrity of a place alive across time, not just its records. You honor what's worth honoring and name when something better is being traded for something cheaper. The loyalty to ideals that frustrated disruption-for-its-own-sake cultures is exactly what heritage roles exist to protect."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (seeing value patterns and drift across time)\n- Social Signal Processing (other-oriented attention to collective dynamics)\n- Symbolic Manipulation (working with abstract meaning and values)\n\nLikely Moderate-Accessibility Blocks:\n- Self-Reference Processing (accessible when attention turns inward)\n- Sequential Processing (organizing historical narrative)\n- Generative Creation (articulating ideals and their implications)\n\nLikely Lower-Accessibility Blocks:\n- Perceptual Discrimination (present-moment sensory detail less attended than abstract significance)\n- Spatial Relationships (concrete spatial processing less emphasized)\n\nThis pattern suggests your cognitive architecture is optimized for moral memory and collective accountability. Your developmental opportunities lie in present-moment appreciation and self-reference—building capacity to see present goodness and to recognize your own wounds within your principled stance.\n\nIDEALIZED",
 
   "strengths": [

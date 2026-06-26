@@ -29,6 +29,21 @@ export const equanimousProfile = {
 
   "workEnvironments": "Where you thrive:\n- Impartiality and nuanced understanding valued\n- Mediation, facilitation, counseling, diplomacy, analysis\n- Roles requiring fairness and steady presence\n- Calm presence is the primary value\n\nWhere you suffocate:\n- Tribal loyalty demanded\n- Extreme position-taking rewarded\n- Balance viewed as weakness\n- Partisan environments where \"not being strongly X\" makes you suspect",
 
+  "topCareers": [
+    {
+      "title": "Mediator / Diplomat",
+      "description": "You rest at center—not through effort, through architecture—while everyone else is pulled toward the extremes. Mediation and diplomacy are built for exactly that: the person who can hold every side fairly because no side is where you natively live. You access any pole when it's useful but default to none, which is why parties trust you not to be secretly on the other one. The balance that gets read as fence-sitting in partisan rooms is, here, the entire qualification."
+    },
+    {
+      "title": "Analyst / Impartial Evaluator",
+      "description": "You can get concrete or abstract, draw on the past or project forward, weigh self against other—and not tip. Analysis and impartial evaluation reward that equilibrium: seeing a situation whole, without the distortion of a default lean. You hold nuance where others demand a side, and your read holds up because it isn't bent toward a conclusion you wanted. The even-handedness that made tribal environments suspicious of you is the foundation of judgment people can actually rely on."
+    },
+    {
+      "title": "Facilitator / Counselor",
+      "description": "When everything shakes, you're the stable center that holds steady, and people settle just being near it. Facilitation and counseling pay for that witnessing presence—staying balanced and clear while someone else's intensity runs hot. You don't get recruited into the drama; you hold space around it. The calm that felt to others like \"not caring enough\" is, in this work, precisely the value you bring."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (balance lets you see patterns across all domains)\n- Perceptual Discrimination (present-focus enables fine-grained awareness)\n- Social Signal Processing (balanced reference gives access to interpersonal dynamics)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (accessible when needed)\n- Symbolic Manipulation (available but not preferentially engaged)\n- Self-Reference Processing (balanced, not foregrounded)\n\nLikely Lower-Accessibility Blocks:\n- Generative Creation (balance may limit the drive that comes from tension and strong orientation)\n\nThis pattern suggests your cognitive architecture is optimized for understanding across difference, maintaining perspective, and responding flexibly to situational demands.\n\nEQUANIMOUS",
 
   "strengths": [

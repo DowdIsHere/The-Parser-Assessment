@@ -29,6 +29,21 @@ export const foresightedProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments where foresight is the job\n- Strategy, planning, forecasting, risk assessment, trend analysis, futures research\n- Any role where perceiving what's coming creates value\n- Strategic advisor roles translating trajectory perception into actionable guidance\n\nWhere you suffocate:\n- Purely reactive environments where no one plans\n- Cultures where strategy is considered overhead\n- Where putting out today's fires consumes all attention\n- Where your future-perception is treated as anxiety to be managed",
 
+  "topCareers": [
+    {
+      "title": "Strategist / Futures Researcher",
+      "description": "You see the future bleeding into the present—pattern recognition applied to trajectories that others experience as prediction. Strategy and futures research are exactly that capacity at work: tracking what's becoming while everyone else is fixed on what is. You perceive the shape of things before they fully form and translate it into guidance. The future-perception that got managed as anxiety becomes, in this field, the entire product."
+    },
+    {
+      "title": "Forecasting / Trend Analyst",
+      "description": "You're oriented toward emergence—you catch the signal of where current conditions are heading before it's obvious. Forecasting and trend analysis pay for that early read: seeing the trajectory and naming it while there's still time to act. You hold balanced attention across stakeholders, so your projections account for more than one interest. The \"you're getting ahead of yourself\" that reactive cultures said becomes, here, precisely the point."
+    },
+    {
+      "title": "Strategic Advisor / Planner",
+      "description": "You perceive what's coming clearly enough that others call it foresight, and you can turn that into a plan. Strategic advisory and planning reward exactly that—converting trajectory-perception into actionable guidance for people focused on today's fires. You're the one in the room already living in the consequence of the current decision. The anticipation that felt like overthinking the future becomes the discipline organizations hire you to provide."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Pattern Recognition (trajectory and trend detection)\n- Symbolic Manipulation (abstract processing of future implications)\n- Generative Creation (perceiving possible futures, not just probable ones)\n\nLikely Moderate-Accessibility Blocks:\n- Self-Reference Processing (through balanced attention that includes self)\n- Social Signal Processing (through balanced attention that includes other)\n- Sequential Processing (tracking how futures unfold from presents)\n\nLikely Lower-Accessibility Blocks:\n- Perceptual Discrimination (abstract orientation may de-emphasize concrete present-moment detail)\n- Spatial Relationships (temporal processing emphasized over spatial)\n\nThis pattern suggests your cognitive architecture is optimized for strategic intelligence and anticipatory perception. Your developmental opportunities lie in present-moment engagement—building capacity to value what's here now, not just what it's becoming.\n\nFORESIGHTED",
 
   "strengths": [

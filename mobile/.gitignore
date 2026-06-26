@@ -1,0 +1,6 @@
+# Capacitor / native build output — generated locally on your Mac, not committed
+node_modules/
+www/
+ios/
+android/
+.DS_Store
