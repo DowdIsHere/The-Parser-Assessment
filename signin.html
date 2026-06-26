@@ -71,8 +71,8 @@
 <body>
   <div class="auth-page">
     <div class="auth-card">
-      <div class="auth-logo">The Cognition Block</div>
-      <div class="auth-logo-sub">Let's talk about it…</div>
+      <div class="auth-logo">Parser Frame™</div>
+      <div class="auth-logo-sub">by J.D. Mercer</div>
 
       <!-- AUTH FORM -->
       <div id="formWrap">
@@ -173,7 +173,7 @@
           showError(data.error || (mode === 'register' ? 'Could not create account.' : 'Sign in failed.'));
           return;
         }
-        showSignedIn(data.user);
+        window.location.href = '/profile.html';
       } catch (_) {
         showError('Something went wrong. Please try again.');
       } finally {
