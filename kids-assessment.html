@@ -6,22 +6,22 @@
     <title>Parser Profile for Kids | How Do You Think?</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --blue-500: #2563EB;
-            --blue-400: #3B82F6;
-            --blue-100: #DBEAFE;
-            --slate-900: #1A1A2E;
-            --slate-700: #334155;
-            --slate-500: #64748B;
-            --slate-100: #F1F5F9;
-            --white: #FFFFFF;
-            --bg-page: #F7F8FA;
-            --bg-card: #FFFFFF;
-            --text-primary: #1A1A2E;
-            --text-secondary: #334155;
-            --text-muted: #64748B;
+            --blue-500: #9A7B2E;
+            --blue-400: #B8922A;
+            --blue-100: #E8D9B0;
+            --slate-900: #1E1813;
+            --slate-700: #4A3F35;
+            --slate-500: #8A7E6E;
+            --slate-100: #F2ECE0;
+            --white: #FFFDF9;
+            --bg-page: #FAF7F0;
+            --bg-card: #FFFDF9;
+            --text-primary: #1E1813;
+            --text-secondary: #4A3F35;
+            --text-muted: #8A7E6E;
             --border: rgba(0, 0, 0, 0.08);
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
@@ -31,7 +31,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'IBM Plex Sans', system-ui, sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
             min-height: 100vh;
@@ -43,7 +43,7 @@
             text-align: center;
             padding: 20px 0 30px;
         }
-        .logo { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.5rem; font-weight: 700; color: var(--slate-900); }
+        .logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 700; color: var(--slate-900); }
         .logo span { color: var(--blue-500); }
         .tagline { color: var(--slate-500); font-size: 1rem; margin-top: 5px; }
         .progress-container { margin: 20px 0; }
@@ -60,8 +60,8 @@
             padding: 30px;
             box-shadow: var(--shadow-sm);
         }
-        .card h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; font-weight: 700; margin-bottom: 15px; text-align: center; }
-        .card h2 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 25px; line-height: 1.4; }
+        .card h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-weight: 700; margin-bottom: 15px; text-align: center; }
+        .card h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 25px; line-height: 1.4; }
         .card p { color: var(--text-secondary); margin-bottom: 20px; font-size: 1.1rem; text-align: center; }
         .question-number { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
         .options { display: flex; flex-direction: column; gap: 12px; }
@@ -105,7 +105,7 @@
         .dimension-item.reference .label { color: var(--accent-reference); }
         /* Results */
         .result-section { margin: 25px 0; }
-        .result-section h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; margin-bottom: 15px; }
+        .result-section h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; margin-bottom: 15px; }
         .score-bar-container { margin: 10px 0 20px; }
         .score-bar { height: 20px; background: var(--slate-100); border-radius: 10px; position: relative; overflow: hidden; }
         .score-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
@@ -113,8 +113,10 @@
         .score-fill.temporal { background: var(--accent-temporal); }
         .score-fill.reference { background: var(--accent-reference); }
         .score-labels { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
-        .profile-name { font-size: 1.8rem; color: var(--blue-500); font-weight: 700; margin: 10px 0; }
+        .profile-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; color: var(--blue-500); font-weight: 700; margin: 10px 0; }
         .profile-description { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+        @media (prefers-reduced-motion: no-preference) { button:active, .btn:active, .btn-primary:active { transform: translateY(-1px) scale(0.98); } }
     </style>
 </head>
 <body>
@@ -173,6 +175,11 @@
                 <div class="profile-name" id="profileName">Loading...</div>
                 <p class="profile-description" id="profileDescription"></p>
 
+                <div class="result-section" id="kidSuperpowersSection" style="display:none;">
+                    <h3>⭐ Your Superpowers</h3>
+                    <div id="kidSuperpowers"></div>
+                </div>
+
                 <div class="result-section">
                     <h3>🧩 How You See Things</h3>
                     <div class="score-bar-container">
@@ -212,16 +219,79 @@
                     </div>
                 </div>
 
+                <div class="result-section" id="kidLearnSection" style="display:none;">
+                    <h3>📚 How You Learn Best</h3>
+                    <p class="profile-description" id="kidLearn" style="font-size:1.05rem;"></p>
+                </div>
+
+                <div class="result-section" id="kidBasicsSection" style="display:none;">
+                    <h3>🏫 Learning the Basics at School</h3>
+                    <p class="profile-description" id="kidBasics" style="font-size:1.05rem;"></p>
+                </div>
+
+                <div class="result-section" id="kidEnergySection" style="display:none;">
+                    <h3>⚡ What Fills You Up & Wears You Out</h3>
+                    <div id="kidEnergy" style="white-space:pre-line;font-size:1.02rem;color:var(--text-secondary);text-align:left;"></div>
+                </div>
+
+                <div class="result-section" id="kidFrictionSection" style="display:none;">
+                    <h3>🤝 Where You Bump Heads</h3>
+                    <p class="profile-description" id="kidFriction" style="font-size:1.05rem;"></p>
+                </div>
+
+                <div class="result-section" id="kidWatchOutsSection" style="display:none;">
+                    <h3>🧭 Things to Watch For</h3>
+                    <div id="kidWatchOuts"></div>
+                </div>
+
+                <div class="result-section" id="kidBlocksSection" style="display:none;">
+                    <h3>🧠 Your Thinking Blocks</h3>
+                    <div id="kidBlocks" style="white-space:pre-line;font-size:1.02rem;color:var(--text-secondary);text-align:left;"></div>
+                </div>
+
+                <div class="result-section" id="kidGrownUpsSection" style="display:none;">
+                    <h3>👨‍👩‍👧 For Grown-Ups</h3>
+                    <p class="profile-description" id="kidGrownUps" style="font-size:1rem;"></p>
+                </div>
+
                 <div id="customerIdDisplay" style="display:none;margin:16px 0;padding:12px 20px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;text-align:center;">
                     <div style="font-size:0.75rem;color:#64748b;margin-bottom:4px;">Customer ID</div>
-                    <div id="customerIdValue" style="font-weight:700;font-size:1.1rem;letter-spacing:0.08em;color:#2563eb;font-family:monospace;"></div>
+                    <div id="customerIdValue" style="font-weight:700;font-size:1.1rem;letter-spacing:0.08em;color:#2563eb;font-family:'IBM Plex Mono', monospace;"></div>
                 </div>
                 <button class="btn-primary" onclick="restartAssessment()">Try Again</button>
             </div>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { actualizedKidsProfile } from './actualizedkids.js';
+        import { altruisticKidsProfile } from './altruistickids.js';
+        import { attunedKidsProfile } from './attunedkids.js';
+        import { centeredKidsProfile } from './centeredkids.js';
+        import { coherentKidsProfile } from './coherentkids.js';
+        import { collaborativeKidsProfile } from './collaborativekids.js';
+        import { embodiedKidsProfile } from './embodiedkids.js';
+        import { empatheticKidsProfile } from './empathetickids.js';
+        import { equanimousKidsProfile } from './equanimouskids.js';
+        import { foresightedKidsProfile } from './foresightedkids.js';
+        import { groundedKidsProfile } from './groundedkids.js';
+        import { harmoniousKidsProfile } from './harmoniouskids.js';
+        import { idealizedKidsProfile } from './idealizedkids.js';
+        import { integratedKidsProfile } from './integratedkids.js';
+        import { intentionalKidsProfile } from './intentionalkids.js';
+        import { introspectiveKidsProfile } from './introspectivekids.js';
+        import { intuitiveKidsProfile } from './intuitivekids.js';
+        import { legacyKidsProfile } from './legacykids.js';
+        import { mindfulKidsProfile } from './mindfulkids.js';
+        import { reconciledKidsProfile } from './reconciledkids.js';
+        import { reflectiveKidsProfile } from './reflectivekids.js';
+        import { reliableKidsProfile } from './reliablekids.js';
+        import { resilientKidsProfile } from './resilientkids.js';
+        import { seasonedKidsProfile } from './seasonedkids.js';
+        import { sentimentalKidsProfile } from './sentimentalkids.js';
+        import { sharpKidsProfile } from './sharpkids.js';
+        import { visionaryKidsProfile } from './visionarykids.js';
+
         // 9 Questions for Kids Assessment
         const questions = [
             // SPATIAL QUESTIONS (3)
@@ -384,6 +454,71 @@
             'mid-mid-mid': { name: 'The Balanced Thinker', desc: 'You\'re flexible in every way! You can think big or small, about past or future, about yourself or others. You adapt to any situation!' }
         };
 
+        // The real Parser archetype for each score key — the same 27 used in the
+        // grown-up assessment. (spatial: low=Concrete/big-step-by-step, high=Big-Picture;
+        // temporal: low=Past, high=Future; reference: low=Others, high=Self.)
+        const archetypeByKey = {
+            'high-high-high': 'Visionary',
+            'high-high-mid': 'Foresighted',
+            'high-high-low': 'Altruistic',
+            'high-mid-high': 'Introspective',
+            'high-mid-mid': 'Mindful',
+            'high-mid-low': 'Intuitive',
+            'high-low-high': 'Sentimental',
+            'high-low-mid': 'Reflective',
+            'high-low-low': 'Idealized',
+            'mid-high-high': 'Actualized',
+            'mid-high-mid': 'Harmonious',
+            'mid-high-low': 'Collaborative',
+            'mid-mid-high': 'Centered',
+            'mid-mid-mid': 'Equanimous',
+            'mid-mid-low': 'Empathetic',
+            'mid-low-high': 'Integrated',
+            'mid-low-mid': 'Coherent',
+            'mid-low-low': 'Reconciled',
+            'low-high-high': 'Intentional',
+            'low-high-mid': 'Resilient',
+            'low-high-low': 'Reliable',
+            'low-mid-high': 'Embodied',
+            'low-mid-mid': 'Grounded',
+            'low-mid-low': 'Attuned',
+            'low-low-high': 'Sharp',
+            'low-low-mid': 'Seasoned',
+            'low-low-low': 'Legacy'
+        };
+
+        // Full kid-edition profiles. Each archetype gets fleshed out over time;
+        // until then the assessment falls back to the short blurb above.
+        const kidsProfiles = {
+            'Visionary': visionaryKidsProfile,
+            'Foresighted': foresightedKidsProfile,
+            'Altruistic': altruisticKidsProfile,
+            'Introspective': introspectiveKidsProfile,
+            'Mindful': mindfulKidsProfile,
+            'Intuitive': intuitiveKidsProfile,
+            'Sentimental': sentimentalKidsProfile,
+            'Reflective': reflectiveKidsProfile,
+            'Idealized': idealizedKidsProfile,
+            'Actualized': actualizedKidsProfile,
+            'Harmonious': harmoniousKidsProfile,
+            'Collaborative': collaborativeKidsProfile,
+            'Centered': centeredKidsProfile,
+            'Equanimous': equanimousKidsProfile,
+            'Empathetic': empatheticKidsProfile,
+            'Integrated': integratedKidsProfile,
+            'Coherent': coherentKidsProfile,
+            'Reconciled': reconciledKidsProfile,
+            'Intentional': intentionalKidsProfile,
+            'Resilient': resilientKidsProfile,
+            'Reliable': reliableKidsProfile,
+            'Embodied': embodiedKidsProfile,
+            'Grounded': groundedKidsProfile,
+            'Attuned': attunedKidsProfile,
+            'Sharp': sharpKidsProfile,
+            'Seasoned': seasonedKidsProfile,
+            'Legacy': legacyKidsProfile
+        };
+
         function startAssessment() {
             document.getElementById('welcomeScreen').classList.remove('active');
             document.getElementById('questionScreen').classList.add('active');
@@ -443,6 +578,26 @@
             }
         }
 
+        function renderBlocks(kidCode) {
+            const helpers = window.parserBlocks;
+            if (!helpers) return;
+            const data = helpers.getBlocksByKidCode(kidCode);
+            if (!data) return;
+            const labels = helpers.blockKidLabels || {};
+            const renderList = (id, items) => {
+                document.getElementById(id).innerHTML = items.map(b => `
+                    <li>
+                        <span class="block-kid-label">${labels[b] || b}</span>
+                        <span class="block-tech-label">(${b})</span>
+                    </li>
+                `).join('');
+            };
+            renderList('blocksHigh', data.high);
+            renderList('blocksModerate', data.moderate);
+            renderList('blocksLow', data.low);
+            document.getElementById('blocksSection').style.display = 'block';
+        }
+
         function showResults() {
             // Calculate average scores for each dimension (1-5 scale)
             const avgSpatial = scores.spatial.reduce((a, b) => a + b, 0) / scores.spatial.length;
@@ -458,14 +613,21 @@
             const getLevel = (pct) => pct < 33 ? 'low' : pct > 66 ? 'high' : 'mid';
             const profileKey = `${getLevel(spatialPercent)}-${getLevel(temporalPercent)}-${getLevel(referencePercent)}`;
 
-            const profile = profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid'];
+            // Map the score to the real Parser archetype (e.g. Big-Picture+Future+Self = Visionary)
+            const archetype = archetypeByKey[profileKey] || 'Balanced Thinker';
+            const blurb = (profileDescriptions[profileKey] || profileDescriptions['mid-mid-mid']).desc;
+            // Full kid profile content when available; otherwise the short blurb
+            const rich = kidsProfiles[archetype] || null;
+            const description = rich ? rich.overview : blurb;
+
+            renderBlocks(profileKey);
 
             // Log completion — generates customer ID and sends notification
             fetch('/api/log-completion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    profileName: profile.name + ' (Kids)',
+                    profileName: archetype + ' (Kids)',
                     profileCode: profileKey,
                     scores: {
                         spatial: Math.round(spatialPercent),
@@ -474,7 +636,7 @@
                     },
                     emailProvided: false,
                     assessmentType: 'kids',
-                    overview: profile.desc || ''
+                    overview: description || ''
                 })
             }).then(r => r.json()).then(data => {
                 if (data.customerId) {
@@ -487,8 +649,9 @@
             document.getElementById('questionScreen').classList.remove('active');
             document.getElementById('resultsScreen').classList.add('active');
 
-            document.getElementById('profileName').textContent = profile.name;
-            document.getElementById('profileDescription').textContent = profile.desc;
+            document.getElementById('profileName').textContent = archetype;
+            document.getElementById('profileDescription').textContent = description;
+            renderKidProfile(rich);
 
             document.getElementById('spatialBar').style.width = spatialPercent + '%';
             document.getElementById('temporalBar').style.width = temporalPercent + '%';
@@ -507,7 +670,62 @@
             document.getElementById('welcomeScreen').classList.add('active');
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('progressText').textContent = 'Ready to start!';
+            renderKidProfile(null);
         }
+
+        // Render the rich kid-profile sections (superpowers, learning, watch-outs,
+        // grown-up note). Each section only shows when the matched profile has that
+        // content; otherwise it's hidden and only the name + blurb appear.
+        function renderKidProfile(rich) {
+            const card = (title, body) =>
+                `<div style="background:var(--slate-100);border-radius:12px;padding:14px 16px;margin-bottom:10px;text-align:left;">
+                    <div style="font-weight:700;color:var(--blue-500);margin-bottom:4px;">${title}</div>
+                    <div style="font-size:1rem;color:var(--text-secondary);">${body}</div>
+                 </div>`;
+
+            const hasSuperpowers = !!(rich && rich.superpowers && rich.superpowers.length);
+            if (hasSuperpowers) {
+                document.getElementById('kidSuperpowers').innerHTML =
+                    rich.superpowers.map(s => card('⭐ ' + s.title, s.description)).join('');
+            }
+            document.getElementById('kidSuperpowersSection').style.display = hasSuperpowers ? 'block' : 'none';
+
+            const hasLearn = !!(rich && rich.howYouLearn);
+            if (hasLearn) document.getElementById('kidLearn').textContent = rich.howYouLearn;
+            document.getElementById('kidLearnSection').style.display = hasLearn ? 'block' : 'none';
+
+            const hasBasics = !!(rich && rich.learningBasics);
+            if (hasBasics) document.getElementById('kidBasics').textContent = rich.learningBasics;
+            document.getElementById('kidBasicsSection').style.display = hasBasics ? 'block' : 'none';
+
+            const hasEnergy = !!(rich && rich.energyPatterns);
+            if (hasEnergy) document.getElementById('kidEnergy').textContent = rich.energyPatterns;
+            document.getElementById('kidEnergySection').style.display = hasEnergy ? 'block' : 'none';
+
+            const hasFriction = !!(rich && rich.frictionPatterns);
+            if (hasFriction) document.getElementById('kidFriction').textContent = rich.frictionPatterns;
+            document.getElementById('kidFrictionSection').style.display = hasFriction ? 'block' : 'none';
+
+            const hasWatch = !!(rich && rich.watchOuts && rich.watchOuts.length);
+            if (hasWatch) {
+                document.getElementById('kidWatchOuts').innerHTML =
+                    rich.watchOuts.map(w => card(w.title, w.tip)).join('');
+            }
+            document.getElementById('kidWatchOutsSection').style.display = hasWatch ? 'block' : 'none';
+
+            const hasBlocks = !!(rich && rich.blockIndicators);
+            if (hasBlocks) document.getElementById('kidBlocks').textContent = rich.blockIndicators;
+            document.getElementById('kidBlocksSection').style.display = hasBlocks ? 'block' : 'none';
+
+            const hasGrownUps = !!(rich && rich.forGrownUps);
+            if (hasGrownUps) document.getElementById('kidGrownUps').textContent = rich.forGrownUps;
+            document.getElementById('kidGrownUpsSection').style.display = hasGrownUps ? 'block' : 'none';
+        }
+
+        // This script is a module, so inline onclick handlers need to be on window.
+        window.startAssessment = startAssessment;
+        window.nextQuestion = nextQuestion;
+        window.restartAssessment = restartAssessment;
     </script>
 </body>
 </html>

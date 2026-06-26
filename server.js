@@ -19,6 +19,25 @@ const JWT_SECRET = process.env.SESSION_SECRET || 'parser-profile-kids-change-me-
 const JWT_EXPIRES = '30d';
 const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
+// ============================================================================
+// SUPABASE (persistent storage)
+// ============================================================================
+// When SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set, accounts and
+// completions are stored in Postgres. Otherwise the server transparently
+// falls back to the local JSON files below (fine for local dev only).
+let createClient = null;
+try { ({ createClient } = require('@supabase/supabase-js')); } catch { /* package not installed */ }
+
+const supabase = (createClient && process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
+    ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } })
+    : null;
+
+if (supabase) {
+    console.log('[DB] Supabase connected:', process.env.SUPABASE_URL);
+} else {
+    console.warn('[DB] Supabase NOT configured — using local JSON files (data will not persist across deploys). Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
+}
+
 // Stripe webhook needs raw body, so set it up before express.json()
 app.post('/api/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
@@ -47,6 +66,68 @@ function saveAccounts(data) {
     } catch (e) {
         console.error('Error saving accounts:', e.message);
     }
+}
+
+// ── Data layer: Supabase when configured, local file otherwise ──
+
+async function dbFindAccount(email) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_accounts')
+            .select('email, password_hash, first_name, last_name, role')
+            .eq('email', normalized)
+            .maybeSingle();
+        if (error) throw error;
+        if (!data) return null;
+        return { email: data.email, passwordHash: data.password_hash, firstName: data.first_name, lastName: data.last_name, role: data.role };
+    }
+    const accounts = loadAccounts();
+    return accounts.users.find(u => u.email === normalized) || null;
+}
+
+async function dbCreateAccount({ email, passwordHash, firstName, lastName, role }) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { error } = await supabase.from('parser_accounts').insert({
+            email: normalized, password_hash: passwordHash,
+            first_name: firstName, last_name: lastName || '', role
+        });
+        if (error) {
+            if (error.code === '23505') return { duplicate: true }; // unique violation
+            throw error;
+        }
+        return { ok: true };
+    }
+    const accounts = loadAccounts();
+    accounts.users.push({ email: normalized, passwordHash, firstName, lastName: lastName || '', role, createdAt: new Date().toISOString() });
+    saveAccounts(accounts);
+    return { ok: true };
+}
+
+// Insert a completion row and return its canonical customer ID.
+// Falls back to the file-based counter when Supabase is not configured.
+async function dbInsertCompletion(fields) {
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_completions')
+            .insert({
+                profile_name: fields.profileName || null,
+                profile_code: fields.profileCode || null,
+                scores: fields.scores || null,
+                email: fields.userEmail ? fields.userEmail.toLowerCase().trim() : null,
+                name: fields.userName || null,
+                assessment_type: fields.assessmentType || 'adult',
+                email_provided: !!fields.emailProvided
+            })
+            .select('id')
+            .single();
+        if (error) throw error;
+        const customerId = `CBI-${new Date().getFullYear()}-${String(data.id).padStart(5, '0')}`;
+        await supabase.from('parser_completions').update({ customer_id: customerId }).eq('id', data.id);
+        return customerId;
+    }
+    return generateCustomerId();
 }
 
 // ============================================================================
@@ -91,34 +172,40 @@ app.get('/api/auth/status', (req, res) => {
 app.post('/api/auth/register', async (req, res) => {
     const { email, password, firstName, lastName, role } = req.body;
 
-    if (!email || !password || !firstName || !lastName || !role) {
+    if (!email || !password || !firstName || !role) {
         return res.status(400).json({ success: false, error: 'All fields are required' });
     }
-    if (!['parent', 'teacher'].includes(role)) {
-        return res.status(400).json({ success: false, error: 'Role must be parent or teacher' });
+    if (!['parent', 'teacher', 'member'].includes(role)) {
+        return res.status(400).json({ success: false, error: 'Role must be parent, teacher, or member' });
     }
     if (password.length < 8) {
         return res.status(400).json({ success: false, error: 'Password must be at least 8 characters' });
     }
 
-    const accounts = loadAccounts();
     const normalizedEmail = email.toLowerCase().trim();
-    if (accounts.users.find(u => u.email === normalizedEmail)) {
-        return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+    try {
+        const existing = await dbFindAccount(normalizedEmail);
+        if (existing) {
+            return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+        }
+        const passwordHash = await bcrypt.hash(password, 12);
+        const created = await dbCreateAccount({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: (lastName || '').trim(), role });
+        if (created.duplicate) {
+            return res.status(409).json({ success: false, error: 'An account with this email already exists' });
+        }
+    } catch (e) {
+        console.error('[register] DB error:', e.message);
+        return res.status(500).json({ success: false, error: 'Could not create account. Please try again.' });
     }
 
-    const passwordHash = await bcrypt.hash(password, 12);
-    accounts.users.push({ email: normalizedEmail, passwordHash, firstName: firstName.trim(), lastName: lastName.trim(), role, createdAt: new Date().toISOString() });
-    saveAccounts(accounts);
-
-    const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+    const token = jwt.sign({ email: normalizedEmail, role, firstName: firstName.trim(), lastName: (lastName || '').trim() }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
     res.cookie('kidsAccessToken', token, {
         httpOnly: true,
         secure: !!process.env.RAILWAY_ENVIRONMENT_NAME,
         sameSite: 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000
     });
-    res.json({ success: true, user: { email: normalizedEmail, role, firstName: firstName.trim(), lastName: lastName.trim() } });
+    res.json({ success: true, user: { email: normalizedEmail, role, firstName: firstName.trim(), lastName: (lastName || '').trim() } });
 });
 
 app.post('/api/auth/login', async (req, res) => {
@@ -127,8 +214,13 @@ app.post('/api/auth/login', async (req, res) => {
         return res.status(400).json({ success: false, error: 'Email and password are required' });
     }
 
-    const accounts = loadAccounts();
-    const user = accounts.users.find(u => u.email === email.toLowerCase().trim());
+    let user;
+    try {
+        user = await dbFindAccount(email);
+    } catch (e) {
+        console.error('[login] DB error:', e.message);
+        return res.status(500).json({ success: false, error: 'Login failed. Please try again.' });
+    }
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
         return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
@@ -146,6 +238,89 @@ app.post('/api/auth/login', async (req, res) => {
 app.post('/api/auth/logout', (req, res) => {
     res.clearCookie('kidsAccessToken');
     res.json({ success: true });
+});
+
+// ============================================================================
+// MEMBER PROFILE — revisit your Parser Profile after signing in
+// ============================================================================
+
+function getAuthUser(req) {
+    const token = req.cookies?.kidsAccessToken;
+    if (!token) return null;
+    try { return jwt.verify(token, JWT_SECRET); }
+    catch { return null; }
+}
+
+// Retrieve the signed-in user's saved Parser Profile.
+// Supabase: their most recent completion (stored with their email at finish).
+// Local file mode: the profile saved onto their account record.
+async function dbGetUserProfile(email) {
+    const normalized = email.toLowerCase().trim();
+    if (supabase) {
+        const { data, error } = await supabase
+            .from('parser_completions')
+            .select('profile_name, profile_code, scores, assessment_type')
+            .eq('email', normalized)
+            .not('profile_name', 'is', null)
+            .order('id', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+        if (error) throw error;
+        if (!data) return null;
+        return { profileName: data.profile_name, profileCode: data.profile_code, scores: data.scores, assessmentType: data.assessment_type, lifeStage: null };
+    }
+    const accounts = loadAccounts();
+    const u = accounts.users.find(x => x.email === normalized);
+    return (u && u.profile) ? u.profile : null;
+}
+
+// Persist the profile onto the account (local file mode). On Supabase the
+// completion row already carries it, so this is a no-op there.
+async function dbSaveUserProfile(email, profile) {
+    if (supabase) return { ok: true };
+    const normalized = email.toLowerCase().trim();
+    const accounts = loadAccounts();
+    const u = accounts.users.find(x => x.email === normalized);
+    if (!u) return { ok: false };
+    u.profile = {
+        profileName: profile.profileName || null,
+        profileCode: profile.profileCode || null,
+        scores: profile.scores || null,
+        lifeStage: profile.lifeStage || null,
+        assessmentType: profile.assessmentType || 'adult',
+        savedAt: new Date().toISOString()
+    };
+    saveAccounts(accounts);
+    return { ok: true };
+}
+
+app.get('/api/profile/me', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ authenticated: false });
+    try {
+        const profile = await dbGetUserProfile(payload.email);
+        res.json({
+            authenticated: true,
+            user: { email: payload.email, firstName: payload.firstName, lastName: payload.lastName, role: payload.role },
+            profile: profile || null
+        });
+    } catch (e) {
+        console.error('[profile/me] error:', e.message);
+        res.status(500).json({ authenticated: true, profile: null, error: 'Could not load your profile.' });
+    }
+});
+
+app.post('/api/profile/save', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ success: false, error: 'Not signed in' });
+    const { profileName, profileCode, scores, lifeStage, assessmentType } = req.body || {};
+    try {
+        await dbSaveUserProfile(payload.email, { profileName, profileCode, scores, lifeStage, assessmentType });
+        res.json({ success: true });
+    } catch (e) {
+        console.error('[profile/save] error:', e.message);
+        res.status(500).json({ success: false, error: 'Could not save your profile.' });
+    }
 });
 
 // Static files served AFTER the protected route above
@@ -199,9 +374,13 @@ const createTransporter = () => {
 };
 
 // ============================================================================
-// ROOT LANDING PAGE
+// ROOT — marketing homepage
 // ============================================================================
 
+// The public marketing site lives at index.html. express.static (above)
+// serves it for '/' as well; this explicit route documents the intent and
+// guarantees the homepage even if static index resolution is disabled.
+// The assessment itself remains reachable directly at /assessment.html.
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -247,7 +426,13 @@ app.post('/api/log-completion', async (req, res) => {
     const { profileName, profileCode, scores, emailProvided, assessmentType, userEmail, userName,
             overview, phrase, strengths, howYouLearn, howYouCommunicate, primaryChallenge } = req.body;
 
-    const customerId = generateCustomerId();
+    let customerId;
+    try {
+        customerId = await dbInsertCompletion({ profileName, profileCode, scores, emailProvided, assessmentType, userEmail, userName });
+    } catch (e) {
+        console.error('[log-completion] DB insert failed, using local counter:', e.message);
+        customerId = generateCustomerId();
+    }
     const timestamp = new Date().toISOString();
     const spatial  = scores?.spatial  || 0;
     const temporal = scores?.temporal || 0;
@@ -308,7 +493,7 @@ app.post('/api/log-completion', async (req, res) => {
 
     <!-- Scores -->
     <div style="padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid #e2e8f0;">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:12px;">Dimension Scores</div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#94a3b8;margin-bottom:12px;">Your Scores</div>
       <div style="margin-bottom:6px;"><span style="background:#ecfdf5;color:#0d9488;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Spatial: ${spatial}% ${spatialLabel}</span></div>
       <div style="margin-bottom:6px;"><span style="background:#fffbeb;color:#d97706;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Temporal: ${temporal}% ${temporalLabel}</span></div>
       <div><span style="background:#eff6ff;color:#7c3aed;padding:5px 14px;border-radius:5px;font-size:13px;font-weight:600;">Reference: ${reference}% ${referenceLabel}</span></div>
@@ -400,7 +585,7 @@ app.post('/api/send-results', async (req, res) => {
             <p style="color: #6a6a7a; font-size: 14px; margin: 0;">${profileCode}</p>
         </div>
 
-        <!-- Dimension Scores -->
+        <!-- Your Scores -->
         <div style="padding: 30px; border-bottom: 1px solid #e0e0e5;">
             <h3 style="color: #1a1a24; font-size: 16px; margin: 0 0 20px 0;">📊 Your Cognitive Coordinates</h3>
             <div style="margin-bottom: 16px;">
@@ -478,12 +663,12 @@ app.post('/api/send-results', async (req, res) => {
         <div style="padding: 40px 30px; text-align: center; background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));">
             <h3 style="color: #1a1a24; font-size: 20px; margin: 0 0 12px 0;">Want to Learn More?</h3>
             <p style="color: #4a4a5a; font-size: 14px; margin: 0 0 24px 0;">Discover the framework behind your Parser Profile™ and explore the full CBI model.</p>
-            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
+            <a href="https://cognitionblocksllc.com/" style="display: inline-block; background: linear-gradient(135deg, #00d4aa, #00b894); color: #0a0a0f; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px;">Explore the CBI Framework</a>
         </div>
 
         <!-- Footer -->
         <div style="padding: 30px; text-align: center; background-color: #0a0a0f;">
-            <a href="https://cognitionblocksllc.com/cbi_overview" style="display: inline-block; color: #00d4aa; border: 2px solid #00d4aa; padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 20px;">Explore CBI</a>
+            <a href="https://cognitionblocksllc.com/" style="display: inline-block; color: #00d4aa; border: 2px solid #00d4aa; padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 14px; margin-bottom: 20px;">Explore CBI</a>
             <p style="color: #a0a0b0; font-size: 12px; margin: 16px 0 0 0;">Parser Profile™ developed by J.D. Mercer</p>
             <p style="color: #6a6a7a; font-size: 11px; margin: 4px 0 0 0;">Based on the Cognition Blocks Intelligence (CBI) Framework</p>
             <p style="color: #6a6a7a; font-size: 11px; margin: 12px 0 0 0;">© 2026 Cognition Blocks LLC. All rights reserved.</p>
@@ -566,6 +751,89 @@ app.post('/api/notify-completion', async (req, res) => {
 });
 
 // ============================================================================
+// PROFESSIONAL INQUIRY (Parser Frame for Professionals)
+// ============================================================================
+
+function escapeHtml(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+async function dbInsertInquiry(fields) {
+    if (!supabase) return;
+    const { error } = await supabase.from('parser_inquiries').insert({
+        name: fields.name, email: fields.email,
+        organization: fields.organization || null, role: fields.role || null,
+        team_size: fields.teamSize || null, team_type: fields.teamType || null,
+        message: fields.message || null, source: 'professionals'
+    });
+    if (error) throw error;
+}
+
+app.post('/api/inquire', async (req, res) => {
+    const { name, email, organization, role, teamSize, teamType, message, company_url } = req.body || {};
+
+    // Honeypot — bots fill hidden fields. Accept silently and drop.
+    if (company_url) return res.json({ success: true });
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!name || !name.trim() || !email || !emailRe.test(String(email).trim())) {
+        return res.status(400).json({ success: false, error: 'Please provide your name and a valid email.' });
+    }
+
+    const fields = {
+        name: name.trim().slice(0, 200),
+        email: email.trim().slice(0, 200),
+        organization: (organization || '').trim().slice(0, 200),
+        role: (role || '').trim().slice(0, 200),
+        teamSize: (teamSize || '').trim().slice(0, 100),
+        teamType: (teamType || '').trim().slice(0, 100),
+        message: (message || '').trim().slice(0, 4000)
+    };
+
+    // Persist (best-effort — never blocks the response)
+    try {
+        await dbInsertInquiry(fields);
+    } catch (e) {
+        console.error('[inquire] DB insert failed:', e.message);
+    }
+
+    // Notify the team
+    const transporter = createTransporter();
+    if (transporter) {
+        try {
+            await transporter.sendMail({
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER || 'noreply@cognitionblocksllc.com',
+                to: process.env.INQUIRY_TO || 'profile.library@cognitionblocksllc.com',
+                replyTo: fields.email,
+                subject: `Parser Frame inquiry — ${fields.name}${fields.organization ? ' · ' + fields.organization : ''}`,
+                html: `
+                    <h2>New Parser Frame for Professionals inquiry</h2>
+                    <p><strong>Name:</strong> ${escapeHtml(fields.name)}</p>
+                    <p><strong>Email:</strong> ${escapeHtml(fields.email)}</p>
+                    <p><strong>Organization:</strong> ${escapeHtml(fields.organization) || '—'}</p>
+                    <p><strong>Role:</strong> ${escapeHtml(fields.role) || '—'}</p>
+                    <p><strong>Team size:</strong> ${escapeHtml(fields.teamSize) || '—'}</p>
+                    <p><strong>Team type:</strong> ${escapeHtml(fields.teamType) || '—'}</p>
+                    <p><strong>About the team:</strong></p>
+                    <p style="white-space:pre-wrap;">${escapeHtml(fields.message) || '—'}</p>
+                    <hr>
+                    <p style="color:#888;font-size:12px;">Received ${new Date().toISOString()}</p>
+                `
+            });
+            console.log(`[INQUIRE] ${fields.name} <${fields.email}>${fields.organization ? ' · ' + fields.organization : ''}`);
+        } catch (err) {
+            console.error('[INQUIRE] email failed:', err.message);
+        }
+    } else {
+        console.warn('[INQUIRE] Email not configured — inquiry from', fields.email, 'was', supabase ? 'saved to DB only.' : 'NOT captured.');
+    }
+
+    res.json({ success: true });
+});
+
+// ============================================================================
 // PROMO CODE VALIDATION
 // ============================================================================
 
@@ -585,7 +853,7 @@ app.post('/api/validate-promo', (req, res) => {
     }
 
     if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-        const newAmount = Math.round(1999 * 0.85); // 15% off $19.99
+        const newAmount = Math.round(2000 * 0.85); // 15% off $20.00
         return res.json({ success: true, type: 'discount', discount: 15, newAmount });
     }
 
@@ -602,7 +870,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 1999; // $19.99 in cents
+        let amount = 2000; // $20.00 in cents
         if (promoCode) {
             const promoFree = process.env.PROMO_FREE || '';
             const promoDiscount = process.env.PROMO_DISCOUNT || '';
@@ -614,7 +882,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
             }
 
             if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(1999 * 0.85); // 15% off
+                amount = Math.round(2000 * 0.85); // 15% off
             }
         }
 
@@ -658,10 +926,29 @@ async function handleStripeWebhook(req, res) {
         const event = getStripe().webhooks.constructEvent(req.body, sig, webhookSecret);
 
         switch (event.type) {
-            case 'payment_intent.succeeded':
+            case 'payment_intent.succeeded': {
                 const paymentIntent = event.data.object;
                 console.log('Payment succeeded:', paymentIntent.id, paymentIntent.metadata);
+                // Mark the buyer's most recent completion as paid.
+                const buyerEmail = paymentIntent.metadata?.email;
+                if (supabase && buyerEmail) {
+                    try {
+                        const { data } = await supabase.from('parser_completions')
+                            .select('id')
+                            .eq('email', buyerEmail.toLowerCase().trim())
+                            .order('id', { ascending: false })
+                            .limit(1);
+                        if (data && data.length) {
+                            await supabase.from('parser_completions')
+                                .update({ paid: true, payment_intent_id: paymentIntent.id })
+                                .eq('id', data[0].id);
+                        }
+                    } catch (e) {
+                        console.error('[webhook] mark paid failed:', e.message);
+                    }
+                }
                 break;
+            }
             case 'payment_intent.payment_failed':
                 const failedPayment = event.data.object;
                 console.log('Payment failed:', failedPayment.id, failedPayment.last_payment_error?.message);

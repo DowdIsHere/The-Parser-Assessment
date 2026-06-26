@@ -1,8 +1,10 @@
 // INTEGRATED Profile
 // Parser Profile™ © 2026 Cognition Blocks LLC
+// Balanced • Past • Self
 
 export const integratedProfile = {
   "name": "INTEGRATED",
+  "code": "Balanced • Past • Self",
   "tagline": "The one who knows themselves because they've done the work",
 
   "overview": "You were sitting in your car in a parking lot once, after a conversation that didn't go the way you wanted, and instead of turning the key you stayed there and asked yourself why. That's the thing you've always done. Not turned away from the moment—turned it over in your hands until you understood what had actually happened, and what it said about you.\n\nYou know who you are because you went back and checked. Your sense of self didn't get hoped into being; it got built, slowly, out of moments you actually lived and then sat with afterward—the fight you started and only later understood you'd started, the job you took for reasons you couldn't see until two years had passed. Each one taught you something, and you kept it.\n\nYour mind moves easily between the single memory and the pattern underneath it. You can still feel the specific afternoon, and you can also name the theme it belonged to. That's the balance you live in: what happened, and what it meant, held in the same hand.\n\nAnd the work has always pointed inward. Not because other people didn't matter, but because you learned early that you could only ever stand inside one life and watch it honestly—your own. So that's where you did your deepest looking.\n\nThey called you introspective, self-aware, sometimes \"too far up in your own head.\" What they couldn't see was the structure you'd built in there: a self you'd actually tested against how you behaved, refined every time the evidence came back different from the story.",

@@ -29,6 +29,21 @@ export const empatheticProfile = {
 
   "workEnvironments": "Where you thrive:\n- Emotional intelligence recognized as real intelligence\n- Understanding people is central to the work\n- Counseling, therapy, coaching, healthcare, teaching, HR, conflict resolution\n- Reading and responding to people is the primary skill\n\nWhere you suffocate:\n- Human beings treated as abstractions or resources\n- Emotional reality dismissed as unprofessional\n- Ignoring what you perceive in service of efficiency\n- Cultures that value pure logic over human understanding",
 
+  "topCareers": [
+    {
+      "title": "Therapist / Counselor",
+      "description": "You live in the experience of others—reading who's struggling and what's unspoken the moment you walk in—not as a choice but as where your attention goes. Therapy and counseling are that perception made into a craft: receiving what people can't say and holding it without flinching. You flex between the concrete specifics and the larger pattern, meeting someone exactly where they are. The emotional reality others dismiss as unprofessional is, in this room, the entire work."
+    },
+    {
+      "title": "Coach / HR / People Lead",
+      "description": "You feel what people can't express, and you can name it gently enough that they don't have to defend. Coaching and people-leadership run on that—understanding the human under the role, the tension between team members, what's actually driving the behavior. You treat emotional intelligence as the real intelligence it is, because for you it always was. The capacity that efficiency-cultures asked you to switch off is exactly what makes people feel safe enough to grow."
+    },
+    {
+      "title": "Healthcare / Conflict Resolution",
+      "description": "When two people are talking past each other, you feel both sides at once and can hold them both. Healthcare and conflict resolution depend on that—receiving someone's unspoken fear or pain and responding to the person, not just the problem. You don't reduce human beings to abstractions or resources; you can't, and that's the gift. The reading-and-responding that came so naturally you assumed everyone did it becomes the thing these fields are built around."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Social Signal Processing (continuous attunement to others)\n- Perceptual Discrimination (present-focus enables fine-grained social perception)\n- Pattern Recognition (reading emotional and relational patterns)\n\nLikely Moderate-Accessibility Blocks:\n- Sequential Processing (accessible when needed)\n- Symbolic Manipulation (available but not foregrounded)\n\nLikely Lower-Accessibility Blocks:\n- Self-Reference Processing (other-orientation may under-develop this)\n- Generative Creation (present-and-other focus may limit speculative self-expression)\n\nThis pattern suggests your cognitive architecture is optimized for interpersonal understanding and relational responsiveness.\n\nEMPATHETIC",
 
   "strengths": [

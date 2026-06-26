@@ -1,8 +1,10 @@
 // COHERENT Profile
 // Parser Profile™ © 2026 Cognition Blocks LLC
+// Balanced • Past • Balanced
 
 export const coherentProfile = {
   "name": "COHERENT",
+  "code": "Balanced • Past • Balanced",
   "tagline": "The one who finds the thread that connects everything",
 
   "overview": "Everyone in the meeting was arguing about what to do next. You said it quietly: \"we ran this exact play two years ago.\" You remembered the room, who pushed for it, how it shipped four months late. That's the move you've always made—you don't see a new problem, you see an old one coming back around.\n\nThe new hire asked why the sign-off step existed and everyone shrugged. You knew: a bad shipment went out in 2019 and someone lost an account over it. The rule wasn't red tape. It was a scar. You kept the reasons when everyone else had only kept the rule.\n\nHand you a tangle and you reached for two things at once—the exact detail and the pattern it sat in. The date on the email. The thing that was actually said. And then the shape all of it made when you stepped back far enough to see it.\n\nYou tracked both sides, too. Your own history, and everyone else's—the grudge that started before you were hired, still steering the room today. The story was never only yours, and you were one of the few who could read the whole thing.\n\nThey called you thorough. Sometimes \"too analytical.\" What they missed: the question you kept asking—how did we get here?—was the thing that kept the next decision from repeating the last mistake.",

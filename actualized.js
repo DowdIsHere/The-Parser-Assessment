@@ -29,6 +29,21 @@ export const actualizedProfile = {
 
   "workEnvironments": "Where you thrive:\n- Environments that support long-term growth\n- Roles that reward self-direction and personal development\n- Entrepreneurship, leadership development, creative fields with mastery trajectories\n- Any role where your own growth and the role's demands align\n- Coaching, particularly around achievement and development\n\nWhere you suffocate:\n- Purely maintenance-focused roles with no growth trajectory\n- Constant present-focus without future-building\n- Environments that don't allow personal development alongside professional performance\n- Roles without clear growth pathways or autonomy over your development",
 
+  "topCareers": [
+    {
+      "title": "Development / Achievement Coach",
+      "description": "You've always navigated by a felt sense of who you could become, and you build toward it deliberately instead of drifting. Development coaching is that lived skill turned outward—helping someone else see their own future self clearly and assemble it choice by choice. You know the difference between passive drift and deliberate construction because you've lived on the building side. The compass you used on your own life becomes the thing you hand to people stuck without one."
+    },
+    {
+      "title": "Entrepreneur / Founder",
+      "description": "Every skill, every habit, every hard conversation with yourself has been construction toward the person you intend to be. Entrepreneurship rewards that exact orientation—building deliberately toward a future that doesn't exist yet, with your own growth and the venture's growth pulling in the same direction. You don't wait for life to shape you; you architect. The relentless becoming that made any static, maintenance-only role feel like a slow death is the founder's whole engine."
+    },
+    {
+      "title": "Creative / Mastery-Track Professional",
+      "description": "You're drawn to work with a trajectory—where today's self is visibly less than next year's, and the gap is the point. Creative and craft fields with real mastery paths reward that: the long arc of becoming better, the development that never tops out. You thrive where your personal growth is allowed to run alongside the performance, not bolted on after. The drive to keep building yourself, restless in any capped role, is exactly what a mastery path is for."
+    }
+  ],
+
   "blockIndicators": "Your Parser Profile suggests the following CBI block accessibility pattern:\n\nLikely High-Accessibility Blocks:\n- Self-Reference Processing (continuous self-monitoring and development)\n- Pattern Recognition (tracking patterns in your own growth and trajectory)\n- Sequential Processing (planning and implementing development paths)\n\nLikely Moderate-Accessibility Blocks:\n- Symbolic Manipulation (working with abstract frameworks for self-development)\n- Generative Creation (envisioning future selves, creating development approaches)\n- Spatial Relationships (mapping trajectories and pathways)\n\nLikely Lower-Accessibility Blocks:\n- Social Signal Processing (other-focus isn't foregrounded)\n- Perceptual Discrimination (present-moment sensory detail may be under-attended)\n\nThis pattern suggests your cognitive architecture is optimized for deliberate self-development and long-term personal achievement. Your developmental opportunities lie in present-moment awareness and other-oriented attention—building the capacity to be fully here and to attend to others' experience with the same quality of attention you bring to your own becoming.\n\nACTUALIZED",
 
   "strengths": [

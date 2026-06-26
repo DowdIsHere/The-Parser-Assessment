@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | The Cognition Block</title>
+  <meta name="description" content="Sign in to The Cognition Block.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Auth layout ported from The Cognition Block; rethemed to the Parser
+       Profile palette (Editorial Luxury — warm cream + gold, light). */
+    :root {
+      --accent:#9A7B2E; --accent-strong:#8A6D24; --accent-bright:#B8922A;
+      --accent-soft:rgba(154,123,46,0.10); --accent-line:rgba(154,123,46,0.24);
+      --gold-pale:#D8B45E;
+      --text-primary:#1E1813; --text-secondary:#4A3F35; --text-muted:#8A7E6E;
+      --bg-page:#FAF7F0; --bg-card:#FFFDF9; --bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12); --border-strong:rgba(60,45,25,0.22);
+      --ring-highlight:inset 0 1px 0 rgba(255,255,255,0.7);
+      --shadow-lg:0 16px 40px rgba(60,40,15,0.12);
+      --accent-glow:0 8px 22px -8px rgba(154,123,46,0.40);
+      --status-compromised-bg:#FBEAEA; --status-compromised-text:#B3261E;
+      --status-preserved-bg:#E8F4EC; --status-preserved-text:#0E7A52;
+      --focus-ring:0 0 0 3px rgba(154,123,46,0.18);
+      --font-display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+      --font-ui:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+      --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+      --r-input:12px; --r-btn:12px; --r-panel:18px;
+      color-scheme:light;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-ui);background:var(--bg-page);color:var(--text-primary);min-height:100dvh;line-height:1.6;letter-spacing:0.005em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    /* Parser-signature grain */
+    body::before{content:'';position:fixed;inset:0;z-index:300;pointer-events:none;opacity:0.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+    .auth-page{display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:24px;position:relative;overflow:hidden;z-index:1;}
+    .auth-page::before{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(48rem 36rem at 50% -10%, var(--accent-soft), transparent 60%),
+                 radial-gradient(40rem 30rem at 90% 110%, rgba(216,180,94,0.12), transparent 60%);}
+    .auth-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-panel);padding:44px 38px;width:100%;max-width:432px;box-shadow:var(--ring-highlight), var(--shadow-lg);}
+    .auth-logo{font-family:var(--font-display);font-size:1.7rem;font-weight:700;letter-spacing:-0.01em;color:var(--text-primary);text-align:center;margin-bottom:4px;}
+    .auth-logo-sub{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);text-align:center;margin-bottom:34px;}
+    .auth-title{font-family:var(--font-display);font-size:1.9rem;font-weight:600;letter-spacing:-0.01em;color:var(--text-primary);text-align:center;margin-bottom:26px;}
+    .auth-error{background:var(--status-compromised-bg);color:var(--status-compromised-text);padding:11px 14px;border-radius:var(--r-input);font-size:0.85rem;font-weight:500;margin-bottom:16px;text-align:center;}
+    .auth-form{display:flex;flex-direction:column;gap:16px;}
+    .auth-field{display:flex;flex-direction:column;gap:7px;}
+    label{font-family:var(--font-ui);font-size:0.82rem;font-weight:600;letter-spacing:0.005em;color:var(--text-secondary);}
+    input{background:var(--bg-inset);border:1px solid var(--border);border-radius:var(--r-input);color:var(--text-primary);font-family:var(--font-ui);font-size:0.9rem;padding:12px 15px;width:100%;}
+    input:focus{outline:none;border-color:var(--accent);box-shadow:var(--focus-ring);background:var(--bg-card);}
+    input::placeholder{color:var(--text-muted);opacity:1;}
+    .btn{font-family:var(--font-ui);padding:10px 20px;border-radius:var(--r-btn);font-size:0.875rem;font-weight:700;letter-spacing:0.005em;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;text-decoration:none;transition:transform .18s cubic-bezier(0.22,1,0.36,1), box-shadow .26s cubic-bezier(0.22,1,0.36,1), background-color .2s;}
+    .btn-primary{background:linear-gradient(180deg,var(--accent-bright),var(--accent));color:#fff;box-shadow:var(--accent-glow),inset 0 1px 0 rgba(255,255,255,0.25);}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 26px -8px rgba(154,123,46,0.5),inset 0 1px 0 rgba(255,255,255,0.3);}
+    .btn-primary:active{transform:translateY(0) scale(0.98);}
+    .btn-primary:disabled{opacity:0.55;cursor:not-allowed;transform:none;box-shadow:none;}
+    .btn-secondary{background:var(--bg-inset);color:var(--text-primary);border:1px solid var(--border);}
+    .btn-secondary:hover{background:var(--bg-card);border-color:var(--border-strong);transform:translateY(-1px);}
+    .auth-submit{width:100%;margin-top:8px;padding:13px 20px;font-size:0.92rem;}
+    .auth-switch{text-align:center;margin-top:22px;font-size:0.86rem;color:var(--text-muted);}
+    .auth-switch a{color:var(--accent);text-decoration:none;font-weight:600;cursor:pointer;}
+    .auth-switch a:hover{text-decoration:underline;}
+    .auth-success{text-align:center;}
+    .auth-success .tick{width:54px;height:54px;border-radius:999px;background:var(--status-preserved-bg);color:var(--status-preserved-text);display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;margin-bottom:18px;}
+    .auth-actions{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+    .muted{color:var(--text-muted);font-size:0.92rem;}
+    .hidden{display:none !important;}
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">The Cognition Block</div>
+      <div class="auth-logo-sub">Let's talk about it…</div>
+
+      <!-- AUTH FORM -->
+      <div id="formWrap">
+        <h1 class="auth-title" id="authTitle">Sign In</h1>
+        <div class="auth-error hidden" id="authError"></div>
+        <form class="auth-form" id="authForm" novalidate>
+          <div class="auth-field hidden" id="fieldFirst">
+            <label for="firstName">First name</label>
+            <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="First name">
+          </div>
+          <div class="auth-field hidden" id="fieldLast">
+            <label for="lastName">Last name</label>
+            <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Last name (optional)">
+          </div>
+          <div class="auth-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <div class="auth-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+          </div>
+          <button type="submit" class="btn btn-primary auth-submit" id="submitBtn">Sign In</button>
+        </form>
+        <p class="auth-switch" id="switchLine">Don't have an account? <a id="switchLink">Create one</a></p>
+      </div>
+
+      <!-- SIGNED-IN STATE -->
+      <div id="signedIn" class="auth-success hidden">
+        <div class="tick">✓</div>
+        <h1 class="auth-title" id="signedInTitle" style="margin-bottom:10px;">You're signed in</h1>
+        <p class="muted" id="signedInMsg" style="margin-bottom:22px;"></p>
+        <div class="auth-actions">
+          <a class="btn btn-primary" href="/profile.html">View My Profile</a>
+          <a class="btn btn-secondary" href="/assessment.html">Take the Assessment</a>
+          <p class="auth-switch" style="margin-top:6px;"><a id="signOutLink">Sign out</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var mode = 'signin';
+    var $ = function (id) { return document.getElementById(id); };
+    var form = $('authForm'), err = $('authError'), title = $('authTitle'), submit = $('submitBtn');
+    var fFirst = $('fieldFirst'), fLast = $('fieldLast'), pw = $('password'), switchLine = $('switchLine');
+
+    function showError(m) { err.textContent = m; err.classList.remove('hidden'); }
+    function clearError() { err.classList.add('hidden'); err.textContent = ''; }
+
+    function bindSwitch() {
+      var link = $('switchLink');
+      if (link) link.onclick = function () { setMode(mode === 'register' ? 'signin' : 'register'); };
+    }
+
+    function setMode(m) {
+      mode = m; clearError();
+      var reg = (m === 'register');
+      title.textContent = reg ? 'Create Account' : 'Sign In';
+      submit.textContent = reg ? 'Create Account' : 'Sign In';
+      fFirst.classList.toggle('hidden', !reg);
+      fLast.classList.toggle('hidden', !reg);
+      pw.setAttribute('autocomplete', reg ? 'new-password' : 'current-password');
+      pw.placeholder = reg ? 'At least 8 characters' : 'Your password';
+      switchLine.innerHTML = reg
+        ? "Already have an account? <a id='switchLink'>Sign in</a>"
+        : "Don't have an account? <a id='switchLink'>Create one</a>";
+      bindSwitch();
+    }
+
+    function showSignedIn(user) {
+      $('formWrap').classList.add('hidden');
+      $('signedIn').classList.remove('hidden');
+      if (user && user.firstName) $('signedInTitle').textContent = "You're signed in, " + user.firstName;
+      $('signedInMsg').textContent = (user && user.email) ? ('Account: ' + user.email) : 'Your account is active.';
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault(); clearError();
+      var email = $('email').value.trim(), password = $('password').value;
+      if (!email || !password) { showError('Please enter your email and password.'); return; }
+      var body = { email: email, password: password };
+      var url = '/api/auth/login';
+      if (mode === 'register') {
+        var first = $('firstName').value.trim();
+        if (!first) { showError('Please enter your first name.'); return; }
+        if (password.length < 8) { showError('Password must be at least 8 characters.'); return; }
+        body.firstName = first; body.lastName = $('lastName').value.trim(); body.role = 'member';
+        url = '/api/auth/register';
+      }
+      submit.disabled = true; var orig = submit.textContent;
+      submit.textContent = (mode === 'register') ? 'Creating account…' : 'Signing in…';
+      try {
+        var res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok || !data.success) {
+          showError(data.error || (mode === 'register' ? 'Could not create account.' : 'Sign in failed.'));
+          return;
+        }
+        showSignedIn(data.user);
+      } catch (_) {
+        showError('Something went wrong. Please try again.');
+      } finally {
+        submit.disabled = false; submit.textContent = orig;
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.id === 'signOutLink') {
+        e.preventDefault();
+        fetch('/api/auth/logout', { method: 'POST' }).finally(function () { location.reload(); });
+      }
+    });
+
+    // If already signed in, show that state up front.
+    fetch('/api/auth/status').then(function (r) { return r.json(); }).then(function (d) {
+      if (d && d.authenticated) showSignedIn(d.user);
+    }).catch(function () {});
+
+    bindSwitch();
+    setMode('signin');
+  })();
+  </script>
+</body>
+</html>
