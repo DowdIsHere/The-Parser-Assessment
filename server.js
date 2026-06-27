@@ -323,6 +323,39 @@ app.post('/api/profile/save', async (req, res) => {
     }
 });
 
+app.get('/api/profile/kids', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ authenticated: false });
+    try {
+        if (supabase) {
+            const { data, error } = await supabase
+                .from('parser_completions')
+                .select('profile_name, profile_code, scores, created_at, name')
+                .eq('email', payload.email.toLowerCase().trim())
+                .eq('assessment_type', 'kids')
+                .order('id', { ascending: false })
+                .limit(1)
+                .maybeSingle();
+            if (error) throw error;
+            return res.json({
+                authenticated: true,
+                user: { email: payload.email, firstName: payload.firstName, lastName: payload.lastName },
+                profile: data ? {
+                    profileName: data.profile_name,
+                    profileCode: data.profile_code,
+                    scores: data.scores,
+                    childName: data.name,
+                    createdAt: data.created_at
+                } : null
+            });
+        }
+        res.json({ authenticated: true, user: { email: payload.email, firstName: payload.firstName }, profile: null });
+    } catch (e) {
+        console.error('[profile/kids] error:', e.message);
+        res.status(500).json({ authenticated: true, profile: null, error: 'Could not load profile.' });
+    }
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
@@ -853,7 +886,7 @@ app.post('/api/validate-promo', (req, res) => {
     }
 
     if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-        const newAmount = Math.round(2000 * 0.85); // 15% off $20.00
+        const newAmount = Math.round(2900 * 0.85); // 15% off $29.00
         return res.json({ success: true, type: 'discount', discount: 15, newAmount });
     }
 
@@ -870,7 +903,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 2000; // $20.00 in cents
+        let amount = 2900; // $29.00 in cents
         if (promoCode) {
             const promoFree = process.env.PROMO_FREE || '';
             const promoDiscount = process.env.PROMO_DISCOUNT || '';
@@ -882,7 +915,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
             }
 
             if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(2000 * 0.85); // 15% off
+                amount = Math.round(2900 * 0.85); // 15% off
             }
         }
 
