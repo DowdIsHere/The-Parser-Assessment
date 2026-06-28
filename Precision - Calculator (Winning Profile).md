@@ -120,17 +120,36 @@ two records separate.
    `score = gap − bar`
 3. **Net rally** = `score(1-4) + score(9+)`
 
-Signed bars by pole (the FC 9+ bar is a *trail*, so it enters negative):
+**The bars belong to the matchup TYPE, not just the pole.** An FC vs a PM and an
+FC vs a BAL are two different frames with two different bar sets — using the wrong
+type's bars is the most common mistake. Pick the bar set by the *pair of types*,
+then read each player's bars off it. (The 9+ bar is a *trail* where negative, so
+it enters as a negative number: `gap − (−v) = gap + v`.)
 
+**PM-vs-FC** (each at own pole):
 | Pole | 1-4 bar | 9+ bar |
 |---|---|---|
 | **PM** | +1.1 | +5.9 |
 | **FC** | +2.3 | −0.6 |
 
+**FC-vs-BAL** (from the validated FC-vs-BAL gap card — *different FC bars*):
+| Pole | 1-4 bar | 9+ bar |
+|---|---|---|
+| **FC** (vs BAL) | +0.6 | −3.8 |
+| **BAL** (vs FC) | +1.1 | +6.1 |
+
 Positive score = over the bar (surplus); negative = under (deficit). **Higher net
 rally = better rally shape → the play.** The thin-boundary insight: in PM-vs-FC
 the win/lose gaps sit almost on top of each other, so there's no cushion — one
 **big hole** (a large single-metric deficit) sinks the player immediately.
+
+> ⚠️ **What these bars are — and aren't.** Each bar set *describes what the winner
+> of that matchup type DID* (the average match-day winning gaps), not whether a
+> given player *will* produce it from their season averages. Cobolli (BAL) graded
+> −14.4 under the BAL-wins profile on his season numbers — looked like a clear
+> loser — and won anyway. The frame reads the shape; it does not promise a season
+> card will reproduce on the day. This is the wall: it's a description of winning,
+> not a prediction from averages.
 
 **Worked example — Bergs (PM) vs Humbert (FC):**
 - Bergs: gaps 1-4 = 48.7−51.3 = −2.6, 9+ = 53.6−46.1 = +7.5
@@ -139,6 +158,15 @@ the win/lose gaps sit almost on top of each other, so there's no cushion — one
   → 1-4: +2.6−2.3 = **+0.3**; 9+: −7.5−(−0.6) = **−6.9**; **net = −6.6**
 - Bergs −2.1 > Humbert −6.6 → **Bergs.** (Result: Bergs won, vs a Humbert-favored
   market. Humbert's big hole was the 9+ he can't reach.)
+
+**Worked example — Hurkacz (FC) vs Ruud (BAL)** *(uses the FC-vs-BAL bars, not PM-vs-FC)*:
+- Hurkacz (FC): gaps 1-4 = 52.4−51.9 = +0.5, 9+ = 47.5−50.0 = −2.5
+  → 1-4: +0.5−0.6 = **−0.1**; 9+: −2.5−(−3.8) = **+1.3**; **net = +1.2**
+- Ruud (BAL): gaps 1-4 = −0.5, 9+ = +2.5
+  → 1-4: −0.5−1.1 = **−1.6**; 9+: +2.5−6.1 = **−3.6**; **net = −5.2**
+- Hurkacz +1.2 > Ruud −5.2 → **Hurkacz.** Ruud's big hole is the grind: a BAL needs
+  +6.1 on 9+ to beat an FC and he's at +2.5. (Ran first with the wrong PM-vs-FC FC
+  bars and got −3.7 — the wrong bar set flips an FC-winning shape into mush.)
 
 ## How to read it
 - The **PM wins** when its (PM−FC) gaps sit on the PM side of the midpoints —
