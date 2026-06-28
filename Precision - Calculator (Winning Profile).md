@@ -105,6 +105,41 @@ OUFE-A ≥ +3.5, 9+ ≥ +5.9, Steal ≥ +3.6, UFE ≤ +3.9. (PM side confirmed o
 FC-only image only where it overlaps; OUFE-A PM gate uses the verified +3.5
 PM-win gap.)
 
+## The RALLY GAP score (net rally) — rally-only frame
+A separate, lighter read that uses **only the two rally metrics** (1-4 and 9+),
+ignoring conv, steal, OUFE-A, and UFE. It scores each player's rally shape as the
+sum of how far over/under the pole's bar each rally sits. Used where the full
+six-gate recipe abstains but the rally shape still separates the two players
+(e.g. tight PM-vs-FC). It is a **rally-shape read, not the recipe** — keep the
+two records separate.
+
+**Formula** (per player, at their own pole):
+1. **Gap on each rally metric** vs the opponent:
+   `gap = your value − opponent's value`  (compute for 1-4, then 9+)
+2. **Score each metric** against its pole's signed bar:
+   `score = gap − bar`
+3. **Net rally** = `score(1-4) + score(9+)`
+
+Signed bars by pole (the FC 9+ bar is a *trail*, so it enters negative):
+
+| Pole | 1-4 bar | 9+ bar |
+|---|---|---|
+| **PM** | +1.1 | +5.9 |
+| **FC** | +2.3 | −0.6 |
+
+Positive score = over the bar (surplus); negative = under (deficit). **Higher net
+rally = better rally shape → the play.** The thin-boundary insight: in PM-vs-FC
+the win/lose gaps sit almost on top of each other, so there's no cushion — one
+**big hole** (a large single-metric deficit) sinks the player immediately.
+
+**Worked example — Bergs (PM) vs Humbert (FC):**
+- Bergs: gaps 1-4 = 48.7−51.3 = −2.6, 9+ = 53.6−46.1 = +7.5
+  → 1-4: −2.6−1.1 = **−3.7**; 9+: +7.5−5.9 = **+1.6**; **net = −2.1**
+- Humbert: gaps 1-4 = +2.6, 9+ = −7.5
+  → 1-4: +2.6−2.3 = **+0.3**; 9+: −7.5−(−0.6) = **−6.9**; **net = −6.6**
+- Bergs −2.1 > Humbert −6.6 → **Bergs.** (Result: Bergs won, vs a Humbert-favored
+  market. Humbert's big hole was the 9+ he can't reach.)
+
 ## How to read it
 - The **PM wins** when its (PM−FC) gaps sit on the PM side of the midpoints —
   i.e. PM is adding the strike (1-4, conv) on top of native grind (9+, steal,
