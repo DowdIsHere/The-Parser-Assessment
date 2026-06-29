@@ -26,7 +26,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Ruud v Hurkacz (BAL-FC) | **Hurkacz** | +1.2/−5.2 | 4/4 | +0.5 | 🟢 minimal | lean | ✅ **W** 6-4,6-2,7-6 |
 | Fritz v Draper (BAL-FC) | **Fritz** | +1.7/−5.7 | 3/3 | +0.6 | 🟢 minimal | lean | |
 | Agut v Fonseca (BAL-PM) | **Agut** | −0.8/−1.9 | 3/5 | +6.1 | 🟠 moderate | **PASS** (near-toss) | ❌ pick L, Fonseca 7-6,6-4,6-3 (was a Pass — dodged) |
-| Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | LOW (near-toss) | 🟡 live, Baez up in 5th (81%) |
+| Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | **PASS** (near-toss) | ❌ pick L, Struff 6-1,7-6,4-6,2-6,7-5 (was a Pass — dodged) |
 | Fokina v Cerundolo (BAL-PM) | **Fokina** | +5.0/−7.7 | 2/5 | −3.4 | 🟢 minimal | STRONG | 🟢 live, Fokina leading (91%) |
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
 | de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | |
@@ -65,11 +65,14 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 |---|---|---|
 | Hurkacz | +6.4* | ✅ pick W (skipped a winner) |
 | Agut | +1.1 | ❌ pick L, Fonseca won (dodged a loser) |
-| Baez | +1.9 | 🟡 live, leading 81% |
+| Baez | +1.9 | ❌ pick L, Struff won 5 sets (dodged a loser) |
 | Fritz | +7.4* | pending |
 
-→ **Pass: dodged 1 loser (Agut), skipped 1 winner (Hurkacz).** Discipline on the
-thin/low-conviction spots; no position taken, so not scored W/L.
+→ **Pass: dodged 2 losers (Agut, Baez), skipped 1 winner (Hurkacz).** The two
+**near-tosses (sep 1.1, 1.9) both lost the thin lean — and the model bought
+neither.** That's the abstention edge live: it correctly flagged the two spots it
+couldn't call, and both would have been losses. Discipline = the edge.
+No position taken on Pass, so not scored W/L.
 *Hurkacz/Fritz have real rally separation but went to Pass on low conviction
 (4-red VARIABLE, no axis owned) — not near-tosses.
 
