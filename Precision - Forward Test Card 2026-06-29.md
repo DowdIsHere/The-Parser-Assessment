@@ -27,7 +27,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Fritz v Draper (BAL-FC) | **Fritz** | +1.7/−5.7 | 3/3 | +0.6 | 🟢 minimal | lean | |
 | Agut v Fonseca (BAL-PM) | **Agut** | −0.8/−1.9 | 3/5 | +6.1 | 🟠 moderate | **PASS** (near-toss) | ❌ pick L, Fonseca 7-6,6-4,6-3 (was a Pass — dodged) |
 | Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | **PASS** (near-toss) | ❌ pick L, Struff 6-1,7-6,4-6,2-6,7-5 (was a Pass — dodged) |
-| Fokina v Cerundolo (BAL-PM) | **Fokina** | +5.0/−7.7 | 2/5 | −3.4 | 🟢 minimal | STRONG | 🟢 live, Fokina leading (91%) |
+| Fokina v ~~Cerundolo~~ | ~~Fokina~~ | — | — | — | — | ⚠️ **VOID** | Graded vs *Francisco* C.; actual opp **Juan Manuel** Cerundolo = NOT GRADABLE. (Fokina W 6-4,6-4,7-6, not a frame call.) |
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
 | de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | ⏸ suspended 1-1 (de Jong won set-1 TB 7-4; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sonego v Etcheverry (FC) | **Etcheverry** | +4.5/−5.3 | 2/4 | +11.8 | 🟠 moderate | CAUTION (disrupt) | |
@@ -46,11 +46,13 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 |---|---|
 | Bergs | ✅ W |
 | Medvedev | 🟢 live, leading 97% |
-| Fokina | 🟢 live, leading 91% |
+| ~~Fokina~~ | ⚠️ VOID — graded wrong Cerundolo (actual opp Juan Manuel = not gradable) |
 | de Jong | ⏸ suspended 1-1 (won set-1 TB; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sinner | ✅ W (5 sets — Kec pushed it) |
 
-→ **Strong: 2–0** (Bergs, Sinner); Medvedev & Fokina led at last look; de Jong suspended 1-1.
+→ **Strong: 2–0** (Bergs, Sinner); Medvedev led at last look; de Jong suspended.
+**Fokina VOID** — wrong opponent graded (the Cerundolo name-collision bit us). Lesson:
+confirm player identity before grading when names collide; don't assume the gradable one.
 
 **FLAGGED — real rally edge, but disruptor flag → DON'T BUY FAVORITE (other side?)**
 | pick (favorite) | rally sep | flag | status |
