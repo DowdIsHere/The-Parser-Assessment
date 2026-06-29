@@ -37,6 +37,12 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 - **Strongest (favored + safe + clean):** Medvedev (beat Cilic on grass already, disrupt-proof), Sinner (owns every axis), Fokina, de Jong (1-red near-call).
 - **Flagged (rally says favorite, disruptor says risk):** **Giron** (🔴 Moutet 32.6 disruptor — the Altmaier pattern) and **Etcheverry** (🟠 Sonego 23.5 disruptor). Rally pick stands but confidence drops — the rally may not get played on their terms.
 - **Near-tosses (pass):** Agut/Fonseca and Struff/Baez — thin rally gap; Agut also disruption-flagged.
+- **Lean, low conviction — Hurkacz over Ruud:** both 4-red VARIABLE; Hurkacz favored
+  only +1.2 and **owns no axis** — he's −0.1 on his own home strike (1-4) and wins
+  purely off 9+ (+1.3), the wrong axis for an FC. Bet small or pass. **Surface note
+  (not in the May-21 profile):** it's grass — Hurkacz's serve is a real weapon and
+  Ruud is historically least comfortable there, so the surface nudges the same way
+  as the thin rally lean. Surface is supporting context, not a profile signal.
 
 ## Honest notes
 - Profiles are season-aggregate through **May 21** — no grass-specific form. Two
