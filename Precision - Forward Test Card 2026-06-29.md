@@ -32,7 +32,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | ⏸ suspended 1-1 (de Jong won set-1 TB 7-4; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sonego v Etcheverry (FC) | **Etcheverry** | +4.5/−5.3 | 2/4 | +11.8 | 🟠 moderate | CAUTION (disrupt) | |
 | Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | ✅ **W** 4-6,6-3,6-7,6-2,6-3 (5 sets) |
-| Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | 🟢 live, Medvedev leading (97%) |
+| Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | ✅ **W** 6-1,6-2,6-4 (straights) |
 
 ## THREE COUNTS (Strong / Flagged / Pass)
 Market = prediction market (Kalshi): you **purchase shares** in an outcome, hold
@@ -45,12 +45,12 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 | pick | status |
 |---|---|
 | Bergs | ✅ W |
-| Medvedev | 🟢 live, leading 97% |
+| Medvedev | ✅ W 6-1,6-2,6-4 (straights) |
 | ~~Fokina~~ | ⚠️ VOID — graded wrong Cerundolo (actual opp Juan Manuel = not gradable) |
 | de Jong | ⏸ suspended 1-1 (won set-1 TB; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sinner | ✅ W (5 sets — Kec pushed it) |
 
-→ **Strong: 2–0** (Bergs, Sinner); Medvedev led at last look; de Jong suspended.
+→ **Strong: 3–0** (Bergs, Sinner, Medvedev); de Jong suspended (resumes tmrw).
 **Fokina VOID** — wrong opponent graded (the Cerundolo name-collision bit us). Lesson:
 confirm player identity before grading when names collide; don't assume the gradable one.
 
