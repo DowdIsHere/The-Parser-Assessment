@@ -29,7 +29,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | **PASS** (near-toss) | ❌ pick L, Struff 6-1,7-6,4-6,2-6,7-5 (was a Pass — dodged) |
 | Fokina v Cerundolo (BAL-PM) | **Fokina** | +5.0/−7.7 | 2/5 | −3.4 | 🟢 minimal | STRONG | 🟢 live, Fokina leading (91%) |
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
-| de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | |
+| de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | ⏸ suspended 1-1 (de Jong won set-1 TB 7-4; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sonego v Etcheverry (FC) | **Etcheverry** | +4.5/−5.3 | 2/4 | +11.8 | 🟠 moderate | CAUTION (disrupt) | |
 | Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | |
 | Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | 🟢 live, Medvedev leading (97%) |
@@ -47,7 +47,7 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 | Bergs | ✅ W |
 | Medvedev | 🟢 live, leading 97% |
 | Fokina | 🟢 live, leading 91% |
-| de Jong | pending |
+| de Jong | ⏸ suspended 1-1 (won set-1 TB; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sinner | pending |
 
 → **Strong: 1–0** (2 leading).
