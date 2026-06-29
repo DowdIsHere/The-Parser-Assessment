@@ -25,7 +25,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 |---|---|---|---|---|---|---|---|
 | Ruud v Hurkacz (BAL-FC) | **Hurkacz** | +1.2/−5.2 | 4/4 | +0.5 | 🟢 minimal | lean | ✅ **W** 6-4,6-2,7-6 |
 | Fritz v Draper (BAL-FC) | **Fritz** | +1.7/−5.7 | 3/3 | +0.6 | 🟢 minimal | lean | |
-| Agut v Fonseca (BAL-PM) | **Agut** | −0.8/−1.9 | 3/5 | +6.1 | 🟠 moderate | LOW (near-toss) | |
+| Agut v Fonseca (BAL-PM) | **Agut** | −0.8/−1.9 | 3/5 | +6.1 | 🟠 moderate | LOW (near-toss) | ❌ **L** Fonseca 7-6,6-4,6-3 (flag correct) |
 | Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | LOW (near-toss) | 🟡 live, Baez up in 5th (81%) |
 | Fokina v Cerundolo (BAL-PM) | **Fokina** | +5.0/−7.7 | 2/5 | −3.4 | 🟢 minimal | STRONG | 🟢 live, Fokina leading (91%) |
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
@@ -34,16 +34,41 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | |
 | Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | 🟢 live, Medvedev leading (97%) |
 
-## Read
-- **Strongest (favored + safe + clean):** Medvedev (beat Cilic on grass already, disrupt-proof), Sinner (owns every axis), Fokina, de Jong (1-red near-call).
-- **Flagged (rally says favorite, disruptor says risk):** **Giron** (🔴 Moutet 32.6 disruptor — the Altmaier pattern) and **Etcheverry** (🟠 Sonego 23.5 disruptor). Rally pick stands but confidence drops — the rally may not get played on their terms.
-- **Near-tosses (pass):** Agut/Fonseca and Struff/Baez — thin rally gap; Agut also disruption-flagged.
-- **Lean, low conviction — Hurkacz over Ruud:** both 4-red VARIABLE; Hurkacz favored
-  only +1.2 and **owns no axis** — he's −0.1 on his own home strike (1-4) and wins
-  purely off 9+ (+1.3), the wrong axis for an FC. Bet small or pass. **Surface note
-  (not in the May-21 profile):** it's grass — Hurkacz's serve is a real weapon and
-  Ruud is historically least comfortable there, so the surface nudges the same way
-  as the thin rally lean. Surface is supporting context, not a profile signal.
+## THREE COUNTS (Strong / Flagged / Pass)
+Track each bucket's record separately to see if the confidence tiers earn out.
+
+**STRONG — clean rally edge, disrupt-safe → BET**
+| pick | status |
+|---|---|
+| Bergs | ✅ W |
+| Medvedev | 🟢 live, leading 97% |
+| Fokina | 🟢 live, leading 91% |
+| de Jong | pending |
+| Sinner | pending |
+
+→ **Strong: 1–0** (2 leading).
+
+**FLAGGED — disruptor risk on the rally favorite → FADE / AVOID**
+| pick (favorite) | flag | status |
+|---|---|---|
+| Agut | 🟠 Fonseca +6.1 | ❌ **L** (Fonseca won) — **flag CORRECT** |
+| Giron | 🔴 Moutet +17.6 | tomorrow |
+| Etcheverry | 🟠 Sonego +11.8 | tomorrow |
+
+→ **Flagged: pick 0–1; the flag was right (1–0).** Avoiding the flagged favorite beat the plain rally read.
+
+**PASS — near-toss / low-conviction lean → SKIP (or bet tiny)**
+| pick | status |
+|---|---|
+| Hurkacz | ✅ W (lean; won anyway) |
+| Baez | 🟡 live, leading 81% |
+| Fritz | pending |
+
+→ **Pass: 1–0** (a small winner skipped — correct discipline, not a loss).
+
+*The headline so far: STRONG is holding, and the FLAGGED bucket's first result
+proves the disruptor flag adds real signal — the rally said Agut, the flag said
+fade, and fading was right.*
 
 ## Honest notes
 - Profiles are season-aggregate through **May 21** — no grass-specific form. Two
