@@ -35,11 +35,13 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | 🟢 live, Medvedev leading (97%) |
 
 ## THREE COUNTS (Strong / Flagged / Pass)
-Bucket rule: **PASS** = rally near-toss / low conviction → skip (flag irrelevant).
-**FLAGGED** = real rally edge, but disruptor flag fires → fade the favorite.
-**STRONG** = real edge + disrupt-safe → bet. Track each bucket's record.
+Market = prediction market (Kalshi): you **purchase shares** in an outcome, hold
+or sell — no wager, no book. Bucket rule: **PASS** = rally near-toss / low
+conviction → no position (flag irrelevant). **FLAGGED** = real rally edge, but
+disruptor flag fires → don't buy the favorite (consider the other side).
+**STRONG** = real edge + disrupt-safe → buy the favorite. Track each bucket.
 
-**STRONG — clean rally edge, disrupt-safe → BET**
+**STRONG — clean rally edge, disrupt-safe → BUY (favorite shares)**
 | pick | status |
 |---|---|
 | Bergs | ✅ W |
@@ -50,7 +52,7 @@ Bucket rule: **PASS** = rally near-toss / low conviction → skip (flag irreleva
 
 → **Strong: 1–0** (2 leading).
 
-**FLAGGED — real rally edge, but disruptor flag → FADE / AVOID**
+**FLAGGED — real rally edge, but disruptor flag → DON'T BUY FAVORITE (other side?)**
 | pick (favorite) | rally sep | flag | status |
 |---|---|---|---|
 | Giron | +7.9 | 🔴 Moutet +17.6 | tomorrow |
@@ -67,7 +69,7 @@ Bucket rule: **PASS** = rally near-toss / low conviction → skip (flag irreleva
 | Fritz | +7.4* | pending |
 
 → **Pass: dodged 1 loser (Agut), skipped 1 winner (Hurkacz).** Discipline on the
-thin/low-conviction spots; not bet, so not scored W/L.
+thin/low-conviction spots; no position taken, so not scored W/L.
 *Hurkacz/Fritz have real rally separation but went to Pass on low conviction
 (4-red VARIABLE, no axis owned) — not near-tosses.
 
