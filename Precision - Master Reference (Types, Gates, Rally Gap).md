@@ -79,6 +79,14 @@ RALLY GAP            = Gap to Victory(1-4) + Gap to Victory(9+)
 Higher Rally Gap (closer to / past victory) = the play.
 ```
 
+**The SURPLUS matters, not just the deficit.** Each player typically *wins* one
+rally axis (over the bar, positive Gap to Victory) and *loses* the other (under).
+How far a player goes **over** the bar on the axis he wins tells you **how hard he
+owns it** — that's the dominance that decides the match, not just the size of his
+deficit. A player who barely clears his home axis (e.g. +0.3) is **hanging on by a
+thread where he's supposed to be strong**; one who clears it by +1.6 owns it. Read
+both the over and the under, per axis — not just the net.
+
 **Worked — Ruud (BAL) vs Hurkacz (FC):**
 - Ruud 1-4: Winning Metric = Hurkacz 52.4 + 1.1 = **53.5**; Ruud 51.9 → **−1.6**
 - Ruud 9+:  Winning Metric = Hurkacz 47.5 + 6.1 = **53.6**; Ruud 50.0 → **−3.6**
