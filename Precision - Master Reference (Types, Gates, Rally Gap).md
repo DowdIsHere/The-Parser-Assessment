@@ -156,6 +156,30 @@ bars.** Don't over-trust a Rally Gap here.
 
 ---
 
+## 5b. The DISRUPTOR FLAG (confidence modifier on the Rally Gap)
+The Rally Gap assumes a **standard baseline rally**. A player who slices, comes
+to net, and drop-shots **changes what the rally is** — pulling points out of the
+baseline bucket the Rally Gap measures. So a Rally-Gap favorite, especially a
+clean baseliner, is **at risk** when the underdog is a heavy disruptor. (Altmaier
+sliced Medvedev off his game at Halle 2026: Rally Gap said Medvedev +6.0, the
+disruptor won.)
+
+```
+DISRUPT = slice% + net% + drop%  of a player's total shots  (men's ShotTypes data)
+  >= 20  DISRUPTOR   |   15-20  mild   |   < 15  baseline
+
+DISRUPTION GAP = underdog DISRUPT − favorite DISRUPT
+  >= 12  STRONG disruption risk   |   6-12  moderate   |   < 6  minimal
+```
+
+Engine: `engine/precision/disruptor.py` (`score()`, `tier()`, `matchup_flag()`).
+A STRONG/moderate flag does **not** flip the Rally-Gap pick — it **downgrades
+confidence**, because the rally the pick relies on may not get played on the
+favorite's terms. Calibration: Evans 46, Moutet 33, Altmaier 26, Sonego 24 =
+disruptors; Sinner 8.5, Medvedev/Cilic ~10, Fritz 10.5 = clean baselines.
+
+---
+
 ## 6. Honest limits
 - **UFE caps are only verified for PM-vs-FC** (+3.9 / +2.2). The other cards show
   the raw winner−loser ownUFE gap; treat it as descriptive until verified as a gate.
