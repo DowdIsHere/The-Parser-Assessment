@@ -39,13 +39,23 @@ D is only +1.9; Medvedev looks like an FC pole but his own D is −2.2 → BAL.)
 
 ---
 
-## 3. The 6-GATE formula (all six metrics)
-For each metric, read **your side's winning gap** off the matchup card (§5):
+## 3. The 6-GATE formula (all six metrics) — read as GAP TO VICTORY
+The gate is **not** "how far ahead of the opponent." It's **how far from the
+number that wins.** For each metric:
 
 ```
-GREEN  if  actual gap ≥ card gap        (every metric EXCEPT UFE)
-UFE is a CAP:  GREEN if actual gap ≤ cap
+Winning Metric  = opponent's value + your side's winning gap (§5)   ← OPPONENT-SPECIFIC
+Gap to Victory  = your value − Winning Metric        (UFE: Winning Metric − your value)
+GREEN  if  Gap to Victory ≥ 0   (you've reached/passed the winning number)
+RED    if  Gap to Victory < 0   (still short of it)
 ```
+
+The **Winning Metric is opponent-specific** — your target on a metric changes with
+who you face, because it's the opponent's value plus the gap a winner of your type
+carries over them. (UFE is lower-is-better, so its Gap to Victory flips: you're
+green when your errors are at or below the winning number.) This is algebraically
+the same as `actual gap − card gap`, but "gap to victory" is the correct name:
+every cell on a grid is a distance to that metric's winning value.
 
 Verdict (every side is exactly one):
 - **CALL** — all six measured AND all six green.
@@ -62,12 +72,18 @@ of the same matchup card. Used when the six-gate recipe abstains but rally shape
 still separates the players.
 
 ```
-score(metric) = actual gap − card bar       (for 1-4, then 9+)
-Net rally     = score(1-4) + score(9+)
-Higher net rally = the play.
+Winning Metric (1-4) = opponent 1-4 + your 1-4 winning gap   ← opponent-specific
+Winning Metric (9+)  = opponent 9+  + your 9+  winning gap
+Gap to Victory       = your value − Winning Metric   (on 1-4, then 9+)
+RALLY GAP            = Gap to Victory(1-4) + Gap to Victory(9+)
+Higher Rally Gap (closer to / past victory) = the play.
 ```
 
-The 9+ "trail" bars are negative, so they enter as negatives: `gap − (−v) = gap+v`.
+**Worked — Ruud (BAL) vs Hurkacz (FC):**
+- Ruud 1-4: Winning Metric = Hurkacz 52.4 + 1.1 = **53.5**; Ruud 51.9 → **−1.6**
+- Ruud 9+:  Winning Metric = Hurkacz 47.5 + 6.1 = **53.6**; Ruud 50.0 → **−3.6**
+- **Ruud Rally Gap = −5.2** (well short of victory on both rallies)
+- Hurkacz comes out **+1.2** (at/past his winning metrics) → **Hurkacz the play.**
 
 ---
 
