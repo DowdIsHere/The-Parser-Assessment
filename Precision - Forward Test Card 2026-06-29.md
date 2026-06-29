@@ -16,22 +16,23 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Match | Pick | Result | Score |
 |---|---|---|---|
 | Bergs (PM) vs Humbert (FC) — FC-vs-PM | **Bergs** (rally −2.1 vs −6.6; market had Humbert) | **Bergs W** 3-6,6-1,6-4 | ✅ HIT |
+| Ruud (BAL) vs Hurkacz (FC) — FC-vs-BAL | **Hurkacz** (lean; +1.2 / −5.2; grass note) | **Hurkacz W** 6-4,6-2,7-6(7) | ✅ HIT |
 
-**Record: 1–0.** Called against the market; closed on a steal.
+**Record: 2–0.** Bergs against the market; Hurkacz on the softest "lean" + grass note — both held.
 
 ## Pending (Wimbledon R1)
 | Match (type) | Favored (rally) | Rally Gap | Reds f/u | Disrupt gap | Flag | Confidence | Result |
 |---|---|---|---|---|---|---|---|
-| Ruud v Hurkacz (BAL-FC) | **Hurkacz** | +1.2/−5.2 | 4/4 | +0.5 | 🟢 minimal | lean | |
+| Ruud v Hurkacz (BAL-FC) | **Hurkacz** | +1.2/−5.2 | 4/4 | +0.5 | 🟢 minimal | lean | ✅ **W** 6-4,6-2,7-6 |
 | Fritz v Draper (BAL-FC) | **Fritz** | +1.7/−5.7 | 3/3 | +0.6 | 🟢 minimal | lean | |
 | Agut v Fonseca (BAL-PM) | **Agut** | −0.8/−1.9 | 3/5 | +6.1 | 🟠 moderate | LOW (near-toss) | |
-| Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | LOW (near-toss) | |
-| Fokina v Cerundolo (BAL-PM) | **Fokina** | +5.0/−7.7 | 2/5 | −3.4 | 🟢 minimal | STRONG | |
+| Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | LOW (near-toss) | 🟡 live, Baez up in 5th (81%) |
+| Fokina v Cerundolo (BAL-PM) | **Fokina** | +5.0/−7.7 | 2/5 | −3.4 | 🟢 minimal | STRONG | 🟢 live, Fokina leading (91%) |
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
 | de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | |
 | Sonego v Etcheverry (FC) | **Etcheverry** | +4.5/−5.3 | 2/4 | +11.8 | 🟠 moderate | CAUTION (disrupt) | |
 | Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | |
-| Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | |
+| Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | 🟢 live, Medvedev leading (97%) |
 
 ## Read
 - **Strongest (favored + safe + clean):** Medvedev (beat Cilic on grass already, disrupt-proof), Sinner (owns every axis), Fokina, de Jong (1-red near-call).
