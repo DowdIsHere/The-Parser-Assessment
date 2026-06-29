@@ -31,7 +31,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
 | de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | ⏸ suspended 1-1 (de Jong won set-1 TB 7-4; Hij up 5-3 in 3rd) — resumes tmrw |
 | Sonego v Etcheverry (FC) | **Etcheverry** | +4.5/−5.3 | 2/4 | +11.8 | 🟠 moderate | CAUTION (disrupt) | |
-| Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | |
+| Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | ✅ **W** 4-6,6-3,6-7,6-2,6-3 (5 sets) |
 | Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | 🟢 live, Medvedev leading (97%) |
 
 ## THREE COUNTS (Strong / Flagged / Pass)
@@ -48,9 +48,9 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 | Medvedev | 🟢 live, leading 97% |
 | Fokina | 🟢 live, leading 91% |
 | de Jong | ⏸ suspended 1-1 (won set-1 TB; Hij up 5-3 in 3rd) — resumes tmrw |
-| Sinner | pending |
+| Sinner | ✅ W (5 sets — Kec pushed it) |
 
-→ **Strong: 1–0** (2 leading).
+→ **Strong: 2–0** (Bergs, Sinner); Medvedev & Fokina led at last look; de Jong suspended 1-1.
 
 **FLAGGED — real rally edge, but disruptor flag → DON'T BUY FAVORITE (other side?)**
 | pick (favorite) | rally sep | flag | status |
