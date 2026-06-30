@@ -15,7 +15,7 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 |---|---|---|---|---|---|---|
 | **Sinner** over Borges | BAL-BAL | +8.9/−13.5 | +22.4 | 1 | +6.0 (nominal) | |
 | **Djokovic** over Tsitsipas | BAL-BAL | +4.8/−9.4 | +14.2 | 2 | +6.2 (nominal) | |
-| **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 safe | |
+| ~~Munar over F. Cerundolo~~ | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ⚠️ **FORM-OVERRIDE → no position.** Frame (data thru May 21) is blind to Cerundolo's **Queen's grass TITLE** (Jun, beat Tommy Paul in final). Market 76% is pricing form, not mispricing. Form → Cerundolo. |
 
 ## FLAGGED — real edge, but disruptor fires → don't buy favorite (the flag's first exams)
 | pick (favorite) | type | sep | reds | disrupt | result |
@@ -32,6 +32,15 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 
 ## Carryover (from 2026-06-29 card)
 - **de Jong vs Hijikata** — suspended 1-1, resumes; STRONG pick, live.
+
+## Blind spot caught — RECENT FORM / SURFACE (2nd named blind spot)
+The frame reads season architecture **through May 21** — it cannot see a hot streak or a
+surface switch. **Munar over Cerundolo** was a clean frame STRONG, but Cerundolo **won the
+Queen's grass title in June** (beat Tommy Paul in the final) — invisible to the model. The
+market's 76% on Cerundolo is **pricing form, not making a mistake.** Rule: **when recent
+form is available (esp. a title / deep run on the upcoming surface), it OVERRIDES a
+stale-data pick.** Munar → no position; form leans Cerundolo. (Same class as the disruptor
+blind spot: the gates are sound only when the inputs are current.)
 
 ## Honest notes
 - 37/45 NOT GRADABLE — that's coverage discipline, not a flaw. The model only speaks on
