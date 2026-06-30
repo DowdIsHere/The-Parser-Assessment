@@ -10,6 +10,10 @@ pooled name against a qualifier / uncharted player. The model stays silent on th
 rally edge is **modest (sep < ~12)**. A larger edge can't be disrupted away, so a borderline
 flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 
+> 🗣️ **LANGUAGE RULE (costly lesson):** plain words only — **buy / don't buy / sit out.**
+> NEVER "fade / back / lay / take." The word "fade Etcheverry" (= don't buy him) got read
+> as its opposite and pointed at the losing side. Jargon can invert a correct call. Banned.
+
 ## STRONG — buy the favorite
 | pick | type | rally (fav/und) | sep | reds | disrupt | result |
 |---|---|---|---|---|---|---|
