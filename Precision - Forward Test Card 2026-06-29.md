@@ -29,7 +29,7 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Struff v Baez (BAL-PM) | **Baez** | −0.4/−2.3 | 3/5 | +4.9 | 🟢 minimal | **PASS** (near-toss) | ❌ pick L, Struff 6-1,7-6,4-6,2-6,7-5 (was a Pass — dodged) |
 | Fokina v ~~Cerundolo~~ | ~~Fokina~~ | — | — | — | — | ⚠️ **VOID** | Graded vs *Francisco* C.; actual opp **Juan Manuel** Cerundolo = NOT GRADABLE. (Fokina W 6-4,6-4,7-6, not a frame call.) |
 | Moutet v Giron (BAL-PM) | **Giron** | +2.6/−5.3 | 3/4 | +17.6 | 🔴 STRONG | DOWNGRADE (disrupt) | |
-| de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | ⏸ suspended 1-1 (de Jong won set-1 TB 7-4; Hij up 5-3 in 3rd) — resumes tmrw |
+| de Jong v Hijikata (FC) | **de Jong** | +3.6/−4.4 | 1/5 | +0.9 | 🟢 minimal | STRONG | ✅ **W** 7-6(4),3-6,5-7,6-4,6-3 (5 sets, from 2-1 down) |
 | Sonego v Etcheverry (FC) | **Etcheverry** | +4.5/−5.3 | 2/4 | +11.8 | 🟠 moderate | CAUTION (disrupt) | |
 | Sinner v Kecmanovic (BAL) | **Sinner** | +7.9/−12.5 | 1/5 | +4.4 | 🟢 minimal | STRONG | ✅ **W** 4-6,6-3,6-7,6-2,6-3 (5 sets) |
 | Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | ✅ **W** 6-1,6-2,6-4 (straights) |
@@ -47,10 +47,10 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 | Bergs | ✅ W |
 | Medvedev | ✅ W 6-1,6-2,6-4 (straights) |
 | ~~Fokina~~ | ⚠️ VOID — graded wrong Cerundolo (actual opp Juan Manuel = not gradable) |
-| de Jong | ⏸ suspended 1-1 (won set-1 TB; Hij up 5-3 in 3rd) — resumes tmrw |
+| de Jong | ✅ W 7-6,3-6,5-7,6-4,6-3 (5 sets, comeback from 2-1 down) |
 | Sinner | ✅ W (5 sets — Kec pushed it) |
 
-→ **Strong: 3–0** (Bergs, Sinner, Medvedev); de Jong suspended (resumes tmrw).
+→ **Strong: 4–0** (Bergs, Sinner, Medvedev, de Jong). Every high-conviction call hit.
 **Fokina VOID** — wrong opponent graded (the Cerundolo name-collision bit us). Lesson:
 confirm player identity before grading when names collide; don't assume the gradable one.
 

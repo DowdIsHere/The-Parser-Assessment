@@ -15,7 +15,7 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 |---|---|---|---|---|---|---|
 | **Sinner** over Borges | BAL-BAL | +8.9/−13.5 | +22.4 | 1 | +6.0 (nominal) | |
 | **Djokovic** over Tsitsipas | BAL-BAL | +4.8/−9.4 | +14.2 | 2 | +6.2 (nominal) | |
-| ~~Munar over F. Cerundolo~~ | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ⚠️ **FORM-OVERRIDE → no position.** Frame (data thru May 21) is blind to Cerundolo's **Queen's grass TITLE** (Jun, beat Tommy Paul in final). Market 76% is pricing form, not mispricing. Form → Cerundolo. |
+| **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ✅✅ **FRAME HIT — Munar W 6-1,6-4,6-3.** Frame called Munar at a 24% market; he won in straights. **My form/shotmaker OVERRIDE (lean Cerundolo) was WRONG** — the hot streak reverted, the base read held. Genuine mispricing found. Lesson: do NOT override a clean frame pick on blind-spot speculation. |
 
 ## FLAGGED — real edge, but disruptor fires → don't buy favorite (the flag's first exams)
 | pick (favorite) | type | sep | reds | disrupt | result |
@@ -32,6 +32,14 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 
 ## Carryover (from 2026-06-29 card)
 - **de Jong vs Hijikata** — suspended 1-1, resumes; STRONG pick, live.
+
+## ⚠️ CRITICAL CORRECTION — blind spots EXPLAIN, they do NOT OVERRIDE
+**Munar beat Cerundolo 6-1, 6-4, 6-3.** The frame's Munar pick was RIGHT; the form +
+shotmaker override (lean Cerundolo) was WRONG. The blind spots below are real
+*explanations for variance* — but using them to **fade a clean frame pick is −EV.**
+Cerundolo over-performed 5 matches at Queen's, then **reverted to his profile and lost
+exactly as the frame said.** A hot streak is already in the market price *and* it ends.
+**Rule: trust the frame's pick; use blind spots to size/contextualize, NOT to flip the side.**
 
 ## Blind spot caught — THE SHOTMAKER / OVER-PERFORMER (3rd named blind spot)
 Ran Cerundolo's last 10 through the gates: **2 hit / 4 miss (6 gradable) — and the frame
