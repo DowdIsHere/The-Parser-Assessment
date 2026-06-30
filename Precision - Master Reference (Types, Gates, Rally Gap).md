@@ -173,10 +173,28 @@ DISRUPTION GAP = underdog DISRUPT − favorite DISRUPT
 ```
 
 Engine: `engine/precision/disruptor.py` (`score()`, `tier()`, `matchup_flag()`).
-A STRONG/moderate flag does **not** flip the Rally-Gap pick — it **downgrades
-confidence**, because the rally the pick relies on may not get played on the
-favorite's terms. Calibration: Evans 46, Moutet 33, Altmaier 26, Sonego 24 =
-disruptors; Sinner 8.5, Medvedev/Cilic ~10, Fritz 10.5 = clean baselines.
+A flag does **NOT** flip the pick to the disruptor. When the flag (≥ moderate)
+**conflicts with** the Rally-Gap favorite, the match is a **true coin toss → PASS**
+(see §5c) — no position on either side. Calibration: Evans 46, Moutet 33, Altmaier
+26, Sonego 24 = disruptors; Sinner 8.5, Medvedev/Cilic ~10, Fritz 10.5 = clean baselines.
+(Flag uses **shot types only** — slice/net/drop. Steal & conv are NOT disruption
+signals; they are baked into the rallies and are already two of the six gates.)
+
+---
+
+## 5c. TRUE COIN TOSS → PASS (the 4th component)
+The frame's verdict logic. A match is a **PASS** (no position) when it can't be
+called with confidence — specifically:
+- the Rally Gap is too thin (near-toss), **OR**
+- the shot-type **flag conflicts** with the Rally-Gap favorite (gate says one side,
+  flag says it's unreliable) — that conflict **is** a coin toss.
+
+A flag never produces a pick on the disruptor; it only moves a would-be favorite to
+**Pass**. Take a position only when Gates + Rally Gap agree **and** the flag is clear.
+
+**The approved frame is exactly these four:** (1) Gates by Victory Gaps · (2) Rally
+Gap Deficit Analysis · (3) Flag by shot types · (4) True Coin Toss → Pass. Anything
+else lives in `Frame Improvements for analysis and testing.md`, not here.
 
 ---
 
