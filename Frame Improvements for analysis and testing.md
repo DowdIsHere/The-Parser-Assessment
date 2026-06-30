@@ -98,6 +98,26 @@ Possible next directions (untested, for future research only): condition on surf
 on rally-gap size, on round/tournament tier; or abandon the season-aggregate-%
 framing entirely and pursue the mid-rally/point-ending shot-sequence approach in §A3.
 
+### A5. Why it fails — the "3 shot types" flag is really 1 (slice), and slice doesn't reliably disrupt
+Broke down DISRUPT into its components for both flagged matches plus the original
+Altmaier/Medvedev anecdote:
+
+| player | slice% | net% | drop% | TOTAL | slice's share |
+|---|---|---|---|---|---|
+| Moutet (flagged, LOST as disruptor) | 23.4 | 4.6 | 4.6 | 32.6 | 72% |
+| Sonego (flagged, WON as disruptor) | 14.5 | 5.8 | 3.1 | 23.5 | 62% |
+| Altmaier (original anecdote, WON) | 19.5 | 5.0 | 1.0 | 25.5 | 76% |
+| Giron / Etcheverry / Medvedev (favorites) | — | — | — | — | 57–75% (similar!) |
+
+**Net and drop are minor everywhere — DISRUPT is effectively a slice score with two
+small passengers, not a 3-mechanism signal.** Worse: **Moutet and Altmaier are nearly
+identical profiles** (slice-dominant, low net/drop) with **opposite outcomes**
+(Altmaier beat the favorite; Moutet lost to the favorite). Same shape of player,
+opposite results — consistent with §A4's backtest: slice-heavy play behaves like a
+coin flip, not a reliable disruption weapon. **Conclusion: rethink the construct from
+scratch rather than reweight it** — collapsing 3 shot types that are ~all slice
+explains both the conceptual confound (§A3) and the null backtest (§A4).
+
 ---
 
 ## B. Discarded / incorrect (kept for the record, not for use)
