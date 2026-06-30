@@ -26,7 +26,7 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 ## FLAGGED — real edge, but disruptor fires → don't buy favorite (the flag's first exams)
 | pick (favorite) | type | sep | reds | disrupt | result |
 |---|---|---|---|---|---|
-| Giron vs Moutet | PM-BAL | +7.9 | 3 | **🔴 +17.6** (Moutet 32.6) | **PASS** — flag conflicts with rally favorite = true coin toss (component 4). No position either side. |
+| Giron vs Moutet | PM-BAL | +7.9 | 3 | **🔴 +17.6** (Moutet 32.6) | **PASS** — flag conflicts with rally favorite = true coin toss (component 4). No position either side. RESULT: **Giron W** 4-6,6-4,7-5,6-4 (the rally-favored side won; no P&L, correctly no position taken). |
 | Etcheverry over Sonego | FC-FC | +9.8 | 2 | **🟠 +11.8** (Sonego 23.5) | ✅ **FLAG HIT — Sonego W 6-4,6-4,6-7(2),7-6(4).** Disruptor flag's FIRST live test confirmed: the rally favorite was beaten by the disruptor, exactly as flagged. (Sonego even stole the deciding breaker 7-4 in Etcheverry's domain.) In-the-moment "lean Etch on the tiebreak" was WRONG — the flag outranked it. |
 
 ## PASS — near-toss / low conviction → no position
