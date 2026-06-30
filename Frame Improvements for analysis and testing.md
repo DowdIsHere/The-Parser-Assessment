@@ -63,9 +63,40 @@ causal "this shot type disrupts the opponent" claim.
 **What real validation would require:** split each shot category into "mid-rally" vs
 "point-ending," and check whether a MID-RALLY slice/net/drop changes how the point
 *subsequently* unfolds (not just whether it co-occurs with a known outcome). That is
-a real research task, not a quick recalibration. **Until done, treat the live
-disruptor flag's calibration as unverified — its directional finding (Sonego/Etch:
-flag-side won; Giron/Moutet: rally-side won, 1-for-2) is too small a sample to lean on.**
+a real research task, not a quick recalibration.
+
+### A4. BACKTEST RESULT — the disruptor flag shows NO measurable effect (n=1,519)
+Ran the real test: does disruption gap predict the Rally-Gap favorite losing MORE
+than expected? Backtested every gradable historical match (both players in pool,
+both have shot-type data) — favorite/underdog determined the same way the live engine
+does (Rally Gap), bucketed by disruption gap, checked actual winner via `PtWinner`.
+
+| disruption gap | n | favorite win% |
+|---|---|---|
+| favorite is bigger disruptor (<0) | 457 | 60.8% |
+| 0–6 (minimal) | 593 | 67.3% |
+| 6–12 (moderate) | 327 | 62.4% |
+| **12+ (STRONG flag)** | 142 | **68.3%** |
+| overall | 1,519 | 64.4% |
+
+**No trend.** If the flag had real signal, favorite win% should *fall* as the
+disruption gap rises. It doesn't — it's flat/noisy, and the STRONG-flag bucket (12+)
+has the **highest** favorite win rate of all four, the opposite of the hypothesis.
+Confidence intervals overlap heavily across buckets (rough 2×SE: 56–65% / 64–71% /
+57–68% / 62–75%) — consistent with **no detectable effect**, not just a weak one.
+
+**Verdict: the disruptor flag, as currently constructed (slice%+net%+drop%, season-
+aggregate, summed), does not clear a basic backtest.** This is a bigger problem than
+"the weights are arbitrary" (§A3) — the construct itself shows no measurable
+predictive power at n=1,519. Reweighting slice/net/drop relative to each other would
+be tuning a signal that may not exist in this form. Tonight's live 1-for-2
+(Sonego/Etcheverry hit, Giron/Moutet miss) is consistent with pure noise around a
+null effect, not a small sample of a real one.
+
+**Do not deploy any version of this flag live until it clears a real backtest.**
+Possible next directions (untested, for future research only): condition on surface,
+on rally-gap size, on round/tournament tier; or abandon the season-aggregate-%
+framing entirely and pursue the mid-rally/point-ending shot-sequence approach in §A3.
 
 ---
 
