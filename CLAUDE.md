@@ -38,6 +38,16 @@ Any idea beyond these four goes in `Frame Improvements for analysis and testing.
   → May 21, 2026.** Frozen at that cutoff (no June+ form).
 - **conv / steal** (TennisViz): current. Don't refresh mid-test.
 - **Recent form / surface** is a real-world *caveat to be aware of* — NOT a frame override.
+- **Physical condition / recent injuries** must be checked before a live read goes out.
+  None of our data (charting frozen at May 21; shot-types same) can see a withdrawal,
+  an injury, or fatigue from a heavy match week. Example: **Tommy Paul** withdrew
+  from Stuttgart (Jun 8, neck injury) minutes before his match, then lost the Queen's
+  Club final to Cerundolo 13 days later, 6-7(4), 6-4, 6-3, after winning set one — a
+  plausible injury-affected result the frame had zero visibility into (gates/rally
+  favored Paul clearly: 2r vs 5r, +4.8/−9.8). **Check for this on every player before
+  presenting a read, the same way you'd check recent form.** Get the player right —
+  verify which side an injury report applies to before logging it anywhere.
+  Real-world context to flag — NOT a frame override.
 
 ## FORWARD-TEST RECORD
 Dated cards: `Precision - Forward Test Card YYYY-MM-DD.md`. Buckets: **Strong** (buy),

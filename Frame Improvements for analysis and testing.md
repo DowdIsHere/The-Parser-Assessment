@@ -98,6 +98,16 @@ Possible next directions (untested, for future research only): condition on surf
 on rally-gap size, on round/tournament tier; or abandon the season-aggregate-%
 framing entirely and pursue the mid-rally/point-ending shot-sequence approach in §A3.
 
+### A4b. Small-sample trap — confirmed live (slice SHARE, not just raw score)
+After §A4's null backtest, tried "slice share" (slice as % of a player's own DISRUPT
+score) on the same 3 anecdote matches: winner had the higher share in all 3 (3/3) —
+looked like a finding. Re-ran it on Cerundolo's real last-10 (10 matches, not
+cherry-picked): **5 holds, 5 breaks — exactly a coin flip.** The 3/3 was 1-in-8 noise
+from a small, non-random sample (selected *because* it was "disruptor-qualifying"),
+not a real pattern. **Lesson: after a large null backtest, do not chase patterns in
+small/selected sub-samples — they regress to the null almost every time.** Confirms
+§A4: no validated shot-type signal, slice share included.
+
 ### A5. Why it fails — the "3 shot types" flag is really 1 (slice), and slice doesn't reliably disrupt
 Broke down DISRUPT into its components for both flagged matches plus the original
 Altmaier/Medvedev anecdote:
@@ -140,3 +150,19 @@ parked as a possible future study only.
 ### B4. Proposed "absolute-fragility flag" (value vs winning baseline) — UNAPPROVED.
 Idea floated to flag a favorite whose absolute 1-4 or 9+ sits far below the winning
 baseline. Not approved; parked.
+
+---
+
+## C. Process checklist (not a frame component — a diligence step)
+
+### C1. Check physical condition / recent injuries before every live read.
+No data source we have (charting, frozen May 21; shot types, same) can see a
+withdrawal, an injury, or fatigue from a heavy match week. Case: **Tommy Paul**
+withdrew from Stuttgart (Jun 8, neck injury) minutes before his match, then lost the
+Queen's Club final to Cerundolo 13 days later (6-7(4), 6-4, 6-3, after winning set
+one) — a plausible injury-affected MISS on a match the gates/rally favored Paul to
+win cleanly (2r vs 5r, +4.8/−9.8). (Correction: this was first misattributed to
+Cerundolo — verify which player an injury report belongs to before logging it.)
+**This is now a standing check, logged in CLAUDE.md**, alongside recent-form/surface:
+real-world context to flag before presenting a read — never a frame override, just
+something to know and say out loud.
