@@ -32,6 +32,41 @@ tiebreak player.
   Sonego/Etcheverry the in-the-moment tiebreak lean pointed at the flagged favorite
   and cost a position. **Status: untested; explore only after the approved engine is back.**
 
+### A3. Disruptor flag's shot weighting — CURRENT FORMULA IS NOT DATA-SUPPORTED.
+The live `disruptor.py` DISRUPT score sums slice% + net% + drop% as if all three carry
+equal "disruption" weight. **They do not.** Measured directly from
+`charting-m-stats-ShotTypes.csv` (`shots_in_pts_won` / `shots_in_pts_lost`, pooled
+across all charted matches), baseline = 50.2% of all shots occur in a point the hitter
+wins:
+
+| shot | win-association | vs baseline |
+|---|---|---|
+| Slice | 41.0% | **−9.3** (hitter loses the point MORE often) |
+| Drop shot | 55.0% | +4.8 |
+| Net/Volley (all variants) | 68.5–70.9% | **+18 to +21** |
+| Overhead | 82.7% | +32.4 |
+| Groundstroke | ~50% | flat (the baseline) |
+
+**Slice and net/volley are near-opposites**, yet the current formula weights them
+identically and adds them together. This is not a refinement question — **the current
+DISRUPT formula is not supported by the data and should not be trusted as-is.**
+
+**Critical caveat — correlation, not causation, and likely confounded:** a volley's
+strong positive association is partly tautological (you're often at net hitting a
+volley *because* the point was already going your way — the volley frequently *ends*
+an already-won point, it doesn't *cause* the win). Slice's negative association likely
+mirrors this: players slice more while defending/stretched, i.e. already in a losing
+position — the slice may be a **symptom** of trouble, not its cause. This data does
+NOT separate point-ending shots from mid-rally shots, so it cannot yet support a real
+causal "this shot type disrupts the opponent" claim.
+
+**What real validation would require:** split each shot category into "mid-rally" vs
+"point-ending," and check whether a MID-RALLY slice/net/drop changes how the point
+*subsequently* unfolds (not just whether it co-occurs with a known outcome). That is
+a real research task, not a quick recalibration. **Until done, treat the live
+disruptor flag's calibration as unverified — its directional finding (Sonego/Etch:
+flag-side won; Giron/Moutet: rally-side won, 1-for-2) is too small a sample to lean on.**
+
 ---
 
 ## B. Discarded / incorrect (kept for the record, not for use)
