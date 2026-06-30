@@ -15,7 +15,9 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 |---|---|---|---|---|---|---|
 | **Sinner** over Borges | BAL-BAL | +8.9/−13.5 | +22.4 | 1 | +6.0 (nominal) | |
 | **Djokovic** over Tsitsipas | BAL-BAL | +4.8/−9.4 | +14.2 | 2 | +6.2 (nominal) | |
-| **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ✅✅ **FRAME HIT — Munar W 6-1,6-4,6-3.** Frame called Munar at a 24% market; he won in straights. **My form/shotmaker OVERRIDE (lean Cerundolo) was WRONG** — the hot streak reverted, the base read held. Genuine mispricing found. Lesson: do NOT override a clean frame pick on blind-spot speculation. |
+| **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ✅ **STRONG HIT — Munar W 6-1,6-4,6-3** at a 24% market (genuine mispricing). My later form/shotmaker override was a wrong detour; the STRONG *pick* was correct and gets full credit. |
+
+→ **STRONG settled across both cards: 5–0** — Bergs, Sinner, Medvedev, de Jong, **Munar**. Every high-conviction call has hit. (Sinner, Djokovic still to play Jul 1.)
 
 ## FLAGGED — real edge, but disruptor fires → don't buy favorite (the flag's first exams)
 | pick (favorite) | type | sep | reds | disrupt | result |
