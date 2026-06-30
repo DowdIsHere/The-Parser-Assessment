@@ -33,6 +33,18 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 ## Carryover (from 2026-06-29 card)
 - **de Jong vs Hijikata** — suspended 1-1, resumes; STRONG pick, live.
 
+## Blind spot caught — THE SHOTMAKER / OVER-PERFORMER (3rd named blind spot)
+Ran Cerundolo's last 10 through the gates: **2 hit / 4 miss (6 gradable) — and the frame
+picked AGAINST him in ALL FOUR of his wins** (beat Paul, Nakashima, Brooksby, Zandschulp),
+while correctly picking his opponents in both losses (de Minaur, Musetti). The frame rates
+him a 4–5 red, −5 to −11 rally scrub against everyone. **It's not blind to his form — it's
+structurally WRONG about him**, across May (losses) *and* June (the Queen's title run).
+Why: Cerundolo is a **high-variance shotmaker** — own UFE 21.2 (sprays), OUFE 22.0 (forces),
+low rally win% (1-4 48.4 / 9+ 46.4). **He wins with winners and serve, not rallies**, so a
+*rally-based* frame chronically underrates him — especially on grass. Same class as Hijikata
+(4-1 while never grading). **Rule: a player who wins via shotmaking/serve (low rally win% +
+high OUFE + high own UFE) is a frame anti-pattern — distrust a pick that fades him.**
+
 ## Blind spot caught — RECENT FORM / SURFACE (2nd named blind spot)
 The frame reads season architecture **through May 21** — it cannot see a hot streak or a
 surface switch. **Munar over Cerundolo** was a clean frame STRONG, but Cerundolo **won the
