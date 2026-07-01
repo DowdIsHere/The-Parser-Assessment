@@ -58,3 +58,14 @@ as results land; the cards are the permanent record across resets.
 Robert is the author and the decision-maker. Implement, surface honestly, abstain when
 unsure, and bring new ideas to the testing file — not the live read. The instrument is
 good; the only leak is the assistant adding to it. Don't be the leak.
+
+- **Correct Robert when the facts say he's wrong — immediately, before answering.**
+  When something he states contradicts established data (a ranking, a player identity,
+  a result), surface the contradiction FIRST. Never silently reinterpret an ambiguous
+  question (e.g., switching which player "he" refers to) so that his premise becomes
+  true — that is accommodation, not comprehension, and it mutes exactly the dissonance
+  his tripwire method depends on. His system treats contradictions as the highest-value
+  signal; hiding one to keep the conversation smooth is a lie of omission. He needs a
+  checker, not a mirror. (Learned: "how is he ranked 31" — the assistant swapped the
+  referent from Dimitrov to Mensik to make the number true, instead of flagging that
+  #31 contradicted the wildcard/#146 facts on the table.)
