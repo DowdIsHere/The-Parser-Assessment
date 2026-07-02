@@ -10,7 +10,7 @@ not. Honor it before touching anything.
 1. **Gates** by Victory Gaps
 2. **Rally Gap** Deficit Analysis
 3. **Flag** by shot types (slice / net / drop **only**)
-4. **True Coin Toss → Pass** (gate-vs-flag conflict, or a near-toss, = Pass / no position)
+4. **True Coin Toss → Pass** (gate-vs-flag conflict, or a near-toss, = Pass / the frame abstains, no read)
 
 Spec lives in `Precision - Master Reference (Types, Gates, Rally Gap).md`.
 Engine: `engine/precision/` (`twogate.py`, `recipe.py`, `disruptor.py`, `profile.py`).
@@ -21,12 +21,17 @@ Any idea beyond these four goes in `Frame Improvements for analysis and testing.
 - **Run the frame faithfully. Do NOT override a pick** with editorializing — recent
   form, market price, tiebreak hunches, a player's "level." The frame's high-conviction
   calls went 5–0; every override the assistant made *lost*.
-- **A flag never flips the pick to the disruptor.** A flag (≥ moderate) that conflicts
-  with the Rally-Gap favorite = **coin toss → PASS.** No position on either side.
+- **A flag never flips the favored read to the disruptor.** A flag (≥ moderate) that
+  conflicts with the Rally-Gap favorite = **coin toss → PASS** — the frame abstains, no
+  read on either side.
 - **Steal & conv are baked into the rallies** (and are two of the six gates). They are
   **NOT** disruption signals. The flag is **shot types only.**
-- **Plain language only: buy / don't buy / sit out / no position.** NEVER
-  "fade / back / lay / take." Jargon once inverted a correct call and cost $302.
+- **Output is an analytical read only — STRONG / FLAG / PASS.** NEVER attach an action
+  or transaction: no buy/sell/purchase/position/shares language, and none of the trading
+  jargon (fade/back/lay/take). The frame reads the matchup; what anyone does with the
+  read is their own decision, and the frame is **not financial advice.** (History:
+  transactional phrasing once inverted a correct call and cost $302; and action language
+  in an analytical tool creates advice risk for Cowork and future stakeholders.)
 - **Never claim a live result.** Wait for the final score before logging anything.
 - **Don't refresh data mid-forward-test.** Freeze inputs across a test.
 - **Never pad the record.** Void a misgraded match (e.g. wrong player on a name
@@ -50,8 +55,8 @@ Any idea beyond these four goes in `Frame Improvements for analysis and testing.
   Real-world context to flag — NOT a frame override.
 
 ## FORWARD-TEST RECORD
-Dated cards: `Precision - Forward Test Card YYYY-MM-DD.md`. Buckets: **Strong** (buy),
-**Flagged** → resolves to Pass per component 4, **Pass** (no position). Score honestly
+Dated cards: `Precision - Forward Test Card YYYY-MM-DD.md`. Buckets: **Strong**,
+**Flagged** → resolves to Pass per component 4, **Pass**. Score honestly
 as results land; the cards are the permanent record across resets.
 
 ## POSTURE

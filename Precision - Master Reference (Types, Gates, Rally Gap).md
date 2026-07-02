@@ -76,7 +76,7 @@ Winning Metric (1-4) = opponent 1-4 + your 1-4 winning gap   ← opponent-specif
 Winning Metric (9+)  = opponent 9+  + your 9+  winning gap
 Gap to Victory       = your value − Winning Metric   (on 1-4, then 9+)
 RALLY GAP            = Gap to Victory(1-4) + Gap to Victory(9+)
-Higher Rally Gap (closer to / past victory) = the play.
+Higher Rally Gap (closer to / past victory) = the favored read.
 ```
 
 **The SURPLUS matters, not just the deficit.** Each player typically *wins* one
@@ -91,7 +91,7 @@ both the over and the under, per axis — not just the net.
 - Ruud 1-4: Winning Metric = Hurkacz 52.4 + 1.1 = **53.5**; Ruud 51.9 → **−1.6**
 - Ruud 9+:  Winning Metric = Hurkacz 47.5 + 6.1 = **53.6**; Ruud 50.0 → **−3.6**
 - **Ruud Rally Gap = −5.2** (well short of victory on both rallies)
-- Hurkacz comes out **+1.2** (at/past his winning metrics) → **Hurkacz the play.**
+- Hurkacz comes out **+1.2** (at/past his winning metrics) → **Hurkacz the favored read.**
 
 ---
 
@@ -175,9 +175,9 @@ DISRUPTION GAP = underdog DISRUPT − favorite DISRUPT
 ```
 
 Engine: `engine/precision/disruptor.py` (`score()`, `tier()`, `matchup_flag()`).
-A flag does **NOT** flip the pick to the disruptor. When the flag (≥ moderate)
+A flag does **NOT** flip the favored read to the disruptor. When the flag (≥ moderate)
 **conflicts with** the Rally-Gap favorite, the match is a **true coin toss → PASS**
-(see §5c) — no position on either side. Calibration: Evans 46, Moutet 33, Altmaier
+(see §5c) — the frame abstains, no read on either side. Calibration: Evans 46, Moutet 33, Altmaier
 26, Sonego 24 = disruptors; Sinner 8.5, Medvedev/Cilic ~10, Fritz 10.5 = clean baselines.
 (Flag uses **shot types only** — slice/net/drop. Steal & conv are NOT disruption
 signals; they are baked into the rallies and are already two of the six gates.)
@@ -185,14 +185,15 @@ signals; they are baked into the rallies and are already two of the six gates.)
 ---
 
 ## 5c. TRUE COIN TOSS → PASS (the 4th component)
-The frame's verdict logic. A match is a **PASS** (no position) when it can't be
-called with confidence — specifically:
+The frame's verdict logic. A match is a **PASS** (the frame abstains — no read) when it
+can't be called with confidence — specifically:
 - the Rally Gap is too thin (near-toss), **OR**
 - the shot-type **flag conflicts** with the Rally-Gap favorite (gate says one side,
   flag says it's unreliable) — that conflict **is** a coin toss.
 
-A flag never produces a pick on the disruptor; it only moves a would-be favorite to
-**Pass**. Take a position only when Gates + Rally Gap agree **and** the flag is clear.
+A flag never produces a favored read on the disruptor; it only moves a would-be favorite
+to **Pass**. A **STRONG** read requires Gates + Rally Gap to agree **and** the flag to be
+clear.
 
 **The approved frame is exactly these four:** (1) Gates by Victory Gaps · (2) Rally
 Gap Deficit Analysis · (3) Flag by shot types · (4) True Coin Toss → Pass. Anything

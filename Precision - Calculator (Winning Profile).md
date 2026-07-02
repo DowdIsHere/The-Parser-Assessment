@@ -139,7 +139,7 @@ it enters as a negative number: `gap − (−v) = gap + v`.)
 | **BAL** (vs FC) | +1.1 | +6.1 |
 
 Positive score = over the bar (surplus); negative = under (deficit). **Higher net
-rally = better rally shape → the play.** The thin-boundary insight: in PM-vs-FC
+rally = better rally shape → the favored read.** The thin-boundary insight: in PM-vs-FC
 the win/lose gaps sit almost on top of each other, so there's no cushion — one
 **big hole** (a large single-metric deficit) sinks the player immediately.
 

@@ -10,26 +10,27 @@ pooled name against a qualifier / uncharted player. The model stays silent on th
 rally edge is **modest (sep < ~12)**. A larger edge can't be disrupted away, so a borderline
 flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 
-> 🗣️ **LANGUAGE RULE (costly lesson):** plain words only — **buy / don't buy / sit out.**
-> NEVER "fade / back / lay / take." The word "fade Etcheverry" (= don't buy him) got read
-> as its opposite and pointed at the losing side. Jargon can invert a correct call. Banned.
+> 🗣️ **LANGUAGE RULE:** output is an analytical read only — **STRONG / FLAG / PASS.** No
+> action or transaction is ever attached: no buy/sell/position/shares language, and none of
+> the trading jargon (fade/back/lay/take). The frame reads the matchup; it is not financial
+> advice. (History: transactional phrasing once inverted a correct read and cost $302.)
 
-## STRONG — buy the favorite
+## STRONG — clear favored read
 | pick | type | rally (fav/und) | sep | reds | disrupt | result |
 |---|---|---|---|---|---|---|
 | **Sinner** over Borges | BAL-BAL | +8.9/−13.5 | +22.4 | 1 | +6.0 (nominal) | |
 | **Djokovic** over Tsitsipas | BAL-BAL | +4.8/−9.4 | +14.2 | 2 | +6.2 (nominal) | |
-| **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ✅ **STRONG HIT — Munar W 6-1,6-4,6-3** at a 24% market (genuine mispricing). My later form/shotmaker override was a wrong detour; the STRONG *pick* was correct and gets full credit. |
+| **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ✅ **STRONG HIT — Munar W 6-1,6-4,6-3** (the frame read Munar against a 24% market-implied probability). My later form/shotmaker override was a wrong detour; the STRONG *read* was correct and gets full credit. |
 
 → **STRONG settled across both cards: 5–0** — Bergs, Sinner, Medvedev, de Jong, **Munar**. Every high-conviction call has hit. (Sinner, Djokovic still to play Jul 1.)
 
-## FLAGGED — real edge, but disruptor fires → don't buy favorite (the flag's first exams)
+## FLAGGED — real edge, but disruptor fires → favorite's read is contested (the flag's first exams)
 | pick (favorite) | type | sep | reds | disrupt | result |
 |---|---|---|---|---|---|
-| Giron vs Moutet | PM-BAL | +7.9 | 3 | **🔴 +17.6** (Moutet 32.6) | **PASS** — flag conflicts with rally favorite = true coin toss (component 4). No position either side. RESULT: **Giron W** 4-6,6-4,7-5,6-4 (the rally-favored side won; no P&L, correctly no position taken). |
+| Giron vs Moutet | PM-BAL | +7.9 | 3 | **🔴 +17.6** (Moutet 32.6) | **PASS** — flag conflicts with rally favorite = true coin toss (component 4). The frame abstained — no read on either side. RESULT: **Giron W** 4-6,6-4,7-5,6-4 (the rally-favored side won; frame correctly abstained). |
 | Etcheverry over Sonego | FC-FC | +9.8 | 2 | **🟠 +11.8** (Sonego 23.5) | ✅ **FLAG HIT — Sonego W 6-4,6-4,6-7(2),7-6(4).** Disruptor flag's FIRST live test confirmed: the rally favorite was beaten by the disruptor, exactly as flagged. (Sonego even stole the deciding breaker 7-4 in Etcheverry's domain.) In-the-moment "lean Etch on the tiebreak" was WRONG — the flag outranked it. |
 
-## PASS — near-toss / low conviction → no position
+## PASS — near-toss / low conviction → the frame abstains
 | pick | type | sep | reds | note |
 |---|---|---|---|---|
 | Popyrin over Lehecka | BAL-BAL | +5.6 | 4 | owns little (4 red) |
@@ -41,16 +42,17 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 
 ## 🥇 DISRUPTOR FLAG — first live verdict: HIT (Sonego beat Etcheverry)
 The flag's first real test landed. Rally gap + tiebreak proxy both said Etcheverry; the
-🟠 flag said fade him (Sonego 23.5 disruptor). **Sonego won 6-4,6-4,6-7,7-6** — junked it
-up, denied the clean game, even stole the deciding breaker in Etcheverry's domain. **The
-flag was right; the in-the-moment tiebreak lean (mine) was the leak.** Cost: a real losing
-position on Etcheverry. **HARD RULE: the structural signal (gate / flag) OUTRANKS any
-in-match read — ours or mine. When they disagree, the flag wins. Proven twice (Munar, this).**
+🟠 flag marked Etcheverry's read as contested (Sonego 23.5 disruptor). **Sonego won
+6-4,6-4,6-7,7-6** — junked it up, denied the clean game, even stole the deciding breaker
+in Etcheverry's domain. **The flag was right; the in-the-moment tiebreak lean (mine) was
+the leak.** **HARD RULE: the structural signal (gate / flag) OUTRANKS any in-match read —
+ours or mine. When they disagree, the flag wins. Proven twice (Munar, this).**
 
 ## ⚠️ CRITICAL CORRECTION — blind spots EXPLAIN, they do NOT OVERRIDE
 **Munar beat Cerundolo 6-1, 6-4, 6-3.** The frame's Munar pick was RIGHT; the form +
 shotmaker override (lean Cerundolo) was WRONG. The blind spots below are real
-*explanations for variance* — but using them to **fade a clean frame pick is −EV.**
+*explanations for variance* — but using them to **override a clean frame read is a
+documented error.**
 Cerundolo over-performed 5 matches at Queen's, then **reverted to his profile and lost
 exactly as the frame said.** A hot streak is already in the market price *and* it ends.
 **Rule: trust the frame's pick; use blind spots to size/contextualize, NOT to flip the side.**
@@ -73,7 +75,7 @@ surface switch. **Munar over Cerundolo** was a clean frame STRONG, but Cerundolo
 Queen's grass title in June** (beat Tommy Paul in the final) — invisible to the model. The
 market's 76% on Cerundolo is **pricing form, not making a mistake.** Rule: **when recent
 form is available (esp. a title / deep run on the upcoming surface), it OVERRIDES a
-stale-data pick.** Munar → no position; form leans Cerundolo. (Same class as the disruptor
+stale-data pick.** Munar → the frame abstains; form leans Cerundolo. (Same class as the disruptor
 blind spot: the gates are sound only when the inputs are current.)
 
 ## Honest notes

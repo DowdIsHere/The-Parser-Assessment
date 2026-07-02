@@ -35,13 +35,13 @@ grass. Engine: `recipe.py`, `twogate.py`, `disruptor.py`.
 | Cilic v Medvedev (BAL) | **Medvedev** | +4.6/−9.2 | 2/4 | +0.1 | 🟢 minimal | STRONG | ✅ **W** 6-1,6-2,6-4 (straights) |
 
 ## THREE COUNTS (Strong / Flagged / Pass)
-Market = prediction market (Kalshi): you **purchase shares** in an outcome, hold
-or sell — no wager, no book. Bucket rule: **PASS** = rally near-toss / low
-conviction → no position (flag irrelevant). **FLAGGED** = real rally edge, but
-disruptor flag fires → don't buy the favorite (consider the other side).
-**STRONG** = real edge + disrupt-safe → buy the favorite. Track each bucket.
+The frame emits an analytical read only — not financial advice, no action attached.
+Bucket rule: **PASS** = rally near-toss / low conviction → the frame abstains (flag
+irrelevant). **FLAGGED** = real rally edge, but the disruptor flag fires → the
+favorite's read is contested. **STRONG** = real edge + disrupt-safe → a clear favored
+read. Track each bucket.
 
-**STRONG — clean rally edge, disrupt-safe → BUY (favorite shares)**
+**STRONG — clean rally edge, disrupt-safe → clear favored read**
 | pick | status |
 |---|---|
 | Bergs | ✅ W |
@@ -54,7 +54,7 @@ disruptor flag fires → don't buy the favorite (consider the other side).
 **Fokina VOID** — wrong opponent graded (the Cerundolo name-collision bit us). Lesson:
 confirm player identity before grading when names collide; don't assume the gradable one.
 
-**FLAGGED — real rally edge, but disruptor flag → DON'T BUY FAVORITE (other side?)**
+**FLAGGED — real rally edge, but disruptor flag → favorite's read is contested**
 | pick (favorite) | rally sep | flag | status |
 |---|---|---|---|
 | Giron | +7.9 | 🔴 Moutet +17.6 | tomorrow |
@@ -62,7 +62,7 @@ confirm player identity before grading when names collide; don't assume the grad
 
 → **Flagged: 0–0 — UNTESTED.** Both pending; this is where the flag actually gets graded.
 
-**PASS — near-toss / low-conviction lean → SKIP**
+**PASS — near-toss / low-conviction → the frame abstains**
 | pick | rally sep | status |
 |---|---|---|
 | Hurkacz | +6.4* | ✅ pick W (skipped a winner) |
@@ -70,11 +70,11 @@ confirm player identity before grading when names collide; don't assume the grad
 | Baez | +1.9 | ❌ pick L, Struff won 5 sets (dodged a loser) |
 | Fritz | +7.4* | pending |
 
-→ **Pass: dodged 2 losers (Agut, Baez), skipped 1 winner (Hurkacz).** The two
-**near-tosses (sep 1.1, 1.9) both lost the thin lean — and the model bought
-neither.** That's the abstention edge live: it correctly flagged the two spots it
-couldn't call, and both would have been losses. Discipline = the edge.
-No position taken on Pass, so not scored W/L.
+→ **Pass: 2 abstentions where the favored side lost (Agut, Baez), 1 where it won
+(Hurkacz).** The two **near-tosses (sep 1.1, 1.9) both lost the thin lean — and the
+frame gave a read on neither.** That's the abstention edge live: it correctly flagged
+the two spots it couldn't call, and both would have been losses. Discipline = the edge.
+Pass = the frame abstains, so not scored W/L.
 *Hurkacz/Fritz have real rally separation but went to Pass on low conviction
 (4-red VARIABLE, no axis owned) — not near-tosses.
 

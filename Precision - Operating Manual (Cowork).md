@@ -9,13 +9,18 @@ verdict.**
 ---
 
 ## 0. THE ONLY THREE OUTPUTS
-| Verdict | Meaning | Action |
-|---|---|---|
-| **STRONG** | Rally Gap favorite is clear **and** disrupt-safe | **Buy the favorite** |
-| **FLAG** | Rally Gap favorite is clear **but** underdog is a moderate+ disruptor | **No position** (buy neither) |
-| **PASS** | Not gradable, near-toss, or favorite owns no axis | **No position** |
+The frame emits an **analytical classification of the matchup — a read, not a
+recommendation.** It is not financial advice and names no action to take. What a
+reader does with a classification is entirely their own decision.
 
-A FLAG never buys the disruptor. It only moves a would-be favorite to no-position.
+| Verdict | What the read means |
+|---|---|
+| **STRONG** | The frame identifies a clear favorite — decisive Rally Gap separation, an owned axis, and disrupt-safe. |
+| **FLAG** | A rally favorite exists, but a moderate+ underdog disruptor conflicts with it — the read is contested. |
+| **PASS** | No gradable or clear read — not gradable, a near-toss, or no owned axis. |
+
+A FLAG never names the disruptor as the favored read; it marks the favorite's read
+as contested.
 
 ---
 
@@ -165,7 +170,8 @@ DISRUPTION GAP = underdog DISRUPT − favorite DISRUPT     (favorite = Rally-Gap
              ≥12 STRONG | 6–12 moderate | <6 minimal
 ```
 Steal and conv are **NOT** disruption signals — they are baked into the rallies and are
-two of the six gates. The flag is shot types only. A flag never buys the disruptor.
+two of the six gates. The flag is shot types only. A flag never designates the
+disruptor as the favored read.
 
 ---
 
@@ -186,7 +192,10 @@ approved until you fix it — it is the one open knob.)
 ---
 
 ## 10. HARD RULES (operational)
-1. Output is exactly one of **STRONG / FLAG / PASS.** No fourth option, no hedge.
+1. Output is exactly one of **STRONG / FLAG / PASS** — an analytical read only.
+   **Never attach an action or transaction to it:** no buy/sell/purchase/position/
+   shares language, and none of the trading jargon (fade/back/lay/take). The frame
+   reads the matchup; it does not advise, and it is not financial advice.
 2. **No overrides.** The frame's pick is not adjusted for form, price, tiebreak hunches,
    level, or any in-match read.
 3. **No editorializing against a pick.** A concern goes to
