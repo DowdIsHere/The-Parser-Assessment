@@ -138,7 +138,7 @@ calibrated card flips to −1.3. UFE caps (+3.9 / +2.2) are separately verified.
 
 **Rally bars:** FC `1-4 +0.6 / 9+ −3.8` · BAL `1-4 +1.1 / 9+ +6.1`
 
-### PM-vs-PM  *(same-type — coin toss)*
+### PM-vs-PM  *(same-type — flat bars)*
 Symmetric: the winner exceeds the loser by the same small margin on each metric,
 so both sides read the same column.
 | metric | winner − loser |
@@ -150,9 +150,11 @@ so both sides read the same column.
 | steal | +0.4 |
 | ownUFE | +0.3 |
 
-**Rally bars:** `1-4 +0.3 / 9+ +0.1` (both sides). These are ≈0 — **same-type is
-the coin-toss bucket; the BREAKOUT (largest single outlier gap) decides, not the
-bars.** Don't over-trust a Rally Gap here.
+**Rally bars:** `1-4 +0.3 / 9+ +0.1` (both sides). These are ≈0 — the bars barely
+separate the players, so the **gates and Rally Gap carry the read on their own
+numbers.** **A coin toss is NOT a match-type — it is whatever the gates + Rally Gap
+(component 4) dictate.** Same-type routinely produces a clear call when the gates
+separate the two; never tag a matchup a toss because the players share a type.
 
 ---
 
