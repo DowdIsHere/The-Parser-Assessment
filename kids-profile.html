@@ -195,45 +195,65 @@
       return html;
     }
 
+    // slugify a label to use as an element id ("For Dad" → "for-dad")
+    function slugify(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+
     function renderParentTab(profile, childName) {
-      // Both-parents note
       let html = '';
-      if (profile.forBothParents) {
-        html += section('For Both of You', '', prose(profile.forBothParents));
+
+      // Shared note for all caregivers (shown above individual sections)
+      const sharedNote = profile.forAllParents || profile.forBothParents || null;
+      if (sharedNote) {
+        const sharedTitle = (Array.isArray(profile.forParents) && profile.forParents.length === 1)
+          ? 'A Note for You'
+          : 'For All of You';
+        html += section('', sharedTitle, prose(sharedNote));
       }
 
-      // Dad / Mom sub-toggle
-      const hasDad = !!profile.forDad;
-      const hasMom = !!profile.forMom;
-      if (hasDad || hasMom) {
-        let subtabs = '<div class="subtab-bar">';
-        if (hasDad) subtabs += `<button class="subtab-btn active" data-sub="dad">For Dad</button>`;
-        if (hasMom) subtabs += `<button class="subtab-btn${hasDad ? '' : ' active'}" data-sub="mom">For Mom</button>`;
-        subtabs += '</div>';
-
-        let dadPane = hasDad ? `<div class="subtab-pane${hasDad ? ' active' : ''}" id="sub-dad">${prose(profile.forDad)}</div>` : '';
-        let momPane = hasMom ? `<div class="subtab-pane${!hasDad ? ' active' : ''}" id="sub-mom">${prose(profile.forMom)}</div>` : '';
-
-        html += `<div class="section"><div class="eyebrow">Parent Notes</div><h3>A Note for Each of You</h3>${subtabs}${dadPane}${momPane}</div>`;
+      // Individual caregiver notes — rendered as tabs if >1, inline if exactly 1
+      const parents = Array.isArray(profile.forParents) ? profile.forParents.filter(p => p && p.note) : [];
+      if (parents.length === 1) {
+        html += section('Parent Note', parents[0].label, prose(parents[0].note));
+      } else if (parents.length > 1) {
+        const subtabs = parents.map((p, i) =>
+          `<button class="subtab-btn${i === 0 ? ' active' : ''}" data-sub="${slugify(p.label)}">${esc(p.label)}</button>`
+        ).join('');
+        const panes = parents.map((p, i) =>
+          `<div class="subtab-pane${i === 0 ? ' active' : ''}" id="sub-${slugify(p.label)}">${prose(p.note)}</div>`
+        ).join('');
+        const sectionTitle = parents.length === 2 ? 'A Note for Each of You' : 'A Note for Each Caregiver';
+        html += `<div class="section"><div class="eyebrow">Parent Notes</div><h3>${sectionTitle}</h3><div class="subtab-bar">${subtabs}</div>${panes}</div>`;
       }
 
-      // Block patterns
+      // Per-block breakdown — tabs mirror the forParents labels
       if (Array.isArray(profile.blockPattern) && profile.blockPattern.length) {
         const levelClass = { strong: 'level-strong', growing: 'level-growing', developing: 'level-developing' };
         const levelLabel = { strong: 'Strong', growing: 'Growing', developing: 'Developing' };
         const cards = profile.blockPattern.map(b => {
           const cls = levelClass[b.level] || 'level-growing';
           const lbl = levelLabel[b.level] || b.level;
-          let noteHtml = '';
-          if (b.dadNote) noteHtml += `<p><strong>For Dad:</strong> ${esc(b.dadNote)}</p>`;
-          if (b.momNote) noteHtml += `<p><strong>For Mom:</strong> ${esc(b.momNote)}</p>`;
+          const notes = Array.isArray(b.parentNotes) ? b.parentNotes.filter(n => n && n.note) : [];
+          let notesHtml = '';
+          if (notes.length === 1) {
+            notesHtml = `<p>${esc(notes[0].note)}</p>`;
+          } else if (notes.length > 1) {
+            const bid = 'block-' + slugify(b.block);
+            const stabs = notes.map((n, i) =>
+              `<button class="subtab-btn${i === 0 ? ' active' : ''}" data-sub="${bid}-${slugify(n.label)}">${esc(n.label)}</button>`
+            ).join('');
+            const spanes = notes.map((n, i) =>
+              `<div class="subtab-pane${i === 0 ? ' active' : ''}" id="sub-${bid}-${slugify(n.label)}"><p>${esc(n.note)}</p></div>`
+            ).join('');
+            notesHtml = `<div class="subtab-bar" style="margin-top:10px;">${stabs}</div>${spanes}`;
+          }
           return `<div class="rcard">
             <span class="block-level ${cls}">${lbl}</span>
             <h4>${esc(b.block)}</h4>
-            ${noteHtml}
+            ${notesHtml}
           </div>`;
         }).join('');
-        html += section('Cognitive Block Breakdown', 'What each block means for your child — and for you', cards);
+        const blockTitle = parents.length > 0 ? 'What each block means — and what you can do' : 'Cognitive Block Breakdown';
+        html += section('Block Breakdown', blockTitle, cards);
       }
 
       return html;
@@ -286,15 +306,16 @@
         });
       });
 
-      // Wire up parent sub-tabs
+      // Wire up all sub-tab toggles generically
       document.querySelectorAll('.subtab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const bar = btn.closest('.subtab-bar');
           bar.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          const section = bar.closest('.section');
-          section.querySelectorAll('.subtab-pane').forEach(p => p.classList.remove('active'));
-          const target = section.querySelector('#sub-' + btn.dataset.sub);
+          // Panes are siblings of the bar inside the same parent container (section or rcard)
+          const container = bar.parentElement;
+          container.querySelectorAll('.subtab-pane').forEach(p => p.classList.remove('active'));
+          const target = document.getElementById('sub-' + btn.dataset.sub);
           if (target) target.classList.add('active');
         });
       });

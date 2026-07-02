@@ -5,6 +5,13 @@
 // Kids editions use a child-facing voice plus a "For Grown-Ups" note for
 // parents and teachers. The architecture is identical to the adult VISIONARY
 // profile; only the life-stage context (school, play, friends, family) changes.
+//
+// forParents: array of { label, note } — one entry per parent/caregiver.
+//   Labels can be anything: "For Dad", "For Mom", "For Grandma", etc.
+//   The profile page renders whatever entries are present — no hardcoded assumptions.
+//
+// blockPattern[].parentNotes: array of { label, note } — same labels as forParents.
+//   Omit entirely if no per-parent block notes are written yet.
 
 export const visionaryKidsProfile = {
   "name": "VISIONARY",
@@ -70,62 +77,139 @@ export const visionaryKidsProfile = {
 
   "whenYouGrowUp": "Visionary kids often grow into inventors, scientists, artists, storytellers, designers, and builders of brand-new things — the people who dream up what doesn't exist yet and then make it real. Anywhere the question is \"what could we create?\" is a place your brain will love.",
 
-  // ─── For Parents Section ──────────────────────────────────────────────────
+  // ─── For Parents Section ─────────────────────────────────────────────────
+  // forParents: one entry per parent/caregiver. Add, remove, or rename labels
+  // freely — the profile page renders however many entries are present.
 
-  "forDad": "Here's the part where I talk to you directly — dad to dad, or parent to parent.\n\nYour child's brain runs on big ideas and the future. That's not a phase. It's not immaturity. It's a legitimate cognitive wiring — one that shows up in inventors, architects, novelists, entrepreneurs, and every person who ever built something new from scratch.\n\nWhat this means practically:\n\nHe doesn't need more structure — he needs better reasons. When a task feels arbitrary, his brain checks out. When a task connects to a bigger idea he cares about, he locks in. So instead of \"do your homework,\" try \"here's what this builds toward.\" Instead of \"just focus,\" try \"let's find the big idea first.\"\n\nHe's not being difficult when he pushes back on steps. He's trying to see the whole thing before he does any of it. That's how his mind works. Let him see the destination, then walk backwards to the steps.\n\nThe things that look like weaknesses — drifting off, not finishing, skipping details — are the shadow side of his strengths. You don't eliminate them. You build the scaffolding around them: help him pick one thing to finish before starting the next. Help him notice when the details actually matter. But don't try to make him a detail person. He's not. And that's okay.\n\nHe needs someone who gets excited about his ideas. Not someone who plays along — someone who actually sees what he sees. When that happens, something lights up in a kid like this. Be that person when you can. It matters more than you know.\n\nThe biggest gift you can give him right now is this: let him know that his kind of brain is a real thing, that other people think the way he thinks, and that it leads somewhere good.",
+  "forParents": [
+    {
+      "label": "For Dad",
+      "note": "Here's the part where I talk to you directly — dad to dad, or parent to parent.\n\nYour child's brain runs on big ideas and the future. That's not a phase. It's not immaturity. It's a legitimate cognitive wiring — one that shows up in inventors, architects, novelists, entrepreneurs, and every person who ever built something new from scratch.\n\nWhat this means practically:\n\nHe doesn't need more structure — he needs better reasons. When a task feels arbitrary, his brain checks out. When a task connects to a bigger idea he cares about, he locks in. So instead of \"do your homework,\" try \"here's what this builds toward.\" Instead of \"just focus,\" try \"let's find the big idea first.\"\n\nHe's not being difficult when he pushes back on steps. He's trying to see the whole thing before he does any of it. That's how his mind works. Let him see the destination, then walk backwards to the steps.\n\nThe things that look like weaknesses — drifting off, not finishing, skipping details — are the shadow side of his strengths. You don't eliminate them. You build the scaffolding around them: help him pick one thing to finish before starting the next. Help him notice when the details actually matter. But don't try to make him a detail person. He's not. And that's okay.\n\nHe needs someone who gets excited about his ideas. Not someone who plays along — someone who actually sees what he sees. When that happens, something lights up in a kid like this. Be that person when you can. It matters more than you know.\n\nThe biggest gift you can give him right now is this: let him know that his kind of brain is a real thing, that other people think the way he thinks, and that it leads somewhere good."
+    },
+    {
+      "label": "For Mom",
+      "note": "Your child's brain is wired for possibility. He sees what things could become, not just what they are. He thinks forward, not step by step. He holds big pictures in his head that he sometimes can't fully explain — because the picture is real to him even when the words aren't there yet.\n\nThis is the same wiring that shows up in creative directors, researchers, storytellers, and anyone who ever had to build something before there was a blueprint for it.\n\nHere's what I want you to hear:\n\nWhen he seems scattered, he's usually not. He's juggling multiple threads at once. His brain is working — just not in the linear sequence that school tends to reward. The challenge isn't attention; it's translation. He needs help turning the big swirling whole into steps that other people can see.\n\nWhen he gets passionate about something and then seems to drop it — that's not flakiness. That's a Visionary brain doing what it does: finding the idea exciting, learning what it needs to learn, and then moving to the next edge. The follow-through piece is real, and it's worth developing. But it's a skill to build, not a character flaw to fix.\n\nHe's going to need people who believe in him before the results are visible. That's you. A Visionary kid with even one person in their corner who says \"I see it, keep going\" can do extraordinary things.\n\nThe most useful things you can do:\n- When he has a big idea, ask him to tell you more before you ask about the details.\n- When he's struggling with a rote task, help him find the \"why\" before the \"how.\"\n- When he starts to drift, don't scold the drift — redirect to the anchor. \"What's the main thing you're trying to do right now?\"\n- Let him finish his thought before you offer the practical response. He needs to feel heard before he can hear you.\n\nYou're raising someone whose best work hasn't happened yet — because his best work requires more life experience, more tools, more people who get him. You're building the foundation for that. It matters."
+    }
+  ],
 
-  "forMom": "Your child's brain is wired for possibility. He sees what things could become, not just what they are. He thinks forward, not step by step. He holds big pictures in his head that he sometimes can't fully explain — because the picture is real to him even when the words aren't there yet.\n\nThis is the same wiring that shows up in creative directors, researchers, storytellers, and anyone who ever had to build something before there was a blueprint for it.\n\nHere's what I want you to hear:\n\nWhen he seems scattered, he's usually not. He's juggling multiple threads at once. His brain is working — just not in the linear sequence that school tends to reward. The challenge isn't attention; it's translation. He needs help turning the big swirling whole into steps that other people can see.\n\nWhen he gets passionate about something and then seems to drop it — that's not flakiness. That's a Visionary brain doing what it does: finding the idea exciting, learning what it needs to learn, and then moving to the next edge. The follow-through piece is real, and it's worth developing. But it's a skill to build, not a character flaw to fix.\n\nHe's going to need people who believe in him before the results are visible. That's you. A Visionary kid with even one person in their corner who says \"I see it, keep going\" can do extraordinary things.\n\nThe most useful things you can do:\n- When he has a big idea, ask him to tell you more before you ask about the details.\n- When he's struggling with a rote task, help him find the \"why\" before the \"how.\"\n- When he starts to drift, don't scold the drift — redirect to the anchor. \"What's the main thing you're trying to do right now?\"\n- Let him finish his thought before you offer the practical response. He needs to feel heard before he can hear you.\n\nYou're raising someone whose best work hasn't happened yet — because his best work requires more life experience, more tools, more people who get him. You're building the foundation for that. It matters.",
+  // ─── Shared note shown above the individual parent sections ───────────────
+  "forAllParents": "A few things that are true about raising a Visionary child, regardless of which parent is reading this:\n\nHis brain is wired to see what isn't there yet. That is genuinely useful in the world — but it means he lives slightly in the future, which can make the present feel less urgent than it actually is. Your job is to help him stay connected to now without killing the forward-looking instinct.\n\nHe needs his ideas to be taken seriously before he can take your feedback seriously. This is sequencing, not manipulation. When he feels heard, he can hear you. When he doesn't feel heard, he goes internal — and you lose him.\n\nThe gap between his vision and his execution will frustrate both of you. He sees it so clearly. Why won't it just appear? That frustration is normal and it's important — it's what will eventually teach him to build the scaffolding between idea and reality. Your role is to stay curious with him in that gap, not to solve it for him.\n\nHe's going to be okay. More than okay. The wiring that makes childhood hard — the drifting, the impatience with routine, the big ideas that haven't landed yet — is the same wiring that will make him extraordinary at something. Your job right now is to keep that wiring intact while helping him learn to live in the world with it.",
+
+  // ─── Per-block breakdown for parents ─────────────────────────────────────
+  // parentNotes: array with same labels as forParents. Omit if not written yet.
 
   "blockPattern": [
     {
       "block": "Pattern Recognition",
       "level": "strong",
-      "dadNote": "He sees connections fast — between ideas, between situations, between things that seem unrelated. This isn't just \"smart.\" It's a specific cognitive strength. When he says \"this is like that thing we talked about\" or \"this reminds me of\" — that's the block firing. Feed it with variety. Take him to new places, expose him to new topics, let him make the connections himself.",
-      "momNote": "He spots patterns before most people know there's a pattern to spot. You'll notice this when he draws connections across different subjects or situations that seem totally unrelated. That's not random — it's a strength. When you see it, name it: \"You just made a connection I didn't see.\" That kind of specific recognition builds his confidence in his own thinking."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "He sees connections fast — between ideas, between situations, between things that seem unrelated. This isn't just \"smart.\" It's a specific cognitive strength. When he says \"this is like that thing we talked about\" or \"this reminds me of\" — that's the block firing. Feed it with variety. Take him to new places, expose him to new topics, let him make the connections himself."
+        },
+        {
+          "label": "For Mom",
+          "note": "He spots patterns before most people know there's a pattern to spot. You'll notice this when he draws connections across different subjects or situations that seem totally unrelated. That's not random — it's a strength. When you see it, name it: \"You just made a connection I didn't see.\" That kind of specific recognition builds his confidence in his own thinking."
+        }
+      ]
     },
     {
       "block": "Generative Creation",
       "level": "strong",
-      "dadNote": "He generates ideas easily and often. This is not the same as being good at any one thing yet — it's the raw capacity to make new things. His job right now is to generate. Your job is to help him learn that the best ideas get better when you slow down and develop them instead of jumping to the next one.",
-      "momNote": "He makes things up — stories, plans, inventions, solutions. This is real. It's one of the harder cognitive abilities to develop in people who don't naturally have it, and he has it. The skill to build on top of it: learning to choose one idea and go deep, rather than staying in the generating-and-discarding loop."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "He generates ideas easily and often. This is not the same as being good at any one thing yet — it's the raw capacity to make new things. His job right now is to generate. Your job is to help him learn that the best ideas get better when you slow down and develop them instead of jumping to the next one."
+        },
+        {
+          "label": "For Mom",
+          "note": "He makes things up — stories, plans, inventions, solutions. This is real. It's one of the harder cognitive abilities to develop in people who don't naturally have it, and he has it. The skill to build on top of it: learning to choose one idea and go deep, rather than staying in the generating-and-discarding loop."
+        }
+      ]
     },
     {
       "block": "Symbolic Manipulation",
       "level": "strong",
-      "dadNote": "He thinks in concepts and abstractions — the \"what if\" kind of thinking. He can hold an idea in his mind and move it around, turn it over, combine it with other ideas, before anything has been made concrete. This is the block that makes him good at hypotheticals, strategy, and imagining futures. It's also why he sometimes struggles to execute — the idea is so real in his head that the physical steps feel like a letdown.",
-      "momNote": "He's comfortable with \"what if\" thinking — with ideas that don't have a physical form yet. He can imagine scenarios, possibilities, futures. This feels natural to him. What he's still learning is how to bring those abstract ideas down into the concrete world — into steps, into things that other people can see and touch. That's the bridge to keep building."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "He thinks in concepts and abstractions — the \"what if\" kind of thinking. He can hold an idea in his mind and move it around, turn it over, combine it with other ideas, before anything has been made concrete. This is the block that makes him good at hypotheticals, strategy, and imagining futures. It's also why he sometimes struggles to execute — the idea is so real in his head that the physical steps feel like a letdown."
+        },
+        {
+          "label": "For Mom",
+          "note": "He's comfortable with \"what if\" thinking — with ideas that don't have a physical form yet. He can imagine scenarios, possibilities, futures. This feels natural to him. What he's still learning is how to bring those abstract ideas down into the concrete world — into steps, into things that other people can see and touch. That's the bridge to keep building."
+        }
+      ]
     },
     {
       "block": "Self-Understanding",
       "level": "growing",
-      "dadNote": "He knows what he wants and what he likes — but he's still developing the ability to understand why he does what he does, what's happening inside him when he reacts a certain way, and how his internal state affects his choices. This is a block that grows slowly and mostly through reflection. Ask him questions that start with \"what do you think made you do that?\" or \"what were you feeling when that happened?\" — not to analyze him, but to build the habit of looking inward.",
-      "momNote": "He's building his understanding of himself — which is normal for his age, but it's also something his profile specifically calls out as a growing edge. He tends to operate from the outside in: idea first, then action, then maybe understanding why. He benefits from moments where someone helps him slow down and look inward — not in a heavy way, just: \"What was going on for you there?\" over time, these conversations build the block."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "He knows what he wants and what he likes — but he's still developing the ability to understand why he does what he does, what's happening inside him when he reacts a certain way, and how his internal state affects his choices. This is a block that grows slowly and mostly through reflection. Ask him questions that start with \"what do you think made you do that?\" or \"what were you feeling when that happened?\" — not to analyze him, but to build the habit of looking inward."
+        },
+        {
+          "label": "For Mom",
+          "note": "He's building his understanding of himself — which is normal for his age, but it's also something his profile specifically calls out as a growing edge. He tends to operate from the outside in: idea first, then action, then maybe understanding why. He benefits from moments where someone helps him slow down and look inward — not in a heavy way, just: \"What was going on for you there?\" Over time, these conversations build the block."
+        }
+      ]
     },
     {
       "block": "Spatial Thinking",
       "level": "growing",
-      "dadNote": "This one is about how he thinks about physical and visual space — mentally rotating objects, understanding maps, organizing physical environments. It's not a weakness exactly; it just doesn't come as automatically as his abstract thinking. Hands-on building, spatial games, drawing plans, even cooking — anything that makes him interact with the physical world in structured ways — builds this block.",
-      "momNote": "Spatial thinking — mentally picturing how things fit together in space — is something his brain is still developing. It's not a big deficit; it's just not where his natural strength lives. Things that help: building with physical materials, organizing a space together, drawing a floor plan or a map, puzzles. The goal is to get his strong abstract mind to connect with the physical world more fluidly."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "This one is about how he thinks about physical and visual space — mentally rotating objects, understanding maps, organizing physical environments. It's not a weakness exactly; it just doesn't come as automatically as his abstract thinking. Hands-on building, spatial games, drawing plans, even cooking — anything that makes him interact with the physical world in structured ways — builds this block."
+        },
+        {
+          "label": "For Mom",
+          "note": "Spatial thinking — mentally picturing how things fit together in space — is something his brain is still developing. It's not a big deficit; it's just not where his natural strength lives. Things that help: building with physical materials, organizing a space together, drawing a floor plan or a map, puzzles. The goal is to get his strong abstract mind to connect with the physical world more fluidly."
+        }
+      ]
     },
     {
       "block": "Sequential Processing",
       "level": "developing",
-      "dadNote": "Step-by-step, in-order execution is the block that makes his big ideas actually happen. Right now, it's the weakest part of his profile — and that's normal for a Visionary. He sees the whole thing and wants to skip to the interesting parts. The discipline of \"step one, then step two, then step three\" feels constraining because his brain already knows where it's going. But this is the block that turns vision into reality. Help him build it by breaking big things into small steps together — not for him, with him. Let him see that the steps are how the idea becomes real.",
-      "momNote": "This is his most developing block, and it's the most important one to consciously build. He has the ideas — what he's learning is how to execute them, one step at a time, in order, without skipping. The way to build this isn't punishment or pressure — it's practice with things he actually cares about. Let him pick a project he's excited about, then help him map out every step. Walk through it with him. Celebrate finishing each step, not just the final result. That's how this block grows."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "Step-by-step, in-order execution is the block that makes his big ideas actually happen. Right now, it's the weakest part of his profile — and that's normal for a Visionary. He sees the whole thing and wants to skip to the interesting parts. The discipline of \"step one, then step two, then step three\" feels constraining because his brain already knows where it's going. But this is the block that turns vision into reality. Help him build it by breaking big things into small steps together — not for him, with him. Let him see that the steps are how the idea becomes real."
+        },
+        {
+          "label": "For Mom",
+          "note": "This is his most developing block, and it's the most important one to consciously build. He has the ideas — what he's learning is how to execute them, one step at a time, in order, without skipping. The way to build this isn't punishment or pressure — it's practice with things he actually cares about. Let him pick a project he's excited about, then help him map out every step. Walk through it with him. Celebrate finishing each step, not just the final result. That's how this block grows."
+        }
+      ]
     },
     {
       "block": "Detail Orientation",
       "level": "developing",
-      "dadNote": "He notices the big things and misses the small ones — that's the trade-off of his profile. The details aren't invisible to him; they're just not where his attention naturally lands. You can help him build this by making the details matter in a context he cares about. In a Lego build, in a recipe, in a plan he's invested in — when the details are connected to something bigger, he can learn to care about them. The goal isn't to turn him into a detail person. It's to give him enough detail-awareness that his big ideas actually work.",
-      "momNote": "The small stuff — the fine print, the last steps, the small but important pieces — doesn't naturally hold his attention. He gets it done if the stakes are obvious, but otherwise his brain wants to move to the next big thing. The way to develop this: tie the details to the outcome he cares about. \"This little part is what makes the whole thing work\" is more effective than \"because I said so\" or \"because it's on the checklist.\""
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "He notices the big things and misses the small ones — that's the trade-off of his profile. The details aren't invisible to him; they're just not where his attention naturally lands. You can help him build this by making the details matter in a context he cares about. In a Lego build, in a recipe, in a plan he's invested in — when the details are connected to something bigger, he can learn to care about them. The goal isn't to turn him into a detail person. It's to give him enough detail-awareness that his big ideas actually work."
+        },
+        {
+          "label": "For Mom",
+          "note": "The small stuff — the fine print, the last steps, the small but important pieces — doesn't naturally hold his attention. He gets it done if the stakes are obvious, but otherwise his brain wants to move to the next big thing. The way to develop this: tie the details to the outcome he cares about. \"This little part is what makes the whole thing work\" is more effective than \"because I said so\" or \"because it's on the checklist.\""
+        }
+      ]
     },
     {
       "block": "Social Attunement",
       "level": "developing",
-      "dadNote": "Reading the room — noticing what other people are feeling, picking up on social cues, adjusting to what's happening around him — is the block he's most actively developing. He's not socially oblivious; he cares about people. But when he's in idea-mode, the external social information gets filtered out. The practice here is simple: help him slow down and look. \"What do you think she was feeling when that happened?\" \"Did you notice when the energy shifted?\" Over time, that builds the habit of attending to others even when his mind wants to go elsewhere.",
-      "momNote": "He's learning how to read what other people are feeling and what they need in the moment. This is a real skill that some kids have naturally and some have to build — and for a Visionary brain, it's often the last block to come online because so much energy goes to internal idea-generation. The most effective way to develop it: real conversations about real situations. \"What do you think your friend was feeling?\" \"Why do you think they reacted that way?\" Not interrogation — just curiosity, modeled out loud."
+      "parentNotes": [
+        {
+          "label": "For Dad",
+          "note": "Reading the room — noticing what other people are feeling, picking up on social cues, adjusting to what's happening around him — is the block he's most actively developing. He's not socially oblivious; he cares about people. But when he's in idea-mode, the external social information gets filtered out. The practice here is simple: help him slow down and look. \"What do you think she was feeling when that happened?\" \"Did you notice when the energy shifted?\" Over time, that builds the habit of attending to others even when his mind wants to go elsewhere."
+        },
+        {
+          "label": "For Mom",
+          "note": "He's learning how to read what other people are feeling and what they need in the moment. This is a real skill that some kids have naturally and some have to build — and for a Visionary brain, it's often the last block to come online because so much energy goes to internal idea-generation. The most effective way to develop it: real conversations about real situations. \"What do you think your friend was feeling?\" \"Why do you think they reacted that way?\" Not interrogation — just curiosity, modeled out loud."
+        }
+      ]
     }
-  ],
-
-  "forBothParents": "A few things that are true about raising a Visionary child, regardless of which parent is reading this:\n\nHis brain is wired to see what isn't there yet. That is genuinely useful in the world — but it means he lives slightly in the future, which can make the present feel less urgent than it actually is. Your job is to help him stay connected to now without killing the forward-looking instinct.\n\nHe needs his ideas to be taken seriously before he can take your feedback seriously. This is sequencing, not manipulation. When he feels heard, he can hear you. When he doesn't feel heard, he goes internal — and you lose him.\n\nThe gap between his vision and his execution will frustrate both of you. He sees it so clearly. Why won't it just appear? That frustration is normal and it's important — it's what will eventually teach him to build the scaffolding between idea and reality. Your role is to stay curious with him in that gap, not to solve it for him.\n\nHe's going to be okay. More than okay. The wiring that makes childhood hard — the drifting, the impatience with routine, the big ideas that haven't landed yet — is the same wiring that will make him extraordinary at something. Your job right now is to keep that wiring intact while helping him learn to live in the world with it."
+  ]
 };
