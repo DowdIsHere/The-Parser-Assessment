@@ -118,6 +118,12 @@
     .f-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); line-height: 1.8; }
     .disclaimer { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); line-height: 1.7; text-align: center; max-width: 760px; margin: 0 auto; }
 
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 0.88rem; font-weight: 600; color: var(--text-secondary); }
+    .form-input { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px 16px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+    .form-input:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(154,123,46,0.14); }
+    textarea.form-input { font-family: var(--font-body); }
+
     @media (max-width: 760px) {
       .contents-grid { grid-template-columns: 1fr; }
       .excerpt-block { padding: 32px 24px; }
@@ -152,7 +158,7 @@
         <a href="/individual.html">Individual</a>
         <a href="/professionals.html">For Teams</a>
         <a href="/clinicians.html">For Clinicians</a>
-        <a href="#pricing" class="btn">Book Analysis</a>
+        <a href="#pricing" class="btn">Sign up</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -287,42 +293,51 @@
 
   <section class="section alt" id="pricing">
     <div class="section-inner">
-      <div class="pricing-block">
-        <div class="eyebrow">Pricing</div>
+      <!-- Signed-out CTA -->
+      <div id="couplesSignedOut" class="pricing-block" style="display:none;">
+        <div class="eyebrow">Get Started</div>
         <h2 class="section-title">Couples Parser Analysis.</h2>
-        <p class="section-sub" style="margin-bottom:32px;">Both individual profiles and the written analysis — in one package.</p>
+        <p class="section-sub" style="margin-bottom:36px;">Sign in or create an account to begin. If you're new, we'll start you with your individual Parser Profile first.</p>
+        <a href="/signin.html?next=/couples.html" class="btn-cta">Sign up</a>
+      </div>
 
-        <div class="price-row">
-          <span class="price-main">$199</span>
-        </div>
-        <p class="price-note">One-time. Everything below is included.</p>
+      <!-- Signed-in questionnaire -->
+      <div id="couplesForm" class="pricing-block" style="display:none;">
+        <div class="eyebrow">Submit Your Request</div>
+        <h2 class="section-title">Let's start your analysis.</h2>
+        <p class="section-sub" style="margin-bottom:36px;">Tell us about you and your partner. We'll reach out to confirm details and get you started.</p>
 
-        <div class="package-list">
-          <div class="pkg-item">
-            <span class="pkg-num">i</span>
-            <div>
-              <strong>Individual Parser Profile — Partner One</strong>
-              <span>Downloadable Parser profile and Evite to send to Partner Two.</span>
-            </div>
+        <form id="couplesRequestForm" style="display:flex;flex-direction:column;gap:20px;max-width:560px;">
+          <div class="form-group">
+            <label class="form-label">Your name</label>
+            <input id="cf-name1" class="form-input" type="text" placeholder="Your full name" required>
           </div>
-          <div class="pkg-item">
-            <span class="pkg-num">ii</span>
-            <div>
-              <strong>Individual Parser Profile Promotional Code for Evite — Partner Two</strong>
-              <span>Partner One notified when Partner Two completes the assessment.</span>
-            </div>
+          <div class="form-group">
+            <label class="form-label">Your email</label>
+            <input id="cf-email1" class="form-input" type="email" placeholder="Your email" required readonly style="opacity:0.7;cursor:default;">
           </div>
-          <div class="pkg-item">
-            <span class="pkg-num">iii</span>
-            <div>
-              <strong>Couples Parser Analysis</strong>
-              <span>With zero relationship questions, twelve-section written analysis of what actually goes on between the two of you.</span>
-            </div>
+          <div class="form-group">
+            <label class="form-label">Partner's name</label>
+            <input id="cf-name2" class="form-input" type="text" placeholder="Partner's full name" required>
           </div>
-        </div>
+          <div class="form-group">
+            <label class="form-label">Partner's email</label>
+            <input id="cf-email2" class="form-input" type="email" placeholder="Partner's email address" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Anything you'd like us to know? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+            <textarea id="cf-notes" class="form-input" rows="4" placeholder="Context, questions, or anything on your mind…" style="resize:vertical;"></textarea>
+          </div>
+          <div>
+            <button type="submit" class="btn-cta" id="cfSubmitBtn">Submit Request</button>
+            <p id="cfMsg" style="margin-top:14px;font-size:0.92rem;display:none;"></p>
+          </div>
+        </form>
+      </div>
 
-        <a href="/assessment.html" class="btn-cta">Book Couples Analysis →</a>
-        <p class="already-own">Already own both Individual Parser Profiles? <a href="mailto:Inquire@cognitionblocksllc.com?subject=Couples%20Analysis%20only%20%E2%80%94%20%24199">Couples Analysis only — $199.</a></p>
+      <!-- Loading -->
+      <div id="couplesLoading" class="pricing-block">
+        <p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;">Loading…</p>
       </div>
     </div>
   </section>
@@ -367,5 +382,69 @@
   </script>
 
   <script src="/mobile-nav.js" defer></script>
+  <script>
+  (function () {
+    var loading = document.getElementById('couplesLoading');
+    var signedOut = document.getElementById('couplesSignedOut');
+    var formBlock = document.getElementById('couplesForm');
+
+    fetch('/api/profile/me').then(function (res) {
+      if (res.status === 401 || res.status === 403) { return null; }
+      return res.json();
+    }).then(function (data) {
+      loading.style.display = 'none';
+      if (!data || !data.authenticated) {
+        signedOut.style.display = '';
+        return;
+      }
+      // Signed in — show questionnaire
+      formBlock.style.display = '';
+      var email1 = document.getElementById('cf-email1');
+      var name1 = document.getElementById('cf-name1');
+      email1.value = data.user.email || '';
+      if (data.user.firstName || data.user.lastName) {
+        name1.value = [data.user.firstName, data.user.lastName].filter(Boolean).join(' ');
+      }
+    }).catch(function () {
+      loading.style.display = 'none';
+      signedOut.style.display = '';
+    });
+
+    document.getElementById('couplesRequestForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('cfSubmitBtn');
+      var msg = document.getElementById('cfMsg');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      var payload = {
+        name1: document.getElementById('cf-name1').value.trim(),
+        email1: document.getElementById('cf-email1').value.trim(),
+        name2: document.getElementById('cf-name2').value.trim(),
+        email2: document.getElementById('cf-email2').value.trim(),
+        notes: document.getElementById('cf-notes').value.trim()
+      };
+      fetch('/api/couples/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) { return res.json(); }).then(function (data) {
+        if (data.ok) {
+          msg.style.display = '';
+          msg.style.color = 'var(--blue-600)';
+          msg.textContent = 'Request received. We\'ll be in touch soon.';
+          btn.textContent = 'Submitted';
+        } else {
+          throw new Error(data.error || 'Something went wrong.');
+        }
+      }).catch(function (err) {
+        btn.disabled = false;
+        btn.textContent = 'Submit Request';
+        msg.style.display = '';
+        msg.style.color = '#c0392b';
+        msg.textContent = err.message || 'Something went wrong. Please try again.';
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

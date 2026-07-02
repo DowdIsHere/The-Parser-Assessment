@@ -173,7 +173,8 @@
           showError(data.error || (mode === 'register' ? 'Could not create account.' : 'Sign in failed.'));
           return;
         }
-        window.location.href = '/profile.html';
+        var next = new URLSearchParams(window.location.search).get('next');
+        window.location.href = (next && next.startsWith('/')) ? next : '/profile.html';
       } catch (_) {
         showError('Something went wrong. Please try again.');
       } finally {

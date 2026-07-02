@@ -356,6 +356,33 @@ app.get('/api/profile/kids', async (req, res) => {
     }
 });
 
+app.post('/api/couples/request', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ ok: false, error: 'Not authenticated.' });
+    const { name1, email1, name2, email2, notes } = req.body || {};
+    if (!name1 || !email1 || !name2 || !email2) {
+        return res.status(400).json({ ok: false, error: 'Missing required fields.' });
+    }
+    try {
+        if (supabase) {
+            await supabase.from('couples_requests').insert({
+                email: payload.email.toLowerCase().trim(),
+                name1: name1.trim(),
+                email1: email1.trim().toLowerCase(),
+                name2: name2.trim(),
+                email2: email2.trim().toLowerCase(),
+                notes: (notes || '').trim(),
+                created_at: new Date().toISOString()
+            });
+        }
+        console.log('[couples/request] from:', payload.email, 'partner:', email2);
+        res.json({ ok: true });
+    } catch (e) {
+        console.error('[couples/request] error:', e.message);
+        res.status(500).json({ ok: false, error: 'Could not save request. Please try again.' });
+    }
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
