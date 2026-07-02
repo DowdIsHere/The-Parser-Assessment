@@ -163,11 +163,28 @@ Rally Gap = Gap-to-Victory(1-4) + Gap-to-Victory(9+)
 ---
 
 ## 8. THE FLAG (shot types ONLY — slice / net / drop)
+**The Flag Report is a table, one row per player** — never collapse it to a single number.
+Per player, from the ShotTypes file (`Sl`, `Net`, `Dr` over `Total`):
 ```
-DISRUPT      = 100 × (Sl + Net + Dr) / Total shots      (per player, ShotTypes file)
-             ≥20 DISRUPTOR | 15–20 mild | <15 baseline
-DISRUPTION GAP = underdog DISRUPT − favorite DISRUPT     (favorite = Rally-Gap favorite)
-             ≥12 STRONG | 6–12 moderate | <6 minimal
+slice%      = 100 × Sl  / Total       (that shot type as a % of ALL the player's shots)
+net%        = 100 × Net / Total
+drop%       = 100 × Dr  / Total
+TOTAL       = slice% + net% + drop%                        (= the DISRUPT score)
+slice share = slice% / TOTAL   = Sl / (Sl + Net + Dr)      (the author's read within the flag)
+tier        = TOTAL ≥20 DISRUPTOR | 15–20 mild | <15 baseline
+```
+**Report format (always all six columns):**
+| player | slice% | net% | drop% | TOTAL | slice share | tier |
+
+**Reading it:** `TOTAL` sets the tier (who is a disruptor). The **slice-share gap** between
+the two players is the author's read — *how* the disruption is accomplished — and is read
+against the Rally Gap. `slice share` and `TOTAL` are distinct: two players can share the
+same slice share at very different TOTALs (e.g. Sonego 62% @ 23.5 = DISRUPTOR vs Etcheverry
+61% @ 11.7 = baseline).
+
+```
+DISRUPTION GAP = underdog TOTAL − favorite TOTAL          (favorite = Rally-Gap favorite)
+             ≥12 STRONG | 6–12 moderate | <6 minimal      (fires FLAG when the disruptor is the underdog)
 ```
 Steal and conv are **NOT** disruption signals — they are baked into the rallies and are
 two of the six gates. The flag is shot types only. A flag never designates the
