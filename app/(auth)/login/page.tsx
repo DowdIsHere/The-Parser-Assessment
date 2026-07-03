@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { Suspense, useState, FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const next = searchParams.get('next') || '/home'
@@ -93,5 +93,13 @@ export default function LoginPage() {
         <Link href="/signup">Create one</Link>
       </p>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="auth-card" />}>
+      <LoginForm />
+    </Suspense>
   )
 }
