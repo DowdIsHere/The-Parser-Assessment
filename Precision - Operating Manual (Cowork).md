@@ -199,19 +199,24 @@ disruptor as the favored read.
 
 ---
 
-## 9. THE VERDICT (decision tree → STRONG / FLAG / PASS)
-```
-1. Not gradable (any of 12 metrics missing)                         → PASS
-2. Favorite owns NO axis (both rally Gap-to-Victory < 0)            → PASS
-3. Separation below the near-toss cutoff  (see parameter below)     → PASS
-4. Favorite clear (owns an axis, separation ≥ cutoff):
-     Disruption gap ≥ 6 AND underdog is the disruptor              → FLAG
-     else                                                          → STRONG
-```
-**Near-toss cutoff = author-set calibration parameter.** From the record: near-tosses
-at separation ≈ 1–2 were PASS; a STRONG hit landed at separation ≈ 6 (Munar). Set the
-cutoff in that band and hold it constant across a test. (Do not treat this number as
-approved until you fix it — it is the one open knob.)
+## 9. THE VERDICT (STRONG / FLAG / PASS) — a downstream read, NOT a trigger
+**There is no hard trigger and no decision tree.** No single component decides — not a red,
+not the TOTAL, not the disruption gap, not the slice share. The verdict is the read *across*
+the layers, traced downstream: a red or a flag is a **force**, and you look downstream at
+whether the rest of the shape absorbs it before it holds.
+
+Present all layers in full and read them together:
+- **Gates** — by depth (how deep each red is, whether another axis covers it), not red count.
+- **Rally Gap** — the favorite's cushion and its surplus (how hard an axis is owned).
+- **Flag** — the disruption *weighed against that cushion*: a real slice threat bends a shallow
+  favorite and bounces off a deep one; a net-heavy TOTAL isn't a rally-reset threat at all.
+
+The bare mechanics (does the favorite own an axis; is the match gradable) still gate to PASS.
+Everything past that is the author's read — the frame lays out the shape; the call emerges from
+how the layers sit against each other. **The flag never fires a verdict by itself; it is a
+computed layer, read downstream.** (The former `disruption gap ≥ 6 → FLAG` trigger was a
+premature articulation and has been removed. The flag mechanism — how the disruption weighs
+against the Rally Gap — is still being worked out; do not hard-code one.)
 
 ---
 
