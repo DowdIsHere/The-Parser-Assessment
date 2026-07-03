@@ -26,30 +26,32 @@ as contested.
 
 ## 1. DATA — sources, files, how to pull
 
-**Two working files (a player must be in BOTH to be gradable):**
+**Three working CSVs (all small, all in the workspace root — a player must be in the
+first two to be gradable; the third feeds the Flag):**
 
 | File | Columns used | Source | Vintage |
 |---|---|---|---|
 | `Precision - Everybody Measurements.csv` | `short_win%`, `long_win%`, `adjUFE`, `WinUFE` | Sackmann Match Charting Project | **frozen May 21 2026** |
 | `Precision - Variables (TennisViz).csv` | `conv`, `steal` (+ `serve`,`perform` for reference) | TennisViz Insights | current |
+| `Precision - Flag Report (Disruptor).csv` | `slice%`, `net%`, `drop%`, `TOTAL`, `slice_share%`, `tier` | precomputed from Sackmann shot types | **frozen May 21 2026** |
 
-**Flag data (third file, shot types):**
-`engine/data/mcp/charting-m-stats-ShotTypes.csv` — rows `Sl` (slice), `Net`, `Dr` (drop) over `Total`, per player.
+The Flag file is **precomputed** — one row per player — so grading needs **no raw shot
+dump and no engine code**; the model reads it like the other two roster CSVs. (Regeneration
+only, offline: `engine/precision/disruptor.py` over the full ShotTypes source, then written
+to this CSV. `gen_measurements.py` likewise regenerates the Measurements file. Neither the
+32MB+ raw charting files nor the engine are needed to grade a matchup.)
 
-**Pipelines:**
-- Charting metrics → `python3 engine/precision/gen_measurements.py` regenerates *Everybody Measurements* from a fresh Sackmann pull (`charting-m-points-2020s.csv`).
-- TennisViz `conv`/`steal` → pasted into *Variables* from TennisViz (manual; current).
-- Flag → `engine/precision/disruptor.py` reads ShotTypes.
-
-**Look up a player:** match the name across both files (case-insensitive, ignore `-`/`.`).
+**Look up a player:** match the name across the CSVs (case-insensitive, ignore `-`/`.`).
 **Freeze rule:** do NOT refresh either source in the middle of a forward test.
 
 ---
 
 ## 2. SCREEN (gradability) — do this first, every time
-A match is **GRADABLE** only if **both players** appear in **both** files with **all six**
-metrics present. Any one of the twelve values missing → **NOT GRADABLE → verdict PASS.**
-No manual fill-ins, no substitutes, no partial grade.
+A match is **GRADABLE** only if **both players** appear in **both** roster files
+(Measurements + Variables) with **all six** metrics present. Any one of the twelve values
+missing → **NOT GRADABLE → verdict PASS.** No manual fill-ins, no substitutes, no partial
+grade. (The Flag file is looked up separately for component 3; if a gradable player has no
+shot-type row, report the Flag as "no shot data" — it does not block the gates/rally.)
 
 ---
 
@@ -164,15 +166,16 @@ Rally Gap = Gap-to-Victory(1-4) + Gap-to-Victory(9+)
 
 ## 8. THE FLAG (shot types ONLY — slice / net / drop)
 **The Flag Report is a table, one row per player** — never collapse it to a single number.
-Per player, from the ShotTypes file (`Sl`, `Net`, `Dr` over `Total`):
+Read each player's row straight from `Precision - Flag Report (Disruptor).csv`:
 ```
-slice%      = 100 × Sl  / Total       (that shot type as a % of ALL the player's shots)
-net%        = 100 × Net / Total
-drop%       = 100 × Dr  / Total
+columns:  slice%  net%  drop%  TOTAL  slice_share%  tier
 TOTAL       = slice% + net% + drop%                        (= the DISRUPT score)
-slice share = slice% / TOTAL   = Sl / (Sl + Net + Dr)      (the author's read within the flag)
+slice share = slice% / TOTAL                               (the author's read within the flag)
 tier        = TOTAL ≥20 DISRUPTOR | 15–20 mild | <15 baseline
 ```
+(Definitions, for reference — the CSV already has these computed: each shot-type % is that
+type as a share of ALL the player's shots, i.e. `100 × Sl/Total`, `100 × Net/Total`,
+`100 × Dr/Total`.)
 **Report format (always all six columns):**
 | player | slice% | net% | drop% | TOTAL | slice share | tier |
 

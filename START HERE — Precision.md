@@ -17,13 +17,15 @@ model screens gradability itself; if either player is missing from a data file i
 
 ---
 
-## WHAT THE MODEL READS (automatically — you don't paste these)
-- `CLAUDE.md` — loaded first: the 4 components + hard rules (no overrides, no advice language)
+## FILES NEEDED (six — all small, all in the workspace root)
+- `CLAUDE.md` — the 4 components + hard rules
 - `Precision - Operating Manual (Cowork).md` — the step-by-step procedure
 - `Precision - Master Reference (Types, Gates, Rally Gap).md` — the type cards / spec
-- Data: `Precision - Everybody Measurements.csv` · `Precision - Variables (TennisViz).csv` ·
-  `engine/data/mcp/charting-m-stats-ShotTypes.csv`
-- Engine: `engine/precision/` (`recipe.py`, `twogate.py`, `disruptor.py`)
+- `Precision - Everybody Measurements.csv` — charting (rally/UFE/OUFE)
+- `Precision - Variables (TennisViz).csv` — conv/steal
+- `Precision - Flag Report (Disruptor).csv` — precomputed slice/net/drop/TOTAL/slice-share/tier
+
+No raw shot dump and no engine code are needed to grade — the Flag is precomputed into the CSV.
 
 ## THE FRAME IS EXACTLY FOUR COMPONENTS
 1. Gates by Victory Gaps · 2. Rally Gap Deficit · 3. Flag by shot types (slice/net/drop) ·
