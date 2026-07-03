@@ -18,11 +18,11 @@ flag on a giant (Sinner +22, Djokovic +14) is nominal, not a real risk.
 ## STRONG — clear favored read
 | pick | type | rally (fav/und) | sep | reds | disrupt | result |
 |---|---|---|---|---|---|---|
-| **Sinner** over Borges | BAL-BAL | +8.9/−13.5 | +22.4 | 1 | +6.0 (nominal) | |
-| **Djokovic** over Tsitsipas | BAL-BAL | +4.8/−9.4 | +14.2 | 2 | +6.2 (nominal) | |
+| **Sinner** over Borges | BAL-BAL | +8.9/−13.5 | +22.4 | 1 | +6.0 (nominal) | ✅ **HIT — Sinner W 1-6, 7-6(4), 7-6(2), 6-4** |
+| **Djokovic** over Tsitsipas | BAL-BAL | +4.8/−9.4 | +14.2 | 2 | +6.2 (nominal) | ✅ **HIT — Djokovic def. Tsitsipas** (straights; exact games to confirm) |
 | **Munar** over F. Cerundolo | BAL-BAL | +0.8/−5.4 | +6.2 | 2 | −6.7 | ✅ **STRONG HIT — Munar W 6-1,6-4,6-3** (the frame read Munar against a 24% market-implied probability). My later form/shotmaker override was a wrong detour; the STRONG *read* was correct and gets full credit. |
 
-→ **STRONG settled across both cards: 5–0** — Bergs, Sinner, Medvedev, de Jong, **Munar**. Every high-conviction call has hit. (Sinner, Djokovic still to play Jul 1.)
+→ **STRONG settled across both cards: 7–0** — Bergs, Sinner (Kecmanovic), Medvedev, de Jong, Munar, **Djokovic** (Tsitsipas), **Sinner** (Borges). Every high-conviction call has hit.
 
 ## FLAGGED — real edge, but disruptor fires → favorite's read is contested (the flag's first exams)
 | pick (favorite) | type | sep | reds | disrupt | result |
