@@ -201,3 +201,17 @@ model CouplesRequest {
 
   createdAt DateTime @default(now())
 }
+
+model ClinicalTrialSignup {
+  id           String  @id @default(cuid())
+  name         String
+  credentials  String
+  email        String
+  practiceType String
+  message      String?
+  status       String  @default("pending")
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
