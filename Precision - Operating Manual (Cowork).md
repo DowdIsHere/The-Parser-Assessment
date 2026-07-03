@@ -182,9 +182,11 @@ against the Rally Gap. `slice share` and `TOTAL` are distinct: two players can s
 same slice share at very different TOTALs (e.g. Sonego 62% @ 23.5 = DISRUPTOR vs Etcheverry
 61% @ 11.7 = baseline).
 
+**Report BOTH comparatives every time** (favorite = Rally-Gap favorite):
 ```
-DISRUPTION GAP = underdog TOTAL − favorite TOTAL          (favorite = Rally-Gap favorite)
-             ≥12 STRONG | 6–12 moderate | <6 minimal      (fires FLAG when the disruptor is the underdog)
+DISRUPTION GAP  = underdog TOTAL − favorite TOTAL
+                  ≥12 STRONG | 6–12 moderate | <6 minimal   (fires FLAG when the disruptor is the underdog)
+SLICE-SHARE GAP = underdog slice share − favorite slice share   (the author's read; report alongside, never in place of)
 ```
 Steal and conv are **NOT** disruption signals — they are baked into the rallies and are
 two of the six gates. The flag is shot types only. A flag never designates the
