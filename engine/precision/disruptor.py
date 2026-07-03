@@ -66,9 +66,10 @@ def score(name):
 
 def parts(name):
     """Full flag report for a player:
-    (slice%, net%, drop%, TOTAL, slice_share%) or None if absent.
+    (slice%, net%, drop%, TOTAL, slice_share%, net_share%, drop_share%) or None.
     Each of slice/net/drop% is that shot-type as a % of ALL shots; TOTAL is their
-    sum (= the DISRUPT score); slice_share = slice / (slice + net + drop)."""
+    sum (= the DISRUPT score); each *_share is that shot type as a % of TOTAL
+    (how the disruptor total is composed)."""
     agg = _load()
     k = _find(agg, name)
     if not k:
@@ -79,8 +80,9 @@ def parts(name):
     sl, net, dr = agg[k]["Sl"], agg[k]["Net"], agg[k]["Dr"]
     slp, netp, drp = 100 * sl / t, 100 * net / t, 100 * dr / t
     tot = slp + netp + drp
-    share = 100 * sl / (sl + net + dr) if (sl + net + dr) else 0
-    return round(slp, 1), round(netp, 1), round(drp, 1), round(tot, 1), round(share)
+    d = (sl + net + dr) or 1
+    return (round(slp, 1), round(netp, 1), round(drp, 1), round(tot, 1),
+            round(100 * sl / d), round(100 * net / d), round(100 * dr / d))
 
 
 def tier(d):

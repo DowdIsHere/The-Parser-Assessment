@@ -165,17 +165,19 @@ Rally Gap = Gap-to-Victory(1-4) + Gap-to-Victory(9+)
 ---
 
 ## 8. THE FLAG (shot types ONLY — slice / net / drop)
-**The Flag Report is a table, one row per player** — never collapse it to a single number.
-Read each player's row straight from `Precision - Flag Report (Disruptor).csv`:
+**The Flag Report is a table, one row per player, ALL columns shown** — never collapse it
+to a total or a single share. Read each player's row straight from
+`Precision - Flag Report (Disruptor).csv`:
 ```
-columns:  slice%  net%  drop%  TOTAL  slice_share%  tier
-TOTAL       = slice% + net% + drop%                        (= the DISRUPT score)
-slice share = slice% / TOTAL                               (the author's read within the flag)
-tier        = TOTAL ≥20 DISRUPTOR | 15–20 mild | <15 baseline
+columns:  slice%  net%  drop%  TOTAL  slice_share%  net_share%  drop_share%  tier
+TOTAL        = slice% + net% + drop%                       (= the DISRUPT score)
+slice/net/drop%   = each shot type as a % of ALL the player's shots (100×Sl/Total, etc.)
+*_share%     = each shot type as a % of TOTAL — HOW the disruptor total is composed
+               (a 46/42/12 split is a net-rusher; a 66/29/5 split is a slicer — same TOTAL, different game)
+tier         = TOTAL ≥20 DISRUPTOR | 15–20 mild | <15 baseline
 ```
-(Definitions, for reference — the CSV already has these computed: each shot-type % is that
-type as a share of ALL the player's shots, i.e. `100 × Sl/Total`, `100 × Net/Total`,
-`100 × Dr/Total`.)
+Report every column — the shares are the layer that tells the author *how* the number is
+made, not just how big it is. Slice share is the primary read; net/drop share show the rest.
 **Report format (always all six columns):**
 | player | slice% | net% | drop% | TOTAL | slice share | tier |
 
