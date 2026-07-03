@@ -24,5 +24,6 @@ npm-debug.log*
 
 # Next.js / TS build artifacts
 .next/
+next-env.d.ts
 tsconfig.tsbuildinfo
 node_modules/
