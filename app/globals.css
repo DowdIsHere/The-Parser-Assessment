@@ -884,6 +884,16 @@ textarea.form-input { font-family: var(--font-ui); resize: vertical; }
   .messages-layout { grid-template-columns: 1fr; }
 }
 
+/* ── Forms (settings, profile edit) ── */
+.form-group { margin-bottom: 20px; }
+.form-hint { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+.form-actions { display: flex; gap: 12px; margin-top: 8px; }
+.error-message { color: var(--status-compromised-text, #B3261E); background: var(--status-compromised-bg, #FBEAEA); padding: 10px 14px; border-radius: var(--r-input); font-size: 0.85rem; font-weight: 500; margin: 4px 0 14px; }
+.success-message { color: #0E7A52; background: #E8F4EC; padding: 10px 14px; border-radius: var(--r-input); font-size: 0.85rem; font-weight: 500; margin: 4px 0 14px; }
+.settings-description { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6; }
+.btn-danger { background: #FBEAEA; color: #B3261E; border: 1px solid rgba(179,38,30,0.24); }
+.btn-danger:hover { background: #F6DADA; border-color: rgba(179,38,30,0.4); }
+
 /* ── Marketing pages ── */
 .mkt-header {
   position: sticky;
