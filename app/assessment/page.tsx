@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 type Screen = 'intro' | 'questions' | 'phraseGate' | 'age' | 'teaser' | 'payment' | 'success'
@@ -69,6 +69,22 @@ export default function AssessmentPage() {
   const [loading, setLoading] = useState(false)
   const [hoveredOpt, setHoveredOpt] = useState<number | null>(null)
 
+  // Auth gate for checkout
+  const [signedIn, setSignedIn] = useState(false)
+  const [suName, setSuName] = useState('')
+  const [suEmail, setSuEmail] = useState('')
+  const [suPassword, setSuPassword] = useState('')
+  const [authError, setAuthError] = useState('')
+
+  // Check whether the visitor is already signed in when they reach the pay page.
+  useEffect(() => {
+    if (screen !== 'payment') return
+    fetch('/api/auth/me')
+      .then((r) => r.json())
+      .then((d) => setSignedIn(!!d.authenticated))
+      .catch(() => setSignedIn(false))
+  }, [screen])
+
   const q = QUESTIONS[currentQ]
 
   function handleAnswer(optIdx: number) {
@@ -116,6 +132,34 @@ export default function AssessmentPage() {
       const { url } = await res.json()
       if (url) window.location.href = url
     } catch {
+      setLoading(false)
+    }
+  }
+
+  // Create the account (which signs them in via the session cookie), then
+  // continue straight to Stripe checkout.
+  async function handleSignupAndPay(e: React.FormEvent) {
+    e.preventDefault()
+    setAuthError('')
+    if (!suName.trim()) { setAuthError('Please enter the name to appear in your profile.'); return }
+    if (suPassword.length < 8) { setAuthError('Password must be at least 8 characters.'); return }
+    setLoading(true)
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName: suName.trim(), email: suEmail.trim(), password: suPassword }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        setAuthError(data.error || 'Could not create your account.')
+        setLoading(false)
+        return
+      }
+      setSignedIn(true)
+      await handleUnlock()
+    } catch {
+      setAuthError('Network error. Please try again.')
       setLoading(false)
     }
   }
@@ -263,9 +307,36 @@ export default function AssessmentPage() {
             </div>
           ))}
         </div>
-        <button style={{ ...primaryBtn, fontSize: 16, padding: '15px 40px', width: '100%', opacity: loading ? 0.7 : 1 }} onClick={handleUnlock} disabled={loading}>
-          {loading ? 'Redirecting to Stripe…' : 'Pay $19 — Unlock Now'}
-        </button>
+        {signedIn ? (
+          <button style={{ ...primaryBtn, fontSize: 16, padding: '15px 40px', width: '100%', opacity: loading ? 0.7 : 1 }} onClick={handleUnlock} disabled={loading}>
+            {loading ? 'Redirecting to Stripe…' : 'Pay $19 — Unlock Now'}
+          </button>
+        ) : (
+          <form onSubmit={handleSignupAndPay} style={{ textAlign: 'left' }}>
+            <p style={{ color: '#5C4A30', fontSize: 14, lineHeight: 1.6, margin: '0 0 16px', textAlign: 'center' }}>
+              Create your account to save your profile and unlock the full report.
+            </p>
+            {authError && (
+              <div style={{ background: '#FBEAEA', color: '#B3261E', padding: '10px 14px', borderRadius: 10, fontSize: 13, fontWeight: 500, marginBottom: 14, textAlign: 'center' }}>{authError}</div>
+            )}
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#4A3F35', marginBottom: 6 }}>The name to appear in your profile</label>
+            <input type="text" value={suName} onChange={(e) => setSuName(e.target.value)} required placeholder="e.g. Jordan"
+              style={{ width: '100%', background: '#F2ECE0', border: '1px solid rgba(60,45,25,0.12)', borderRadius: 12, padding: '12px 15px', fontFamily: uiFont, fontSize: 14, marginBottom: 14 }} />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#4A3F35', marginBottom: 6 }}>Email</label>
+            <input type="email" value={suEmail} onChange={(e) => setSuEmail(e.target.value)} required autoComplete="email" placeholder="you@example.com"
+              style={{ width: '100%', background: '#F2ECE0', border: '1px solid rgba(60,45,25,0.12)', borderRadius: 12, padding: '12px 15px', fontFamily: uiFont, fontSize: 14, marginBottom: 14 }} />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#4A3F35', marginBottom: 6 }}>Password <span style={{ color: '#9A8A70', fontWeight: 400 }}>(min 8 chars)</span></label>
+            <input type="password" value={suPassword} onChange={(e) => setSuPassword(e.target.value)} required minLength={8} autoComplete="new-password" placeholder="••••••••"
+              style={{ width: '100%', background: '#F2ECE0', border: '1px solid rgba(60,45,25,0.12)', borderRadius: 12, padding: '12px 15px', fontFamily: uiFont, fontSize: 14, marginBottom: 18 }} />
+            <button type="submit" style={{ ...primaryBtn, fontSize: 16, padding: '15px 40px', width: '100%', opacity: loading ? 0.7 : 1 }} disabled={loading}>
+              {loading ? 'Setting up…' : 'Sign Up & Pay $19'}
+            </button>
+            <p style={{ color: '#9A8A70', fontSize: 12, marginTop: 12, textAlign: 'center' }}>
+              Already have an account?{' '}
+              <Link href={`/login?next=${encodeURIComponent('/assessment')}`} style={{ color: accent, fontWeight: 600 }}>Sign in</Link>
+            </p>
+          </form>
+        )}
         <p style={{ color: '#9A8A70', fontSize: 12, marginTop: 14 }}>Secure payment via Stripe · 30-day money-back guarantee</p>
         <button style={{ ...secondaryBtn, marginTop: 10 }} onClick={() => setScreen('teaser')}>← Back</button>
       </div>
