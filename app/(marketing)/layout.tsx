@@ -11,9 +11,11 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
             <span className="mkt-logo-sub">by J.D. Mercer</span>
           </Link>
           <nav className="mkt-nav">
-            <Link href="/collisions" className="mkt-nav-link">Collisions</Link>
+            <Link href="/parsers" className="mkt-nav-link">The 27 Parsers</Link>
             <Link href="/individual" className="mkt-nav-link">Individual</Link>
             <Link href="/couples" className="mkt-nav-link">Couples</Link>
+            <Link href="/parents" className="mkt-nav-link">Parents</Link>
+            <Link href="/login" className="mkt-nav-link">Sign in</Link>
             <Link href="/assessment" className="btn btn-primary mkt-nav-cta">Take the Assessment</Link>
           </nav>
         </div>

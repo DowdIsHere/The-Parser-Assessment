@@ -894,6 +894,9 @@ textarea.form-input { font-family: var(--font-ui); resize: vertical; }
 .btn-danger { background: #FBEAEA; color: #B3261E; border: 1px solid rgba(179,38,30,0.24); }
 .btn-danger:hover { background: #F6DADA; border-color: rgba(179,38,30,0.4); }
 
+/* ── Parser directory cards ── */
+.parser-index-card:hover { border-color: var(--accent-line) !important; box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
 /* ── Marketing pages ── */
 .mkt-header {
   position: sticky;
