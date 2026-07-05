@@ -110,6 +110,15 @@
     .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-500); color: #fff; font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; padding: 16px 40px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
     .btn-cta:hover { background: var(--blue-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
+    /* TRIAL FORM */
+    .trial-form { max-width: 620px; display: flex; flex-direction: column; gap: 18px; }
+    .trial-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .trial-field { display: flex; flex-direction: column; gap: 6px; }
+    .trial-field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+    .trial-field input, .trial-field select, .trial-field textarea { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px 14px; outline: none; width: 100%; transition: border-color 0.2s, box-shadow 0.2s; }
+    .trial-field input:focus, .trial-field select:focus, .trial-field textarea:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(154,123,46,0.14); }
+    .trial-note { font-size: 0.9rem; color: var(--text-muted); }
+
     footer { background: var(--blue-900); color: rgba(255,255,255,0.6); padding: 48px 0 28px; }
     .f-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
     .f-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
@@ -173,7 +182,7 @@
         <span class="sub">Clinician Certification · CBI Framework</span>
       </a>
       <nav id="siteNav">
-        <a href="#what-you-get">The Framework</a>
+        <a href="#what-you-get">The Program</a>
         <a href="#trial">Clinical Trial</a>
         <a href="#trial" class="btn">Join the Trial</a>
       </nav>
@@ -186,16 +195,16 @@
 
   <section class="hero">
     <div class="hero-inner">
-      <div class="eyebrow-tag">CBI Clinical Validation Trial · Now Enrolling</div>
-      <h1>A cognitive architecture assessment, <em>now in clinical validation.</em></h1>
-      <p>A structural read of how your client's mind receives and organizes information — the layer beneath presenting behavior, attachment patterns, and therapeutic resistance. Ahead of formal certification, we're enrolling a limited cohort of licensed practitioners to apply the Parser Profile framework in practice and help build its clinical evidence base. Participation is free during the trial.</p>
-      <a href="#trial" class="btn-hero">Apply to Join the Trial</a>
+      <div class="eyebrow-tag">CBI Clinical Trial · Now Enrolling</div>
+      <h1>A cognitive architecture assessment, <em>entering clinical validation.</em></h1>
+      <p>A structural read of how your client's mind receives and organizes information — the layer beneath presenting behavior, attachment patterns, and therapeutic resistance. We're enrolling licensed practitioners in a clinical trial to validate the Parser Profile Assessment in real practice, ahead of formal certification. Participation is free.</p>
+      <a href="#trial" class="btn-hero">Join the Clinical Trial</a>
     </div>
   </section>
 
   <section class="section alt" id="what-you-get">
     <div class="section-inner">
-      <div class="eyebrow">Certification Includes</div>
+      <div class="eyebrow">What Participation Includes</div>
 
       <div class="what-grid">
         <div class="what-card">
@@ -205,8 +214,8 @@
         </div>
         <div class="what-card">
           <div class="what-num">02</div>
-          <h4>Practitioner Credentials</h4>
-          <p>Licensed access to administer the Parser Profile Assessment within your practice. Includes practitioner dashboard, client invitation links, and full reporting access.</p>
+          <h4>Trial Practitioner Access</h4>
+          <p>Access to administer the Parser Profile Assessment with your clients as part of the study. Includes a practitioner dashboard, client invitation links, and full reporting access.</p>
         </div>
         <div class="what-card">
           <div class="what-num">03</div>
@@ -225,70 +234,67 @@
   <section class="section" id="trial">
     <div class="section-inner">
       <div class="eyebrow">Now Enrolling</div>
-      <h2 class="section-title">Join the CBI Clinical Validation Trial.</h2>
-      <p class="section-sub">Before the Parser Profile framework is offered as a certified, licensed clinical instrument, we're gathering real-world validation data with a limited cohort of licensed practitioners. Trial participants receive full framework access and reference materials at no cost, in exchange for structured feedback and de-identified outcome data. There is no fee to participate and no purchase required.</p>
+      <h2 class="section-title">Join the clinical trial.</h2>
+      <p class="section-sub">The Parser Profile Assessment is entering clinical validation. We're inviting licensed practitioners to administer it within their practice as part of a structured trial — at no cost — to build the evidence base toward formal certification. Enrollment is limited.</p>
 
-      <div class="trial-grid">
-        <div class="trial-card">
-          <h3>What participants receive</h3>
-          <ul class="price-list">
-            <li>Parser Frame Overview training on the CBI framework and 27-profile system</li>
-            <li>Trial access to administer the Parser Profile Assessment within your practice</li>
-            <li>Complete clinical reference materials and interpretation guides</li>
-            <li>Direct consultation access and a practitioner peer cohort</li>
-            <li>Named acknowledgement in validation findings (optional)</li>
-          </ul>
+      <div class="what-grid" style="margin-bottom:44px;">
+        <div class="what-card">
+          <div class="what-num">Free to participate</div>
+          <h4>No fee during the trial</h4>
+          <p>Participants receive access at no charge in exchange for structured feedback and de-identified observations from real sessions.</p>
         </div>
-        <div class="trial-card">
-          <h3>What we ask in return</h3>
-          <ul class="price-list">
-            <li>Active licensed practice (therapy, coaching, neuropsych, education)</li>
-            <li>Apply the framework with a handful of consenting clients during the trial</li>
-            <li>Complete brief structured feedback on clinical fit and utility</li>
-            <li>Share de-identified, aggregate outcome observations</li>
-            <li>Treat all training materials as confidential (standard for clinical instruments)</li>
-          </ul>
+        <div class="what-card">
+          <div class="what-num">Toward certification</div>
+          <h4>Early-practitioner standing</h4>
+          <p>Trial participants are first in line for formal certification once the framework completes validation and credentialing.</p>
         </div>
       </div>
 
-      <form id="trialForm" class="trial-form" novalidate>
-        <div class="trial-form-row">
-          <label>Full name
-            <input type="text" name="name" required placeholder="Dr. Jane Doe">
-          </label>
-          <label>Professional credentials
-            <input type="text" name="credentials" required placeholder="LMFT, PhD, LCSW…">
-          </label>
+      <form id="trialForm" class="trial-form">
+        <div class="trial-row">
+          <div class="trial-field">
+            <label for="tf-name">Full name</label>
+            <input id="tf-name" type="text" placeholder="Dr. Jane Doe" required>
+          </div>
+          <div class="trial-field">
+            <label for="tf-email">Email</label>
+            <input id="tf-email" type="email" placeholder="you@practice.com" required>
+          </div>
         </div>
-        <div class="trial-form-row">
-          <label>Email
-            <input type="email" name="email" required placeholder="you@practice.com">
-          </label>
-          <label>Practice type
-            <select name="practiceType" required>
+        <div class="trial-row">
+          <div class="trial-field">
+            <label for="tf-credential">Credential / License</label>
+            <select id="tf-credential" required>
               <option value="" disabled selected>Select…</option>
-              <option>Couples &amp; Family Therapy</option>
-              <option>Cognitive-Behavioral Therapy</option>
-              <option>Neuropsychology / Rehabilitation</option>
-              <option>Executive &amp; Performance Coaching</option>
-              <option>Educational / Developmental</option>
-              <option>Other</option>
+              <option>LMFT — Marriage &amp; Family Therapist</option>
+              <option>LCSW — Clinical Social Worker</option>
+              <option>LPC / LPCC — Professional Counselor</option>
+              <option>PhD / PsyD — Psychologist</option>
+              <option>MD / DO — Physician / Psychiatrist</option>
+              <option>Neuropsychologist</option>
+              <option>Executive / Performance Coach</option>
+              <option>Educational / Developmental Specialist</option>
+              <option>Other licensed practitioner</option>
             </select>
-          </label>
+          </div>
+          <div class="trial-field">
+            <label for="tf-region">License state / region</label>
+            <input id="tf-region" type="text" placeholder="e.g. California, USA" required>
+          </div>
         </div>
-        <label>Anything you'd like us to know (optional)
-          <textarea name="message" rows="3" placeholder="Your practice focus, caseload, or questions about the trial."></textarea>
-        </label>
-        <div class="trial-error" id="trialError" hidden></div>
-        <button type="submit" class="btn-cta" id="trialSubmit">Apply to Join the Trial</button>
-        <p class="trial-note">Applications are reviewed individually. Participation is free and involves no purchase. We'll follow up by email.</p>
+        <div class="trial-field">
+          <label for="tf-setting">Practice setting</label>
+          <input id="tf-setting" type="text" placeholder="Private practice, group clinic, hospital, university…">
+        </div>
+        <div class="trial-field">
+          <label for="tf-notes">Anything you'd like us to know? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+          <textarea id="tf-notes" rows="4" placeholder="Your clinical focus, client population, or questions about the trial…"></textarea>
+        </div>
+        <div>
+          <button type="submit" class="btn-cta" id="tfSubmit">Apply to Enroll</button>
+          <p id="tfMsg" class="trial-note" style="margin-top:14px;display:none;"></p>
+        </div>
       </form>
-
-      <div class="trial-success" id="trialSuccess" hidden>
-        <div class="trial-tick">✓</div>
-        <h3>Application received</h3>
-        <p>Thank you for your interest in the CBI Clinical Validation Trial. We review each application individually and will follow up by email about next steps and onboarding.</p>
-      </div>
     </div>
   </section>
 
@@ -380,6 +386,45 @@
         if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+  </script>
+  <script>
+  (function () {
+    var form = document.getElementById('trialForm');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('tfSubmit');
+      var msg = document.getElementById('tfMsg');
+      var payload = {
+        name: document.getElementById('tf-name').value.trim(),
+        email: document.getElementById('tf-email').value.trim(),
+        credential: document.getElementById('tf-credential').value,
+        region: document.getElementById('tf-region').value.trim(),
+        setting: document.getElementById('tf-setting').value.trim(),
+        notes: document.getElementById('tf-notes').value.trim()
+      };
+      btn.disabled = true; btn.textContent = 'Submitting…';
+      function showOk() {
+        msg.style.display = ''; msg.style.color = 'var(--blue-600)';
+        msg.textContent = 'Application received. We\'ll be in touch about the next enrollment cohort.';
+        btn.textContent = 'Submitted';
+      }
+      function fallbackMailto() {
+        var body = encodeURIComponent(
+          'Clinical Trial Enrollment\n\nName: ' + payload.name + '\nEmail: ' + payload.email +
+          '\nCredential: ' + payload.credential + '\nLicense region: ' + payload.region +
+          '\nPractice setting: ' + payload.setting + '\nNotes: ' + payload.notes);
+        window.location.href = 'mailto:Inquire@cognitionblocksllc.com?subject=' +
+          encodeURIComponent('Clinical Trial Enrollment — ' + payload.name) + '&body=' + body;
+        showOk();
+      }
+      fetch('/api/clinical-trial', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (res && res.ok) { showOk(); } else { fallbackMailto(); }
+      }).catch(function () { fallbackMailto(); });
+    });
+  })();
   </script>  <script>
   (function(){
     var root=document.documentElement;

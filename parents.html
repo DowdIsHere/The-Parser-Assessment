@@ -122,6 +122,19 @@
     .f-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); line-height: 1.8; }
     .disclaimer { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); line-height: 1.7; text-align: center; max-width: 760px; margin: 0 auto; }
 
+    /* QUESTIONNAIRE */
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .form-label { font-size: 0.88rem; font-weight: 600; color: var(--text-secondary); }
+    .form-input { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px 16px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+    .form-input:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(154,123,46,0.14); }
+    textarea.form-input { resize: vertical; }
+    .parent-card { border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; background: var(--bg-card); }
+    .parent-card-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .parent-remove { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); background: none; border: none; cursor: pointer; }
+    .parent-remove:hover { color: var(--blue-500); }
+    .add-parent-btn { font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--blue-500); background: none; border: 1px dashed var(--border-strong); border-radius: 8px; padding: 12px 18px; cursor: pointer; width: 100%; margin-bottom: 22px; transition: border-color 0.2s, color 0.2s; }
+    .add-parent-btn:hover { border-color: var(--blue-500); color: var(--blue-400); }
+
     @media (max-width: 760px) {
       .editions { grid-template-columns: 1fr; }
       .contents-grid { grid-template-columns: 1fr; }
@@ -329,50 +342,75 @@
 
   <section class="section" id="pricing">
     <div class="section-inner">
-      <div class="pricing-block">
-        <div class="eyebrow">Get Started</div>
-        <h2 class="section-title">Parenting Parser Analysis.</h2>
-        <p class="section-sub" style="margin-bottom:32px;">Your child's profile, the collision map, the written analysis, and the consultation — in one package.</p>
 
-        <div class="price-row">
-          <span class="price-main">$199</span>
-        </div>
-        <p class="price-note">One-time. Everything below is included.</p>
-
-        <div class="package-list">
-          <div class="pkg-item">
-            <span class="pkg-num">i</span>
-            <div>
-              <strong>Your Child's Parser Profile</strong>
-              <span>Full written profile in the language of their age — Kids (7–12) or Teen (13–17).</span>
-            </div>
-          </div>
-          <div class="pkg-item">
-            <span class="pkg-num">ii</span>
-            <div>
-              <strong>Parent–Child Collision Map</strong>
-              <span>Your architecture plotted against your child's, with the recurring friction named.</span>
-            </div>
-          </div>
-          <div class="pkg-item">
-            <span class="pkg-num">iii</span>
-            <div>
-              <strong>The Written Analysis</strong>
-              <span>The nine-section document covering how your child learns, communicates, and grows.</span>
-            </div>
-          </div>
-          <div class="pkg-item">
-            <span class="pkg-num">+</span>
-            <div>
-              <strong>Consultation</strong>
-              <span>You and J.D. Mercer, walking through the analysis live.</span>
-            </div>
-          </div>
-        </div>
-
-        <a href="/signin.html?next=/parents.html" class="btn-cta">Sign up</a>
-        <p class="already-own">Have more than one child? <a href="/kids-assessment.html">Each additional sibling analysis — $99.</a></p>
+      <!-- Loading -->
+      <div id="parentLoading" class="pricing-block">
+        <p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;">Loading…</p>
       </div>
+
+      <!-- Signed-out CTA -->
+      <div id="parentSignedOut" class="pricing-block" style="display:none;">
+        <div class="eyebrow">Get Started</div>
+        <h2 class="section-title">Begin your child's analysis.</h2>
+        <p class="section-sub" style="margin-bottom:36px;">Sign in or create an account to begin. New here? Signing up starts the Parser assessment.</p>
+        <a href="/signin.html?next=/parents.html" class="btn-cta">Sign up</a>
+      </div>
+
+      <!-- Signed-in questionnaire -->
+      <div id="parentForm" class="pricing-block" style="display:none; max-width:640px;">
+        <div class="eyebrow">Submit Your Request</div>
+        <h2 class="section-title">Tell us about your family.</h2>
+        <p class="section-sub" style="margin-bottom:36px;">Add your child, then one or both parents. The collision map is built around however many parent profiles you include — one parent or two.</p>
+
+        <form id="parentRequestForm">
+          <div class="form-group">
+            <label class="form-label">Child's first name</label>
+            <input id="pf-child" class="form-input" type="text" placeholder="Your child's name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Child's age</label>
+            <select id="pf-age" class="form-input" required>
+              <option value="7-12">7–12 (Kids edition)</option>
+              <option value="13-17">13–17 (Teen edition)</option>
+            </select>
+          </div>
+
+          <div class="parent-card">
+            <div class="parent-card-title">Parent 1</div>
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input id="pf-p1name" class="form-input" type="text" placeholder="Your name" required>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Email</label>
+              <input id="pf-p1email" class="form-input" type="email" placeholder="Your email" required readonly style="opacity:0.7;cursor:default;">
+            </div>
+          </div>
+
+          <div class="parent-card" id="parent2Card" style="display:none;">
+            <div class="parent-card-title">Parent 2 <button type="button" class="parent-remove" id="removeParent2">Remove</button></div>
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input id="pf-p2name" class="form-input" type="text" placeholder="Second parent's name">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Email <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+              <input id="pf-p2email" class="form-input" type="email" placeholder="Second parent's email">
+            </div>
+          </div>
+
+          <button type="button" class="add-parent-btn" id="addParent2">+ Add a second parent</button>
+
+          <div class="form-group">
+            <label class="form-label">Anything you'd like us to know? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+            <textarea id="pf-notes" class="form-input" rows="4" placeholder="Context, questions, or anything on your mind…"></textarea>
+          </div>
+
+          <button type="submit" class="btn-cta" id="pfSubmit">Submit Request</button>
+          <p id="pfMsg" style="margin-top:14px;font-size:0.92rem;display:none;"></p>
+        </form>
+      </div>
+
     </div>
   </section>
 
@@ -413,6 +451,80 @@
       });
     },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
     els.forEach(function(el){io.observe(el);});
+  })();
+  </script>
+  <script>
+  (function () {
+    var loading = document.getElementById('parentLoading');
+    var signedOut = document.getElementById('parentSignedOut');
+    var formBlock = document.getElementById('parentForm');
+
+    // Show the questionnaire to members; otherwise the Sign up CTA.
+    fetch('/api/profile/me').then(function (res) {
+      if (res.status === 401 || res.status === 403) return null;
+      return res.json();
+    }).then(function (data) {
+      loading.style.display = 'none';
+      if (!data || !data.authenticated) { signedOut.style.display = ''; return; }
+      formBlock.style.display = '';
+      var email1 = document.getElementById('pf-p1email');
+      var name1 = document.getElementById('pf-p1name');
+      email1.value = data.user.email || '';
+      if (data.user.firstName || data.user.lastName) {
+        name1.value = [data.user.firstName, data.user.lastName].filter(Boolean).join(' ');
+      }
+    }).catch(function () { loading.style.display = 'none'; signedOut.style.display = ''; });
+
+    // Add / remove the second parent — the analysis formats to however many are entered.
+    var p2card = document.getElementById('parent2Card');
+    var addBtn = document.getElementById('addParent2');
+    document.getElementById('addParent2').addEventListener('click', function () {
+      p2card.style.display = ''; addBtn.style.display = 'none';
+    });
+    document.getElementById('removeParent2').addEventListener('click', function () {
+      p2card.style.display = 'none'; addBtn.style.display = '';
+      document.getElementById('pf-p2name').value = '';
+      document.getElementById('pf-p2email').value = '';
+    });
+
+    document.getElementById('parentRequestForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('pfSubmit');
+      var msg = document.getElementById('pfMsg');
+      var parents = [{
+        name: document.getElementById('pf-p1name').value.trim(),
+        email: document.getElementById('pf-p1email').value.trim()
+      }];
+      if (p2card.style.display !== 'none') {
+        var n2 = document.getElementById('pf-p2name').value.trim();
+        if (n2) parents.push({ name: n2, email: document.getElementById('pf-p2email').value.trim() });
+      }
+      var payload = {
+        child: document.getElementById('pf-child').value.trim(),
+        childAge: document.getElementById('pf-age').value,
+        parents: parents,          // 1 or 2 — the map formats to this count
+        parentCount: parents.length,
+        notes: document.getElementById('pf-notes').value.trim()
+      };
+      btn.disabled = true; btn.textContent = 'Sending…';
+      function showOk() {
+        msg.style.display = ''; msg.style.color = 'var(--blue-600)';
+        msg.textContent = 'Request received. We\'ll be in touch soon.';
+        btn.textContent = 'Submitted';
+      }
+      function fallback() {
+        var lines = 'Parenting Parser Analysis Request\n\nChild: ' + payload.child + ' (' + payload.childAge + ')\n';
+        payload.parents.forEach(function (p, i) { lines += 'Parent ' + (i+1) + ': ' + p.name + (p.email ? ' <' + p.email + '>' : '') + '\n'; });
+        lines += 'Notes: ' + payload.notes;
+        window.location.href = 'mailto:Inquire@cognitionblocksllc.com?subject=' +
+          encodeURIComponent('Parenting Analysis — ' + payload.child) + '&body=' + encodeURIComponent(lines);
+        showOk();
+      }
+      fetch('/api/parents/request', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      }).then(function (res) { if (res && res.ok) showOk(); else fallback(); })
+        .catch(function () { fallback(); });
+    });
   })();
   </script>
   <script src="/mobile-nav.js" defer></script>
