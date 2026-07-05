@@ -21,3 +21,9 @@ npm-debug.log*
 # IDE
 .vscode/
 .idea/
+
+# Next.js / TS build artifacts
+.next/
+next-env.d.ts
+tsconfig.tsbuildinfo
+node_modules/
