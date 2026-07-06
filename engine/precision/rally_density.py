@@ -64,11 +64,10 @@ if __name__ == "__main__":
         if sum(surf[s].values()) > 2000:
             line(s or "(blank)", surf[s])
     print("\n=== PLAYERS (all surfaces) ===")
-    for nm in ["Jan-Lennard Struff","Daniil Medvedev","Hubert Hurkacz","Novak Djokovic",
-               "Jannik Sinner","Jaume Munar","Alexander Bublik"]:
+    for nm in ["Jannik Sinner","Jan-Lennard Struff","Alexander Zverev","Jiri Lehecka","Taylor Fritz","Alexander Bublik","Felix Auger-Aliassime","Novak Djokovic","Alex de Minaur","Flavio Cobolli","Daniil Medvedev"]:
         k = next((k for k in per if nm.split()[-1] in k), None)
         if k: line(k, per[k])
     print("\n=== SAME PLAYERS, GRASS ONLY ===")
-    for nm in ["Jan-Lennard Struff","Daniil Medvedev","Hubert Hurkacz","Alexander Bublik"]:
+    for nm in ["Jannik Sinner","Jan-Lennard Struff","Alexander Zverev","Jiri Lehecka","Taylor Fritz","Alexander Bublik","Felix Auger-Aliassime","Novak Djokovic","Alex de Minaur","Flavio Cobolli","Daniil Medvedev"]:
         k = next((k for k in perg if nm.split()[-1] in k and sum(perg[k].values())>150), None)
         if k: line(k+" (grass)", perg[k])
