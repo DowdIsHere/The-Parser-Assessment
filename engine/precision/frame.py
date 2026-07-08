@@ -31,6 +31,7 @@ ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
 EM_F = os.path.join(ROOT, "Precision - Everybody Measurements.csv")
 VAR_F = os.path.join(ROOT, "Precision - Variables (TennisViz).csv")
 FL_F = os.path.join(ROOT, "Precision - Flag Report (Disruptor).csv")
+STEAL_F = os.path.join(ROOT, "Precision - Steal (Charting).csv")  # steal for ALL charted players
 
 ORDER = ["r14", "conv", "oufe", "r9", "steal", "ufc"]
 LAB = {"r14": "1-4 Rally", "conv": "Convs", "oufe": "OUFE-A",
@@ -76,6 +77,19 @@ def _num(x):
     return float(x) if x else None
 
 
+def _load_steal():
+    D = {}
+    if os.path.exists(STEAL_F):
+        for r in csv.DictReader(open(STEAL_F)):
+            v = _num(r["steal_charting"])
+            if v is not None:
+                D[r["player"].strip()] = v
+    return D
+
+
+_STEAL = _load_steal()   # charting steal for every charted player (frees frame from TViz)
+
+
 def load():
     EM = {r["player"].strip(): r for r in csv.DictReader(open(EM_F))}
     VAR = {r["player"].strip(): r for r in csv.DictReader(open(VAR_F))}
@@ -84,16 +98,28 @@ def load():
 
 
 def metrics(name, EM, VAR):
-    """Six gate metrics, or None if the player is not fully gradable."""
+    """Gate metrics from charting; conv from TViz if present, else None (PENDING).
+
+    Gradable on 5 gates (rally x2, OUFE, UFE, steal) — conv is the ONLY TViz-only
+    gate and it's the toss-decider, so when it's absent we grade 5-gate and flag
+    conv PENDING (pull real conv from ATP to finalize a near-toss). Steal falls
+    back to charting for any player not in TViz."""
     ke, kv = _find(EM, name), _find(VAR, name)
-    if not ke or not kv:
-        return None, (ke, kv)
-    e, v = EM[ke], VAR[kv]
+    if not ke:
+        return None, (ke, kv)   # no charting profile -> not gradable at all
+    e = EM[ke]
+    v = VAR[kv] if kv else {}
+    steal = _num(v.get("steal")) if kv else None
+    if steal is None:                       # charting fallback for non-TViz players
+        sk = _find(_STEAL, name)
+        steal = _STEAL.get(sk) if sk else None
+    conv = _num(v.get("conv")) if kv else None   # may be None = PENDING (pull from ATP)
+    win = _num(e["WinUFE"])
     m = dict(r14=_num(e["short_win%"]), r9=_num(e["long_win%"]),
-             ufc=_num(e["adjUFE"]), conv=_num(v["conv"]), steal=_num(v["steal"]))
-    m["oufe"] = (m["ufc"] + _num(e["WinUFE"])) if (m["ufc"] is not None
-                                                   and _num(e["WinUFE"]) is not None) else None
-    if any(m[x] is None for x in ORDER):
+             ufc=_num(e["adjUFE"]), conv=conv, steal=steal)
+    m["oufe"] = (m["ufc"] + win) if (m["ufc"] is not None and win is not None) else None
+    # gradable requires everything EXCEPT conv (conv is optional / pending)
+    if any(m[x] is None for x in ("r14", "r9", "ufc", "oufe", "steal")):
         return None, (ke, kv)
     return m, (ke, kv)
 
@@ -134,11 +160,17 @@ def report(a, b, EM, VAR, FL):
     ga = card[ta] if ta in card else card[next(iter(card))]
     gb = card[tb] if tb in card else card[next(iter(card))]
     prov = " (PROVISIONAL card)" if key in PROVISIONAL else ""
+    conv_pending = ma["conv"] is None or mb["conv"] is None
+    gates = [g for g in ORDER if not (g == "conv" and conv_pending)]
     print(f"### {a} ({ta}, D{Da:+}) vs {b} ({tb}, D{Db:+})   [{'-'.join(key)} card{prov}]")
     print(f"GATE          {a.split()[-1][:12]:<12}          {b.split()[-1][:12]}")
     print(f"              your#  win#   g2v      your#  win#   g2v")
     ra = rb = 0
     for m in ORDER:
+        if m == "conv" and conv_pending:
+            who = " & ".join(x.split()[-1] for x, mm in ((a, ma), (b, mb)) if mm["conv"] is None)
+            print(f"{LAB[m]:13}   PENDING — pull conv from ATP for {who}")
+            continue
         wa, va = _g2v(ma, mb, ga, m)
         wb, vb = _g2v(mb, ma, gb, m)
         if m in ("r14", "r9"):
@@ -146,16 +178,20 @@ def report(a, b, EM, VAR, FL):
             rb += vb
         print(f"{LAB[m]:13} {ma[m]:5.1f}|{wa:5.1f}|{va:+5.1f}{'R' if va < 0 else 'G'}"
               f"   {mb[m]:5.1f}|{wb:5.1f}|{vb:+5.1f}{'R' if vb < 0 else 'G'}")
-    reda = sum(1 for m in ORDER if _g2v(ma, mb, ga, m)[1] < 0)
-    redb = sum(1 for m in ORDER if _g2v(mb, ma, gb, m)[1] < 0)
+    reda = sum(1 for m in gates if _g2v(ma, mb, ga, m)[1] < 0)
+    redb = sum(1 for m in gates if _g2v(mb, ma, gb, m)[1] < 0)
     ra, rb = round(ra, 1), round(rb, 1)
-    print(f"reds / RALLY   {reda}  |{ra:+6}           {redb}  |{rb:+6}")
+    tag = f"reds({len(gates)}g)" if conv_pending else "reds"
+    print(f"{tag} / RALLY   {reda}  |{ra:+6}           {redb}  |{rb:+6}")
     fav, und = (a, b) if ra > rb else (b, a)
     favG = (ra if fav == a else rb)
     owns = (max(_g2v(ma, mb, ga, "r14")[1], _g2v(ma, mb, ga, "r9")[1]) >= 0) if fav == a \
         else (max(_g2v(mb, ma, gb, "r14")[1], _g2v(mb, ma, gb, "r9")[1]) >= 0)
     print(f"RALLY favorite: {fav.split()[-1]}  (sep {round(abs(ra - rb), 1)}; "
           f"favorite {'owns an axis' if owns else 'owns NO axis → PASS'})")
+    if conv_pending:
+        print("  ⚠ conv PENDING — this is a 5-gate read. conv+steal decide near-tosses, "
+              "so pull real conv from ATP before trusting a thin call.")
     # FLAG — presented layer, both comparatives; no hard trigger
     fa, fb = FL.get(_find(FL, a)), FL.get(_find(FL, b))
     print("FLAG          slice% net% drop% TOTAL | sl-sh net-sh dr-sh tier")
