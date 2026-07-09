@@ -166,3 +166,65 @@ Cerundolo — verify which player an injury report belongs to before logging it.
 **This is now a standing check, logged in CLAUDE.md**, alongside recent-form/surface:
 real-world context to flag before presenting a read — never a frame override, just
 something to know and say out loud.
+
+---
+
+## D. NEXT-GEN GATE READ — the deficit/payment ledger (calibration model) — UNAPPROVED, testing only
+
+*Co-developed with Robert, 2026-07-08. A model for reading the six gates as an
+entangled system rather than six flat, independently-counted reds. Parked here for
+testing; NOT wired into the live read.*
+
+### D1. Gates are opponent-calibrated minimums, read as a ledger
+Each gate's win# is the **minimum that player must bring on that dimension to beat
+THIS opponent** (opp value + card gap — already how g2v works). Green = met the
+minimum; red = missed it. But a red is not a loss — it is a **deficit that must be
+handed off (paid) elsewhere.**
+
+### D2. Sources vs payments (the handoff economy)
+```
+SOURCES of deficit (burden created)        PAYMENTS / handoffs (burden covered)
+• Rally red (1-4 / 9+) — missed exchange   • Conv  — cash the pressure point
+• UFE red — self-inflicted; you're victim  • Steal — improvise the point
+        ERRORS ARE ON BOTH SIDES:          • OUFE-A — force THEM to miss (victimize)
+        own UFE sources · OUFE pays        • UFE green — don't self-inflict
+```
+Two-sided / coupled: your OUFE drains their ledger; their UFE feeds yours — a NET
+flow between the two economies, not two isolated scorecards.
+
+Read = **balance the ledger, count NAKED (unpaid) deficits, not total reds.**
+- Covered ledger → survives/wins. Naked deficit → loss.
+- **OUFE-A is the deficit-type with NO payment route** — "can't impose on this
+  opponent" is a burden conv/steal cannot cash. This is why the lone-OUFE-A-red
+  favorites all lost this week (Medvedev, Hurkacz, de Minaur): not one red, but the
+  one red *nothing hands off.* ("The door.")
+
+### D3. The ledger's SHAPE is set by the Parser print (the real calibration)
+The gates are not independent — they are entangled projections of the block
+hierarchy. Same block fact shows up in multiple gates:
+- **PM (long-rally) = pattern player = SP+PR lead, GC low.** His 9+ strength AND his
+  low UFE are the SAME fact (patterns don't spray; improvisation does). He natively
+  sources little UFE and pays by OUTLASTING (long patterns → forced OUFE).
+- **FC (first-strike) = PD lead.** Natively SOURCES UFE (aggression) and pays by
+  first-striking / steal.
+- Gate↔block map (working): 1-4↔PD · 9+↔SP+PR · UFE↔(low GC + SP) · steal↔GC ·
+  conv↔SRP-under-pressure.
+
+Therefore: **read each gate against what the TYPE predicts; the DEVIATION is the
+signal.** A PM with normal-low UFE = no info (pattern running). A PM with HIGH UFE =
+loud signal (the pattern is breaking — a deficit sourced where his print says it
+shouldn't be). An FC with low UFE = exceptional control his type doesn't carry.
+
+### D4. Weighted by portion-played (density)
+Every source and payment is scaled by the **portion of the match the player actually
+plays in that mode** (the rally_density finding). A serve-dominant player sources
+almost nothing in rallies and pays through serve/steal; a grinder sources and pays in
+the exchange. See `engine/precision/rally_density.py`.
+
+### D5. Backtest support (n=31, Wimbledon 2026 men, one grass tournament)
+- STRONG 16/23 (70%); at sep >= 12 (real conviction) 13/17 (76%) with **100% of
+  losses grass/riser.** The sep 8-11 "STRONGs" went 0/3 — argues STRONG cutoff ~12.
+- PASS near-toss favorites went 2/8 (25%) — abstaining validated.
+- The 3 non-blind-spot STRONG losses (Shapovalov, Molcan, Fonseca) were all thin-rally
+  reads where the handoff gates (conv/steal) should have carried the call and flat
+  red-counting missed it — direct motivation for this ledger model.
