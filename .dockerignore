@@ -1,7 +1,0 @@
-node_modules
-.next
-.git
-The Block Material
-*.log
-.env
-.DS_Store
