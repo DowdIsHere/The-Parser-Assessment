@@ -110,15 +110,6 @@
     .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-500); color: #fff; font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; padding: 16px 40px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
     .btn-cta:hover { background: var(--blue-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-    /* TRIAL FORM */
-    .trial-form { max-width: 620px; display: flex; flex-direction: column; gap: 18px; }
-    .trial-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .trial-field { display: flex; flex-direction: column; gap: 6px; }
-    .trial-field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
-    .trial-field input, .trial-field select, .trial-field textarea { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px 14px; outline: none; width: 100%; transition: border-color 0.2s, box-shadow 0.2s; }
-    .trial-field input:focus, .trial-field select:focus, .trial-field textarea:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(154,123,46,0.14); }
-    .trial-note { font-size: 0.9rem; color: var(--text-muted); }
-
     footer { background: var(--blue-900); color: rgba(255,255,255,0.6); padding: 48px 0 28px; }
     .f-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
     .f-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
@@ -147,23 +138,6 @@
       html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
       a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
     }
-    /* Clinical trial */
-    .trial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-    .trial-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; box-shadow: var(--shadow-sm); }
-    .trial-card h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 18px; letter-spacing: -0.01em; }
-    .trial-form { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; box-shadow: var(--shadow-sm); max-width: 720px; }
-    .trial-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .trial-form label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 18px; }
-    .trial-form input, .trial-form select, .trial-form textarea { width: 100%; margin-top: 7px; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-page); font-family: var(--font-body); font-size: 0.92rem; color: var(--text-primary); font-weight: 400; }
-    .trial-form input:focus, .trial-form select:focus, .trial-form textarea:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
-    .trial-form textarea { resize: vertical; }
-    .trial-error { background: #FBEAEA; color: #B3261E; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; font-weight: 500; margin-bottom: 16px; }
-    .trial-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 14px; line-height: 1.5; }
-    .trial-success { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 44px 36px; box-shadow: var(--shadow-sm); max-width: 720px; text-align: center; }
-    .trial-tick { width: 54px; height: 54px; border-radius: 999px; background: #E8F4EC; color: #0E7A52; display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 700; margin-bottom: 18px; }
-    .trial-success h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
-    .trial-success p { color: var(--text-secondary); line-height: 1.7; max-width: 48ch; margin: 0 auto; }
-    @media (max-width: 720px) { .trial-grid, .trial-form-row { grid-template-columns: 1fr; } }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
   <link rel="stylesheet" href="/mobile-nav.css">
@@ -182,9 +156,9 @@
         <span class="sub">Clinician Certification · CBI Framework</span>
       </a>
       <nav id="siteNav">
-        <a href="#what-you-get">The Program</a>
-        <a href="#trial">Clinical Trial</a>
-        <a href="#trial" class="btn">Join the Trial</a>
+        <a href="#what-you-get">Certification</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#inquire" class="btn">Schedule Inquiry</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -195,16 +169,16 @@
 
   <section class="hero">
     <div class="hero-inner">
-      <div class="eyebrow-tag">CBI Clinical Trial · Now Enrolling</div>
-      <h1>A cognitive architecture assessment, <em>entering clinical validation.</em></h1>
-      <p>A structural read of how your client's mind receives and organizes information — the layer beneath presenting behavior, attachment patterns, and therapeutic resistance. We're enrolling licensed practitioners in a clinical trial to validate the Parser Profile Assessment in real practice, ahead of formal certification. Participation is free.</p>
-      <a href="#trial" class="btn-hero">Join the Clinical Trial</a>
+      <div class="eyebrow-tag">CBI Clinician Certification</div>
+      <h1>A cognitive architecture assessment, <em>licensed for clinical use.</em></h1>
+      <p>A structural read of how your client's mind receives and organizes information — the layer beneath presenting behavior, attachment patterns, and therapeutic resistance. As a certified practitioner, you administer the Parser Profile Assessment as a licensed clinical adjunct within your own practice.</p>
+      <a href="#inquire" class="btn-hero">Schedule a Professional Inquiry</a>
     </div>
   </section>
 
   <section class="section alt" id="what-you-get">
     <div class="section-inner">
-      <div class="eyebrow">What Participation Includes</div>
+      <div class="eyebrow">Certification Includes</div>
 
       <div class="what-grid">
         <div class="what-card">
@@ -214,8 +188,8 @@
         </div>
         <div class="what-card">
           <div class="what-num">02</div>
-          <h4>Trial Practitioner Access</h4>
-          <p>Access to administer the Parser Profile Assessment with your clients as part of the study. Includes a practitioner dashboard, client invitation links, and full reporting access.</p>
+          <h4>Practitioner Credentials</h4>
+          <p>Licensed access to administer the Parser Profile Assessment within your practice. Includes practitioner dashboard, client invitation links, and full reporting access.</p>
         </div>
         <div class="what-card">
           <div class="what-num">03</div>
@@ -231,70 +205,54 @@
     </div>
   </section>
 
-  <section class="section" id="trial">
+  <section class="section" id="pricing">
     <div class="section-inner">
-      <div class="eyebrow">Now Enrolling</div>
-      <h2 class="section-title">Join the clinical trial.</h2>
-      <p class="section-sub">The Parser Profile Assessment is entering clinical validation. We're inviting licensed practitioners to administer it within their practice as part of a structured trial — at no cost — to build the evidence base toward formal certification. Enrollment is limited.</p>
+      <div class="eyebrow">Investment</div>
+      <h2 class="section-title">Certification pricing.</h2>
+      <p class="section-sub">The 30–60 Minute Parser Frame Overview is the required entry point for all practitioners. Per-assessment licensing and annual recertification scale with practice volume. Group practice and institutional arrangements are available on inquiry.</p>
 
-      <div class="what-grid" style="margin-bottom:44px;">
-        <div class="what-card">
-          <div class="what-num">Free to participate</div>
-          <h4>No fee during the trial</h4>
-          <p>Participants receive access at no charge in exchange for structured feedback and de-identified observations from real sessions.</p>
+      <div class="pricing-grid">
+        <div class="price-card featured">
+          <div class="price-label">One-Time</div>
+          <h3>30–60 Minute Parser Frame Overview + Certification</h3>
+          <div class="price-num">$497<small style="font-size:1rem;font-weight:400;color:var(--text-muted);margin-left:6px;">USD</small></div>
+          <div class="price-note">Single payment. Includes everything below.</div>
+          <ul class="price-list">
+            <li>Live 30–60 minute Parser Frame Overview session with Robert Dowd</li>
+            <li>Practitioner credentials and dashboard access</li>
+            <li>Complete clinical reference materials</li>
+            <li>Recording of your training session</li>
+            <li>First 90 days of practitioner support included</li>
+          </ul>
         </div>
-        <div class="what-card">
-          <div class="what-num">Toward certification</div>
-          <h4>Early-practitioner standing</h4>
-          <p>Trial participants are first in line for formal certification once the framework completes validation and credentialing.</p>
+
+        <div class="price-card">
+          <div class="price-label">Custom Engagements</div>
+          <h3>Group Practices &amp; Institutions</h3>
+          <div class="price-num" style="font-size:2rem;letter-spacing:0;">Inquire</div>
+          <div class="price-note">Quoted based on practice size and use case.</div>
+          <ul class="price-list">
+            <li>Multi-practitioner certification packages</li>
+            <li>Institutional licensing for hospitals and clinics</li>
+            <li>Custom training cohorts (5+ practitioners)</li>
+            <li>White-labeling and branded administration</li>
+            <li>Research collaboration arrangements</li>
+          </ul>
         </div>
       </div>
 
-      <form id="trialForm" class="trial-form">
-        <div class="trial-row">
-          <div class="trial-field">
-            <label for="tf-name">Full name</label>
-            <input id="tf-name" type="text" placeholder="Dr. Jane Doe" required>
-          </div>
-          <div class="trial-field">
-            <label for="tf-email">Email</label>
-            <input id="tf-email" type="email" placeholder="you@practice.com" required>
-          </div>
+      <div class="ongoing-block">
+        <h4>Ongoing Costs</h4>
+        <div class="sub">After certification, you pay only for what you use.</div>
+        <div class="ongoing-row">
+          <span class="ongoing-label">Per-assessment licensing — for each client you assess</span>
+          <span class="ongoing-price">$15–25 / client</span>
         </div>
-        <div class="trial-row">
-          <div class="trial-field">
-            <label for="tf-credential">Credential / License</label>
-            <select id="tf-credential" required>
-              <option value="" disabled selected>Select…</option>
-              <option>LMFT — Marriage &amp; Family Therapist</option>
-              <option>LCSW — Clinical Social Worker</option>
-              <option>LPC / LPCC — Professional Counselor</option>
-              <option>PhD / PsyD — Psychologist</option>
-              <option>MD / DO — Physician / Psychiatrist</option>
-              <option>Neuropsychologist</option>
-              <option>Executive / Performance Coach</option>
-              <option>Educational / Developmental Specialist</option>
-              <option>Other licensed practitioner</option>
-            </select>
-          </div>
-          <div class="trial-field">
-            <label for="tf-region">License state / region</label>
-            <input id="tf-region" type="text" placeholder="e.g. California, USA" required>
-          </div>
+        <div class="ongoing-row">
+          <span class="ongoing-label">Annual recertification — continued access and framework updates</span>
+          <span class="ongoing-price">$197 / year</span>
         </div>
-        <div class="trial-field">
-          <label for="tf-setting">Practice setting</label>
-          <input id="tf-setting" type="text" placeholder="Private practice, group clinic, hospital, university…">
-        </div>
-        <div class="trial-field">
-          <label for="tf-notes">Anything you'd like us to know? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
-          <textarea id="tf-notes" rows="4" placeholder="Your clinical focus, client population, or questions about the trial…"></textarea>
-        </div>
-        <div>
-          <button type="submit" class="btn-cta" id="tfSubmit">Apply to Enroll</button>
-          <p id="tfMsg" class="trial-note" style="margin-top:14px;display:none;"></p>
-        </div>
-      </form>
+      </div>
     </div>
   </section>
 
@@ -355,9 +313,9 @@
 
   <section class="final-cta" id="inquire">
     <div class="section-inner">
-      <h2>Have questions before applying?</h2>
-      <p>For questions about the trial, clinical application, or fit for your practice, reach out directly. No obligation to proceed.</p>
-      <a href="mailto:Inquire@cognitionblocksllc.com?subject=CBI%20Clinical%20Validation%20Trial%20%E2%80%94%20Question" class="btn-cta">Ask a Question</a>
+      <h2>Schedule a 20-minute professional inquiry.</h2>
+      <p>For questions about fit, clinical application, licensing terms, or institutional arrangements. No obligation to proceed.</p>
+      <a href="mailto:Inquire@cognitionblocksllc.com?subject=Professional%20Inquiry%20%E2%80%94%20Parser%20Profile" class="btn-cta">Schedule Professional Inquiry</a>
     </div>
   </section>
 
@@ -386,45 +344,6 @@
         if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
-  </script>
-  <script>
-  (function () {
-    var form = document.getElementById('trialForm');
-    if (!form) return;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = document.getElementById('tfSubmit');
-      var msg = document.getElementById('tfMsg');
-      var payload = {
-        name: document.getElementById('tf-name').value.trim(),
-        email: document.getElementById('tf-email').value.trim(),
-        credential: document.getElementById('tf-credential').value,
-        region: document.getElementById('tf-region').value.trim(),
-        setting: document.getElementById('tf-setting').value.trim(),
-        notes: document.getElementById('tf-notes').value.trim()
-      };
-      btn.disabled = true; btn.textContent = 'Submitting…';
-      function showOk() {
-        msg.style.display = ''; msg.style.color = 'var(--blue-600)';
-        msg.textContent = 'Application received. We\'ll be in touch about the next enrollment cohort.';
-        btn.textContent = 'Submitted';
-      }
-      function fallbackMailto() {
-        var body = encodeURIComponent(
-          'Clinical Trial Enrollment\n\nName: ' + payload.name + '\nEmail: ' + payload.email +
-          '\nCredential: ' + payload.credential + '\nLicense region: ' + payload.region +
-          '\nPractice setting: ' + payload.setting + '\nNotes: ' + payload.notes);
-        window.location.href = 'mailto:Inquire@cognitionblocksllc.com?subject=' +
-          encodeURIComponent('Clinical Trial Enrollment — ' + payload.name) + '&body=' + body;
-        showOk();
-      }
-      fetch('/api/clinical-trial', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-      }).then(function (res) {
-        if (res && res.ok) { showOk(); } else { fallbackMailto(); }
-      }).catch(function () { fallbackMailto(); });
-    });
-  })();
   </script>  <script>
   (function(){
     var root=document.documentElement;
@@ -443,57 +362,6 @@
       });
     },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
     els.forEach(function(el){io.observe(el);});
-  })();
-  </script>
-
-  <script>
-  (function () {
-    var form = document.getElementById('trialForm');
-    if (!form) return;
-    var errBox = document.getElementById('trialError');
-    var submit = document.getElementById('trialSubmit');
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      errBox.hidden = true;
-      var data = {
-        name: form.name.value.trim(),
-        credentials: form.credentials.value.trim(),
-        email: form.email.value.trim(),
-        practiceType: form.practiceType.value,
-        message: form.message.value.trim()
-      };
-      if (!data.name || !data.credentials || !data.email || !data.practiceType) {
-        errBox.textContent = 'Please fill in your name, credentials, email, and practice type.';
-        errBox.hidden = false;
-        return;
-      }
-      submit.disabled = true;
-      var orig = submit.textContent;
-      submit.textContent = 'Submitting…';
-      try {
-        var res = await fetch('/api/clinical-trial', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        var out = await res.json().catch(function () { return {}; });
-        if (!res.ok || !out.ok) {
-          errBox.textContent = out.error || 'Something went wrong. Please email us instead.';
-          errBox.hidden = false;
-          submit.disabled = false;
-          submit.textContent = orig;
-          return;
-        }
-        form.hidden = true;
-        document.getElementById('trialSuccess').hidden = false;
-        document.getElementById('trialSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } catch (_) {
-        errBox.textContent = 'Network error. Please email Inquire@cognitionblocksllc.com.';
-        errBox.hidden = false;
-        submit.disabled = false;
-        submit.textContent = orig;
-      }
-    });
   })();
   </script>
 
