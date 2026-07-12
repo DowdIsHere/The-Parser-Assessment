@@ -5,9 +5,9 @@ the fix for the padded 7-0 that sat stale last week.*
 
 ## RUNNING TALLY  (refresh on every completion)
 - **STRONG:** 0–0
-- **LEAN (sep 5–12, the shaky zone):** 0–0
+- **LEAN (sep 5–12, the shaky zone):** 0–0  *(1 pending: Sinner)*
 - **FLAG:** 0–0
-- **PASS:** 0 abstentions · **NOT GRADABLE:** 0
+- **PASS:** 0 abstentions · **NOT GRADABLE:** many (Newport final + all Gstaad/Bastad qualifiers — below charting floor)
 
 ## PROTOCOL (fired up)
 1. Slate in → grade GRF (Gates / Rally / Flag) on every gradable match.
@@ -26,7 +26,13 @@ the fix for the padded 7-0 that sat stale last week.*
 ## MATCHES
 | date | match | card | verdict | rally sep | tag | RESULT | hit? |
 |---|---|---|---|---|---|---|---|
-| _(awaiting first slate)_ | | | | | | | |
+| 07-12 | **Sinner vs Zverev** (Wimbledon F) | FC-BAL | **LEAN Sinner** | 8.2 (owns axis) | 🌱 grass | _pending_ | — |
+| 07-12 | Fearnley vs Walton (Newport F) | — | NOT GRADABLE (uncharted) | — | — | — | — |
+| 07-12 | Gstaad quals (Tabur/Hüsler, Cinà/Hemery, Dietrich/Monteiro, Skatov/Sachko) | — | NOT GRADABLE (floor) | — | — | — | — |
+| 07-12 | Bastad quals (Krumich/Ferreira Silva, Bueno/Marcondes, +6 more) | — | NOT GRADABLE (floor) | — | — | — | — |
+
+*Note: Sinner is a heavy market favorite but the frame reads only 8.2 (LEAN) — Zverev's
+FC first-strike keeps the rally gap modest. Frame sees it tighter than the price.*
 
 ## NOTES CARRIED FROM LAST WEEK
 - STRONG reliability ~75% overall, **~76% at sep ≥ 12 with 100% of losses = grass/riser.**
