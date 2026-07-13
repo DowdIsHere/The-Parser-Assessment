@@ -5,9 +5,9 @@ the fix for the padded 7-0 that sat stale last week.*
 
 ## RUNNING TALLY  (refresh on every completion)
 - **STRONG:** 0–0
-- **LEAN (sep 5–12, the shaky zone):** 0–0  *(1 pending: Sinner)*
+- **LEAN (sep 5–12, the shaky zone):** **1–0**  ✓ Sinner (Wimbledon F)
 - **FLAG:** 0–0
-- **PASS:** 0 abstentions · **NOT GRADABLE:** many (Newport final + all Gstaad/Bastad qualifiers — below charting floor)
+- **PASS:** 0 abstentions · **NOT GRADABLE:** many (Newport final + all Gstaad/Bastad/Umag qualifiers & R32 — below charting floor)
 
 ## PROTOCOL (fired up)
 1. Slate in → grade GRF (Gates / Rally / Flag) on every gradable match.
@@ -26,7 +26,7 @@ the fix for the padded 7-0 that sat stale last week.*
 ## MATCHES
 | date | match | card | verdict | rally sep | tag | RESULT | hit? |
 |---|---|---|---|---|---|---|---|
-| 07-12 | **Sinner vs Zverev** (Wimbledon F) | FC-BAL | **LEAN Sinner** | 8.2 (owns axis) | 🌱 grass | _pending_ | — |
+| 07-12 | **Sinner vs Zverev** (Wimbledon F) | FC-BAL | **LEAN Sinner** | 8.2 (owns axis) | 🌱 grass | **Sinner W 3-1** | ✓ |
 | 07-12 | Fearnley vs Walton (Newport F) | — | NOT GRADABLE (uncharted) | — | — | — | — |
 | 07-12 | Gstaad quals (Tabur/Hüsler, Cinà/Hemery, Dietrich/Monteiro, Skatov/Sachko) | — | NOT GRADABLE (floor) | — | — | — | — |
 | 07-12 | Bastad quals (Krumich/Ferreira Silva, Bueno/Marcondes, +6 more) | — | NOT GRADABLE (floor) | — | — | — | — |
