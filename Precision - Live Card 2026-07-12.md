@@ -33,6 +33,14 @@ the fix for the padded 7-0 that sat stale last week.*
 
 *Note: Sinner is a heavy market favorite but the frame reads only 8.2 (LEAN) — Zverev's
 FC first-strike keeps the rally gap modest. Frame sees it tighter than the price.*
+*LIVE UPDATE: it played out as a war — Zverev took set 1 in a breaker, two of first three
+sets to tiebreaks; Sinner led 2-1. LEAN texture (close, not a cakewalk) confirmed live.
+AWAITING FINAL SCORE to reconcile.*
+
+| 07-13 | Gstaad/Bastad/Umag — R32 + qualifiers (clay) | — | NOT GRADABLE (0 of 14 singles) | — | 🎾 clay | — | — |
+
+*Mon 07-13: charted seeds (Sonego, Kecmanović, Munar, De Jong, Lajović) all drew UNCHARTED
+opponents → no matchup grades. Frame comes online deeper in these draws.*
 
 ## NOTES CARRIED FROM LAST WEEK
 - STRONG reliability ~75% overall, **~76% at sep ≥ 12 with 100% of losses = grass/riser.**
