@@ -42,6 +42,13 @@ AWAITING FINAL SCORE to reconcile.*
 *Mon 07-13: charted seeds (Sonego, Kecmanović, Munar, De Jong, Lajović) all drew UNCHARTED
 opponents → no matchup grades. Frame comes online deeper in these draws.*
 
+| 07-14 | Gstaad/Bastad/Umag — R32 (clay) | — | NOT GRADABLE (0 matchups) | — | 🎾 clay | — | — |
+
+*Tue 07-14: 14 charted seeds in action but ALL drew uncharted R32 opponents → 0 matchups.
+Watch R16+ where seeds meet — Bastad loaded (Dimitrov, Borges, Altmaier, Basilashvili,
+van de Zandschulp, Baez all gradable); Gstaad (Tsitsipas, Wawrinka, P.Martínez); Umag
+(Carreño Busta, Cecchinato, Marozsán, Molcan). First real clay reads likely Wed/Thu.*
+
 ## NOTES CARRIED FROM LAST WEEK
 - STRONG reliability ~75% overall, **~76% at sep ≥ 12 with 100% of losses = grass/riser.**
 - Every miss traced to two blind spots: **surface** (fixable now via native-surface calibration)
