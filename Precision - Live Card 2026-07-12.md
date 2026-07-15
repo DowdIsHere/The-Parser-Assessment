@@ -4,18 +4,21 @@ match completes — never before (no live-result claims), never batched later. T
 the fix for the padded 7-0 that sat stale last week.*
 
 ## RUNNING TALLY  (refresh on every completion)
-- **STRONG:** 0–0
-- **LEAN (sep 5–12, the shaky zone):** **1–0**  ✓ Sinner (Wimbledon F)
+- **STRONG:** 0–0  (no high-conviction calls yet)
 - **FLAG:** 0–0
-- **PASS:** 0 abstentions · **NOT GRADABLE:** many (Newport final + all Gstaad/Bastad/Umag qualifiers & R32 — below charting floor)
+- **PASS (abstentions):** 2 — Sinner/Zverev (sep 8.2), Borges/Dimitrov (sep 10.4). Both below the STRONG bar → frame stood down.
+- **NOT GRADABLE:** many (Newport final + all Gstaad/Bastad/Umag qualifiers & R32 — below charting floor)
+
+> **The frame emits ONLY three verdicts: STRONG / FLAG / PASS.** There is no "LEAN."
+> A sep that doesn't clear the STRONG bar is a PASS — the frame abstains, full stop.
+> (Removed the invented LEAN bucket 07-15: it let a stand-down masquerade as a soft call.)
 
 ## PROTOCOL (fired up)
 1. Slate in → grade GRF (Gates / Rally / Flag) on every gradable match.
-2. **Verdict logged immediately:**
-   - **STRONG** = rally sep **≥ 12**, favorite owns an axis, **no naked-OUFE-A door**.
-   - **LEAN** = sep **5–12** (backtest: this band went 0/3 at Wimbledon — treat as soft).
-   - **FLAG** = ≥moderate disruptor conflicts with the rally favorite → contested.
-   - **PASS** = sep < 5 / owns no axis (near-toss), OR not gradable.
+2. **Verdict logged immediately — one of THREE:**
+   - **STRONG** = rally sep **≥ 12**, favorite owns an axis, **no naked-OUFE-A door**, disrupt-safe. The only "act" call.
+   - **FLAG** = ≥moderate disruptor conflicts with the rally favorite → contested → resolves to PASS (labeled).
+   - **PASS** = anything that doesn't clear the STRONG bar (sep < 12, owns no axis, near-toss), OR not gradable. The frame abstains.
 3. **Result logged at completion** (final score in hand) → hit/miss → **refresh tally same turn.**
 4. **Blind-spot tag on every read:** 🌱 grass · 📈 riser/uncharted-form · 🩹 fit/injury/fatigue.
    These EXPLAIN a miss; they never override the verdict.
@@ -26,7 +29,7 @@ the fix for the padded 7-0 that sat stale last week.*
 ## MATCHES
 | date | match | card | verdict | rally sep | tag | RESULT | hit? |
 |---|---|---|---|---|---|---|---|
-| 07-12 | **Sinner vs Zverev** (Wimbledon F) | FC-BAL | **LEAN Sinner** | 8.2 (owns axis) | 🌱 grass | **Sinner W 3-1** | ✓ |
+| 07-12 | Sinner vs Zverev (Wimbledon F) | FC-BAL | **PASS** (sep 8.2 < STRONG bar) | 8.2 | 🌱 grass | Sinner W 3-1 | abstained — not scored |
 | 07-12 | Fearnley vs Walton (Newport F) | — | NOT GRADABLE (uncharted) | — | — | — | — |
 | 07-12 | Gstaad quals (Tabur/Hüsler, Cinà/Hemery, Dietrich/Monteiro, Skatov/Sachko) | — | NOT GRADABLE (floor) | — | — | — | — |
 | 07-12 | Bastad quals (Krumich/Ferreira Silva, Bueno/Marcondes, +6 more) | — | NOT GRADABLE (floor) | — | — | — | — |
@@ -43,7 +46,7 @@ AWAITING FINAL SCORE to reconcile.*
 opponents → no matchup grades. Frame comes online deeper in these draws.*
 
 | 07-14 | Gstaad/Bastad/Umag — R32 (clay) | — | NOT GRADABLE (0 matchups) | — | 🎾 clay | — | — |
-| 07-15 | **Borges vs Dimitrov** (Bastad R16) | BAL-BAL | **LEAN Dimitrov** | 10.4 (owns axis) | 🎾 clay · slice muted on clay · Dimitrov NOT injured/NOT rusty — playing decently (Wimb R16, Mallorca QF, won R1); #164 is a LAGGING ranking · Borges = defending Bastad champ · market Borges 65% | _pending_ | — |
+| 07-15 | Borges vs Dimitrov (Bastad R16) | BAL-BAL | **PASS** (sep 10.4 < STRONG bar) | 10.4 | 🎾 clay · Borges defending champ · market Borges 65% | Borges (rolling 6-4,3-0) | abstained — not scored |
 
 *Tue 07-14: 14 charted seeds in action but ALL drew uncharted R32 opponents → 0 matchups.
 Watch R16+ where seeds meet — Bastad loaded (Dimitrov, Borges, Altmaier, Basilashvili,
