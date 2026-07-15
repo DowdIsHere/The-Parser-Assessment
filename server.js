@@ -383,6 +383,35 @@ app.post('/api/couples/request', async (req, res) => {
     }
 });
 
+// ============================================================================
+// AI REPORT GENERATION (Claude Opus 4.5)
+// ============================================================================
+// Builds a finished Parser Profile report from a report template + the
+// Collision Logic Matrix. Deterministic architecture (labels, coordinates,
+// per-axis gaps) is computed server-side; Claude fills the template.
+let reportGenerator;
+try { reportGenerator = require('./lib/reportGenerator'); } catch (e) { console.warn('[report] generator unavailable:', e.message); }
+
+app.post('/api/report/generate', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ ok: false, error: 'Not authenticated.' });
+    if (!reportGenerator) return res.status(503).json({ ok: false, error: 'Report generator not available.' });
+
+    const { reportType, people, extra } = req.body || {};
+    if (!reportType || !people || typeof people !== 'object') {
+        return res.status(400).json({ ok: false, error: 'reportType and people are required.' });
+    }
+
+    try {
+        const result = await reportGenerator.generateReport({ reportType, people, extra });
+        console.log('[report/generate]', payload.email, '|', reportType, '|', result.markdown.length, 'chars');
+        res.json({ ok: true, ...result });
+    } catch (e) {
+        console.error('[report/generate] error:', e.message);
+        res.status(500).json({ ok: false, error: e.message || 'Report generation failed.' });
+    }
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
