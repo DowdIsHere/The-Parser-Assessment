@@ -43,6 +43,7 @@ AWAITING FINAL SCORE to reconcile.*
 opponents → no matchup grades. Frame comes online deeper in these draws.*
 
 | 07-14 | Gstaad/Bastad/Umag — R32 (clay) | — | NOT GRADABLE (0 matchups) | — | 🎾 clay | — | — |
+| 07-15 | **Borges vs Dimitrov** (Bastad R16) | BAL-BAL | **LEAN Dimitrov** | 10.4 (owns axis) | 🎾 clay · slice muted on clay · Dimitrov injury-hx | _pending_ | — |
 
 *Tue 07-14: 14 charted seeds in action but ALL drew uncharted R32 opponents → 0 matchups.
 Watch R16+ where seeds meet — Bastad loaded (Dimitrov, Borges, Altmaier, Basilashvili,
