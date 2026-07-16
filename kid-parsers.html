@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 27 Kid Parsers™ | Parser Profile</title>
+  <meta name="description" content="The 27 Parsers, in kid-friendly form — every child takes in the world through their own lens. Find the one that fits your kid.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-900:#211A12; --blue-700:#2E2419; --blue-600:#8A6D24;
+      --blue-500:#9A7B2E; --blue-400:#B8922A; --blue-100:#E8D9B0; --blue-50:#F3ECD9;
+      --text-primary:#1E1813; --text-secondary:#4A3F35; --text-muted:#8A7E6E;
+      --bg-page:#FAF7F0; --bg-card:#FFFDF9; --bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12); --border-strong:rgba(60,45,25,0.22);
+      --shadow-sm:0 1px 3px rgba(60,40,15,0.06); --shadow-md:0 6px 20px rgba(60,40,15,0.08); --shadow-lg:0 16px 40px rgba(60,40,15,0.12);
+      --amber:#D8B45E; --gold:#9A7B2E;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+      --font-mono:'IBM Plex Mono',monospace;
+      color-scheme:light;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-body);background:var(--bg-page);color:var(--text-primary);line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,0.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+    .h-inner{max-width:1120px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .wordmark{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text-primary);text-decoration:none;letter-spacing:-0.01em;}
+    .wordmark span{color:var(--gold);}
+    .h-links{display:flex;align-items:center;gap:20px;}
+    .h-links a{font-size:0.85rem;font-weight:600;color:var(--text-muted);text-decoration:none;}
+    .h-links a:hover{color:var(--gold);}
+    .h-links a.cta{background:var(--gold);color:#fff;padding:9px 18px;border-radius:8px;}
+    .h-links a.cta:hover{background:var(--blue-600);color:#fff;}
+
+    .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+    /* Hero */
+    .hero{text-align:center;padding:72px 24px 40px;}
+    .hero .eyebrow{font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--gold);margin-bottom:20px;}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2.6rem,6vw,4.2rem);font-weight:700;line-height:1.02;letter-spacing:-0.02em;margin-bottom:22px;}
+    .hero h1 em{font-style:italic;color:var(--gold);}
+    .hero p{font-size:1.15rem;color:var(--text-secondary);max-width:60ch;margin:0 auto;}
+
+    /* Lens metaphor intro */
+    .lens-intro{max-width:64ch;margin:28px auto 0;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px 30px;box-shadow:var(--shadow-sm);text-align:center;}
+    .lens-intro p{color:var(--text-secondary);font-size:1.02rem;}
+    .lens-intro strong{color:var(--text-primary);}
+
+    /* Group headers */
+    .group{margin-top:64px;}
+    .group-head{display:flex;align-items:baseline;gap:16px;padding-bottom:18px;border-bottom:2px solid var(--gold);margin-bottom:30px;flex-wrap:wrap;}
+    .group-name{font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-0.01em;}
+    .group-name em{font-style:italic;color:var(--gold);}
+    .group-desc{color:var(--text-muted);font-size:0.98rem;}
+    .group-tag{font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.16em;color:var(--gold);background:rgba(154,123,46,0.08);border:1px solid rgba(154,123,46,0.24);border-radius:999px;padding:5px 12px;align-self:center;}
+
+    /* Cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 24px 22px;box-shadow:var(--shadow-sm);transition:transform .16s,box-shadow .24s,border-color .2s;}
+    .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border-strong);}
+    .card .kidname{font-family:var(--font-display);font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px;}
+    .card .code{font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:14px;}
+    .card .tag{color:var(--text-secondary);font-size:1rem;line-height:1.55;font-family:var(--font-display);font-style:italic;font-size:1.12rem;}
+    .card .adult{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--text-muted);}
+    .card .adult b{color:var(--text-secondary);font-weight:600;}
+
+    /* CTA band */
+    .cta-band{margin:88px 0 0;background:var(--blue-900);border-radius:0;padding:72px 24px;text-align:center;}
+    .cta-band h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.05;margin-bottom:16px;}
+    .cta-band h2 em{font-style:italic;color:var(--amber);}
+    .cta-band p{color:rgba(255,255,255,0.8);font-family:var(--font-display);font-size:1.2rem;font-style:italic;max-width:52ch;margin:0 auto 34px;}
+    .cta-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--blue-900);font-weight:600;font-size:1rem;padding:16px 40px;border-radius:8px;text-decoration:none;transition:transform .15s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,0.18);}
+    .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.28);}
+    .cta-link{display:inline-block;margin-left:22px;color:rgba(255,255,255,0.82);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.35);padding-bottom:2px;}
+    .cta-link:hover{color:#fff;border-color:#fff;}
+
+    footer{background:var(--blue-900);color:rgba(255,255,255,0.55);padding:36px 24px;text-align:center;font-size:0.82rem;}
+    footer a{color:rgba(255,255,255,0.7);text-decoration:none;}
+
+    @media (max-width:560px){
+      .cta-link{display:block;margin:22px auto 0;width:max-content;}
+      .group-name{font-size:1.6rem;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="wordmark">Parser <span>Profile</span>™</a>
+      <div class="h-links">
+        <a href="/index.html">The 27</a>
+        <a href="/parents.html">For Parents</a>
+        <a href="/kids-assessment.html" class="cta">Kid Assessment</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Parser Profile™ · Kid Edition</div>
+      <h1>The 27 <em>Kid Parsers</em></h1>
+      <p>Every kid takes in the world a little differently — not in what they like or believe, but in what they notice <em>first</em>. That first notice is their lens. Here are all 27.</p>
+      <div class="lens-intro">
+        <p>Think of it like a camera. Some kids use a <strong>close-up lens</strong> — they see what's right here, in detail. Some use a <strong>wide-angle lens</strong> — they see the whole big picture. And some have an <strong>adjustable lens</strong> that zooms in and out. None is better. They're just different ways of seeing.</p>
+      </div>
+    </section>
+
+    <!-- Groups render here -->
+    <div id="groups"></div>
+  </div>
+
+  <div class="cta-band">
+    <h2>Which Parser is <em>your kid?</em></h2>
+    <p>The Kid Assessment finds your child's lens — and gives you language for the way they see, learn, and grow.</p>
+    <a href="/kids-assessment.html" class="cta-btn">Start the Kid Assessment →</a>
+    <a href="/parents.html" class="cta-link">Read the Parent Report</a>
+  </div>
+
+  <footer>
+    <p>Parser Profile™ — Kid Edition · Developed by J.D. Mercer · © 2026 <a href="https://cognitionblocksllc.com">Cognition Blocks LLC</a>.<br>Not a clinical, psychological, or developmental assessment.</p>
+  </footer>
+
+  <script>
+    // All 27 kid parsers — self-contained so the page never depends on the
+    // per-profile module graph loading. Grouped by the first word of the
+    // Parser code (Concrete / Balanced / Abstract) into the three lens types.
+    const KID_PARSERS = [
+      {kidName:"The Explorer", code:"Balanced • Future • Self", adult:"Actualized", tag:"The kid who's always leveling up"},
+      {kidName:"The Team Captain", code:"Abstract • Future • Other", adult:"Altruistic", tag:"The kid who dreams of making things better for everyone"},
+      {kidName:"The Friend", code:"Concrete • Present • Other", adult:"Attuned", tag:"The kid who feels how everyone's feeling"},
+      {kidName:"The Individual", code:"Balanced • Present • Self", adult:"Centered", tag:"The kid who stays calm and knows where they stand"},
+      {kidName:"The Rememberer", code:"Balanced • Past • Balanced", adult:"Coherent", tag:"The kid who remembers how things got the way they are"},
+      {kidName:"The Guide", code:"Balanced • Future • Other", adult:"Collaborative", tag:"The kid who sees what we could build together"},
+      {kidName:"The Maker", code:"Concrete • Present • Self", adult:"Embodied", tag:"The kid who learns by doing and feels things in their gut"},
+      {kidName:"The Connector", code:"Balanced • Present • Other", adult:"Empathetic", tag:"The kid who notices how everybody's feeling"},
+      {kidName:"The Balanced Thinker", code:"Balanced • Present • Balanced", adult:"Equanimous", tag:"The kid who stays calm when everyone else is freaking out"},
+      {kidName:"The Visionary", code:"Abstract • Future • Balanced", adult:"Foresighted", tag:"The kid who can see what's coming next"},
+      {kidName:"The Observer", code:"Concrete • Present • Balanced", adult:"Grounded", tag:"The kid who sees what's actually there"},
+      {kidName:"The Strategist", code:"Balanced • Future • Balanced", adult:"Harmonious", tag:"The kid who finds the way everybody wins"},
+      {kidName:"The Storyteller", code:"Abstract • Past • Other", adult:"Idealized", tag:"The kid who remembers the rules we promised"},
+      {kidName:"The Collector", code:"Balanced • Past • Self", adult:"Integrated", tag:"The kid who really thinks about who they are"},
+      {kidName:"The Builder", code:"Concrete • Future • Self", adult:"Intentional", tag:"The kid who's already building what others are still wishing for"},
+      {kidName:"The Inventor", code:"Abstract • Present • Self", adult:"Introspective", tag:"The kid who really understands their own mind"},
+      {kidName:"The Helper", code:"Abstract • Present • Other", adult:"Intuitive", tag:"The kid who can read the room"},
+      {kidName:"The Caretaker", code:"Concrete • Past • Other", adult:"Legacy", tag:"The kid who remembers and keeps the story"},
+      {kidName:"The Philosopher", code:"Abstract • Present • Balanced", adult:"Mindful", tag:"The kid who really notices what's happening right now"},
+      {kidName:"The Nurturer", code:"Balanced • Past • Other", adult:"Reconciled", tag:"The kid who remembers what happened to everybody"},
+      {kidName:"The Wise One", code:"Abstract • Past • Balanced", adult:"Reflective", tag:"The kid who figures it all out afterward"},
+      {kidName:"The Organizer", code:"Concrete • Future • Other", adult:"Reliable", tag:"The kid whose word you can always count on"},
+      {kidName:"The Planner", code:"Concrete • Future • Balanced", adult:"Resilient", tag:"The kid who's ready for what others don't see coming"},
+      {kidName:"The Craftsperson", code:"Concrete • Past • Balanced", adult:"Seasoned", tag:"The kid who's figured out how to do it right"},
+      {kidName:"The Artist", code:"Abstract • Past • Self", adult:"Sentimental", tag:"The kid who remembers how things felt"},
+      {kidName:"The Expert", code:"Concrete • Past • Self", adult:"Sharp", tag:"The kid who remembers what really happened"},
+      {kidName:"The Dreamer", code:"Abstract • Future • Self", adult:"Visionary", tag:"The kid who dreams up what could be"}
+    ];
+
+    const LENSES = [
+      {key:"Concrete", name:"Close-Up", desc:"Kids who see what's right here — the details, the real, the now.", tag:"Concrete Lens"},
+      {key:"Balanced", name:"Adjustable", desc:"Kids who zoom in and out — a bit of the details, a bit of the big picture.", tag:"Balanced Lens"},
+      {key:"Abstract", name:"Wide-Angle", desc:"Kids who see the whole big picture — ideas, patterns, and what could be.", tag:"Abstract Lens"}
+    ];
+
+    const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const firstWord = (code) => code.split('•')[0].trim();
+
+    function card(p){
+      return `<div class="card">
+        <div class="kidname">${esc(p.kidName)}</div>
+        <div class="code">${esc(p.code)}</div>
+        <div class="tag">${esc(p.tag)}</div>
+        <div class="adult">Grown-up Parser: <b>${esc(p.adult)}</b></div>
+      </div>`;
+    }
+
+    const container = document.getElementById('groups');
+    container.innerHTML = LENSES.map(lens => {
+      const members = KID_PARSERS
+        .filter(p => firstWord(p.code) === lens.key)
+        .sort((a,b) => a.kidName.localeCompare(b.kidName));
+      return `<section class="group">
+        <div class="group-head">
+          <div class="group-name"><em>${esc(lens.name)}</em> Lenses</div>
+          <span class="group-tag">${esc(lens.tag)}</span>
+          <div class="group-desc">${esc(lens.desc)}</div>
+        </div>
+        <div class="grid">${members.map(card).join('')}</div>
+      </section>`;
+    }).join('');
+  </script>
+</body>
+</html>
