@@ -169,10 +169,9 @@
 
     function card(p){
       return `<div class="card">
-        <div class="kidname">${esc(p.kidName)}</div>
+        <div class="kidname">${esc(p.adult)}</div>
         <div class="code">${esc(p.code)}</div>
         <div class="tag">${esc(p.tag)}</div>
-        <div class="adult">Grown-up Parser: <b>${esc(p.adult)}</b></div>
       </div>`;
     }
 
@@ -180,7 +179,7 @@
     container.innerHTML = LENSES.map(lens => {
       const members = KID_PARSERS
         .filter(p => firstWord(p.code) === lens.key)
-        .sort((a,b) => a.kidName.localeCompare(b.kidName));
+        .sort((a,b) => a.adult.localeCompare(b.adult));
       return `<section class="group">
         <div class="group-head">
           <div class="group-name"><em>${esc(lens.name)}</em> Lenses</div>
