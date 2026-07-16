@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 27 Kid Parsers™ | Parser Profile — Kid Edition</title>
+  <meta name="description" content="The 27 Parsers, in kid-friendly form — every child takes in the world through their own lens. Find the one that fits your kid.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
+      --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
+      --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
+      --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
+      --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
+      --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
+      --amber: #D8B45E;
+      --ink: #FAF7F0; --ink-soft: #F2ECE0; --ink-card: #FFFDF9;
+      --gold: #9A7B2E; --gold-bright: #B8922A; --gold-pale: #8A6D24;
+      --cream: #1E1813; --cream-dim: #4A3F35;
+      --rule: rgba(60,45,25,0.12); --rule-soft: rgba(60,45,25,0.07);
+      --text: #1E1813; --text-soft: #4A3F35;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 112.5%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 1rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .container-narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,247,240,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    .h-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo-lockup {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none;
+    }
+    .logo-img {
+      width: 38px; height: 38px;
+      border-radius: 6px;
+      object-fit: cover;
+      filter: brightness(0.9) contrast(1.1);
+    }
+    .logo-text .name {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--cream); letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .logo-text .sub {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      margin-top: 4px;
+    }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold-bright); }
+    nav a.cta {
+      background: var(--blue-500);
+      color: #fff; font-weight: 600;
+      padding: 9px 20px; border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    nav a.cta:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .nav-dd-caret { width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none; opacity: 0.65; transition: transform 0.25s ease; }
+    .nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-dd-menu {
+      position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 184px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-md); padding: 7px;
+      display: flex; flex-direction: column; gap: 1px;
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; z-index: 200;
+    }
+    .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .nav-dd-menu a {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: none;
+      color: var(--text-soft); padding: 10px 12px; border-radius: 8px; white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+    }
+    .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold-pale); }
+    [id^="group-"] { scroll-margin-top: 96px; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 120px 0 96px;
+      position: relative;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--amber);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 1px; background: var(--amber);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 500; line-height: 1.0;
+      letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic; font-weight: 500; color: var(--amber);
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: 1.2rem; line-height: 1.7;
+      color: rgba(255,255,255,0.78); max-width: 54ch;
+      font-style: italic; margin-bottom: 40px;
+    }
+    .hero-image-box {
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-image-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 18px,
+        rgba(255,255,255,0.035) 18px, rgba(255,255,255,0.035) 36px
+      );
+    }
+    .img-placeholder {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      position: relative;
+    }
+    .hero-image-box .img-placeholder { color: rgba(255,255,255,0.5); }
+    .hero-image-box img, .group-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; position: relative; z-index: 1;
+    }
+    .hero-stats {
+      display: flex; gap: 40px;
+    }
+    .stat-item .num {
+      font-family: var(--font-display);
+      font-size: 2.8rem; font-weight: 500;
+      color: #fff; line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-item .label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+    }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--ink-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 64px 0;
+    }
+    .intro-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 500; line-height: 1.55;
+      color: var(--cream); max-width: 80ch;
+      letter-spacing: -0.01em;
+    }
+    .intro-text em { font-style: italic; color: var(--gold-pale); }
+
+    /* ── SECTION STRUCTURE ── */
+    .section { padding: 96px 0; }
+    .section-header {
+      display: flex; align-items: baseline;
+      gap: 24px; margin-bottom: 64px;
+    }
+    .section-num {
+      font-family: var(--font-display);
+      font-size: 5rem; font-weight: 500;
+      color: rgba(184,146,42,0.22);
+      line-height: 1; letter-spacing: -0.04em;
+      flex-shrink: 0;
+    }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 500; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--cream);
+    }
+    .section-title em { font-style: italic; color: var(--gold-pale); }
+    .section-sub {
+      font-size: 1rem; color: var(--text-soft);
+      line-height: 1.75; max-width: 62ch;
+      margin-top: 16px;
+    }
+
+    /* ── PARSER GROUP HEADER ── */
+    .group-header {
+      padding: 48px 0 40px;
+      border-top: 1px solid var(--rule);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: end; margin-bottom: 40px;
+    }
+    .group-header:first-of-type { border-top: none; }
+    .group-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; letter-spacing: -0.025em;
+      color: var(--cream); line-height: 1;
+    }
+    .group-name em { font-style: italic; color: var(--gold-pale); }
+    .group-desc {
+      font-size: 0.95rem; color: var(--text-soft);
+      line-height: 1.7; max-width: 48ch;
+      padding-bottom: 8px;
+    }
+    .group-image {
+      aspect-ratio: 16/7; background: var(--ink-card);
+      border: 1px solid var(--rule); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 48px; position: relative; overflow: hidden;
+    }
+    .group-image::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 14px,
+        rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
+      );
+    }
+
+    /* ── PARSER CAROUSEL ── */
+    .parser-splide { margin-top: 8px; padding-bottom: 12px; }
+    .parser-splide .splide__slide { height: auto; }
+    .parser-splide .splide__arrow { background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); opacity: 1; }
+    .parser-splide .splide__arrow:disabled { opacity: 0.3; }
+    .parser-splide .splide__arrow svg { fill: var(--blue-500); }
+    .parser-splide .splide__pagination__page.is-active { background: var(--blue-400); }
+    .parser-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px 28px;
+      position: relative;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: default;
+      height: 100%;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .parser-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .parser-card:hover { background: var(--blue-50); border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .parser-card:hover::before { opacity: 1; }
+    .parser-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 500;
+      color: rgba(184,146,42,0.16);
+      line-height: 1; letter-spacing: -0.04em;
+      margin-bottom: -8px; display: block;
+      transition: color 0.25s;
+    }
+    .parser-card:hover .parser-num { color: rgba(184,146,42,0.34); }
+    .parser-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 4px; line-height: 1.15;
+    }
+    .parser-aka {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-style: italic;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .parser-tagline {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-style: italic;
+      color: var(--gold-pale); margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .parser-body {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 96px 0;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(184,146,42,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; letter-spacing: -0.025em;
+      color: #fff; margin-bottom: 20px;
+      position: relative;
+    }
+    .cta-band h2 em { font-style: italic; color: var(--amber); }
+    .cta-band p {
+      font-family: var(--font-display);
+      font-size: 1.2rem; color: rgba(255,255,255,0.78);
+      line-height: 1.7; max-width: 52ch; font-style: italic;
+      margin: 0 auto 40px; position: relative;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff;
+      color: var(--blue-900); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .cta-btn:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+    .cta-link {
+      display: inline-block; margin-left: 22px;
+      color: rgba(255,255,255,0.82); font-family: var(--font-body);
+      font-size: 0.98rem; font-weight: 500; text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .cta-link:hover { color: #fff; border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border);
+      background: var(--blue-900);
+      color: rgba(255,255,255,0.6);
+    }
+    .f-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 24px; flex-wrap: wrap;
+    }
+    .f-brand { display: flex; align-items: center; gap: 12px; }
+    .f-logo { width: 32px; height: 32px; border-radius: 5px; object-fit: cover; }
+    .f-name {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; color: #fff;
+    }
+    .f-meta {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.5); line-height: 1.9; text-align: right;
+    }
+    .f-meta a { color: var(--blue-100); text-decoration: none; }
+    .f-meta a:hover { color: #fff; }
+    .f-disclaimer {
+      width: 100%; margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.4); line-height: 1.8;
+      text-align: center;
+    }
+
+    /* ── MOTION ── */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js-anim [data-reveal] {
+        opacity: 0; transform: translateY(26px); filter: blur(6px);
+        transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
+                    transform .85s cubic-bezier(0.22,0.61,0.36,1),
+                    filter .85s cubic-bezier(0.22,0.61,0.36,1);
+        will-change: opacity, transform;
+      }
+      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+      a[class*="btn"]:active, .cta-btn:active, nav a.cta:active { transform: translateY(-1px) scale(0.97); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-image-box { aspect-ratio: 16/9; }
+      .group-header { grid-template-columns: 1fr; gap: 20px; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      .container-narrow { padding: 0 20px; }
+    }
+    @media (max-width: 560px) {
+      .cta-link { display: block; margin: 22px auto 0; width: max-content; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
+  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo-lockup">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="logo-img">
+        <div class="logo-text">
+          <div class="name">J.D. Mercer</div>
+          <div class="sub">Cognition Blocks Intelligence</div>
+        </div>
+      </a>
+      <nav id="siteNav">
+        <div class="nav-dd">
+          <a href="/index.html" class="nav-dd-top">The 27 <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/index.html#group-closeup">Close-Up</a>
+            <a href="/index.html#group-adjustable">Adjustable</a>
+            <a href="/index.html#group-wideangle">Wide-Angle</a>
+            <a href="/kid-parsers.html">Kid Parsers</a>
+          </div>
+        </div>
+        <a href="/individual.html">Individual</a>
+        <div class="nav-dd">
+          <a href="/couples.html" class="nav-dd-top">Relationships <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/couples.html">Couples</a>
+            <a href="/couples.html">Social</a>
+            <a href="/parent-login.html">Children</a>
+          </div>
+        </div>
+        <a href="/signin.html">Sign In</a>
+        <a href="/kids-assessment.html" class="cta">Kid Assessment</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-scrim"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Parser Frame™ · Kid Edition</div>
+        <h1>The <em>27</em><br>Kid Parsers.</h1>
+        <p class="hero-sub">Every kid takes in the world a little differently — not in what they like or believe, but in what they notice first. That first notice is their lens. Here are all 27.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="num">3</div>
+            <div class="label">Lens Types</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">27</div>
+            <div class="label">Kid Parsers</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">1</div>
+            <div class="label">is your kid</div>
+          </div>
+        </div>
+        <div class="hero-actions" style="margin-top:36px;">
+          <a href="/kids-assessment.html" class="cta-btn">Start the Kid Assessment →</a>
+        </div>
+      </div>
+      <div class="hero-image-box">
+        <!-- IMAGE PLACEHOLDER: Kid Parsers hero image -->
+        <span class="img-placeholder">Kid Parsers · Hero Image</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <div class="container-narrow">
+      <p class="intro-text">Think of it like a camera. Some kids use a <em>close-up lens</em> — they see what's right here, in detail. Some use a <em>wide-angle lens</em> — they see the whole big picture. And some have an <em>adjustable lens</em> that zooms in and out. None is better. They're just different ways of seeing.</p>
+    </div>
+  </div>
+
+  <!-- ═══ THE 27 KID PARSERS ═══ -->
+  <section class="section" id="parsers">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">The Kid Parser Profiles</div>
+          <h2 class="section-title">Grouped by how they<br>take things <em>in.</em></h2>
+          <p class="section-sub">There's no better or worse one to be — it's just the angle your kid is standing at. Once you can see theirs, a lot of everyday friction starts to make sense.</p>
+        </div>
+      </div>
+
+      <!-- GROUP 1: CLOSE-UP LENSES -->
+      <div class="group-header" id="group-closeup">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:12px;">Group One</div>
+          <div class="group-name"><em>Close-Up</em><br>Lenses</div>
+        </div>
+        <div class="group-desc">Kids who trust what's right in front of them — what they've done, what they can see, and what they know from real experience.</div>
+      </div>
+      <div class="group-image">
+        <!-- IMAGE PLACEHOLDER: Close-Up Lenses kids -->
+        <span class="img-placeholder">Close-Up Lenses · Group Image</span>
+      </div>
+
+      <div class="splide parser-splide" aria-label="Close-Up Kid Parser profiles">
+        <div class="splide__track">
+          <div class="splide__list">
+        <div class="parser-card splide__slide">
+          <span class="parser-num">01</span>
+          <h3 class="parser-name">Sharp</h3>
+          <div class="parser-aka">aka The Expert</div>
+          <div class="parser-tagline">The kid who remembers what really happened.</div>
+          <p class="parser-body">This kid trusts what they've lived through. When someone gives advice, they're already checking it against their own experience — what worked, what didn't, and exactly why. They remember the specifics. That precision isn't stubbornness — it's earned.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">02</span>
+          <h3 class="parser-name">Seasoned</h3>
+          <div class="parser-aka">aka The Craftsperson</div>
+          <div class="parser-tagline">The kid who's figured out how to do it right.</div>
+          <p class="parser-body">This kid has done the reps. While others are still guessing, they've tested and refined until they know what holds up. Expertise for them isn't a grade — it's accumulated proof. They're the one who remembers why something works, long after everyone else just accepts it.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">03</span>
+          <h3 class="parser-name">Legacy</h3>
+          <div class="parser-aka">aka The Caretaker</div>
+          <div class="parser-tagline">The kid who remembers and keeps the story.</div>
+          <p class="parser-body">Someone has to remember. This kid holds the names, the contributions, the specific moments when things changed — the shared history others forget too easily. This isn't nostalgia; it's stewardship. They understand that what exists now was built by people, and honoring that matters.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">04</span>
+          <h3 class="parser-name">Embodied</h3>
+          <div class="parser-aka">aka The Maker</div>
+          <div class="parser-tagline">The kid who learns by doing and feels things in their gut.</div>
+          <p class="parser-body">This kid's body knows before their mind catches up. They register the subtle signal — the tension, the shift, the "something's off" — before anyone else sees it. Reality for them isn't abstract; it's what they're physically experiencing right now.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">05</span>
+          <h3 class="parser-name">Grounded</h3>
+          <div class="parser-aka">aka The Observer</div>
+          <div class="parser-tagline">The kid who sees what's actually there.</div>
+          <p class="parser-body">This kid sees through the noise. While others complicate, they notice what's actually happening — the obvious thing no one is addressing. Simplicity isn't limitation for them; it's clarity. And yes, it can be frustrating when everyone else needs three conversations to reach what they saw in five minutes.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">06</span>
+          <h3 class="parser-name">Attuned</h3>
+          <div class="parser-aka">aka The Friend</div>
+          <div class="parser-tagline">The kid who feels how everyone's feeling.</div>
+          <p class="parser-body">This kid reads rooms before anyone speaks. The shifted posture, the micro-expression, the energy change when tension enters — they catch it all. This isn't a skill they developed; it's just how they experience being around people.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">07</span>
+          <h3 class="parser-name">Intentional</h3>
+          <div class="parser-aka">aka The Builder</div>
+          <div class="parser-tagline">The kid who's already building what others are still wishing for.</div>
+          <p class="parser-body">This kid is already building something that won't matter for months. While others react to what's happening, they're three steps ahead, constructing conditions for a future they've clearly pictured. Life isn't something that happens to them — it's something they're deliberately assembling.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">08</span>
+          <h3 class="parser-name">Resilient</h3>
+          <div class="parser-aka">aka The Planner</div>
+          <div class="parser-tagline">The kid who's ready for what others don't see coming.</div>
+          <p class="parser-body">This kid runs scenarios. Not anxiously — practically. They want to know what could go wrong so they can have a plan before it does. Preparation isn't worry for them; it's care expressed in advance. When things go sideways, they're the one who already thought about this.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">09</span>
+          <h3 class="parser-name">Reliable</h3>
+          <div class="parser-aka">aka The Organizer</div>
+          <div class="parser-tagline">The kid whose word you can always count on.</div>
+          <p class="parser-body">This kid remembers what they promised. Long after others have forgotten they asked, they're still tracking the commitment. Following through isn't a burden — it's how they show that their word means something. Trust is built in the details of delivery.</p>
+        </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP 2: ADJUSTABLE LENSES -->
+      <div class="group-header" id="group-adjustable" style="margin-top:64px;">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:12px;">Group Two</div>
+          <div class="group-name"><em>Adjustable</em><br>Lenses</div>
+        </div>
+        <div class="group-desc">Kids who shift with the moment — past or future, themselves or others, the practical or the big picture, depending on what the situation calls for.</div>
+      </div>
+      <div class="group-image">
+        <!-- IMAGE PLACEHOLDER: Adjustable Lenses kids -->
+        <span class="img-placeholder">Adjustable Lenses · Group Image</span>
+      </div>
+
+      <div class="splide parser-splide" aria-label="Adjustable Kid Parser profiles">
+        <div class="splide__track">
+          <div class="splide__list">
+        <div class="parser-card splide__slide">
+          <span class="parser-num">10</span>
+          <h3 class="parser-name">Integrated</h3>
+          <div class="parser-aka">aka The Collector</div>
+          <div class="parser-tagline">The kid who really thinks about who they are.</div>
+          <p class="parser-body">This kid's insights come from synthesis. They learn more from reflecting on what they've lived through than from any outside source — connecting their own experiences into patterns that explain more than the individual moments ever could. Understanding, for them, is an inside job.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">11</span>
+          <h3 class="parser-name">Coherent</h3>
+          <div class="parser-aka">aka The Rememberer</div>
+          <div class="parser-tagline">The kid who remembers how things got the way they are.</div>
+          <p class="parser-body">This kid sees the threads. Where others experience events as disconnected, they see the continuity — how now relates to then, how patterns repeat with variation. Making sense of the present requires understanding the story that led here.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">12</span>
+          <h3 class="parser-name">Reconciled</h3>
+          <div class="parser-aka">aka The Nurturer</div>
+          <div class="parser-tagline">The kid who remembers what happened to everybody.</div>
+          <p class="parser-body">This kid witnesses what others want to move past. Group histories live in them — who contributed what, how decisions were made, what was lost along the way. Healing isn't about forgetting; it's about truly seeing what happened so that moving forward doesn't mean pretending it didn't.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">13</span>
+          <h3 class="parser-name">Centered</h3>
+          <div class="parser-aka">aka The Individual</div>
+          <div class="parser-tagline">The kid who stays calm and knows where they stand.</div>
+          <p class="parser-body">This kid knows when they're off before anyone else notices. There's an internal anchor that doesn't depend on what's happening around them — a stable point they can return to when things get turbulent. Their presence comes from that center.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">14</span>
+          <h3 class="parser-name">Equanimous</h3>
+          <div class="parser-aka">aka The Balanced Thinker</div>
+          <div class="parser-tagline">The kid who stays calm when everyone else is freaking out.</div>
+          <p class="parser-body">People call this kid calm. They'd say they're just not adding extra. What's happening is already happening — reacting to it doesn't change it, just creates more turbulence. This isn't detachment; it's efficiency. Most drama is optional. They've simply opted out.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">15</span>
+          <h3 class="parser-name">Empathetic</h3>
+          <div class="parser-aka">aka The Connector</div>
+          <div class="parser-tagline">The kid who notices how everybody's feeling.</div>
+          <p class="parser-body">This kid feels the room shift before anyone names it. Emotional undercurrents register in them like weather changes — present, unmistakable, worth attending to. Their presence creates a container for what others are experiencing, sometimes before they've fully processed their own response.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">16</span>
+          <h3 class="parser-name">Actualized</h3>
+          <div class="parser-aka">aka The Explorer</div>
+          <div class="parser-tagline">The kid who's always leveling up.</div>
+          <p class="parser-body">The person this kid is becoming feels more real than who they are today. They live in the gap between current self and possible self — and that gap energizes rather than discourages them. Growth isn't a goal; it's the medium they move through.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">17</span>
+          <h3 class="parser-name">Harmonious</h3>
+          <div class="parser-aka">aka The Strategist</div>
+          <div class="parser-tagline">The kid who finds the way everybody wins.</div>
+          <p class="parser-body">This kid sees the optimization everyone else misses. Systems could work better — not theoretically, but obviously, practically, if anyone would just adjust the friction points. This isn't criticism; it's perception. The improvements are right there.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">18</span>
+          <h3 class="parser-name">Collaborative</h3>
+          <div class="parser-aka">aka The Guide</div>
+          <div class="parser-tagline">The kid who sees what we could build together.</div>
+          <p class="parser-body">This kid gets excited about collective potential. What could groups accomplish if they actually aligned? The possibility energizes them — and the waste when they don't frustrates them equally. Building something together isn't just a strategy; it's the point.</p>
+        </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP 3: WIDE-ANGLE LENSES -->
+      <div class="group-header" id="group-wideangle" style="margin-top:64px;">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:12px;">Group Three</div>
+          <div class="group-name"><em>Wide-Angle</em><br>Lenses</div>
+        </div>
+        <div class="group-desc">Kids who naturally see the bigger picture — the patterns, the connections, and where things are heading, not just what's right in front of them.</div>
+      </div>
+      <div class="group-image">
+        <!-- IMAGE PLACEHOLDER: Wide-Angle Lenses kids -->
+        <span class="img-placeholder">Wide-Angle Lenses · Group Image</span>
+      </div>
+
+      <div class="splide parser-splide" aria-label="Wide-Angle Kid Parser profiles">
+        <div class="splide__track">
+          <div class="splide__list">
+        <div class="parser-card splide__slide">
+          <span class="parser-num">19</span>
+          <h3 class="parser-name">Sentimental</h3>
+          <div class="parser-aka">aka The Artist</div>
+          <div class="parser-tagline">The kid who remembers how things felt.</div>
+          <p class="parser-body">Feelings are this kid's archive. They remember the emotional texture of experiences more vividly than the facts — and those feelings aren't behind them. They're layered into how they perceive today, still coloring everything. The past isn't something they visit; it's something they carry.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">20</span>
+          <h3 class="parser-name">Reflective</h3>
+          <div class="parser-aka">aka The Wise One</div>
+          <div class="parser-tagline">The kid who figures it all out afterward.</div>
+          <p class="parser-body">Understanding comes after for this kid. They make sense of things in hindsight — not because they're slow, but because meaning emerges from distance. The immediate moment is data; the reflection is insight. They see what something meant long after everyone else has moved on.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">21</span>
+          <h3 class="parser-name">Idealized</h3>
+          <div class="parser-aka">aka The Storyteller</div>
+          <div class="parser-tagline">The kid who remembers the rules we promised.</div>
+          <p class="parser-body">This kid holds certain standards as sacred — not blindly, but because they see what they represent. Principles earned their place, and abandoning them isn't progress; it's forgetting. They're the keeper of what was figured out, the reminder that some things were decided for good reason.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">22</span>
+          <h3 class="parser-name">Introspective</h3>
+          <div class="parser-aka">aka The Inventor</div>
+          <div class="parser-tagline">The kid who really understands their own mind.</div>
+          <p class="parser-body">This kid has been told they "think too much" — and wondered what others do with all that unexamined experience. Their attention turns inward naturally, mapping the territory of their own mind. This isn't overthinking; it's data collection about the instrument through which they experience everything else.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">23</span>
+          <h3 class="parser-name">Mindful</h3>
+          <div class="parser-aka">aka The Philosopher</div>
+          <div class="parser-tagline">The kid who really notices what's happening right now.</div>
+          <p class="parser-body">This kid notices the texture of experience itself. Where others are lost in content, they perceive the quality of the moment — its particular character, this awareness, this configuration of attention. Presence isn't a practice for them; it's what they naturally do.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">24</span>
+          <h3 class="parser-name">Intuitive</h3>
+          <div class="parser-aka">aka The Helper</div>
+          <div class="parser-tagline">The kid who can read the room.</div>
+          <p class="parser-body">This kid knows how people feel about each other before anyone has said anything. The unspoken dynamics are visible to them — who's aligned, who's in tension, who's pretending. They're just picking up on signals everyone else is sending and missing.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">25</span>
+          <h3 class="parser-name">Visionary</h3>
+          <div class="parser-aka">aka The Dreamer</div>
+          <div class="parser-tagline">The kid who dreams up what could be.</div>
+          <p class="parser-body">This kid sees where things are heading before anyone else notices anything changing. Patterns extend forward in their mind naturally — not as worry, but as perception. They're already living in a future others haven't imagined yet.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">26</span>
+          <h3 class="parser-name">Foresighted</h3>
+          <div class="parser-aka">aka The Visionary</div>
+          <div class="parser-tagline">The kid who can see what's coming next.</div>
+          <p class="parser-body">This kid perceives trajectories. Not predictions — something more like seeing the shape of what's emerging before it fully arrives. This isn't prophecy; it's noticing where things are headed before the trend is obvious. They're often right, which is useful. They're often early, which is frustrating.</p>
+        </div>
+        <div class="parser-card splide__slide">
+          <span class="parser-num">27</span>
+          <h3 class="parser-name">Altruistic</h3>
+          <div class="parser-aka">aka The Team Captain</div>
+          <div class="parser-tagline">The kid who dreams of making things better for everyone.</div>
+          <p class="parser-body">This kid thinks in systems and generations. Individual outcomes matter less than collective trajectory — where are we heading, not just where am I going. They're playing a longer game. The beneficiaries of their thinking may not even be born yet.</p>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="container">
+      <h2>Which Parser is<br><em>your kid?</em></h2>
+      <p>The Kid Assessment finds your child's lens — and gives you language for the way they see, learn, and grow.</p>
+      <a href="/kids-assessment.html" class="cta-btn">Start the Kid Assessment →</a>
+      <a href="/parents.html" class="cta-link">Read the Parent Report</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-inner">
+      <div class="f-brand">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="f-logo">
+        <span class="f-name">J.D. Mercer</span>
+      </div>
+      <div class="f-meta">
+        Parser Frame™ · Kid Edition<br>
+        Cognition Blocks Intelligence Framework<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
+        <a href="/kids-assessment.html">Kid Assessment →</a>
+      </div>
+      <div class="f-disclaimer">
+        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · Not a psychological or developmental assessment · © 2025–2026 Cognition Blocks LLC
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll reveal -->
+  <script>
+  (function(){
+    var root=document.documentElement;
+    if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
+    var sel='.hero h1,.hero-sub,.hero-eyebrow,.hero-stats,.hero-actions,.section-header,.group-header,.group-image,.cta-band h2,.cta-band p,.cta-btn,.intro-text,.section-title,.section-sub';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    if(!els.length)return;
+    els.forEach(function(el){el.setAttribute('data-reveal','');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var t=e.target,p=t.parentNode,i=p?[].indexOf.call(p.children,t):0;
+          t.style.transitionDelay=(Math.min(i,6)*60)+'ms';
+          t.classList.add('in');io.unobserve(t);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+  })();
+  </script>
+
+  <!-- Splide carousel -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof Splide === 'undefined') return;
+      document.querySelectorAll('.parser-splide').forEach(function (el) {
+        new Splide(el, {
+          perPage: 3,
+          perMove: 1,
+          gap: '20px',
+          breakpoints: {
+            768: { perPage: 1 }
+          }
+        }).mount();
+      });
+    });
+  </script>
+
+  <script src="/mobile-nav.js" defer></script>
+</body>
+</html>

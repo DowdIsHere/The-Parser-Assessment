@@ -383,6 +383,35 @@ app.post('/api/couples/request', async (req, res) => {
     }
 });
 
+// ============================================================================
+// AI REPORT GENERATION (Claude Opus 4.5)
+// ============================================================================
+// Builds a finished Parser Profile report from a report template + the
+// Collision Logic Matrix. Deterministic architecture (labels, coordinates,
+// per-axis gaps) is computed server-side; Claude fills the template.
+let reportGenerator;
+try { reportGenerator = require('./lib/reportGenerator'); } catch (e) { console.warn('[report] generator unavailable:', e.message); }
+
+app.post('/api/report/generate', async (req, res) => {
+    const payload = getAuthUser(req);
+    if (!payload) return res.status(401).json({ ok: false, error: 'Not authenticated.' });
+    if (!reportGenerator) return res.status(503).json({ ok: false, error: 'Report generator not available.' });
+
+    const { reportType, people, extra } = req.body || {};
+    if (!reportType || !people || typeof people !== 'object') {
+        return res.status(400).json({ ok: false, error: 'reportType and people are required.' });
+    }
+
+    try {
+        const result = await reportGenerator.generateReport({ reportType, people, extra });
+        console.log('[report/generate]', payload.email, '|', reportType, '|', result.markdown.length, 'chars');
+        res.json({ ok: true, ...result });
+    } catch (e) {
+        console.error('[report/generate] error:', e.message);
+        res.status(500).json({ ok: false, error: e.message || 'Report generation failed.' });
+    }
+});
+
 // Static files served AFTER the protected route above
 app.use(express.static('.'));
 
@@ -897,6 +926,12 @@ app.post('/api/inquire', async (req, res) => {
 // PROMO CODE VALIDATION
 // ============================================================================
 
+// Parse a promo env var into a list of uppercased codes. Accepts one code or
+// several separated by commas, e.g. "DONALD10OFF, TELLY10OFF".
+function parsePromoCodes(v) {
+    return String(v || '').split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+}
+
 app.post('/api/validate-promo', (req, res) => {
     const { code } = req.body;
 
@@ -904,17 +939,20 @@ app.post('/api/validate-promo', (req, res) => {
         return res.status(400).json({ success: false, error: 'No promo code provided' });
     }
 
-    const promoFree = process.env.PROMO_FREE || '';
-    const promoDiscount = process.env.PROMO_DISCOUNT || '';
+    const freeCodes = parsePromoCodes(process.env.PROMO_FREE);
+    const discountCodes = parsePromoCodes(process.env.PROMO_DISCOUNT);
     const upperCode = code.trim().toUpperCase();
 
-    if (promoFree && upperCode === promoFree.toUpperCase()) {
+    if (freeCodes.includes(upperCode)) {
         return res.json({ success: true, type: 'free', discount: 100, newAmount: 0 });
     }
 
-    if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-        const newAmount = Math.round(2900 * 0.85); // 15% off $29.00
-        return res.json({ success: true, type: 'discount', discount: 15, newAmount });
+    if (discountCodes.includes(upperCode)) {
+        // Fixed-dollar discount. Base price and $-off are both Railway-configurable.
+        const base = parseInt(process.env.PRICE_AMOUNT, 10) || 2000;       // cents ($20.00)
+        const off  = parseInt(process.env.PROMO_DISCOUNT_AMOUNT, 10) || 1000; // cents ($10.00)
+        const newAmount = Math.max(0, base - off);
+        return res.json({ success: true, type: 'discount', discountAmount: off, newAmount });
     }
 
     res.json({ success: false, error: 'Invalid promo code' });
@@ -930,19 +968,20 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 2900; // $29.00 in cents
+        let amount = parseInt(process.env.PRICE_AMOUNT, 10) || 2000; // $20.00 in cents
         if (promoCode) {
-            const promoFree = process.env.PROMO_FREE || '';
-            const promoDiscount = process.env.PROMO_DISCOUNT || '';
+            const freeCodes = parsePromoCodes(process.env.PROMO_FREE);
+            const discountCodes = parsePromoCodes(process.env.PROMO_DISCOUNT);
             const upperCode = promoCode.trim().toUpperCase();
 
-            if (promoFree && upperCode === promoFree.toUpperCase()) {
+            if (freeCodes.includes(upperCode)) {
                 // Free promo should not create a payment intent
                 return res.json({ success: true, free: true });
             }
 
-            if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(2900 * 0.85); // 15% off
+            if (discountCodes.includes(upperCode)) {
+                const off = parseInt(process.env.PROMO_DISCOUNT_AMOUNT, 10) || 1000; // $10.00 off
+                amount = Math.max(0, amount - off);
             }
         }
 

@@ -81,6 +81,18 @@
     .rcard .remedy{color:var(--text-primary);}
     .rcard .remedy strong{color:var(--accent-strong);}
     .cnum{font-family:var(--font-display);font-size:1.1rem;color:var(--accent);font-weight:700;margin-bottom:4px;}
+    /* Dimension bars */
+    .dim{padding:18px 0;border-top:1px solid var(--border);}
+    .dim:first-of-type{border-top:none;padding-top:8px;}
+    .dim-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
+    .dim-name{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .dim-read{font-family:var(--font-display);font-size:1.25rem;font-weight:600;color:var(--accent-strong);}
+    .dim-track{display:flex;align-items:center;gap:12px;}
+    .dim-pole{font-size:0.78rem;font-weight:600;color:var(--text-muted);width:64px;flex-shrink:0;}
+    .dim-pole:last-of-type{text-align:right;}
+    .dim-rail{position:relative;flex:1;height:6px;border-radius:999px;background:var(--bg-inset);border:1px solid var(--border);}
+    .dim-marker{position:absolute;top:50%;width:16px;height:16px;border-radius:999px;background:linear-gradient(140deg,var(--accent-bright),var(--accent-strong));border:2px solid var(--bg-card);box-shadow:var(--shadow-sm);transform:translate(-50%,-50%);}
+    .dim-copy{color:var(--text-secondary);font-size:0.95rem;margin:12px 0 0;}
     .loading{text-align:center;color:var(--text-muted);padding:80px 24px;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;}
     .hidden{display:none !important;}
   </style>
@@ -111,12 +123,13 @@
     <div class="hidden" id="profileView"></div>
   </div>
 
-  <script type="module">
-    import { getProfileForStage, getProfileByName } from './index.js';
-
+  <script>
+    // Self-contained profile reader. No external module graph — everything it
+    // needs to render a substantive page comes from /api/profile/me and the
+    // definitional axis copy below, so it never collapses to an empty state
+    // when a content file fails to load.
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const prose = (t) => !t ? '' : esc(t).split('\n\n').map(p => '<p>' + p.replace(/\n/g, '<br>') + '</p>').join('');
 
     function initials(first, last, email) {
       const a = (first || '').trim(), b = (last || '').trim();
@@ -124,17 +137,68 @@
       return (email || '?')[0].toUpperCase();
     }
 
-    function section(eyebrow, title, html) {
-      if (!html) return '';
-      return `<div class="section"><div class="eyebrow">${esc(eyebrow)}</div><h3>${esc(title)}</h3>${html}</div>`;
+    // The three Parser dimensions. Each pole has a one-line, definitional read —
+    // grounded in the framework itself, not invented profile-specific claims.
+    const AXES = [
+      {
+        key: 'spatial', label: 'Spatial', low: 'Concrete', high: 'Abstract',
+        copy: {
+          Concrete: 'You process through detail and what is literally in front of you — grounded in the tangible and the real.',
+          Balanced: 'You move between concrete detail and the big picture, drawing on whichever the moment needs.',
+          Abstract: 'You process through patterns and the big picture — reading meaning and connection over literal detail.'
+        }
+      },
+      {
+        key: 'temporal', label: 'Temporal', low: 'Past', high: 'Future',
+        copy: {
+          Past: 'You orient toward what has already happened — memory, precedent, and what has been proven before.',
+          Present: 'You orient toward the present — what is happening now, rather than what was or what could be.',
+          Future: 'You orient toward what is coming — possibility, planning, and where things are heading.'
+        }
+      },
+      {
+        key: 'reference', label: 'Reference', low: 'Other', high: 'Self',
+        copy: {
+          Other: 'You check against the people around you — attuned to the group and how everyone is doing.',
+          Balanced: 'You weigh your own read and the group’s read together before you land.',
+          Self: 'You check against your own internal sense — trusting your own judgment over outside input.'
+        }
+      }
+    ];
+
+    function bucket(key, v) {
+      if (key === 'temporal') return v < 33 ? 'Past' : v > 66 ? 'Future' : 'Present';
+      if (key === 'spatial')  return v < 33 ? 'Concrete' : v > 66 ? 'Abstract' : 'Balanced';
+      return v < 33 ? 'Other' : v > 66 ? 'Self' : 'Balanced'; // reference
     }
 
-    function render(user, saved, profile) {
+    function dimensionBar(axis, value) {
+      const v = Math.max(0, Math.min(100, Number(value) || 0));
+      const lab = bucket(axis.key, v);
+      return `<div class="dim">
+        <div class="dim-top">
+          <span class="dim-name">${esc(axis.label)}</span>
+          <span class="dim-read">${esc(lab)}</span>
+        </div>
+        <div class="dim-track">
+          <span class="dim-pole">${esc(axis.low)}</span>
+          <div class="dim-rail"><span class="dim-marker" style="left:${v}%"></span></div>
+          <span class="dim-pole">${esc(axis.high)}</span>
+        </div>
+        <p class="dim-copy">${esc(axis.copy[lab] || '')}</p>
+      </div>`;
+    }
+
+    function render(user, saved) {
       const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || (user.email || 'Your Profile');
-      const archetype = (profile && profile.name) ? profile.name : (saved.profileName || 'Your Parser');
-      const code = (profile && profile.code) ? profile.code : (saved.profileCode || '');
+      const archetype = saved.profileName || 'Your Parser';
+      const scores = saved.scores || {};
+      // Build coordinates from scores when a saved code isn't present.
+      const code = saved.profileCode ||
+        AXES.map(a => bucket(a.key, Number(scores[a.key]) || 0)).join(' • ');
 
       let html = '';
+
       // Header card
       html += `<div class="phead">
         <div class="pcover"></div>
@@ -142,45 +206,28 @@
           <div class="pavatar">${esc(initials(user.firstName, user.lastName, user.email))}</div>
           <div class="pname">${esc(name)}</div>
           <div class="ptag">${esc(archetype)}${code ? ' · ' + esc(code) : ''}</div>
-          ${profile && profile.tagline ? `<div class="ptagline">${esc(profile.tagline)}</div>` : ''}
         </div>
       </div>`;
 
-      if (!profile) {
-        html += `<div class="section"><p>Your saved profile is <strong>${esc(archetype)}</strong>. The full written report for this profile isn't available to display here right now — please check the report we emailed you, or retake the assessment.</p></div>`;
-        $('profileView').innerHTML = html;
-        return;
+      // Dimensions — always renders from saved scores
+      if (scores && (scores.spatial != null || scores.temporal != null || scores.reference != null)) {
+        const bars = AXES.map(a => dimensionBar(a, scores[a.key])).join('');
+        html += `<div class="section">
+          <div class="eyebrow">Your Architecture</div>
+          <h3>How your mind is oriented</h3>
+          <p>Every Parser sits somewhere along three dimensions. Here is where yours land.</p>
+          ${bars}
+        </div>`;
       }
 
-      // Overview
-      html += section('Profile Overview', 'Who you are', prose(profile.overview));
-      // Phrase
-      if (profile.phrase) html += `<div class="callout"><p>${esc(profile.phrase)}</p></div>`;
-      // Strengths
-      if (Array.isArray(profile.strengths) && profile.strengths.length) {
-        const cards = profile.strengths.map(s => `<div class="rcard"><h4>${esc(s.title)}</h4><p>${esc(s.description)}</p></div>`).join('');
-        html += section('Cognitive Strengths', 'What your mind does well', cards);
-      }
-      html += section('How You Learn', 'How you take knowledge in', prose(profile.howYouLearn));
-      html += section('How You Communicate', 'How you come across', prose(profile.howYouCommunicate));
-      html += section('The Secret You’ve Carried', 'The unspoken part', prose(profile.secret));
-      html += section('What Others Get Wrong', 'The misread', prose(profile.whatOthersGetWrong));
-      html += section('Your Hidden Superpower', 'The rare thing you do', prose(profile.hiddenSuperpower));
-      html += section('Your Blind Spot', 'What’s hard to see from inside', prose(profile.blindSpot));
-      // Challenges
-      if (Array.isArray(profile.challenges) && profile.challenges.length) {
-        const cards = profile.challenges.map(c => `<div class="rcard"><h4>${esc(c.title)}</h4><p>${esc(c.challenge)}</p><p class="remedy"><strong>Remedy:</strong> ${esc(c.remedy)}</p></div>`).join('');
-        html += section('Natural Challenges', 'The shadow side, with remedies', cards);
-      }
-      html += section('Friction Patterns', 'Where you rub up against others', prose(profile.frictionPatterns));
-      html += section('Energy Patterns', 'What drains and what charges you', prose(profile.energyPatterns));
-      html += section('Optimal Work Environments', 'Where you thrive', prose(profile.workEnvironments));
-      // Careers
-      if (Array.isArray(profile.topCareers) && profile.topCareers.length) {
-        const cards = profile.topCareers.map((c, i) => `<div class="rcard"><div class="cnum">${i + 1}</div><h4>${esc(c.title)}</h4><p>${esc(c.description)}</p></div>`).join('');
-        html += section('Your Top 3 Careers', 'Where this architecture pays', cards);
-      }
-      html += section('Cognitive Block Indicators', 'Your CBI accessibility pattern', prose(profile.blockIndicators));
+      // Full report note
+      html += `<div class="section">
+        <div class="eyebrow">Your Full Report</div>
+        <h3>The complete written profile</h3>
+        <p>Your full <strong>${esc(archetype)}</strong> report — strengths, how you learn and communicate, your blind spots, and the careers your architecture is built for — was delivered to your email when you completed the assessment.</p>
+        <p>Want to revisit or update where you land? You can retake the assessment anytime.</p>
+        <a class="btn btn-secondary" href="/assessment.html" style="margin-top:6px;">Retake the Assessment</a>
+      </div>`;
 
       $('profileView').innerHTML = html;
     }
@@ -208,14 +255,8 @@
         return;
       }
 
-      const saved = data.profile;
-      const stage = saved.lifeStage || 'established';
-      let profile = null;
-      try { profile = getProfileForStage(saved.profileName, stage) || getProfileByName(saved.profileName); }
-      catch (_) { profile = null; }
-
       $('profileView').classList.remove('hidden');
-      render(data.user, saved, profile);
+      render(data.user, data.profile);
     })();
   </script>
 </body>

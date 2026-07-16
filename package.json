@@ -7,6 +7,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.1",
     "@supabase/supabase-js": "^2.107.0",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
