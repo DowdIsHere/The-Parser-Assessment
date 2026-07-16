@@ -942,8 +942,11 @@ app.post('/api/validate-promo', (req, res) => {
     }
 
     if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-        const newAmount = Math.round(2000 * 0.85); // 15% off $20.00
-        return res.json({ success: true, type: 'discount', discount: 15, newAmount });
+        // Fixed-dollar discount. Base price and $-off are both Railway-configurable.
+        const base = parseInt(process.env.PRICE_AMOUNT, 10) || 2000;       // cents ($20.00)
+        const off  = parseInt(process.env.PROMO_DISCOUNT_AMOUNT, 10) || 1000; // cents ($10.00)
+        const newAmount = Math.max(0, base - off);
+        return res.json({ success: true, type: 'discount', discountAmount: off, newAmount });
     }
 
     res.json({ success: false, error: 'Invalid promo code' });
@@ -959,7 +962,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
 
     try {
         // Validate promo code if provided
-        let amount = 2000; // $20.00 in cents
+        let amount = parseInt(process.env.PRICE_AMOUNT, 10) || 2000; // $20.00 in cents
         if (promoCode) {
             const promoFree = process.env.PROMO_FREE || '';
             const promoDiscount = process.env.PROMO_DISCOUNT || '';
@@ -971,7 +974,8 @@ app.post('/api/create-payment-intent', async (req, res) => {
             }
 
             if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
-                amount = Math.round(2000 * 0.85); // 15% off
+                const off = parseInt(process.env.PROMO_DISCOUNT_AMOUNT, 10) || 1000; // $10.00 off
+                amount = Math.max(0, amount - off);
             }
         }
 
