@@ -926,6 +926,12 @@ app.post('/api/inquire', async (req, res) => {
 // PROMO CODE VALIDATION
 // ============================================================================
 
+// Parse a promo env var into a list of uppercased codes. Accepts one code or
+// several separated by commas, e.g. "DONALD10OFF, TELLY10OFF".
+function parsePromoCodes(v) {
+    return String(v || '').split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+}
+
 app.post('/api/validate-promo', (req, res) => {
     const { code } = req.body;
 
@@ -933,15 +939,15 @@ app.post('/api/validate-promo', (req, res) => {
         return res.status(400).json({ success: false, error: 'No promo code provided' });
     }
 
-    const promoFree = process.env.PROMO_FREE || '';
-    const promoDiscount = process.env.PROMO_DISCOUNT || '';
+    const freeCodes = parsePromoCodes(process.env.PROMO_FREE);
+    const discountCodes = parsePromoCodes(process.env.PROMO_DISCOUNT);
     const upperCode = code.trim().toUpperCase();
 
-    if (promoFree && upperCode === promoFree.toUpperCase()) {
+    if (freeCodes.includes(upperCode)) {
         return res.json({ success: true, type: 'free', discount: 100, newAmount: 0 });
     }
 
-    if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
+    if (discountCodes.includes(upperCode)) {
         // Fixed-dollar discount. Base price and $-off are both Railway-configurable.
         const base = parseInt(process.env.PRICE_AMOUNT, 10) || 2000;       // cents ($20.00)
         const off  = parseInt(process.env.PROMO_DISCOUNT_AMOUNT, 10) || 1000; // cents ($10.00)
@@ -964,16 +970,16 @@ app.post('/api/create-payment-intent', async (req, res) => {
         // Validate promo code if provided
         let amount = parseInt(process.env.PRICE_AMOUNT, 10) || 2000; // $20.00 in cents
         if (promoCode) {
-            const promoFree = process.env.PROMO_FREE || '';
-            const promoDiscount = process.env.PROMO_DISCOUNT || '';
+            const freeCodes = parsePromoCodes(process.env.PROMO_FREE);
+            const discountCodes = parsePromoCodes(process.env.PROMO_DISCOUNT);
             const upperCode = promoCode.trim().toUpperCase();
 
-            if (promoFree && upperCode === promoFree.toUpperCase()) {
+            if (freeCodes.includes(upperCode)) {
                 // Free promo should not create a payment intent
                 return res.json({ success: true, free: true });
             }
 
-            if (promoDiscount && upperCode === promoDiscount.toUpperCase()) {
+            if (discountCodes.includes(upperCode)) {
                 const off = parseInt(process.env.PROMO_DISCOUNT_AMOUNT, 10) || 1000; // $10.00 off
                 amount = Math.max(0, amount - off);
             }
