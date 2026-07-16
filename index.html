@@ -696,6 +696,17 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
     .cta-btn:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+    .cta-link {
+      display: inline-block; margin-left: 22px;
+      color: rgba(255,255,255,0.82); font-family: var(--font-body);
+      font-size: 0.98rem; font-weight: 500; text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .cta-link:hover { color: #fff; border-color: #fff; }
+    @media (max-width: 560px) {
+      .cta-link { display: block; margin: 22px auto 0; width: max-content; }
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -1575,6 +1586,7 @@
       <h2>Find out which Parser<br><em>you are.</em></h2>
       <p>The Parser Profile shows you your lens — and gives you language for the friction that's been hard to explain.</p>
       <a href="/assessment.html" class="cta-btn">Begin Your Parser Profile →</a>
+      <a href="/individual.html" class="cta-link">What's a Parser Profile?</a>
     </div>
   </div>
 
