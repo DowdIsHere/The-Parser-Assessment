@@ -47,6 +47,8 @@ opponents → no matchup grades. Frame comes online deeper in these draws.*
 
 | 07-14 | Gstaad/Bastad/Umag — R32 (clay) | — | NOT GRADABLE (0 matchups) | — | 🎾 clay | — | — |
 | 07-15 | Borges vs Dimitrov (Bastad R16) | BAL-BAL | **PASS** (sep 10.4 < STRONG bar) | 10.4 | 🎾 clay · Borges defending champ · market Borges 65% | Borges (rolling 6-4,3-0) | abstained — not scored |
+| 07-16 | De Jong vs Baez (Bastad) | FC-PM | **PASS** (sep 2.3 near-toss) | 2.3 | 🎾 clay | _pending_ | abstain |
+| 07-16 | Molcan vs Davidovich Fokina (Umag) | PM-BAL | **PASS** (sep 5.1, conv pending) | 5.1 | 🎾 clay · 5-gate | _pending_ | abstain |
 
 *Tue 07-14: 14 charted seeds in action but ALL drew uncharted R32 opponents → 0 matchups.
 Watch R16+ where seeds meet — Bastad loaded (Dimitrov, Borges, Altmaier, Basilashvili,
