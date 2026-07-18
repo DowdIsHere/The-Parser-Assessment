@@ -3,367 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Clinicians | CBI — Cognition Blocks of Intelligence</title>
-  <meta name="description" content="Certification and licensing for therapists, neuropsychologists, and clinical practitioners — a structural read of the cognitive architecture beneath a client's presenting behavior.">
+  <title>For Clinicians — Coming Soon | Parser Profile™</title>
+  <meta name="description" content="Clinical licensing and certification for the Parser Framework is coming soon.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Editorial Luxury — cream + gold (taste-skill: high-end-visual-design) */
-      --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
-      --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
-      --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
-      --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
-      --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
-      --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
-      --gold: #9A7B2E; --gold-pale: #D8B45E;
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --blue-900:#211A12; --blue-500:#9A7B2E; --blue-400:#B8922A; --blue-100:#E8D9B0; --blue-50:#F3ECD9;
+      --text-primary:#1E1813; --text-secondary:#4A3F35; --text-muted:#8A7E6E;
+      --bg-page:#FAF7F0; --bg-card:#FFFDF9; --bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12);
+      --shadow-md:0 6px 20px rgba(60,40,15,0.08);
+      --gold:#9A7B2E; --gold-pale:#D8B45E; --amber:#D8B45E;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+      --font-mono:'IBM Plex Mono',monospace;
     }
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 112.5%; }
-    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.6; font-size: 1rem; letter-spacing: 0.01em; }
-    body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;font-size:112.5%;}
+    body{font-family:var(--font-body);background:var(--bg-page);color:var(--text-primary);line-height:1.65;min-height:100dvh;display:flex;flex-direction:column;}
+    body::before{content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:0.02;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
 
-    .audience-bar { background: var(--blue-900); color: rgba(255,255,255,0.75); padding: 10px 0; text-align: center; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.16em; }
-    .audience-bar a { color: var(--blue-100); text-decoration: none; }
-    .audience-bar a:hover { color: #fff; }
-    .audience-bar span { margin: 0 10px; opacity: 0.4; }
+    header{position:sticky;top:0;z-index:100;background:rgba(250,247,240,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:18px 0;}
+    .h-inner{max-width:1160px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;}
+    .logo-lockup{display:flex;align-items:center;gap:14px;text-decoration:none;}
+    .logo-img{width:38px;height:38px;border-radius:6px;object-fit:cover;filter:brightness(0.9) contrast(1.1);}
+    .logo-text .name{font-family:var(--font-display);font-size:1.05rem;font-weight:500;color:var(--text-primary);line-height:1;}
+    .logo-text .sub{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);margin-top:4px;}
+    nav{display:flex;gap:28px;align-items:center;}
+    nav a{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+    nav a:hover{color:var(--gold);}
+    nav a.cta{background:var(--blue-500);color:#fff;font-weight:600;padding:9px 20px;border-radius:8px;}
+    nav a.cta:hover{background:var(--blue-400);}
 
-    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 20px 0; }
-    .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
-    .logo .wordmark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; line-height: 1; }
-    .logo .sub { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); }
-    nav { display: flex; gap: 20px; align-items: center; }
-    nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-    nav a:hover { color: var(--blue-500); }
-    nav a.btn { background: var(--blue-500); color: #fff; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; box-shadow: var(--shadow-sm); }
-    nav a.btn:hover { background: var(--blue-400); }
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 24px;}
+    .coming-soon{text-align:center;max-width:560px;}
+    .cs-badge{display:inline-block;font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--gold);background:rgba(154,123,46,0.08);border:1px solid rgba(154,123,46,0.2);padding:6px 16px;border-radius:999px;margin-bottom:24px;}
+    .coming-soon h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:500;letter-spacing:-0.02em;color:var(--text-primary);margin-bottom:20px;line-height:1.1;}
+    .coming-soon h1 em{font-style:italic;color:var(--gold);}
+    .coming-soon p{font-size:1rem;color:var(--text-secondary);line-height:1.75;margin-bottom:16px;max-width:48ch;margin-left:auto;margin-right:auto;}
+    .coming-soon .note{font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);letter-spacing:0.04em;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
+    .back-btn{display:inline-block;margin-top:28px;background:var(--blue-500);color:#fff;font-weight:600;padding:13px 32px;border-radius:8px;text-decoration:none;font-size:0.95rem;transition:background 0.2s,transform 0.15s;}
+    .back-btn:hover{background:var(--blue-400);transform:translateY(-1px);}
 
-    .hero { background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%); position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(184,146,42,0.16) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(216,180,94,0.10) 0%, transparent 50%); pointer-events: none; }
-    .hero-inner { max-width: 1100px; margin: 0 auto; padding: 88px 24px 72px; position: relative; z-index: 1; }
-    .eyebrow-tag { display: inline-block; background: rgba(216,180,94,0.10); border: 1px solid rgba(216,180,94,0.24); color: rgba(245,238,224,0.9); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 100px; margin-bottom: 24px; }
-    .hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; color: #fff; margin-bottom: 24px; max-width: 820px; }
-    .hero h1 em { font-style: italic; font-weight: 400; color: var(--gold-pale); }
-    .hero p { font-family: var(--font-display); font-size: clamp(1rem, 1.7vw, 1.2rem); line-height: 1.65; color: rgba(255,255,255,0.75); max-width: 58ch; font-style: italic; margin-bottom: 40px; }
-    .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue-900); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 14px 32px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-    .btn-hero:hover { background: var(--blue-50); transform: translateY(-2px); }
-
-    .section { padding: 80px 0; }
-    .section.alt { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .eyebrow { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-600); margin-bottom: 14px; }
-    .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 16px; }
-    .section-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 68ch; margin-bottom: 48px; }
-
-    /* WHAT CARD */
-    .what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .what-card { background: var(--bg-page); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
-    .what-num { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 10px; }
-    .what-card h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.01em; }
-    .what-card p { font-size: 0.93rem; color: var(--text-secondary); line-height: 1.6; }
-
-    /* PRICING */
-    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
-    .price-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; box-shadow: var(--shadow-sm); }
-    .price-card.featured { border-color: var(--blue-500); box-shadow: 0 0 0 1px var(--blue-500), var(--shadow-md); }
-    .price-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 10px; }
-    .price-card h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; letter-spacing: -0.01em; line-height: 1.2; }
-    .price-num { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 3.8rem); font-weight: 600; color: var(--text-primary); line-height: 1; letter-spacing: -0.03em; margin-bottom: 8px; }
-    .price-note { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px; }
-    .price-list { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-top: 20px; border-top: 1px solid var(--border); }
-    .price-list li { font-size: 0.9rem; color: var(--text-secondary); display: flex; gap: 10px; align-items: flex-start; }
-    .price-list li::before { content: '—'; color: var(--blue-400); font-weight: 600; flex-shrink: 0; }
-    .ongoing-block { background: var(--bg-inset); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; }
-    .ongoing-block h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
-    .ongoing-block .sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
-    .ongoing-row { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border); }
-    .ongoing-row:first-of-type { border-top: 1px solid var(--border); }
-    .ongoing-label { font-size: 0.93rem; color: var(--text-secondary); }
-    .ongoing-price { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
-
-    /* WHO IT'S FOR */
-    .who-rows { display: flex; flex-direction: column; }
-    .who-row { display: grid; grid-template-columns: 240px 1fr; gap: 24px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--border); }
-    .who-row:first-child { border-top: 1px solid var(--border); }
-    .who-row strong { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
-    .who-row span { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
-
-    /* IP BLOCK */
-    .ip-block { background: var(--blue-900); border-radius: 16px; padding: 48px; position: relative; overflow: hidden; }
-    .ip-block::before { content: ''; position: absolute; top: -80px; right: -80px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(216,180,94,0.14) 0%, transparent 70%); }
-    .ip-eyebrow { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-100); opacity: 0.7; margin-bottom: 20px; position: relative; }
-    .ip-block h3 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; color: #fff; margin-bottom: 16px; position: relative; }
-    .ip-block > p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 32px; max-width: 60ch; position: relative; }
-    .ip-terms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; }
-    .ip-term strong { display: block; color: #fff; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
-    .ip-term span { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
-
-    /* FINAL CTA */
-    .final-cta { text-align: center; padding: 80px 0; }
-    .final-cta h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 16px; }
-    .final-cta p { font-size: 1.05rem; color: var(--text-secondary); max-width: 52ch; margin: 0 auto 36px; line-height: 1.7; }
-    .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-500); color: #fff; font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; padding: 16px 40px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
-    .btn-cta:hover { background: var(--blue-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-    footer { background: var(--blue-900); color: rgba(255,255,255,0.6); padding: 48px 0 28px; }
-    .f-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .f-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
-    footer strong { color: #fff; }
-    footer a { color: var(--blue-100); text-decoration: none; }
-    footer a:hover { color: #fff; }
-    .f-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); line-height: 1.8; }
-
-    @media (max-width: 760px) {
-      .what-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .who-row { grid-template-columns: 1fr; gap: 6px; }
-      .ip-terms { grid-template-columns: 1fr; gap: 16px; }
-      .ip-block { padding: 32px 24px; }
-      .f-top { flex-direction: column; }
-    }
-    /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
-    @media (prefers-reduced-motion: no-preference) {
-      html.js-anim [data-reveal] {
-        opacity: 0; transform: translateY(26px); filter: blur(6px);
-        transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
-                    transform .85s cubic-bezier(0.22,0.61,0.36,1),
-                    filter .85s cubic-bezier(0.22,0.61,0.36,1);
-        will-change: opacity, transform;
-      }
-      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
-      a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
-    }
+    footer{padding:32px 0;border-top:1px solid var(--border);background:var(--blue-900);text-align:center;}
+    .f-copy{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.06em;color:rgba(255,255,255,0.45);}
   </style>
-  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
   <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 <body>
-
-  <div class="audience-bar">
-    Clinician Portal <span>·</span> For Licensed Professionals <span>·</span>
-    <a href="/index.html">← Consumer Site</a>
-  </div>
-
   <header>
     <div class="h-inner">
-      <a href="/clinicians.html" class="logo">
-        <span class="wordmark">Cognition Blocks of Intelligence</span>
-        <span class="sub">Clinician Certification · CBI Framework</span>
+      <a href="/index.html" class="logo-lockup">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="logo-img">
+        <div class="logo-text">
+          <div class="name">J.D. Mercer</div>
+          <div class="sub">Cognition Blocks Intelligence</div>
+        </div>
       </a>
-      <nav id="siteNav">
-        <a href="#what-you-get">Certification</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#inquire" class="btn">Schedule Inquiry</a>
+      <nav>
+        <a href="/index.html">The 27</a>
+        <a href="/individual.html">Individual</a>
+        <a href="/kid-parsers.html">Kids</a>
+        <a href="/signin.html">Sign In</a>
+        <a href="/assessment.html" class="cta">Assessment</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
-        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-      </button>
     </div>
   </header>
-  <div class="nav-scrim"></div>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="eyebrow-tag">CBI Clinician Certification</div>
-      <h1>A cognitive architecture assessment, <em>licensed for clinical use.</em></h1>
-      <p>A structural read of how your client's mind receives and organizes information — the layer beneath presenting behavior, attachment patterns, and therapeutic resistance. As a certified practitioner, you administer the Parser Profile Assessment as a licensed clinical adjunct within your own practice.</p>
-      <a href="#inquire" class="btn-hero">Schedule a Professional Inquiry</a>
+  <main>
+    <div class="coming-soon">
+      <span class="cs-badge">Coming Soon</span>
+      <h1>Clinical <em>Licensing</em></h1>
+      <p>The Parser Framework clinical certification program for therapists, neuropsychologists, and clinical practitioners is currently in development.</p>
+      <p>This program will require proper licensing and credentialing before any clinical application of the framework.</p>
+      <p class="note">The Parser Framework is non-clinical educational content. It is not a psychological or developmental assessment. Clinical licensing details will be announced when the program is ready.</p>
+      <a href="/index.html" class="back-btn">Back to The 27 Parsers</a>
     </div>
-  </section>
-
-  <section class="section alt" id="what-you-get">
-    <div class="section-inner">
-      <div class="eyebrow">Certification Includes</div>
-
-      <div class="what-grid">
-        <div class="what-card">
-          <div class="what-num">01</div>
-          <h4>Parser Frame Overview</h4>
-          <p>Training on the CBI framework, the three structural gradient axes, the 27-profile system, and clinical application — with a session-ready translation guide for in-person and teleconference use.</p>
-        </div>
-        <div class="what-card">
-          <div class="what-num">02</div>
-          <h4>Practitioner Credentials</h4>
-          <p>Licensed access to administer the Parser Profile Assessment within your practice. Includes practitioner dashboard, client invitation links, and full reporting access.</p>
-        </div>
-        <div class="what-card">
-          <div class="what-num">03</div>
-          <h4>Clinical Reference Materials</h4>
-          <p>The complete practitioner reference set — all 27 profile descriptions, gradient interpretation guides, and clinical application frameworks. Written for in-session use.</p>
-        </div>
-        <div class="what-card">
-          <div class="what-num">04</div>
-          <h4>Ongoing Practitioner Support</h4>
-          <p>Quarterly clinical case discussions, framework updates as the research base develops, and direct consultation access for complex presentations. As a certified practitioner, you join an active peer network.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="pricing">
-    <div class="section-inner">
-      <div class="eyebrow">Investment</div>
-      <h2 class="section-title">Certification pricing.</h2>
-      <p class="section-sub">The 30–60 Minute Parser Frame Overview is the required entry point for all practitioners. Per-assessment licensing and annual recertification scale with practice volume. Group practice and institutional arrangements are available on inquiry.</p>
-
-      <div class="pricing-grid">
-        <div class="price-card featured">
-          <div class="price-label">One-Time</div>
-          <h3>30–60 Minute Parser Frame Overview + Certification</h3>
-          <div class="price-num">$497<small style="font-size:1rem;font-weight:400;color:var(--text-muted);margin-left:6px;">USD</small></div>
-          <div class="price-note">Single payment. Includes everything below.</div>
-          <ul class="price-list">
-            <li>Live 30–60 minute Parser Frame Overview session with Robert Dowd</li>
-            <li>Practitioner credentials and dashboard access</li>
-            <li>Complete clinical reference materials</li>
-            <li>Recording of your training session</li>
-            <li>First 90 days of practitioner support included</li>
-          </ul>
-        </div>
-
-        <div class="price-card">
-          <div class="price-label">Custom Engagements</div>
-          <h3>Group Practices &amp; Institutions</h3>
-          <div class="price-num" style="font-size:2rem;letter-spacing:0;">Inquire</div>
-          <div class="price-note">Quoted based on practice size and use case.</div>
-          <ul class="price-list">
-            <li>Multi-practitioner certification packages</li>
-            <li>Institutional licensing for hospitals and clinics</li>
-            <li>Custom training cohorts (5+ practitioners)</li>
-            <li>White-labeling and branded administration</li>
-            <li>Research collaboration arrangements</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="ongoing-block">
-        <h4>Ongoing Costs</h4>
-        <div class="sub">After certification, you pay only for what you use.</div>
-        <div class="ongoing-row">
-          <span class="ongoing-label">Per-assessment licensing — for each client you assess</span>
-          <span class="ongoing-price">$15–25 / client</span>
-        </div>
-        <div class="ongoing-row">
-          <span class="ongoing-label">Annual recertification — continued access and framework updates</span>
-          <span class="ongoing-price">$197 / year</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section alt">
-    <div class="section-inner">
-      <div class="eyebrow">Who This Is For</div>
-      <h2 class="section-title">Practitioners working beneath presenting behavior.</h2>
-      <p class="section-sub">CBI does not replace your diagnostic instruments; it works alongside them — identifying the cognitive input architecture beneath the patterns they already surface, so you can see why a client processes, responds, and relates the way they do.</p>
-
-      <div class="who-rows">
-        <div class="who-row">
-          <strong>Couples &amp; Family Therapists</strong>
-          <span>Where the same misunderstanding recurs across sessions and communication-focused interventions have not resolved it.</span>
-        </div>
-        <div class="who-row">
-          <strong>Cognitive-Behavioral Therapists</strong>
-          <span>Where a client's architecture determines which cognitive frames reach them — and which don't, regardless of repetition.</span>
-        </div>
-        <div class="who-row">
-          <strong>Neuropsychologists &amp; Rehabilitation Specialists</strong>
-          <span>As a clinical adjunct for identifying preserved gradient capacity and developing compensatory pathways in cognitive rehabilitation.</span>
-        </div>
-        <div class="who-row">
-          <strong>Executive &amp; Performance Coaches</strong>
-          <span>For high-functioning clients whose patterns are not pathological but require structural explanation that behavioral frameworks do not provide.</span>
-        </div>
-        <div class="who-row">
-          <strong>Educational &amp; Developmental Specialists</strong>
-          <span>For understanding how a student receives information before determining which intervention strategies are appropriate.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-inner">
-      <div class="ip-block">
-        <div class="ip-eyebrow">IP &amp; Licensing Terms</div>
-        <h3>Certification is a licensed engagement. The terms are standard and clearly defined.</h3>
-        <p>The CBI framework, assessment instrument, and reference materials are proprietary. Practitioners operate under a licensing agreement that protects the integrity of the framework and the practitioner network. The terms are consistent with those of other licensed clinical instruments.</p>
-        <div class="ip-terms">
-          <div class="ip-term">
-            <strong>NDA</strong>
-            <span>Internal training materials and proprietary methodology remain confidential. Standard for licensed clinical instruments.</span>
-          </div>
-          <div class="ip-term">
-            <strong>Use Limitations</strong>
-            <span>Licensed to administer to your clients under your practice. Not licensed to teach, sublicense, or build derivative tools.</span>
-          </div>
-          <div class="ip-term">
-            <strong>Arbitration Clause</strong>
-            <span>Disputes resolved through professional arbitration rather than litigation. Standard practice for licensing agreements.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="final-cta" id="inquire">
-    <div class="section-inner">
-      <h2>Schedule a 20-minute professional inquiry.</h2>
-      <p>For questions about fit, clinical application, licensing terms, or institutional arrangements. No obligation to proceed.</p>
-      <a href="mailto:Inquire@cognitionblocksllc.com?subject=Professional%20Inquiry%20%E2%80%94%20Parser%20Profile" class="btn-cta">Schedule Professional Inquiry</a>
-    </div>
-  </section>
+  </main>
 
   <footer>
-    <div class="f-inner">
-      <div class="f-top">
-        <div>
-          <strong>Cognition Blocks of Intelligence</strong>
-          <div style="margin-top:6px;font-size:0.85rem;">Founded by J.D. Mercer</div>
-          <div style="margin-top:4px;font-size:0.8rem;">CBI Clinician Portal · Robert Dowd, CBI Consultant</div>
-        </div>
-        <div class="f-meta">
-          © 2026 Cognition Blocks LLC<br>
-          All rights reserved<br>
-          U.S. Copyright TXu 2-497-721<br>
-          Provisional Patent #63/968,676
-        </div>
-      </div>
-    </div>
+    <div class="f-copy">Parser Frame™ · Non-clinical educational content · Not a psychological assessment · © 2025–2026 Cognition Blocks LLC</div>
   </footer>
-
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
-  </script>  <script>
-  (function(){
-    var root=document.documentElement;
-    if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.parser-card,.ref-item,.faceoff,.gradient-mismatch,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
-    var els=[].slice.call(document.querySelectorAll(sel));
-    if(!els.length)return;
-    els.forEach(function(el){el.setAttribute('data-reveal','');});
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){
-          var t=e.target,p=t.parentNode,i=p?[].indexOf.call(p.children,t):0;
-          t.style.transitionDelay=(Math.min(i,6)*60)+'ms';
-          t.classList.add('in');io.unobserve(t);
-        }
-      });
-    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
-    els.forEach(function(el){io.observe(el);});
-  })();
-  </script>
 
   <script src="/mobile-nav.js" defer></script>
 </body>
