@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "27Parser™",
+    "slug": "twentyseven-parser",
+    "version": "1.0.0",
+    "scheme": "twentysevenparser",
+    "orientation": "portrait",
+    "icon": "../images/27parser-logo-text.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "../images/27parser-logo-text.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FAF7F0"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cognitionblocks.twentysevenparser"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "../images/27parser-logo-text.png",
+        "backgroundColor": "#FAF7F0"
+      },
+      "package": "com.cognitionblocks.twentysevenparser"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "../images/27parser-logo.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
