@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing by Parser | 27Parser™</title>
+  <meta name="description" content="How to reach each of the 27 parsers — the message format, channel, tone, and trigger that actually lands.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-900:#211A12;--blue-500:#9A7B2E;--blue-400:#B8922A;--blue-100:#E8D9B0;--blue-50:#F3ECD9;
+      --text-primary:#1E1813;--text-secondary:#4A3F35;--text-muted:#8A7E6E;
+      --bg-page:#FAF7F0;--bg-card:#FFFDF9;--bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12);--border-strong:rgba(60,45,25,0.22);
+      --shadow-sm:0 1px 3px rgba(60,40,15,0.06);--shadow-md:0 6px 20px rgba(60,40,15,0.08);
+      --gold:#9A7B2E;--gold-pale:#D8B45E;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+      --font-mono:'IBM Plex Mono',monospace;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;font-size:112.5%;}
+    body{font-family:var(--font-body);background:var(--bg-page);color:var(--text-primary);line-height:1.6;font-size:1rem;letter-spacing:0.01em;}
+    body::before{content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+    .hero{background:linear-gradient(170deg,#211A12 0%,#2E2419 55%,#3A2E1E 100%);position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(184,146,42,0.16) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(216,180,94,0.10) 0%,transparent 50%);pointer-events:none;}
+    .hero-inner{max-width:1100px;margin:0 auto;padding:96px 24px 80px;position:relative;z-index:1;}
+    .eyebrow-tag{display:inline-block;background:rgba(216,180,94,0.10);border:1px solid rgba(216,180,94,0.24);color:rgba(245,238,224,0.9);font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;padding:5px 14px;border-radius:100px;margin-bottom:24px;}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2.4rem,5.5vw,4rem);font-weight:600;line-height:1.08;letter-spacing:-0.025em;color:#fff;margin-bottom:24px;max-width:820px;}
+    .hero h1 em{font-style:italic;font-weight:400;color:var(--gold-pale);}
+    .hero p{font-family:var(--font-display);font-size:clamp(1.05rem,1.8vw,1.25rem);line-height:1.6;color:rgba(255,255,255,0.75);max-width:58ch;font-style:italic;}
+
+    .intro{padding:56px 0 40px;}
+    .intro p{font-size:1rem;color:var(--text-secondary);line-height:1.8;max-width:72ch;}
+
+    .parser-mkt{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;transition:box-shadow 0.3s;}
+    .parser-mkt:hover{box-shadow:var(--shadow-md);}
+    .pm-header{padding:24px 32px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+    .pm-header h2{font-family:var(--font-display);font-size:1.5rem;font-weight:600;}
+    .pm-header h2 span{color:var(--text-muted);font-weight:400;font-size:0.85rem;margin-left:10px;font-family:var(--font-body);}
+    .pm-toggle{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.25s;flex-shrink:0;}
+    .pm-toggle svg{width:13px;height:13px;stroke:var(--text-muted);stroke-width:2;fill:none;transition:transform 0.3s;}
+    .parser-mkt.open .pm-toggle{background:var(--blue-900);border-color:var(--blue-900);}
+    .parser-mkt.open .pm-toggle svg{stroke:#fff;transform:rotate(180deg);}
+    .pm-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+    .parser-mkt.open .pm-body{max-height:3000px;}
+    .pm-content{padding:0 32px 32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .pm-section h3{font-family:var(--font-mono);font-size:0.66rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:8px;}
+    .pm-section p{font-size:0.86rem;color:var(--text-secondary);line-height:1.7;}
+    .pm-section ul{list-style:none;padding:0;}
+    .pm-section ul li{font-size:0.86rem;color:var(--text-secondary);padding:4px 0 4px 16px;position:relative;}
+    .pm-section ul li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--gold-pale);}
+    .pm-tagline{font-family:var(--font-display);font-style:italic;font-size:0.95rem;color:var(--text-muted);border-top:1px solid var(--border);margin:0 32px 20px;padding-top:14px;}
+    .pm-example{background:var(--bg-inset);border-radius:10px;padding:16px 20px;margin:0 32px 24px;font-size:0.84rem;color:var(--text-secondary);line-height:1.7;}
+    .pm-example strong{color:var(--text-primary);font-weight:600;}
+
+    @media(max-width:700px){
+      .pm-content{grid-template-columns:1fr;}
+      .pm-header{padding:18px 20px;}
+      .pm-content{padding:0 20px 24px;}
+      .pm-tagline,.pm-example{margin-left:20px;margin-right:20px;}
+    }
+
+    .parsers-list{padding:0 0 80px;}
+
+    footer{background:var(--blue-900);color:rgba(255,255,255,0.5);padding:48px 24px;text-align:center;font-size:0.78rem;}
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow-tag">Internal · Marketing Playbook</div>
+      <h1>How to reach <em>every parser.</em></h1>
+      <p>Same product, 27 different doors. Each parser takes in information through a different filter — the message that converts one will bounce off another.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="intro">
+      <p>This is not demographic targeting. It's cognitive targeting. Each parser has a preferred message format, an emotional trigger, a channel bias, and a trust mechanism. Match those — and the ad doesn't feel like an ad. It feels like someone finally understood them.</p>
+    </div>
+
+    <div class="parsers-list">
+
+      <!-- ACTUALIZED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Actualized <span>The Self-Made System</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Respects competence. Ignores hype. Won't click unless the message earns it.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Direct, no-fluff copy. Lead with the outcome, not the features. They want to know what it enables, not what it does. Short-form works — they'll dig deeper on their own if the hook is real.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Confident but not loud. Peer-to-peer, never salesy. Speak like a founder talking to a founder. Any hint of manipulation and they're gone permanently.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Podcast pre-rolls (founder-hosted shows)</li><li>LinkedIn thought leadership</li><li>Direct referrals from people they respect</li><li>Newsletter sponsorships (curated, not mass)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Track record. Show who else uses it and what they built with it. Case studies > testimonials. Results > promises.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Countdown timers and fake urgency</li><li>Over-designed landing pages with no substance</li><li>"Limited time offer" language</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "You already know how you work. Now there's a map for it."</div></div>
+      </div>
+
+      <!-- ALTRUISTIC -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Altruistic <span>The Quiet Architect of Others</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Buys for other people. The message has to show who it helps beyond them.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Story-driven. Show a real person whose life improved. The Altruistic parser doesn't buy products — they invest in outcomes for people they care about. Lead with impact on others.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Warm, sincere, unhurried. No pressure. Let them come to it. They need to feel the intention behind the product is genuine — if it's profit-first, they'll sense it.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Community groups and forums</li><li>Word-of-mouth / personal recommendation</li><li>Nonprofit and mission-driven newsletters</li><li>Social media stories (not ads — organic shares)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Mission alignment. They want to know why the company exists, not just what it sells. About pages, founder stories, and social proof from communities they trust.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Aggressive retargeting</li><li>Self-centered benefit copy ("YOU deserve this")</li><li>Any sense that the product exploits vulnerability</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Finally understand why your kid shuts down — and what to say instead."</div></div>
+      </div>
+
+      <!-- ATTUNED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Attuned <span>The Frequency Reader</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Reads the vibe of the ad before the words. Design and tone are the message.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Aesthetically coherent. The visual design IS the first impression — if the palette, typography, or imagery feels off, they won't read the copy. Beautiful, calm, intentional creative.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Intimate and knowing. Speak as if you already understand them. "You've always noticed things other people miss" lands harder than any feature list.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Instagram (visual-first, story format)</li><li>Pinterest (mood boards, aesthetic alignment)</li><li>Curated email (beautiful templates, not mass blasts)</li><li>In-person events and experiences</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Felt resonance. If the brand feels like them — aesthetically, tonally, energetically — they'll trust it before reading a single review. Congruence is everything.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Ugly or cluttered ad creative</li><li>Aggressive, loud copy</li><li>Pop-ups and interruptive formats</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "You always knew you were reading the room. Now there's a name for how you do it."</div></div>
+      </div>
+
+      <!-- CENTERED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Centered <span>The Ballast</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Unimpressed by hype. Responds to calm authority and clear information.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Clean, factual, structured. Bullet points over paragraphs. Present the information and let them decide. They respect a brand that doesn't try to manipulate their emotions.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Measured and professional. No exclamation marks. No urgency. Calm confidence — the ad equivalent of a steady handshake.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Search ads (they're already looking)</li><li>Professional publications</li><li>Long-form content marketing</li><li>Direct mail (physical, not email)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Consistency. If the brand shows up the same way every time — same tone, same quality, same promise kept — the Centered parser will trust it. Volatility is a red flag.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Emotional manipulation</li><li>Flash sales and artificial scarcity</li><li>Brands that change their messaging constantly</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "A cognitive profile based on how you actually process — not a personality quiz."</div></div>
+      </div>
+
+      <!-- COHERENT -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Coherent <span>The Systems Integrator</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Needs to understand the whole system before buying any part of it.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Detailed and logical. Show the framework, the methodology, the structure. They want to see how the pieces connect. An "About the Science" page does more selling than the sales page.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Intellectual, precise, transparent. Explain the why behind the what. If you can show the architecture of the product, they're in. If it feels black-box, they're out.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Long-form blog posts / explainers</li><li>YouTube deep-dives</li><li>Technical documentation / white papers</li><li>Reddit (genuine discussion, not shilling)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Transparency. Open methodology, visible framework, no hidden mechanics. They'll verify your claims — make sure they hold up.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>"Just trust us" messaging</li><li>Vague benefits without mechanism</li><li>Products that can't explain how they work</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "3 axes, 27 profiles, one coordinate system. Here's how the math works."</div></div>
+      </div>
+
+      <!-- COLLABORATIVE -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Collaborative <span>The Force Multiplier</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Converts through shared experience. If someone they respect uses it, they're interested.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Social-proof heavy. Group testimonials, team use cases, "we did this together" framing. They buy into communities, not products. Show the people, not just the thing.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Inclusive, communal, inviting. "Join us" over "buy now." They want to be part of something — the product is the entry ticket to the group.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Group chats and shared links</li><li>Team-based referral programs</li><li>Social media (community-driven content)</li><li>Webinars and group demos</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Social validation. If 3 people they know use it, it's already sold. Referral programs and team discounts are engineered for this parser.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Solo-user messaging with no social element</li><li>Products that feel isolating to use</li><li>No visible community or user base</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "The couples who take it together say the same thing: 'We finally have the right words.'"</div></div>
+      </div>
+
+      <!-- EMBODIED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Embodied <span>The Hands-On Intelligence</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Doesn't read about it — tries it. The best ad is a free sample.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Short, kinetic, action-oriented. Video over text. Show someone doing the thing, not explaining the thing. If you can let them try it immediately (free question, quick demo), you've got them.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Direct, physical, grounded. No abstract language. "Take the first question right now" beats "Discover your cognitive blueprint." Concrete over conceptual.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>TikTok / short-form video</li><li>Interactive ads (swipe, tap, quiz-style)</li><li>In-person demos and pop-ups</li><li>SMS / push notifications (action-first)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Experience. Let them feel it. A free first question, a sample report, a 30-second interaction that proves the value. Words don't convince this parser — experience does.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Long text-heavy landing pages</li><li>"Read more" without any interactive element</li><li>Abstract, philosophical framing</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Answer one question. We'll tell you something about yourself nobody's told you before."</div></div>
+      </div>
+
+      <!-- EMPATHETIC -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Empathetic <span>The Emotional Translator</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Feels the ad before they process it. Emotional authenticity is the only currency.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Story-first. Real testimonials, real emotion, real vulnerability. They don't want polished — they want true. A single authentic quote outperforms a full campaign.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Vulnerable, warm, human. Speak from the heart, not the marketing playbook. If the ad makes them feel something, they'll remember the brand forever.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Long-form video testimonials</li><li>Podcast interviews (emotional, personal)</li><li>Instagram stories (real, unfiltered)</li><li>Email with a personal voice</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Emotional congruence. The feeling of the brand has to match the feeling of the product. If the ad feels corporate but the product is personal, they'll bounce.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Stock photography</li><li>Corporate-speak</li><li>Any whiff of emotional exploitation</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "She said 'I finally understand why I carry everyone's feelings.' That's when I knew we built the right thing."</div></div>
+      </div>
+
+      <!-- EQUANIMOUS -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Equanimous <span>The Even Keel</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Immune to urgency. Converts on their own timeline, never yours.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Informational, non-pressuring. Present the facts and let them marinate. This parser will bookmark it and come back in three weeks. Retargeting works if it's gentle — not aggressive.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Neutral, balanced, respectful. Don't try to create emotional peaks — they'll dismiss it as manipulation. Steady, consistent presence is the strategy.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Search (when they decide to look)</li><li>Informational YouTube content</li><li>Email drip sequences (slow, value-adding)</li><li>Review sites (they'll check)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Long-term consistency. The brand that shows up the same way for a year earns their trust. One viral moment won't do it — longevity will.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>"Last chance!" or "Only 3 left!" copy</li><li>Overly emotional appeals</li><li>High-pressure sales tactics of any kind</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "A framework for understanding how you process. No rush. It'll be here when you're ready."</div></div>
+      </div>
+
+      <!-- FORESIGHTED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Foresighted <span>The Horizon Scanner</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Buys the future, not the present. Show them where this is going.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Vision-forward. Roadmap, trajectory, long-term potential. They're buying version 3.0, not version 1.0. Show the ecosystem they'll be part of in two years.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Ambitious, forward-looking, bold. Talk about what this enables, not just what it is today. "This is the beginning of..." is a power phrase for this parser.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Thought leadership articles</li><li>Keynote / conference appearances</li><li>Futurist newsletters</li><li>Early-access / beta programs</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Vision credibility. If the founder can articulate a compelling future, they're in. They're investing in the vision as much as the product.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Products that feel finished / static</li><li>"This is all there is" framing</li><li>No visible growth trajectory</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Today it's a profile. Tomorrow it's the language every team, school, and family uses to understand each other."</div></div>
+      </div>
+
+      <!-- GROUNDED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Grounded <span>The Bedrock</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Wants to know exactly what they're getting, what it costs, and whether it works.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Spec sheet energy. Price upfront, deliverables listed, timeline clear. No ambiguity. "Here's what you get for $20" converts this parser faster than any emotional pitch.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Straightforward, no-nonsense, honest. They respect brands that don't hide the price or over-promise. Say what it is. Say what it costs. Done.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Google Search ads (intent-based)</li><li>Comparison pages / "vs" content</li><li>Direct referral from someone who bought it</li><li>Pricing pages (they go there first)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Proof of delivery. Screenshots of the actual report, sample outputs, money-back guarantee. They need to see the product before they buy the promise.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Hidden pricing</li><li>"Book a call to learn more"</li><li>Vague, aspirational copy with no specifics</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "$20. Three questions. A 12-page profile of how your mind actually works. Delivered in 2 minutes."</div></div>
+      </div>
+
+      <!-- HARMONIOUS -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Harmonious <span>The Climate Controller</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">The ad has to feel good — visually, tonally, spatially. Dissonance is a dealbreaker.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Aesthetically perfect. Clean layout, balanced composition, harmonious color palette. The design quality of the ad is a direct proxy for the quality of the product in their mind.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Gentle, balanced, inviting. Like walking into a well-designed space. No jarring elements, no visual noise, no tonal whiplash.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Instagram (curated grid aesthetic)</li><li>Pinterest (aspirational boards)</li><li>Beautiful email design</li><li>Physical spaces (events, retail, pop-ups)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Design coherence. If the website, the ad, the email, and the product all feel like they come from the same universe, this parser trusts the brand. Inconsistency = untrustworthy.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Visually cluttered ads</li><li>Inconsistent brand design across touchpoints</li><li>Loud, aggressive creative</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> [No text needed — a beautifully composed image of the report with the cream-and-gold palette does the work.]</div></div>
+      </div>
+
+      <!-- IDEALIZED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Idealized <span>The Standard Bearer</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Will only buy what they consider the best. Anything less than premium is invisible.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Premium positioning. This isn't "a personality test" — it's "the definitive cognitive profiling framework." Exclusivity, craft, and authority. They buy best-in-class or nothing.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Authoritative, editorial, refined. Speak like the standard, not a contender. No comparative language — you don't compete; you define the category.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Premium editorial placements</li><li>Curated recommendation lists</li><li>Influencers with taste authority (not reach)</li><li>Architectural Digest-style brand storytelling</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Craft signals. Typography, paper quality (if physical), editorial voice, design details. They judge the standard of the product by the standard of its presentation.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Discount codes and sales</li><li>Mass-market positioning</li><li>Anything that looks like it was made quickly</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "27 Parsers. One framework. The definitive map of human cognition."</div></div>
+      </div>
+
+      <!-- INTEGRATED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Integrated <span>The Whole-System Thinker</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Needs to see how this connects to everything else in their life before buying.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Ecosystem messaging. Show how the parser profile connects to relationships, career, parenting, team dynamics — the whole map. Individual features bore them; the integration excites them.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Systemic, interconnected, comprehensive. "This one framework explains your work, your marriage, and your parenting — because it's the same mind in all three."</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Long-form content (blog, podcast, YouTube)</li><li>Cross-category marketing (appear in relationship, career, AND parenting contexts)</li><li>Ecosystem landing pages showing the full product suite</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Comprehensiveness. The more use cases the framework covers, the more real it feels to this parser. A narrow product feels incomplete — a platform feels trustworthy.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Single-use-case positioning</li><li>Products that feel siloed or narrow</li><li>"Just for fun" framing</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Your parser shapes how you listen to your partner, lead your team, and raise your kids. One profile. Every domain."</div></div>
+      </div>
+
+      <!-- INTENTIONAL -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Intentional <span>The Deliberate Mover</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Won't impulse-buy anything. Give them the information and step back.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Clear value proposition with full transparency. FAQ-style content works well — they'll have specific questions and want specific answers before they decide.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Respectful of their decision process. Never push. Present, clarify, and wait. "Here's everything you need to decide" is the perfect message.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Search (they'll find you when they're ready)</li><li>Detailed comparison content</li><li>FAQ and knowledge base pages</li><li>Email sequences that add value, not pressure</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Transparency and patience. The brand that doesn't rush them earns their permanent loyalty. Once they decide, they're in for life.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Impulse-buy design patterns</li><li>Hiding information behind a paywall</li><li>Cart abandonment harassment emails</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Three questions, one profile, full methodology published. Take your time — we're not going anywhere."</div></div>
+      </div>
+
+      <!-- INTROSPECTIVE -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Introspective <span>The Inner Cartographer</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">The ad that makes them pause and look inward wins. Reflection is the hook.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Question-led. "Have you ever wondered why..." opens the door. They're already doing the self-examination — give them a framework for what they've been exploring alone.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Quiet, reflective, philosophical. Speak to the private conversation they're already having with themselves. No crowd noise — this is a one-to-one whisper.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Longform essays / Medium / Substack</li><li>Quiet corners of the internet (niche forums, book communities)</li><li>Podcast monologues (introspective hosts)</li><li>Email (personal, letter-style)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Depth. If the brand demonstrates genuine understanding of inner life — not surface-level "know yourself" platitudes — this parser feels seen and trusts immediately.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Shallow, buzzword-driven messaging</li><li>Loud, extroverted brand voice</li><li>Products that promise quick answers to deep questions</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "You've spent years mapping your own mind. We built a coordinate system for what you already know."</div></div>
+      </div>
+
+      <!-- INTUITIVE -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Intuitive <span>The Pattern Jumper</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Decides in the first three seconds. The gut says yes or the scroll continues.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>High-signal, low-noise. One powerful image, one sharp line. They'll either get it immediately or they won't — additional explanation doesn't help. Trust the first impression.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Confident, cryptic, resonant. A little mystery works — they enjoy the feeling of understanding something before it's explained. Let them feel smart for getting it.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Visual social media (Instagram, TikTok)</li><li>Short-form video with strong hook</li><li>Word-of-mouth from tastemakers</li><li>Ambient branding (they'll notice you in the background)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Gut resonance. If it feels right, it is right. They don't need reviews or comparison shopping — they need the first impression to land.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Over-explanation</li><li>Long feature lists</li><li>Anything that requires "reading the fine print"</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "27." [Just the number. Gold on cream. They'll know.]</div></div>
+      </div>
+
+      <!-- LEGACY -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Legacy <span>The Institution Builder</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Asks "Will this matter in 20 years?" before buying anything.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Heritage-weighted. Founding story, the "why" behind the framework, the long-term vision. Position the product as something that endures — a family resource, not a one-time quiz.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Timeless, dignified, substantial. This is not a trend — it's a framework. Speak like something that was here before the customer arrived and will be here after.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Book-length content / published works</li><li>Institutional partnerships (schools, orgs)</li><li>Family-oriented media</li><li>Heirloom-quality physical products</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Longevity signals. How long has this existed? Who stands behind it? Is there institutional weight? The older and more established it feels, the more they trust it.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Trendy, ephemeral branding</li><li>"New and disruptive" positioning</li><li>Products that feel disposable</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "The framework your grandchildren will use to understand themselves."</div></div>
+      </div>
+
+      <!-- MINDFUL -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Mindful <span>The Present-Tense Operator</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Catches every detail in your ad — the good ones and the bad ones.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Immaculately crafted. Every word, every pixel, every spacing choice matters. They'll notice the kerning. They'll notice the typo. They'll notice the stock photo. Get every detail right.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Present, grounded, precise. No future promises — what does this do right now? "Today, this is what you'll learn about yourself" beats "Imagine who you'll become."</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>High-quality print (magazines, journals)</li><li>Well-designed email (every element intentional)</li><li>Quiet social media (not stories — feed posts)</li><li>In-person, one-to-one</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Craft quality. The care visible in the ad tells them the care that went into the product. Sloppy marketing = sloppy product in their mind.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Typos, broken links, misaligned elements</li><li>Low-quality images or video</li><li>Noisy, attention-competing layouts</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Notice things other people miss? There's a reason. It's called your parser."</div></div>
+      </div>
+
+      <!-- RECONCILED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Reconciled <span>The Bridge Between Opposites</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Drawn to products that bridge divides. The "and" in a world of "or."</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Both/and framing. "Not a personality test, not clinical assessment — something else entirely." They love the third option. Position against false binaries.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Nuanced, inclusive, bridging. Acknowledge complexity. Don't oversimplify. They trust brands that hold contradictions gracefully.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Longform editorial (nuanced takes)</li><li>Cross-community platforms</li><li>Interfaith / intercultural spaces</li><li>Relationship and family media</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Nuance. If the brand can hold complexity without collapsing into simplistic messaging, this parser trusts it deeply. Oversimplification is the red flag.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Binary positioning ("us vs. them")</li><li>Oversimplified categories</li><li>Brands that pick sides in polarized debates</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "You don't fit in one box. You never did. That's the point."</div></div>
+      </div>
+
+      <!-- REFLECTIVE -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Reflective <span>The After-Action Mind</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Buys after thinking about it. Retargeting is your friend — but only if it adds value.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Layered. First touch: plant the seed. Second touch: add a new angle. Third touch: the case study that connects it. They need time to process — give them new material each time, not the same ad.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Thoughtful, iterative, building. Each touchpoint should add to their understanding. They're constructing a mental model of the product over time.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Email sequences (escalating depth)</li><li>Blog series / serialized content</li><li>Retargeting with varied creative</li><li>Review and comparison content</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Accumulated understanding. By the time they buy, they've read everything. Make sure every layer holds up to scrutiny — they'll check.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Same ad shown 50 times (diminishing returns)</li><li>Pressure to decide before they've processed</li><li>Shallow content that doesn't reward re-engagement</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Remember that argument where you couldn't explain why you were right? Your parser can."</div></div>
+      </div>
+
+      <!-- RELIABLE -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Reliable <span>The Guarantee</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Buys from brands that keep promises. One broken promise and they're gone.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Promise-based with proof. "Here's what we'll deliver. Here's proof we've delivered it before." Money-back guarantees, delivery timelines, and clear expectations.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Dependable, consistent, trustworthy. The brand voice should sound the same everywhere — website, ad, email, support. Consistency IS the message.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Established platforms (not beta or experimental)</li><li>Search (when they're ready to buy)</li><li>Direct referrals</li><li>Professional associations and endorsements</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Guarantee. Money-back, satisfaction-guaranteed, "delivered in 2 minutes or it's free." They need to know the promise is backed by something real.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Overpromising in ads, underdelivering in product</li><li>Inconsistent messaging across channels</li><li>Fine print that contradicts the headline</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "Your profile. Delivered in 2 minutes. Accurate or your money back."</div></div>
+      </div>
+
+      <!-- RESILIENT -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Resilient <span>The Rebuild Engine</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Responds to comeback stories and underdog framing. Struggle is proof of value.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Challenge-oriented. "Most people don't know how their mind works. The ones who figure it out have an unfair advantage." Frame the product as a tool for people who refuse to stay stuck.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Gritty, real, motivating. Not toxic positivity — earned confidence. They respect brands that have been through something and came out stronger.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Fitness / personal development communities</li><li>Motivational content platforms</li><li>Entrepreneurship media</li><li>Challenge-based campaigns ("Take the assessment, face the truth")</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Founder story. If the creator built this through adversity, the Resilient parser respects it. Origin stories of struggle > polish.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Products that feel soft or coddling</li><li>"Easy" and "effortless" positioning</li><li>No sense of challenge or growth</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "You've rebuilt yourself before. Now build with a blueprint."</div></div>
+      </div>
+
+      <!-- SEASONED -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Seasoned <span>The Earned Perspective</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Doesn't trust marketing. Trusts experience. The product has to prove itself.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Evidence-first. No hype. Show the results from people with mileage — not 22-year-old influencers. Testimonials from people who've "seen everything" and still found this valuable.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Respectful, mature, substance-over-style. Don't talk down. Don't try to teach. Present it as something worthy of their earned judgment.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Professional networks and peer groups</li><li>Book recommendations and reading lists</li><li>Advisory and board-level communications</li><li>One-to-one referral from a trusted peer</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Peer endorsement. The Seasoned parser doesn't trust ads — they trust people who've been around long enough to know the difference between substance and marketing.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Youth-targeted branding</li><li>TikTok-style content</li><li>Anything that feels trendy or ephemeral</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "You've taken a hundred assessments. This is the one that gets it right."</div></div>
+      </div>
+
+      <!-- SENTIMENTAL -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Sentimental <span>The Meaning Keeper</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Buys things that mean something. The story behind the product is the product.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Narrative-rich. Origin story, the moment of creation, the "why this exists" story. They want to know the human behind the brand. A founder letter converts better than any feature page.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Personal, meaningful, emotionally grounded. Speak like you're writing to one person, not a market segment. Sincerity over polish.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Personal email / letter-style</li><li>Founder-narrated video</li><li>Blog posts about the "why"</li><li>Gift-oriented marketing (they buy for others)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Story authenticity. If the story feels real, the product feels real. They'll research the founder, read the about page, and check if the narrative holds up.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Generic corporate branding</li><li>Products with no story</li><li>Mass-produced feeling</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "I built this because my son and I couldn't understand each other. Now we can."</div></div>
+      </div>
+
+      <!-- SHARP -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Sharp <span>The First-Read Closer</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Three seconds. That's your window. Hit hard or lose them forever.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Punchy, high-contrast, immediate. One line, one image, one CTA. No scrolling required. The value proposition has to land in the time it takes to read a road sign.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Direct, confident, zero filler. Talk like someone who doesn't waste time — because this parser doesn't have time to waste. Every word earns its place or gets cut.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>Pre-roll ads (first 3 seconds)</li><li>Billboard / OOH</li><li>Push notifications</li><li>Twitter/X (short, punchy, shareable)</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Speed of delivery. If the product works as fast as the ad promises, you've earned permanent loyalty. Deliver the report in 2 minutes and they'll tell 10 people.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Long-form anything</li><li>Multi-step funnels</li><li>Slow websites or laggy experiences</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "3 questions. 2 minutes. Done."</div></div>
+      </div>
+
+      <!-- VISIONARY -->
+      <div class="parser-mkt">
+        <div class="pm-header"><h2>Visionary <span>The Architect of What's Next</span></h2><div class="pm-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="pm-body"><div class="pm-tagline">Buys potential, not product. Show them the world this creates.</div><div class="pm-content">
+          <div class="pm-section"><h3>Message Format</h3><p>Big-picture, narrative-driven. Long-form is fine — if the vision is compelling enough to hold their attention. Show the ecosystem, the future state, the world where everyone knows their parser.</p></div>
+          <div class="pm-section"><h3>Tone</h3><p>Visionary, bold, aspirational. "What if every team, every school, every family had a common language for how they think?" Paint the picture. They'll fill in the details themselves.</p></div>
+          <div class="pm-section"><h3>Best Channels</h3><ul><li>TED-style talks and keynotes</li><li>Long-form video / documentary-style</li><li>Founder interviews on big-picture podcasts</li><li>Manifesto-style landing pages</li></ul></div>
+          <div class="pm-section"><h3>Trust Mechanism</h3><p>Vision clarity. If the founder can see a future this parser also believes in, the product sells itself. They're buying the mission, not the feature set.</p></div>
+          <div class="pm-section"><h3>What Kills Conversion</h3><ul><li>Small thinking</li><li>"It's just a quiz" positioning</li><li>Incremental, cautious messaging</li></ul></div>
+        </div><div class="pm-example"><strong>Example hook:</strong> "What if the next generation grew up knowing exactly how their mind works?"</div></div>
+      </div>
+
+    </div><!-- /parsers-list -->
+  </div><!-- /wrap -->
+
+  <footer>
+    <p>&copy; 2024 27Parser™ · Internal Marketing Reference</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.pm-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        this.closest('.parser-mkt').classList.toggle('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
