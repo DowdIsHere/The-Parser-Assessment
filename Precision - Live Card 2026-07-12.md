@@ -49,6 +49,11 @@ opponents → no matchup grades. Frame comes online deeper in these draws.*
 | 07-15 | Borges vs Dimitrov (Bastad R16) | BAL-BAL | **PASS** (sep 10.4 < STRONG bar) | 10.4 | 🎾 clay · Borges defending champ · market Borges 65% | Borges (rolling 6-4,3-0) | abstained — not scored |
 | 07-16 | De Jong vs Baez (Bastad) | FC-PM | **PASS** (sep 2.3 near-toss) | 2.3 | 🎾 clay | result unconfirmed (web not indexed) | abstain — not scored |
 | 07-16 | Molcan vs Davidovich Fokina (Umag) | PM-BAL | **PASS** (sep 5.1, conv pending) | 5.1 | 🎾 clay · 5-gate | **Molcan W** (upset 2-seed Fokina) | abstain — not scored; thin favorite (Fokina) LOST → PASS correct |
+| 07-22 | Kitzbühel/Estoril — R16 (clay) | — | NOT GRADABLE (0 matchups) | — | 🎾 clay | — | — |
+
+*Jul 22: 5 charted seeds (Bublik, Etcheverry, P.Martínez, Tabilo, Borges) all drew UNCHARTED
+R16 opponents → 0 gradable. Pattern continues: 250-level clay = shallow fields, seeds vs
+floor. Real matchups need a bigger event or SF/F where two seeds meet.*
 
 *Tue 07-14: 14 charted seeds in action but ALL drew uncharted R32 opponents → 0 matchups.
 Watch R16+ where seeds meet — Bastad loaded (Dimitrov, Borges, Altmaier, Basilashvili,
