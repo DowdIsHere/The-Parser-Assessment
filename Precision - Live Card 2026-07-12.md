@@ -50,6 +50,7 @@ opponents → no matchup grades. Frame comes online deeper in these draws.*
 | 07-16 | De Jong vs Baez (Bastad) | FC-PM | **PASS** (sep 2.3 near-toss) | 2.3 | 🎾 clay | result unconfirmed (web not indexed) | abstain — not scored |
 | 07-16 | Molcan vs Davidovich Fokina (Umag) | PM-BAL | **PASS** (sep 5.1, conv pending) | 5.1 | 🎾 clay · 5-gate | **Molcan W** (upset 2-seed Fokina) | abstain — not scored; thin favorite (Fokina) LOST → PASS correct |
 | 07-22 | Kitzbühel/Estoril — R16 (clay) | — | NOT GRADABLE (0 matchups) | — | 🎾 clay | — | — |
+| 07-23 | Bublik vs Molcan (Kitz QF) | BAL-BAL | **PASS** (sep 0.8, owns no axis) | 0.8 | 🎾 clay · Bublik DISRUPTOR 30.2 · conv pending 5-gate | _pending_ | abstain — not scored |
 
 *Jul 22: 5 charted seeds (Bublik, Etcheverry, P.Martínez, Tabilo, Borges) all drew UNCHARTED
 R16 opponents → 0 gradable. Pattern continues: 250-level clay = shallow fields, seeds vs
