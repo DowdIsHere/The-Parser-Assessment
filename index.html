@@ -37,9 +37,24 @@
     }
     .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
     .logo { text-decoration: none; display: flex; align-items: center; }
-    /* the logo PNG has no alpha — its rounded tile is baked onto black,
-       so the corners must be clipped past the artwork's own radius (~13.9%) */
-    .logo img, .hook-mark { border-radius: 14%; }
+
+    /* 27parser.png is a transparent horizontal lockup, but its artwork occupies
+       only the middle of a much larger canvas (ink 993x363 at offset 193,294 of
+       1536x1024). Sizing the <img> directly would render the mark at ~35% of the
+       height asked for, so the mark is cropped to its ink box here instead —
+       the asset itself is left untouched. Set --w to the desired mark width. */
+    .mark {
+      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
+      width: var(--w);
+      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
+      background-image: url('/27parser.png');
+      background-repeat: no-repeat;
+      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
+      background-position:
+        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
+        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
+    }
+    .logo .mark { --w: 93px; }
     nav { display: flex; gap: 20px; align-items: center; }
     nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
     nav a:hover { color: var(--blue-500); }
@@ -63,7 +78,7 @@
       padding: 28px 24px 0;
       display: flex; flex-direction: column; align-items: center;
     }
-    .hook-mark { width: 84px; height: auto; display: block; margin-bottom: 4px; }
+    .hook-mark { --w: min(330px, 72vw); margin-bottom: 10px; }
     .hook-photo { width: 100%; max-width: 900px; height: auto; display: block; }
     .hook-text {
       background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
@@ -206,7 +221,7 @@
       .f-top { flex-direction: column; }
       .f-meta { text-align: left; }
       .hook-inner { padding: 56px 24px 60px; }
-      .hook-mark { width: 68px; }
+      .hook-mark { --w: 74vw; }
       .section { padding: 64px 0; }
     }
 
@@ -232,8 +247,8 @@
   <!-- HEADER -->
   <header>
     <div class="h-inner">
-      <a href="/index.html" class="logo">
-        <img src="/images/27parser-logo.png" alt="27Parser™" style="height:36px;width:auto;">
+      <a href="/index.html" class="logo" aria-label="27Parser — home">
+        <span class="mark" role="img" aria-label="27Parser™"></span>
       </a>
       <nav id="siteNav">
         <div class="nav-dd">
@@ -272,7 +287,7 @@
   <!-- HERO / THE HOOK -->
   <section>
     <div class="hook-visual">
-      <img src="/images/27parser-logo.png" alt="" class="hook-mark">
+      <span class="mark hook-mark" aria-hidden="true"></span>
       <img src="/parser.png" alt="Two people seated at a table — one speaking, one listening." class="hook-photo">
     </div>
     <div class="hook-text">
