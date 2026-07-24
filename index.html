@@ -181,19 +181,9 @@
       padding: 80px 32px;
     }
     .hook-logo {
-      width: 80px; height: 80px;
-      border-radius: 12px;
-      object-fit: cover;
-      margin-bottom: 48px;
-      filter: brightness(1.1);
-    }
-    .hook-number {
-      font-family: var(--font-display);
-      font-size: clamp(6rem, 18vw, 14rem);
-      font-weight: 300;
-      color: #fff;
-      line-height: 0.85;
-      letter-spacing: -0.04em;
+      width: 220px; height: auto;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 4px 24px rgba(184,146,42,0.3));
     }
     .hook-word {
       font-family: var(--font-display);
@@ -202,7 +192,7 @@
       color: var(--amber);
       font-style: italic;
       letter-spacing: 0.02em;
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
     .hook-line {
       font-family: var(--font-display);
@@ -210,8 +200,98 @@
       color: rgba(255,255,255,0.7);
       font-style: italic;
       max-width: 48ch;
-      margin: 0 auto 48px;
+      margin: 0 auto 36px;
       line-height: 1.6;
+    }
+    .hook-try {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hook-try-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--amber);
+      margin-bottom: 16px;
+    }
+    .hook-try-question {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-style: italic; color: rgba(255,255,255,0.85);
+      max-width: 52ch; margin: 0 auto 24px; line-height: 1.55;
+    }
+    .hook-try-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--amber); text-decoration: none;
+      border: 1px solid rgba(184,146,42,0.4);
+      padding: 10px 24px; border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .hook-try-btn:hover { background: rgba(184,146,42,0.15); border-color: var(--amber); }
+
+    /* ── HOW IT WORKS (Tier 4 — Balanced parsers) ── */
+    .layer-how {
+      padding: 80px 0;
+      background: var(--bg-inset);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .how-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 500; color: var(--cream);
+      text-align: center; margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .how-subtitle {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-style: italic;
+      color: var(--text-muted); text-align: center;
+      margin-bottom: 56px;
+    }
+    .axis-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; max-width: 960px; margin: 0 auto;
+    }
+    .axis-card {
+      text-align: center;
+    }
+    .axis-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .axis-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 8px;
+    }
+    .axis-poles {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; letter-spacing: 0.08em;
+      color: var(--text-muted); margin-bottom: 12px;
+    }
+    .axis-desc {
+      font-size: 0.9rem; color: var(--text-soft);
+      line-height: 1.65; max-width: 28ch; margin: 0 auto;
+    }
+    .how-result {
+      text-align: center; margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .how-result p {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-style: italic;
+      color: var(--text-soft); max-width: 52ch;
+      margin: 0 auto; line-height: 1.6;
+    }
+    .how-result strong { color: var(--cream); font-weight: 500; }
+    @media (max-width: 640px) {
+      .axis-grid { grid-template-columns: 1fr; gap: 40px; }
     }
 
     /* ══════════════════════════════
@@ -1028,11 +1108,15 @@
        ═══════════════════════════════════════ -->
   <section class="layer-hook">
     <div class="hook-inner">
-      <img src="/images/27parser-logo.png" alt="27Parser™" class="hook-logo">
-      <div class="hook-number">27</div>
-      <div class="hook-word">Parsers.</div>
-      <p class="hook-line">Three questions. One profile. The lens your attention defaults to.</p>
+      <img src="/images/27parser-coin-parser.png" alt="27Parser™" class="hook-logo">
+      <div class="hook-word">Three questions. One profile.</div>
+      <p class="hook-line">The lens your attention defaults to.</p>
       <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
+      <div class="hook-try">
+        <div class="hook-try-label">Try the first question</div>
+        <p class="hook-try-question">"When you walk into a room full of people, what do you notice first?"</p>
+        <a href="/assessment.html" class="hook-try-btn">Answer now &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -1060,6 +1144,41 @@
       <p class="spec-copy">A 12-page cognitive profile based on how you actually process — not a personality quiz. <strong>Accurate or your money back.</strong></p>
       <div style="text-align:center;">
         <a href="/assessment.html" class="layer-cta">Begin Assessment &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="milled-divider"></div>
+
+  <!-- ═══════════════════════════════════════
+       HOW IT WORKS (Tier 4 — Balanced parsers)
+       ═══════════════════════════════════════ -->
+  <section class="layer-how">
+    <div class="container">
+      <h2 class="how-title">How It Works</h2>
+      <p class="how-subtitle">Three axes. One coordinate.</p>
+      <div class="axis-grid">
+        <div class="axis-card">
+          <div class="axis-label">Axis One</div>
+          <div class="axis-name">Experience</div>
+          <div class="axis-poles">Concrete &mdash; Balanced &mdash; Abstract</div>
+          <p class="axis-desc">How you take in information — through direct experience or through patterns and ideas.</p>
+        </div>
+        <div class="axis-card">
+          <div class="axis-label">Axis Two</div>
+          <div class="axis-name">Time</div>
+          <div class="axis-poles">Past &mdash; Present &mdash; Future</div>
+          <p class="axis-desc">Where your attention naturally sits — what was, what is, or what could be.</p>
+        </div>
+        <div class="axis-card">
+          <div class="axis-label">Axis Three</div>
+          <div class="axis-name">Reference</div>
+          <div class="axis-poles">Self &mdash; Balanced &mdash; Other</div>
+          <p class="axis-desc">Whose experience you process first — your own or the people around you.</p>
+        </div>
+      </div>
+      <div class="how-result">
+        <p><strong>3 &times; 3 &times; 3 = 27 Parsers.</strong> Your coordinate is the lens your attention defaults to. Not who you are — how you take things in.</p>
       </div>
     </div>
   </section>
@@ -1906,7 +2025,7 @@
         <a href="/individual.html">Parser Profile &rarr;</a>
       </div>
       <div class="f-disclaimer">
-        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · © 2025–2026 Cognition Blocks LLC
+        Parser Frame™ · Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · © 2025–2026 Cognition Blocks LLC
       </div>
     </div>
   </footer>
