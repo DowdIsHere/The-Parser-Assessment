@@ -137,6 +137,58 @@
       background: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 5px);
     }
 
+    /* ── PROGRESSIVE DISCLOSURE ── */
+    .disclosure-layer {
+      display: none;
+    }
+    .disclosure-layer.revealed {
+      display: block;
+      animation: layerReveal 0.6s ease-out;
+    }
+    @keyframes layerReveal {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .layer-gate {
+      text-align: center;
+      padding: 48px 32px 64px;
+      background: var(--bg-inset);
+      border-top: 1px solid var(--border);
+    }
+    .layer-gate-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold);
+      background: none; border: 1px solid var(--gold);
+      padding: 14px 32px; border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .layer-gate-btn:hover {
+      background: var(--gold); color: #fff;
+    }
+    .layer-gate-btn svg {
+      width: 14px; height: 14px; stroke: currentColor;
+      stroke-width: 2; fill: none;
+      transition: transform 0.25s;
+    }
+    .layer-gate-btn:hover svg { transform: translateY(3px); }
+    .gate-label {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .gate-desc {
+      font-family: var(--font-display);
+      font-size: 1rem; font-style: italic;
+      color: var(--text-muted);
+      max-width: 52ch; margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .layer-gate.hidden { display: none; }
+
     /* ── LAYER CTA BUTTON ── */
     .layer-cta {
       display: inline-flex; align-items: center; gap: 10px;
@@ -164,40 +216,32 @@
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       text-align: center;
-      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      background: var(--bg-page);
       position: relative;
       overflow: hidden;
-    }
-    .layer-hook::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,0.14) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.10) 0%, transparent 60%);
-      pointer-events: none;
     }
     .hook-inner {
       position: relative; z-index: 1;
       padding: 80px 32px;
     }
     .hook-logo {
-      width: 220px; height: auto;
-      margin-bottom: 24px;
-      filter: drop-shadow(0 4px 24px rgba(184,146,42,0.3));
+      width: min(520px, 85vw); height: auto;
+      margin-bottom: 40px;
+      border-radius: 12px;
     }
     .hook-word {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(1.8rem, 4vw, 3rem);
       font-weight: 400;
-      color: var(--amber);
+      color: var(--cream);
       font-style: italic;
-      letter-spacing: 0.02em;
-      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
     }
     .hook-line {
       font-family: var(--font-display);
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: rgba(255,255,255,0.7);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted);
       font-style: italic;
       max-width: 48ch;
       margin: 0 auto 36px;
@@ -206,30 +250,30 @@
     .hook-try {
       margin-top: 48px;
       padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 1px solid var(--border);
     }
     .hook-try-label {
       font-family: var(--font-mono);
       font-size: 0.62rem; text-transform: uppercase;
-      letter-spacing: 0.22em; color: var(--amber);
+      letter-spacing: 0.22em; color: var(--gold);
       margin-bottom: 16px;
     }
     .hook-try-question {
       font-family: var(--font-display);
       font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      font-style: italic; color: rgba(255,255,255,0.85);
+      font-style: italic; color: var(--text-soft);
       max-width: 52ch; margin: 0 auto 24px; line-height: 1.55;
     }
     .hook-try-btn {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: var(--font-mono); font-size: 0.7rem;
       text-transform: uppercase; letter-spacing: 0.14em;
-      color: var(--amber); text-decoration: none;
-      border: 1px solid rgba(184,146,42,0.4);
+      color: var(--gold); text-decoration: none;
+      border: 1px solid var(--border-strong);
       padding: 10px 24px; border-radius: 6px;
       transition: all 0.2s;
     }
-    .hook-try-btn:hover { background: rgba(184,146,42,0.15); border-color: var(--amber); }
+    .hook-try-btn:hover { background: rgba(154,123,46,0.08); border-color: var(--gold); }
 
     /* ── HOW IT WORKS (Tier 4 — Balanced parsers) ── */
     .layer-how {
@@ -1108,10 +1152,10 @@
        ═══════════════════════════════════════ -->
   <section class="layer-hook">
     <div class="hook-inner">
-      <img src="/images/27parser-coin-parser.png" alt="27Parser™" class="hook-logo">
+      <img src="/27parser.png" alt="27Parser™" class="hook-logo">
       <div class="hook-word">Three questions. One profile.</div>
       <p class="hook-line">The lens your attention defaults to.</p>
-      <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
+      <a href="/assessment.html" class="layer-cta">Begin Assessment &rarr;</a>
       <div class="hook-try">
         <div class="hook-try-label">Try the first question</div>
         <p class="hook-try-question">"When you walk into a room full of people, what do you notice first?"</p>
@@ -1120,6 +1164,16 @@
     </div>
   </section>
 
+  <!-- Gate 1: after hook -->
+  <div class="layer-gate" id="gate-1">
+    <div class="gate-label">How does it work?</div>
+    <p class="gate-desc">Using Cognition Blocks proprietary technology CogniMap, from the starting point shared via questions, maps the brain to reveal one's orientation and perception.</p>
+    <button class="layer-gate-btn" onclick="revealLayer('layer-2','gate-1','gate-2')">
+      See the framework <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-2">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1183,6 +1237,18 @@
     </div>
   </section>
 
+  </div><!-- /layer-2 -->
+
+  <!-- Gate 2: after spec + how-it-works -->
+  <div class="layer-gate hidden" id="gate-2">
+    <div class="gate-label">Why was it built?</div>
+    <p class="gate-desc">The Founder built it to understand himself and to map a way to communicate clearly with his wife and children following a Multiple Sclerosis and Cognitive Impairment diagnosis.</p>
+    <button class="layer-gate-btn" onclick="revealLayer('layer-3','gate-2','gate-3')">
+      Read the story <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-3">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1201,6 +1267,18 @@
     </div>
   </section>
 
+  </div><!-- /layer-3 -->
+
+  <!-- Gate 3: after story -->
+  <div class="layer-gate hidden" id="gate-3">
+    <div class="gate-label">What else can it do?</div>
+    <p class="gate-desc">Time will tell.</p>
+    <button class="layer-gate-btn" onclick="revealLayer('layer-4','gate-3','gate-4')">
+      See the products <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-4">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1251,6 +1329,18 @@
     </div>
   </section>
 
+  </div><!-- /layer-4 -->
+
+  <!-- Gate 4: after system -->
+  <div class="layer-gate hidden" id="gate-4">
+    <div class="gate-label">Show me a preview.</div>
+    <p class="gate-desc">Answer 3 questions.</p>
+    <button class="layer-gate-btn" onclick="revealLayer('layer-5','gate-4','gate-5')">
+      See a sample report <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-5">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1288,6 +1378,16 @@
     </div>
   </section>
 
+  </div><!-- /layer-5 -->
+
+  <!-- Gate 5: after proof -->
+  <div class="layer-gate hidden" id="gate-5">
+    <button class="layer-gate-btn" onclick="revealLayer('layer-6','gate-5')">
+      Meet all 27 Parsers <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-6">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -2011,6 +2111,8 @@
     </div>
   </div>
 
+  </div><!-- /layer-6 -->
+
   <!-- FOOTER -->
   <footer>
     <div class="f-inner">
@@ -2030,12 +2132,47 @@
     </div>
   </footer>
 
+  <!-- PROGRESSIVE DISCLOSURE -->
+  <script>
+  function revealLayer(layerId, gateId, nextGateId) {
+    var layer = document.getElementById(layerId);
+    var gate = document.getElementById(gateId);
+    if (layer) {
+      layer.classList.add('revealed');
+      // Re-init any Splide carousels inside the newly revealed layer
+      if (typeof Splide !== 'undefined') {
+        layer.querySelectorAll('.parser-splide').forEach(function(el) {
+          if (!el.classList.contains('is-initialized')) {
+            new Splide(el, { perPage: 3, perMove: 1, gap: '20px', breakpoints: { 768: { perPage: 1 } } }).mount();
+          }
+        });
+        layer.querySelectorAll('.collision-splide').forEach(function(el) {
+          if (!el.classList.contains('is-initialized')) {
+            new Splide(el, { perPage: 1, perMove: 1, gap: '24px', autoHeight: true, arrows: true, pagination: true }).mount();
+          }
+        });
+      }
+    }
+    if (gate) gate.classList.add('hidden');
+    if (nextGateId) {
+      var next = document.getElementById(nextGateId);
+      if (next) next.classList.remove('hidden');
+    }
+    // Smooth scroll to the revealed content
+    if (layer) {
+      setTimeout(function() {
+        layer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+  </script>
+
   <!-- SCROLL REVEAL -->
   <script>
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.hook-logo,.hook-number,.hook-word,.hook-line,.hook-inner .layer-cta,.spec-grid,.spec-copy,.layer-spec .layer-cta,.story-panel,.story-hook,.layer-story .layer-cta,.system-title,.system-subtitle,.product-card,.system-framework,.layer-system .layer-cta,.report-preview,.proof-quote,.proof-guarantee,.layer-proof .layer-cta,.section-header,.group-header,.group-image,.collision-domain-header,.cta-band h2,.cta-band p,.cta-btn,.section-title,.section-sub';
+    var sel='.spec-grid,.spec-copy,.layer-spec .layer-cta,.story-panel,.story-hook,.layer-story .layer-cta,.system-title,.system-subtitle,.product-card,.system-framework,.layer-system .layer-cta,.report-preview,.proof-quote,.proof-guarantee,.layer-proof .layer-cta,.section-header,.group-header,.group-image,.collision-domain-header,.cta-band h2,.cta-band p,.cta-btn,.section-title,.section-sub';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
