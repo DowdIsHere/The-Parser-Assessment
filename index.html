@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parser Frame™ — The 27 Parsers | J.D. Mercer</title>
-  <meta name="description" content="Everyone takes in the world a little differently. The 27 Parser Profiles — grouped by how they take things in.">
+  <title>27Parser™ — The Lens Your Attention Defaults To</title>
+  <meta name="description" content="Three questions. One profile. The lens your attention defaults to. 27 Parser Profiles — a cognitive framework for how you actually process.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      /* Editorial Luxury — cream + gold (taste-skill: high-end-visual-design) */
       --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
       --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
       --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
@@ -20,7 +19,6 @@
       --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
       --amber: #D8B45E;
 
-      /* Legacy aliases remapped onto the editorial-luxury system */
       --ink: #FAF7F0; --ink-soft: #F2ECE0; --ink-card: #FFFDF9; --ink-lift: #F4EEE2;
       --gold: #9A7B2E; --gold-bright: #B8922A; --gold-pale: #8A6D24;
       --cream: #1E1813; --cream-dim: #4A3F35;
@@ -133,15 +131,44 @@
     .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold-pale); }
     [id^="group-"], [id^="collide-"] { scroll-margin-top: 96px; }
 
-    /* ── HERO ── */
-    .hero {
-      padding: 120px 0 96px;
-      position: relative;
+    /* ── MILLED DIVIDER ── */
+    .milled-divider {
+      height: 3px;
+      background: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 5px);
+    }
+
+    /* ── LAYER CTA BUTTON ── */
+    .layer-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--blue-500);
+      color: #fff; font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .layer-cta:hover { background: var(--blue-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+    .layer-cta-light {
+      background: #fff;
+      color: var(--blue-900);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .layer-cta-light:hover { background: var(--blue-50); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+
+    /* ══════════════════════════════
+       LAYER 1: THE HOOK
+       ══════════════════════════════ */
+    .layer-hook {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
       background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
-      border-bottom: 1px solid var(--border);
+      position: relative;
       overflow: hidden;
     }
-    .hero::before {
+    .layer-hook::before {
       content: '';
       position: absolute; inset: 0;
       background:
@@ -149,96 +176,306 @@
         radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.10) 0%, transparent 60%);
       pointer-events: none;
     }
-    .hero-inner {
-      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    .hook-inner {
       position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      padding: 80px 32px;
     }
-    .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.68rem; text-transform: uppercase;
-      letter-spacing: 0.22em; color: var(--amber);
-      margin-bottom: 20px;
-      display: flex; align-items: center; gap: 14px;
+    .hook-logo {
+      width: 80px; height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 48px;
+      filter: brightness(1.1);
     }
-    .hero-eyebrow::before {
-      content: ''; width: 28px; height: 1px; background: var(--amber);
-    }
-    .hero h1 {
+    .hook-number {
       font-family: var(--font-display);
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 500; line-height: 1.0;
-      letter-spacing: -0.02em; color: #fff;
-      margin-bottom: 28px;
+      font-size: clamp(6rem, 18vw, 14rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
     }
-    .hero h1 em {
-      font-style: italic; font-weight: 500; color: var(--amber);
-    }
-    .hero-sub {
+    .hook-word {
       font-family: var(--font-display);
-      font-size: 1.2rem; line-height: 1.7;
-      color: rgba(255,255,255,0.78); max-width: 54ch;
-      font-style: italic; margin-bottom: 40px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 400;
+      color: var(--amber);
+      font-style: italic;
+      letter-spacing: 0.02em;
+      margin-bottom: 32px;
     }
-    .hero-image-box {
-      aspect-ratio: 4/3;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .hero-image-box::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        -45deg, transparent 0, transparent 18px,
-        rgba(255,255,255,0.035) 18px, rgba(255,255,255,0.035) 36px
-      );
-    }
-    .img-placeholder {
-      font-family: var(--font-mono);
-      font-size: 0.62rem; text-transform: uppercase;
-      letter-spacing: 0.18em; color: var(--text-muted);
-      position: relative;
-    }
-    .hero-image-box .img-placeholder { color: rgba(255,255,255,0.5); }
-    .hero-image-box img, .group-image img, .collision-domain-image img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block; position: relative; z-index: 1;
-    }
-    .hero-stats {
-      display: flex; gap: 40px;
-    }
-    .stat-item .num {
+    .hook-line {
       font-family: var(--font-display);
-      font-size: 2.8rem; font-weight: 500;
-      color: #fff; line-height: 1;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+      max-width: 48ch;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════
+       LAYER 2: THE SPEC BLOCK
+       ══════════════════════════════ */
+    .layer-spec {
+      padding: 96px 0;
+      background: var(--bg-page);
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .spec-cell {
+      background: var(--bg-card);
+      padding: 40px 28px;
+      text-align: center;
+    }
+    .spec-value {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 500;
+      color: var(--cream);
+      line-height: 1;
       letter-spacing: -0.02em;
     }
-    .stat-item .label {
+    .spec-label {
       font-family: var(--font-mono);
-      font-size: 0.62rem; text-transform: uppercase;
-      letter-spacing: 0.14em; color: rgba(255,255,255,0.55);
-      margin-top: 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-top: 8px;
     }
+    .spec-copy {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      line-height: 1.75;
+      max-width: 62ch;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+    .spec-copy strong { color: var(--cream); font-weight: 600; }
 
-    /* ── INTRO BAND ── */
-    .intro-band {
+    /* ══════════════════════════════
+       LAYER 3: THE STORY
+       ══════════════════════════════ */
+    .layer-story {
+      padding: 96px 0;
       background: var(--ink-soft);
-      border-bottom: 1px solid var(--rule-soft);
-      padding: 64px 0;
     }
-    .intro-text {
+    .story-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      padding: 48px 48px 48px 44px;
+      max-width: 720px;
+      margin: 0 auto 48px;
+    }
+    .story-quote {
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      font-weight: 500; line-height: 1.55;
-      color: var(--cream); max-width: 80ch;
+      font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .story-attribution {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+    }
+    .story-hook {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 500;
+      color: var(--cream);
+      text-align: center;
+      max-width: 52ch;
+      margin: 0 auto 40px;
+      line-height: 1.4;
       letter-spacing: -0.01em;
     }
-    .intro-text em { font-style: italic; color: var(--gold-pale); }
 
-    /* ── SECTION STRUCTURE ── */
+    /* ══════════════════════════════
+       LAYER 4: THE SYSTEM
+       ══════════════════════════════ */
+    .layer-system {
+      padding: 96px 0;
+      background: var(--bg-page);
+    }
+    .system-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 500;
+      color: var(--cream);
+      text-align: center;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+    .system-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px 28px;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .product-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+    .product-card-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .product-card-price {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .product-card-desc {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+    .system-framework {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-align: center;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 40px;
+    }
+
+    /* ══════════════════════════════
+       LAYER 5: THE PROOF
+       ══════════════════════════════ */
+    .layer-proof {
+      padding: 96px 0;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .layer-proof::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(184,146,42,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .proof-inner {
+      position: relative; z-index: 1;
+    }
+    /* Report preview mock */
+    .report-preview {
+      max-width: 560px;
+      margin: 0 auto 56px;
+      background: var(--bg-page);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+    .report-preview-header {
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .report-preview-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .report-preview-title {
+      font-family: 'Playfair Display', var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+    .report-preview-body {
+      padding: 24px 32px 28px;
+    }
+    .report-preview-panel {
+      background: var(--ink-soft);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 20px 20px 20px 18px;
+      margin-bottom: 16px;
+    }
+    .report-preview-panel p {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+    .report-preview-divider {
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 5px);
+      margin: 16px 0;
+    }
+    .report-preview-meta {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .proof-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-style: italic;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      max-width: 52ch;
+      margin: 0 auto 16px;
+      line-height: 1.55;
+    }
+    .proof-guarantee {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .guarantee-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--amber);
+      border: 1px solid rgba(216,180,94,0.35);
+      padding: 8px 20px;
+      border-radius: 6px;
+    }
+
+    /* ── SECTION STRUCTURE (for parsers section) ── */
     .section { padding: 96px 0; }
     .section-border { border-top: 1px solid var(--rule); }
     .section-header {
@@ -305,6 +542,10 @@
         -45deg, transparent 0, transparent 14px,
         rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
       );
+    }
+    .group-image img, .collision-domain-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; position: relative; z-index: 1;
     }
 
     /* ── PARSER CAROUSEL ── */
@@ -521,7 +762,7 @@
       line-height: 1.7;
     }
 
-    /* ── FINDING SYNERGY (the positive synthesis that closes each domain) ── */
+    /* ── FINDING SYNERGY ── */
     .synergy {
       background:
         linear-gradient(160deg, rgba(184,146,42,0.12) 0%, rgba(184,146,42,0.03) 55%, transparent 100%),
@@ -590,7 +831,7 @@
       line-height: 1.7;
     }
 
-    /* ── COLLISION CAROUSEL (one block at a time, full space each) ── */
+    /* ── COLLISION CAROUSEL ── */
     .collision-splide { position: relative; padding-bottom: 60px; margin-bottom: 8px; }
     .collision-splide .splide__slide { height: auto; }
     .collision-splide .faceoff,
@@ -617,42 +858,6 @@
     }
     .collision-splide .splide__pagination__page.is-active {
       background: var(--gold); transform: scale(1.5);
-    }
-
-    /* ── QUICK REF ── */
-    .quick-ref {
-      padding: 96px 0;
-      border-top: 1px solid var(--rule);
-    }
-    .ref-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      margin-top: 48px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-    .ref-item {
-      background: var(--bg-card);
-      padding: 28px;
-    }
-    .ref-item .dimension {
-      font-family: var(--font-mono);
-      font-size: 0.62rem; text-transform: uppercase;
-      letter-spacing: 0.14em; color: var(--gold);
-      margin-bottom: 10px;
-    }
-    .ref-item h4 {
-      font-family: var(--font-display);
-      font-size: 1.15rem; font-weight: 500;
-      color: var(--cream); margin-bottom: 8px;
-    }
-    .ref-item p {
-      font-size: 0.85rem; color: var(--text-soft);
-      line-height: 1.65;
     }
 
     /* ── CTA BAND ── */
@@ -742,7 +947,7 @@
       text-align: center;
     }
 
-    /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
+    /* ── MOTION ── */
     @media (prefers-reduced-motion: no-preference) {
       html.js-anim [data-reveal] {
         opacity: 0; transform: translateY(26px); filter: blur(6px);
@@ -752,23 +957,24 @@
         will-change: opacity, transform;
       }
       html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
-      a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
+      a[class*="btn"]:active, .cta-btn:active, .layer-cta:active, nav a.cta:active { transform: translateY(-1px) scale(0.97); }
     }
 
     /* ── MOBILE ── */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-image-box { aspect-ratio: 16/9; }
       .faceoff-body { grid-template-columns: 1fr; }
       .faceoff-col.through { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 20px; }
       .gm-voices { grid-template-columns: 1fr; }
       .synergy-cols { grid-template-columns: 1fr; }
       .group-header { grid-template-columns: 1fr; gap: 20px; }
-      .ref-grid { grid-template-columns: 1fr; }
+      .product-grid { grid-template-columns: 1fr 1fr; }
+      .spec-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .container { padding: 0 20px; }
       .container-narrow { padding: 0 20px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .story-panel { padding: 32px 24px 32px 20px; }
     }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
@@ -817,45 +1023,157 @@
   </header>
   <div class="nav-scrim"></div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-eyebrow">Parser Frame™</div>
-        <h1>The <em>27</em><br>Parsers.</h1>
-        <p class="hero-sub">Everyone takes in the world a little differently — not in what you believe or care about, but in what you actually notice first. Your Parser is the lens your attention defaults to.</p>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="num">15</div>
-            <div class="label">Questions</div>
-          </div>
-          <div class="stat-item">
-            <div class="num">27</div>
-            <div class="label">Profiles</div>
-          </div>
-          <div class="stat-item">
-            <div class="num">1</div>
-            <div class="label">is yours</div>
-          </div>
+  <!-- ═══════════════════════════════════════
+       LAYER 1: THE HOOK
+       ═══════════════════════════════════════ -->
+  <section class="layer-hook">
+    <div class="hook-inner">
+      <img src="/images/27parser-logo.png" alt="27Parser™" class="hook-logo">
+      <div class="hook-number">27</div>
+      <div class="hook-word">Parsers.</div>
+      <p class="hook-line">Three questions. One profile. The lens your attention defaults to.</p>
+      <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
+    </div>
+  </section>
+
+  <div class="milled-divider"></div>
+
+  <!-- ═══════════════════════════════════════
+       LAYER 2: THE SPEC BLOCK
+       ═══════════════════════════════════════ -->
+  <section class="layer-spec">
+    <div class="container">
+      <div class="spec-grid">
+        <div class="spec-cell">
+          <div class="spec-value">$20</div>
+          <div class="spec-label">One-time</div>
         </div>
-        <div class="hero-actions" style="margin-top:36px;">
-          <a href="/assessment.html" class="cta-btn">Begin Your Assessment →</a>
+        <div class="spec-cell">
+          <div class="spec-value">3</div>
+          <div class="spec-label">Questions</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-value">2</div>
+          <div class="spec-label">Minutes</div>
         </div>
       </div>
-      <div class="hero-image-box">
-        <img src="images/Hero-image.jpg" alt="Parser Frame visual">
+      <p class="spec-copy">A 12-page cognitive profile based on how you actually process — not a personality quiz. <strong>Accurate or your money back.</strong></p>
+      <div style="text-align:center;">
+        <a href="/assessment.html" class="layer-cta">Begin Assessment &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- INTRO BAND -->
-  <div class="intro-band">
-    <div class="container-narrow">
-      <p class="intro-text">Two people can want the same things, share the same values, and walk out of the same meeting having registered <em>completely different details.</em> They're not disagreeing. They just picked up different parts of the same moment.</p>
-    </div>
-  </div>
+  <div class="milled-divider"></div>
 
-  <!-- ═══ THE 27 PARSERS ═══ -->
+  <!-- ═══════════════════════════════════════
+       LAYER 3: THE STORY
+       ═══════════════════════════════════════ -->
+  <section class="layer-story">
+    <div class="container-narrow">
+      <div class="story-panel">
+        <p class="story-quote">"I built this because my son and I couldn't understand each other. We'd argue, and both walk away feeling unheard — not because we didn't care, but because we were listening for completely different things. Now we have a shared language for it."</p>
+        <div class="story-attribution">— The Founder</div>
+      </div>
+      <p class="story-hook">Finally understand why your kid shuts down — and what to say instead.</p>
+      <div style="text-align:center;">
+        <a href="/assessment.html" class="layer-cta">Begin Assessment &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="milled-divider"></div>
+
+  <!-- ═══════════════════════════════════════
+       LAYER 4: THE SYSTEM
+       ═══════════════════════════════════════ -->
+  <section class="layer-system">
+    <div class="container">
+      <h2 class="system-title">One Framework. Every Relationship.</h2>
+      <p class="system-subtitle">3 axes &middot; 27 profiles &middot; one coordinate system</p>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-card-name">Individual Profile</div>
+          <div class="product-card-price">$20</div>
+          <p class="product-card-desc">How your mind actually works.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-card-name">Couples Profile</div>
+          <div class="product-card-price">$49.99</div>
+          <p class="product-card-desc">Why you keep having the same fight.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-card-name">Kids Profile</div>
+          <div class="product-card-price">$19.99</div>
+          <p class="product-card-desc">What your child needs you to understand.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-card-name">Family System</div>
+          <div class="product-card-price">$99.99</div>
+          <p class="product-card-desc">The whole picture: parents, kids, siblings.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-card-name">Social Circle</div>
+          <div class="product-card-price">Coming Soon</div>
+          <p class="product-card-desc">Why your friend group works (and where it doesn't).</p>
+        </div>
+        <div class="product-card">
+          <div class="product-card-name">Teams</div>
+          <div class="product-card-price">Coming Soon</div>
+          <p class="product-card-desc">Why your team miscommunicates on the easy stuff.</p>
+        </div>
+      </div>
+
+      <p class="system-framework">Same framework across every domain.</p>
+      <div style="text-align:center;">
+        <a href="/assessment.html" class="layer-cta">Begin Assessment &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="milled-divider"></div>
+
+  <!-- ═══════════════════════════════════════
+       LAYER 5: THE PROOF
+       ═══════════════════════════════════════ -->
+  <section class="layer-proof">
+    <div class="container proof-inner">
+
+      <!-- Report preview mock -->
+      <div class="report-preview">
+        <div class="report-preview-header">
+          <div class="report-preview-eyebrow">Your Parser Profile</div>
+          <div class="report-preview-title">The Intentional Parser</div>
+        </div>
+        <div class="report-preview-body">
+          <div class="report-preview-panel">
+            <p>You're already building toward something months out. While others react to what's happening, you're three steps ahead, constructing conditions for a future you've clearly pictured.</p>
+          </div>
+          <div class="report-preview-divider"></div>
+          <div class="report-preview-panel">
+            <p>Life isn't something that happens to you — it's something you're deliberately assembling, piece by piece.</p>
+          </div>
+          <div class="report-preview-divider"></div>
+          <div class="report-preview-meta">12 pages &middot; Cognitive profile &middot; Relationship dynamics &middot; Communication guide</div>
+        </div>
+      </div>
+
+      <p class="proof-quote">"You've taken a hundred assessments. This is the one that gets it right."</p>
+      <div class="proof-guarantee">
+        <span class="guarantee-badge">Accurate or your money back</span>
+      </div>
+      <div style="text-align:center;">
+        <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Your Parser Profile &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="milled-divider"></div>
+
+  <!-- ═══════════════════════════════════════
+       THE 27 PARSERS
+       ═══════════════════════════════════════ -->
   <section class="section" id="parsers">
     <div class="container">
       <div class="section-header">
@@ -1338,7 +1656,7 @@
         <h3 class="collision-domain-title">Couples<br>Collisions</h3>
       </div>
       <div class="collision-domain-image">
-        <img src="images/couples-collisions.jpg" alt="couples Collisions">
+        <img src="images/couples-collisions.jpg" alt="Couples Collisions">
       </div>
 
       <div class="splide collision-splide" aria-label="Couples collisions and synergy">
@@ -1569,7 +1887,7 @@
     <div class="container">
       <h2>Find out which Parser<br><em>you are.</em></h2>
       <p>The Parser Profile shows you your lens — and gives you language for the friction that's been hard to explain.</p>
-      <a href="/assessment.html" class="cta-btn">Begin Your Parser Profile →</a>
+      <a href="/assessment.html" class="cta-btn">Begin Your Parser Profile &rarr;</a>
       <a href="/individual.html" class="cta-link">What's a Parser Profile?</a>
     </div>
   </div>
@@ -1579,24 +1897,26 @@
     <div class="f-inner">
       <div class="f-brand">
         <img src="images/cbi-logo.jpg" alt="CBI" class="f-logo">
-        <span class="f-name">J.D. Mercer</span>
+        <span class="f-name">27 Parser</span>
       </div>
       <div class="f-meta">
         Parser Frame™ · Cognition Blocks Intelligence Framework<br>
         U.S. Copyright TXu 2-497-721<br>
         © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
-        <a href="/individual.html">Parser Profile →</a>
+        <a href="/individual.html">Parser Profile &rarr;</a>
       </div>
       <div class="f-disclaimer">
         Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · © 2025–2026 Cognition Blocks LLC
       </div>
     </div>
   </footer>
+
+  <!-- SCROLL REVEAL -->
   <script>
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.ref-item,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
+    var sel='.hook-logo,.hook-number,.hook-word,.hook-line,.hook-inner .layer-cta,.spec-grid,.spec-copy,.layer-spec .layer-cta,.story-panel,.story-hook,.layer-story .layer-cta,.system-title,.system-subtitle,.product-card,.system-framework,.layer-system .layer-cta,.report-preview,.proof-quote,.proof-guarantee,.layer-proof .layer-cta,.section-header,.group-header,.group-image,.collision-domain-header,.cta-band h2,.cta-band p,.cta-btn,.section-title,.section-sub';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
@@ -1619,21 +1939,20 @@
       if (typeof Splide === 'undefined') return;
       document.querySelectorAll('.parser-splide').forEach(function (el) {
         new Splide(el, {
-          perPage: 3,   // Display 3 cards at a time on desktop
-          perMove: 1,   // Scroll 1 card at a time on arrow click
+          perPage: 3,
+          perMove: 1,
           gap: '20px',
           breakpoints: {
-            768: { perPage: 1 } // Drop to 1 card on mobile devices
+            768: { perPage: 1 }
           }
         }).mount();
       });
-      // Collision domains: one block at a time, full space each
       document.querySelectorAll('.collision-splide').forEach(function (el) {
         new Splide(el, {
           perPage: 1,
           perMove: 1,
           gap: '24px',
-          autoHeight: true,   // give each block exactly the room it needs
+          autoHeight: true,
           arrows: true,
           pagination: true
         }).mount();
