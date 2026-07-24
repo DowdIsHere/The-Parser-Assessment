@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sibling Parsers™ | When Brothers and Sisters Collide</title>
+  <meta name="description" content="Why do your kids clash? It's not personality — it's geometry. See how different parsers create friction, find complement, and learn to share a house.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
+      --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
+      --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
+      --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
+      --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
+      --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
+      --amber: #D8B45E;
+      --ink: #FAF7F0; --ink-soft: #F2ECE0; --ink-card: #FFFDF9;
+      --gold: #9A7B2E; --gold-bright: #B8922A; --gold-pale: #8A6D24;
+      --cream: #1E1813; --cream-dim: #4A3F35;
+      --rule: rgba(60,45,25,0.12); --rule-soft: rgba(60,45,25,0.07);
+      --text: #1E1813; --text-soft: #4A3F35;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 112.5%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 1rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .container-narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,247,240,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    .h-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold-bright); }
+    nav a.cta {
+      background: var(--blue-500);
+      color: #fff; font-weight: 600;
+      padding: 9px 20px; border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    nav a.cta:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .nav-dd-caret { width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none; opacity: 0.65; transition: transform 0.25s ease; }
+    .nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-dd-menu {
+      position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 184px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-md); padding: 7px;
+      display: flex; flex-direction: column; gap: 1px;
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; z-index: 200;
+    }
+    .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .nav-dd-menu a {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: none;
+      color: var(--text-soft); padding: 10px 12px; border-radius: 8px; white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+    }
+    .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold-pale); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 120px 0 96px;
+      position: relative;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--amber);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 1px; background: var(--amber);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 500; line-height: 1.0;
+      letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic; font-weight: 500; color: var(--amber);
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: 1.2rem; line-height: 1.7;
+      color: rgba(255,255,255,0.78); max-width: 54ch;
+      font-style: italic; margin-bottom: 40px;
+    }
+    .hero-image-box {
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-image-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 18px,
+        rgba(255,255,255,0.035) 18px, rgba(255,255,255,0.035) 36px
+      );
+    }
+    .img-placeholder {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      position: relative;
+    }
+    .hero-image-box .img-placeholder { color: rgba(255,255,255,0.5); }
+    .hero-stats {
+      display: flex; gap: 40px;
+    }
+    .stat-item .num {
+      font-family: var(--font-display);
+      font-size: 2.8rem; font-weight: 500;
+      color: #fff; line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-item .label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+    }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--ink-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 64px 0;
+    }
+    .intro-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 500; line-height: 1.55;
+      color: var(--cream); max-width: 80ch;
+      letter-spacing: -0.01em;
+    }
+    .intro-text em { font-style: italic; color: var(--gold-pale); }
+
+    /* ── SECTION STRUCTURE ── */
+    .section { padding: 96px 0; }
+    .section-header {
+      display: flex; align-items: baseline;
+      gap: 24px; margin-bottom: 64px;
+    }
+    .section-num {
+      font-family: var(--font-display);
+      font-size: 5rem; font-weight: 500;
+      color: rgba(184,146,42,0.22);
+      line-height: 1; letter-spacing: -0.04em;
+      flex-shrink: 0;
+    }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 500; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--cream);
+    }
+    .section-title em { font-style: italic; color: var(--gold-pale); }
+    .section-sub {
+      font-size: 1rem; color: var(--text-soft);
+      line-height: 1.75; max-width: 62ch;
+      margin-top: 16px;
+    }
+
+    /* ── WHAT YOU GET GRID ── */
+    .what-section { padding: 96px 0; border-top: 1px solid var(--rule); }
+    .what-part-header {
+      margin-bottom: 40px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .what-part-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .what-part-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.01em; line-height: 1.15;
+    }
+    .what-part-title em { font-style: italic; color: var(--gold-pale); }
+    .what-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 36px 48px; margin-bottom: 64px;
+    }
+    .what-grid:last-child { margin-bottom: 0; }
+    .what-card { background: transparent; border: none; padding: 0; }
+    .what-num {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .what-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 8px; line-height: 1.25;
+    }
+    .what-card p {
+      font-size: 0.875rem; color: var(--text-soft); line-height: 1.7;
+    }
+
+    /* ── COLLISION SECTION ── */
+    .collision-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--rule);
+      background: var(--ink-soft);
+    }
+    .collision-domain-header { margin-bottom: 56px; }
+    .collision-domain-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .collision-domain-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.025em; line-height: 1.05;
+    }
+    .collision-domain-image {
+      aspect-ratio: 21/6; background: var(--ink-card);
+      border: 1px solid var(--rule); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 40px 0; position: relative; overflow: hidden;
+    }
+    .collision-domain-image::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 14px,
+        rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
+      );
+    }
+    .faceoff {
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      border-radius: 6px; overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .faceoff-header {
+      background: var(--blue-50);
+      border-bottom: 1px solid var(--rule);
+      padding: 20px 28px;
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .faceoff-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--blue-600);
+      background: var(--blue-100);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .faceoff-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .faceoff-body {
+      padding: 28px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px;
+    }
+    .faceoff-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--text-muted); margin-bottom: 10px;
+    }
+    .faceoff-col h4 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .faceoff-col p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+    .faceoff-col.through { border-left: 1px solid var(--rule); padding-left: 28px; }
+    .faceoff-col.through h4 { color: var(--gold-pale); }
+
+    .synergy {
+      background:
+        linear-gradient(160deg, rgba(184,146,42,0.12) 0%, rgba(184,146,42,0.03) 55%, transparent 100%),
+        var(--ink-card);
+      border: 1px solid rgba(184,146,42,0.32);
+      border-radius: 6px; overflow: hidden; margin-bottom: 24px;
+    }
+    .synergy-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(184,146,42,0.22);
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .synergy-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: #1c1608;
+      background: var(--gold);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .synergy-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .synergy-body { padding: 28px; }
+    .synergy-setup { font-size: 0.9rem; color: var(--text-soft); line-height: 1.7; margin-bottom: 24px; }
+    .synergy-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 24px; }
+    .synergy-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 10px;
+    }
+    .synergy-col p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+    .synergy-payoff { border-top: 1px solid rgba(184,146,42,0.22); padding-top: 20px; }
+    .synergy-payoff-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 10px;
+    }
+    .synergy-payoff h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--gold-pale); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .synergy-payoff p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+
+    .collision-splide { position: relative; padding-bottom: 60px; margin-bottom: 8px; }
+    .collision-splide .splide__slide { height: auto; }
+    .collision-splide .faceoff,
+    .collision-splide .synergy { margin-bottom: 0; }
+    .collision-splide .splide__arrow {
+      top: auto; bottom: 0; transform: none;
+      width: 42px; height: 42px;
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.28); opacity: 1;
+    }
+    .collision-splide .splide__arrow svg { width: 16px; height: 16px; fill: var(--gold); }
+    .collision-splide .splide__arrow:disabled { opacity: 0.32; }
+    .collision-splide .splide__arrow--prev { left: auto; right: 54px; }
+    .collision-splide .splide__arrow--next { right: 0; }
+    .collision-splide .splide__pagination {
+      bottom: 14px; left: 2px; right: auto;
+      justify-content: flex-start; padding: 0;
+    }
+    .collision-splide .splide__pagination__page { background: rgba(255,255,255,0.22); margin: 0 5px; }
+    .collision-splide .splide__pagination__page.is-active { background: var(--gold); transform: scale(1.5); }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 96px 0;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(184,146,42,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; letter-spacing: -0.025em;
+      color: #fff; margin-bottom: 20px;
+      position: relative;
+    }
+    .cta-band h2 em { font-style: italic; color: var(--amber); }
+    .cta-band p {
+      font-family: var(--font-display);
+      font-size: 1.2rem; color: rgba(255,255,255,0.78);
+      line-height: 1.7; max-width: 52ch; font-style: italic;
+      margin: 0 auto 40px; position: relative;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff;
+      color: var(--blue-900); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .cta-btn:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+    .cta-link {
+      display: inline-block; margin-left: 22px;
+      color: rgba(255,255,255,0.82); font-family: var(--font-body);
+      font-size: 0.98rem; font-weight: 500; text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .cta-link:hover { color: #fff; border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border);
+      background: var(--blue-900);
+      color: rgba(255,255,255,0.6);
+    }
+    .f-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 24px; flex-wrap: wrap;
+    }
+    .f-brand { display: flex; align-items: center; gap: 12px; }
+    .f-logo { width: 32px; height: 32px; border-radius: 5px; object-fit: cover; }
+    .f-name {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; color: #fff;
+    }
+    .f-meta {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.5); line-height: 1.9; text-align: right;
+    }
+    .f-meta a { color: var(--blue-100); text-decoration: none; }
+    .f-meta a:hover { color: #fff; }
+    .f-disclaimer {
+      width: 100%; margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.4); line-height: 1.8;
+      text-align: center;
+    }
+
+    /* ── MOTION ── */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js-anim [data-reveal] {
+        opacity: 0; transform: translateY(26px); filter: blur(6px);
+        transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
+                    transform .85s cubic-bezier(0.22,0.61,0.36,1),
+                    filter .85s cubic-bezier(0.22,0.61,0.36,1);
+        will-change: opacity, transform;
+      }
+      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-image-box { aspect-ratio: 16/9; }
+      .faceoff-body { grid-template-columns: 1fr; }
+      .faceoff-col.through { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 20px; }
+      .synergy-cols { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      .container-narrow { padding: 0 20px; }
+      .what-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .cta-link { display: block; margin: 22px auto 0; width: max-content; }
+    }
+  
+    /* ── BRAND MARK ──
+       27parser.png is a transparent horizontal lockup whose artwork occupies
+       only the middle of its canvas (ink 993x363 at offset 193,294 of
+       1536x1024). Sizing the image directly renders the mark at ~35% of the
+       height asked for, so it is cropped to its ink box here. Set --w to the
+       desired mark width; the asset itself is never modified. */
+    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
+    .mark {
+      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
+      width: var(--w); flex: none;
+      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
+      background-image: url('/27parser.png');
+      background-repeat: no-repeat;
+      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
+      background-position:
+        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
+        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
+    }
+    .logo .mark { --w: 93px; }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
+  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo">
+        <span class="mark" role="img" aria-label="27Parser™"></span>
+      </a>
+      <nav id="siteNav">
+        <div class="nav-dd">
+          <a href="/assessment.html" class="nav-dd-top">Assessments <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/assessment.html">Individual</a>
+            <a href="/kids-assessment.html">Kids</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/individual.html" class="nav-dd-top">Analysis <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/individual.html">Individual</a>
+            <a href="/kids-individual.html">Kids</a>
+            <a href="/couples.html">Couples</a>
+            <a href="/dating.html">Dating</a>
+            <a href="/social.html">Social</a>
+            <a href="/siblings.html">Siblings</a>
+            <a href="/family.html">Family</a>
+            <a href="/professionals.html">Professional Teams</a>
+            <a href="/billets.html">Billets</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/collisions.html" class="nav-dd-top">Parser Collisions <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/collisions.html#individual">Individual</a>
+            <a href="/collisions.html#kids">Kids</a>
+            <a href="/collisions.html#couples">Couples</a>
+            <a href="/collisions.html#dating">Dating</a>
+            <a href="/collisions.html#social">Social</a>
+            <a href="/collisions.html#siblings">Siblings</a>
+            <a href="/collisions.html#family">Family</a>
+            <a href="/collisions.html#teams">Professional Teams</a>
+            <a href="/collisions.html#billets">Billets</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-scrim"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Parser Frame™ · Sibling Edition</div>
+        <h1>When<br><em>Siblings</em><br>Collide.</h1>
+        <p class="hero-sub">They share a house, parents, and history — but not a lens. The same moment hits two kids completely differently. Once you see the geometry, the fights start making sense.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="num">351</div>
+            <div class="label">Sibling Pairings</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">3</div>
+            <div class="label">Collision Axes</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">1</div>
+            <div class="label">is for you</div>
+          </div>
+        </div>
+        <div class="hero-actions" style="margin-top:36px;">
+          <a href="/kids-assessment.html" class="cta-btn">Start with Each Kid's Parser →</a>
+        </div>
+      </div>
+      <div class="hero-image-box">
+        <!-- IMAGE PLACEHOLDER: Siblings hero image -->
+        <span class="img-placeholder">Sibling Parsers · Hero Image</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <div class="container-narrow">
+      <p class="intro-text">One kid holds the facts. One kid holds the feelings. One plans ahead. One stays present. <em>None of them is wrong.</em> They're just processing the same family through completely different architectures — and that's where the friction lives.</p>
+    </div>
+  </div>
+
+  <!-- ═══ WHAT YOU GET ═══ -->
+  <section class="what-section section" id="what-you-get">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">What You Get</div>
+          <h2 class="section-title">A map of the<br><em>space between them.</em></h2>
+          <p class="section-sub">The Sibling Dynamic Report shows how two parsers interact — where they'll clash, where they'll click, and what each one needs from the other.</p>
+        </div>
+      </div>
+
+      <div class="what-part-header">
+        <div class="what-part-eyebrow">The Sibling Dynamic Report</div>
+        <div class="what-part-title">For any two kids in the <em>same house.</em></div>
+      </div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>The Two Parsers</h3>
+          <p>A side-by-side breakdown of how each child's lens works — what they notice first, what they miss, and what they need to feel understood.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>Where They Collide</h3>
+          <p>The specific friction points between these two parsers. Not personality clashes — structural geometry. The fights they'll keep having until they see the shape.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>Where They Click</h3>
+          <p>The coordinates they share and the strengths that complement each other. What each one brings that the other lacks.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>Triggers to Watch</h3>
+          <p>The specific situations, phrases, or moments that will reliably create conflict between these two — and why.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">V</div>
+          <h3>What Each Needs From the Other</h3>
+          <p>The translation each child needs to feel seen by their sibling — written in terms they can actually hear.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VI</div>
+          <h3>Parent Navigation Guide</h3>
+          <p>How to referee without taking sides. The intervention language that acknowledges both lenses instead of correcting one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ THE COLLISION TYPES ═══ -->
+  <section class="collision-section" id="collisions">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">The Geometry</div>
+          <h2 class="section-title">The fights that<br><em>keep happening.</em></h2>
+          <p class="section-sub">Every sibling conflict maps to one of three axes. The same argument over and over isn't a behavior problem — it's a structural collision that hasn't been named.</p>
+        </div>
+      </div>
+
+      <!-- TIME COLLISIONS -->
+      <div class="collision-domain-header" id="collide-time">
+        <div class="collision-domain-eyebrow">Axis One</div>
+        <h3 class="collision-domain-title">Time<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Time Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Time collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Past × Future</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One sibling remembers everything — who said what, who started it, what happened last time. The other is already imagining what they could build next. They're in completely different time zones.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You always make stuff up!" vs. "You never want to try anything new!" Past feels dismissed. Future feels trapped. Both think the other is avoiding reality.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Give them different jobs.</h4>
+            <p>Past is the quality checker — "Did this work before?" Future is the idea starter — "What could we try?" When both roles are honored, the fight over who's right dissolves.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Past × Present</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One sibling is still processing what happened yesterday, last week, last year. The other lives completely in the now — what's happening right in front of them is all that exists.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Why are you still upset about that?" vs. "Why don't you care about anything?" Present can't understand why old things keep coming back. Past can't understand how you just move on.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Neither is overreacting or underreacting.</h4>
+            <p>Past needs completion before release. Present processes in the moment and lets go. Help Present understand that some kids carry things longer. Help Past see that Present's moving on isn't coldness.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #3</span>
+          <div><div class="faceoff-title">Future × Present</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One sibling is planning three steps ahead — what happens next, what they're building toward. The other is fully here, doing what they're doing right now, not thinking about later.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"We need a plan!" vs. "Just do it!" Future gets frustrated that Present won't think ahead. Present gets frustrated that Future won't start anything until it's perfect.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Plan first, then do. Or do first, then plan.</h4>
+            <p>Build a sequence they both accept. Future gets planning time. Present gets action time. Neither has to abandon their orientation — they just take turns.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">When Time Differences Complete Each Other</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">The same time differences that cause fights are exactly what give a sibling pair a complete timeline. One holds where they've been. One holds where they're going. One holds right now.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Past Brings</div>
+              <p>Memory, continuity, learning from experience. The record of what worked and what didn't. The keeper of family stories.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Future Brings</div>
+              <p>Vision, direction, imagination. The ability to see what's coming and plan for it. The dreamer who pulls everyone forward.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A sibling pair with both roots and wings.</h4>
+            <p>When all three time orientations are represented, the siblings together have complete coverage. Someone remembers. Someone dreams. Someone acts. The family has history, presence, and direction.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- REFERENCE COLLISIONS -->
+      <div class="collision-domain-header" id="collide-reference" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Axis Two</div>
+        <h3 class="collision-domain-title">Reference<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Reference Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Reference collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Self × Other</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One sibling processes from the inside out — their own experience, their own needs, their own understanding. The other tracks everyone else first — reading the room, feeling the group, noticing what's needed.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You only think about yourself!" vs. "You're so obsessed with what everyone thinks!" Self feels monitored. Other feels like they're doing all the relational work.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Self-reference isn't selfishness. Other-reference isn't anxiety.</h4>
+            <p>Help Self understand that Other's attunement is real perception, not performance. Help Other see that Self's internal focus isn't rejection — it's just where their attention goes first.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Other × Other</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both siblings are tuned outward — tracking what everyone needs, how people are feeling, what the group wants. Neither naturally tracks their own needs first.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You should have said something!" Both over-accommodate. Both lose themselves. Neither admits what they actually want until it's too late.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Two outward-facing kids need permission to be selfish.</h4>
+            <p>Build explicit practices where each states what they want — not what's fair, not what's nice, what they actually want. Take turns. Make it required.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #3</span>
+          <div><div class="faceoff-title">Self × Self</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both siblings process from internal reference. Both know what they want. Neither naturally tracks how their choices affect the other.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Two parallel kids, both clear on their own position, neither checking if the other is okay. "Why didn't you ask?" "Why didn't you say something?"</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Build the check-in into the system.</h4>
+            <p>Neither will naturally ask. Create rituals that require it. "Before we decide, each person says what they want." Structure replaces instinct.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">When Reference Differences Balance Each Other</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">One sibling holds the individual. One sibling holds the relational. Together they have both — healthy independence and genuine connection.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Self Brings</div>
+              <p>Clarity, boundaries, knowing one's own mind. The ability to say no. The anchor that keeps someone from disappearing into others.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Other Brings</div>
+              <p>Attunement, care, social awareness. The ability to notice when something's wrong. The thread that holds relationships together.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A sibling pair with both anchor and thread.</h4>
+            <p>Self-oriented siblings keep the family from losing individuals. Other-oriented siblings keep the family from fragmenting. Together they build a system that protects both autonomy and connection.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ALTITUDE COLLISIONS -->
+      <div class="collision-domain-header" id="collide-altitude" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Axis Three</div>
+        <h3 class="collision-domain-title">Altitude<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Altitude Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Altitude collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Abstract × Concrete</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One sibling sees the big picture — patterns, principles, what things mean. The other sees the specific — what actually happened, what was actually said, what's actually in front of them.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You're missing the point!" vs. "You're not listening to what happened!" Abstract explains the pattern. Concrete needs the particular acknowledged first. Neither feels heard.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Specific first, then pattern.</h4>
+            <p>Abstract isn't avoiding the concrete — they're framing. Concrete isn't missing the pattern — they're grounding. Land the specific thing before zooming out. Sequence matters.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Abstract × Abstract</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both siblings think in patterns, systems, and big ideas. Conversations spiral into meta-discussion. They're talking about talking about it.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Nothing lands. Both are theorizing. Neither gets practical. The argument keeps escalating because no one is naming the specific thing that actually happened.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Force the landing.</h4>
+            <p>"Give me one specific example." Two abstract kids need an external prompt to get concrete. Build the question into family practice: "What's one specific thing?"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #3</span>
+          <div><div class="faceoff-title">Concrete × Concrete</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Both siblings deal in specifics. What exactly was said. What exactly happened. Who did what when. No one is tracking the pattern.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Detail warfare. "You said X." "No, I said Y." The argument gets stuck in micro-facts while the real issue — the pattern, the meaning, the why — goes unnamed.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Someone has to ask "What's this really about?"</h4>
+            <p>Two concrete kids may need a parent to invoke the abstract. "Pause. Forget the exact words. What's the actual issue here?" Lift them out of the details.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">When Altitude Differences Create Depth</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">One sibling holds the specific. One sibling holds the pattern. Together they have both — accuracy and meaning.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Concrete Brings</div>
+              <p>Precision, evidence, grounding. The ability to deal with what's actually happening. The facts that keep abstract thinking honest.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Abstract Brings</div>
+              <p>Pattern recognition, meaning-making, the big picture. The ability to see what things add up to. The interpretation that gives facts significance.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A sibling pair that's both true and meaningful.</h4>
+            <p>Concrete keeps the family honest about what's happening. Abstract helps the family understand what it means. Together they build a house where both facts and interpretations matter.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="container">
+      <h2>Map <em>your</em> kids.<br>Then see the collision.</h2>
+      <p>Start with each child's parser. Then get the Sibling Dynamic Report that shows where they clash, where they click, and what each one needs from the other.</p>
+      <a href="/kids-assessment.html" class="cta-btn">Start with the Kid Assessment →</a>
+      <div style="height: 24px;"></div>
+      <a href="/family.html" class="cta-link">See the full Family Parser Report</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-inner">
+      <div class="f-brand">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="f-logo">
+        <span class="f-name">J.D. Mercer</span>
+      </div>
+      <div class="f-meta">
+        Parser Frame™ · Sibling Edition<br>
+        Cognition Blocks Intelligence Framework<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
+        <a href="/kids-assessment.html">Kid Assessment →</a>
+      </div>
+      <div class="f-disclaimer">
+        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
+        U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
+        Non-clinical educational content · Not a psychological assessment<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll reveal -->
+  <script>
+  (function(){
+    var root=document.documentElement;
+    if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
+    var sel='.hero h1,.hero-sub,.hero-eyebrow,.hero-stats,.hero-actions,.section-header,.collision-domain-header,.collision-domain-image,.cta-band h2,.cta-band p,.cta-btn,.intro-text,.section-title,.section-sub,.what-part-header,.what-grid';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    if(!els.length)return;
+    els.forEach(function(el){el.setAttribute('data-reveal','');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var t=e.target,p=t.parentNode,i=p?[].indexOf.call(p.children,t):0;
+          t.style.transitionDelay=(Math.min(i,6)*60)+'ms';
+          t.classList.add('in');io.unobserve(t);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+  })();
+  </script>
+
+  <!-- Splide carousel -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof Splide === 'undefined') return;
+      document.querySelectorAll('.collision-splide').forEach(function (el) {
+        new Splide(el, {
+          perPage: 1,
+          perMove: 1,
+          gap: '0px'
+        }).mount();
+      });
+    });
+  </script>
+
+  <script src="/mobile-nav.js" defer></script>
+</body>
+</html>

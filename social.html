@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Parsers™ | How You Show Up in Groups</title>
+  <meta name="description" content="Why do some friendships click instantly while others never quite land? It's not chemistry — it's geometry. See how your parser shapes every social interaction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
+      --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
+      --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
+      --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
+      --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
+      --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
+      --amber: #D8B45E;
+      --ink: #FAF7F0; --ink-soft: #F2ECE0; --ink-card: #FFFDF9;
+      --gold: #9A7B2E; --gold-bright: #B8922A; --gold-pale: #8A6D24;
+      --cream: #1E1813; --cream-dim: #4A3F35;
+      --rule: rgba(60,45,25,0.12); --rule-soft: rgba(60,45,25,0.07);
+      --text: #1E1813; --text-soft: #4A3F35;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 112.5%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 1rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .container-narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,247,240,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    .h-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold-bright); }
+    nav a.cta {
+      background: var(--blue-500);
+      color: #fff; font-weight: 600;
+      padding: 9px 20px; border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    nav a.cta:hover { background: var(--blue-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .nav-dd-caret { width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none; opacity: 0.65; transition: transform 0.25s ease; }
+    .nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-dd-menu {
+      position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 184px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-md); padding: 7px;
+      display: flex; flex-direction: column; gap: 1px;
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; z-index: 200;
+    }
+    .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .nav-dd-menu a {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: none;
+      color: var(--text-soft); padding: 10px 12px; border-radius: 8px; white-space: nowrap;
+      transition: background 0.18s, color 0.18s;
+    }
+    .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold-pale); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 120px 0 96px;
+      position: relative;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 32px;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--amber);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 1px; background: var(--amber);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 500; line-height: 1.0;
+      letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic; font-weight: 500; color: var(--amber);
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: 1.2rem; line-height: 1.7;
+      color: rgba(255,255,255,0.78); max-width: 54ch;
+      font-style: italic; margin-bottom: 40px;
+    }
+    .hero-image-box {
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-image-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 18px,
+        rgba(255,255,255,0.035) 18px, rgba(255,255,255,0.035) 36px
+      );
+    }
+    .img-placeholder {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--text-muted);
+      position: relative;
+    }
+    .hero-image-box .img-placeholder { color: rgba(255,255,255,0.5); }
+    .hero-stats {
+      display: flex; gap: 40px;
+    }
+    .stat-item .num {
+      font-family: var(--font-display);
+      font-size: 2.8rem; font-weight: 500;
+      color: #fff; line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-item .label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+    }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--ink-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 64px 0;
+    }
+    .intro-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 500; line-height: 1.55;
+      color: var(--cream); max-width: 80ch;
+      letter-spacing: -0.01em;
+    }
+    .intro-text em { font-style: italic; color: var(--gold-pale); }
+
+    /* ── SECTION STRUCTURE ── */
+    .section { padding: 96px 0; }
+    .section-header {
+      display: flex; align-items: baseline;
+      gap: 24px; margin-bottom: 64px;
+    }
+    .section-num {
+      font-family: var(--font-display);
+      font-size: 5rem; font-weight: 500;
+      color: rgba(184,146,42,0.22);
+      line-height: 1; letter-spacing: -0.04em;
+      flex-shrink: 0;
+    }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 500; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--cream);
+    }
+    .section-title em { font-style: italic; color: var(--gold-pale); }
+    .section-sub {
+      font-size: 1rem; color: var(--text-soft);
+      line-height: 1.75; max-width: 62ch;
+      margin-top: 16px;
+    }
+
+    /* ── WHAT YOU GET GRID ── */
+    .what-section { padding: 96px 0; border-top: 1px solid var(--rule); }
+    .what-part-header {
+      margin-bottom: 40px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .what-part-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .what-part-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.01em; line-height: 1.15;
+    }
+    .what-part-title em { font-style: italic; color: var(--gold-pale); }
+    .what-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 36px 48px; margin-bottom: 64px;
+    }
+    .what-grid:last-child { margin-bottom: 0; }
+    .what-card { background: transparent; border: none; padding: 0; }
+    .what-num {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .what-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 8px; line-height: 1.25;
+    }
+    .what-card p {
+      font-size: 0.875rem; color: var(--text-soft); line-height: 1.7;
+    }
+
+    /* ── COLLISION SECTION ── */
+    .collision-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--rule);
+      background: var(--ink-soft);
+    }
+    .collision-domain-header { margin-bottom: 56px; }
+    .collision-domain-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .collision-domain-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.025em; line-height: 1.05;
+    }
+    .collision-domain-image {
+      aspect-ratio: 21/6; background: var(--ink-card);
+      border: 1px solid var(--rule); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 40px 0; position: relative; overflow: hidden;
+    }
+    .collision-domain-image::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 14px,
+        rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
+      );
+    }
+    .faceoff {
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      border-radius: 6px; overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .faceoff-header {
+      background: var(--blue-50);
+      border-bottom: 1px solid var(--rule);
+      padding: 20px 28px;
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .faceoff-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--blue-600);
+      background: var(--blue-100);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .faceoff-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .faceoff-body {
+      padding: 28px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px;
+    }
+    .faceoff-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--text-muted); margin-bottom: 10px;
+    }
+    .faceoff-col h4 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .faceoff-col p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+    .faceoff-col.through { border-left: 1px solid var(--rule); padding-left: 28px; }
+    .faceoff-col.through h4 { color: var(--gold-pale); }
+
+    .synergy {
+      background:
+        linear-gradient(160deg, rgba(184,146,42,0.12) 0%, rgba(184,146,42,0.03) 55%, transparent 100%),
+        var(--ink-card);
+      border: 1px solid rgba(184,146,42,0.32);
+      border-radius: 6px; overflow: hidden; margin-bottom: 24px;
+    }
+    .synergy-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(184,146,42,0.22);
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .synergy-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: #1c1608;
+      background: var(--gold);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .synergy-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .synergy-body { padding: 28px; }
+    .synergy-setup { font-size: 0.9rem; color: var(--text-soft); line-height: 1.7; margin-bottom: 24px; }
+    .synergy-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 24px; }
+    .synergy-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 10px;
+    }
+    .synergy-col p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+    .synergy-payoff { border-top: 1px solid rgba(184,146,42,0.22); padding-top: 20px; }
+    .synergy-payoff-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 10px;
+    }
+    .synergy-payoff h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--gold-pale); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .synergy-payoff p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+
+    .collision-splide { position: relative; padding-bottom: 60px; margin-bottom: 8px; }
+    .collision-splide .splide__slide { height: auto; }
+    .collision-splide .faceoff,
+    .collision-splide .synergy { margin-bottom: 0; }
+    .collision-splide .splide__arrow {
+      top: auto; bottom: 0; transform: none;
+      width: 42px; height: 42px;
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.28); opacity: 1;
+    }
+    .collision-splide .splide__arrow svg { width: 16px; height: 16px; fill: var(--gold); }
+    .collision-splide .splide__arrow:disabled { opacity: 0.32; }
+    .collision-splide .splide__arrow--prev { left: auto; right: 54px; }
+    .collision-splide .splide__arrow--next { right: 0; }
+    .collision-splide .splide__pagination {
+      bottom: 14px; left: 2px; right: auto;
+      justify-content: flex-start; padding: 0;
+    }
+    .collision-splide .splide__pagination__page { background: rgba(255,255,255,0.22); margin: 0 5px; }
+    .collision-splide .splide__pagination__page.is-active { background: var(--gold); transform: scale(1.5); }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 96px 0;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(184,146,42,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; letter-spacing: -0.025em;
+      color: #fff; margin-bottom: 20px;
+      position: relative;
+    }
+    .cta-band h2 em { font-style: italic; color: var(--amber); }
+    .cta-band p {
+      font-family: var(--font-display);
+      font-size: 1.2rem; color: rgba(255,255,255,0.78);
+      line-height: 1.7; max-width: 52ch; font-style: italic;
+      margin: 0 auto 40px; position: relative;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff;
+      color: var(--blue-900); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .cta-btn:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+    .cta-link {
+      display: inline-block; margin-left: 22px;
+      color: rgba(255,255,255,0.82); font-family: var(--font-body);
+      font-size: 0.98rem; font-weight: 500; text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .cta-link:hover { color: #fff; border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border);
+      background: var(--blue-900);
+      color: rgba(255,255,255,0.6);
+    }
+    .f-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 24px; flex-wrap: wrap;
+    }
+    .f-brand { display: flex; align-items: center; gap: 12px; }
+    .f-logo { width: 32px; height: 32px; border-radius: 5px; object-fit: cover; }
+    .f-name {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; color: #fff;
+    }
+    .f-meta {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.5); line-height: 1.9; text-align: right;
+    }
+    .f-meta a { color: var(--blue-100); text-decoration: none; }
+    .f-meta a:hover { color: #fff; }
+    .f-disclaimer {
+      width: 100%; margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.4); line-height: 1.8;
+      text-align: center;
+    }
+
+    /* ── MOTION ── */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js-anim [data-reveal] {
+        opacity: 0; transform: translateY(26px); filter: blur(6px);
+        transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
+                    transform .85s cubic-bezier(0.22,0.61,0.36,1),
+                    filter .85s cubic-bezier(0.22,0.61,0.36,1);
+        will-change: opacity, transform;
+      }
+      html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-image-box { aspect-ratio: 16/9; }
+      .faceoff-body { grid-template-columns: 1fr; }
+      .faceoff-col.through { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 20px; }
+      .synergy-cols { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      .container-narrow { padding: 0 20px; }
+      .what-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .cta-link { display: block; margin: 22px auto 0; width: max-content; }
+    }
+  
+    /* ── BRAND MARK ──
+       27parser.png is a transparent horizontal lockup whose artwork occupies
+       only the middle of its canvas (ink 993x363 at offset 193,294 of
+       1536x1024). Sizing the image directly renders the mark at ~35% of the
+       height asked for, so it is cropped to its ink box here. Set --w to the
+       desired mark width; the asset itself is never modified. */
+    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
+    .mark {
+      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
+      width: var(--w); flex: none;
+      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
+      background-image: url('/27parser.png');
+      background-repeat: no-repeat;
+      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
+      background-position:
+        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
+        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
+    }
+    .logo .mark { --w: 93px; }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
+  <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
+  <link rel="stylesheet" href="/mobile-nav.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo">
+        <span class="mark" role="img" aria-label="27Parser™"></span>
+      </a>
+      <nav id="siteNav">
+        <div class="nav-dd">
+          <a href="/assessment.html" class="nav-dd-top">Assessments <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/assessment.html">Individual</a>
+            <a href="/kids-assessment.html">Kids</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/individual.html" class="nav-dd-top">Analysis <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/individual.html">Individual</a>
+            <a href="/kids-individual.html">Kids</a>
+            <a href="/couples.html">Couples</a>
+            <a href="/dating.html">Dating</a>
+            <a href="/social.html">Social</a>
+            <a href="/siblings.html">Siblings</a>
+            <a href="/family.html">Family</a>
+            <a href="/professionals.html">Professional Teams</a>
+            <a href="/billets.html">Billets</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/collisions.html" class="nav-dd-top">Parser Collisions <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/collisions.html#individual">Individual</a>
+            <a href="/collisions.html#kids">Kids</a>
+            <a href="/collisions.html#couples">Couples</a>
+            <a href="/collisions.html#dating">Dating</a>
+            <a href="/collisions.html#social">Social</a>
+            <a href="/collisions.html#siblings">Siblings</a>
+            <a href="/collisions.html#family">Family</a>
+            <a href="/collisions.html#teams">Professional Teams</a>
+            <a href="/collisions.html#billets">Billets</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-scrim"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Parser Frame™ · Social Edition</div>
+        <h1>Social<br><em>by Parser.</em></h1>
+        <p class="hero-sub">Some friendships feel effortless. Others never quite land. The difference isn't personality or shared interests — it's geometry. Two lenses either align or they don't. Now you can see why.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="num">27</div>
+            <div class="label">Social Profiles</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">351</div>
+            <div class="label">Friendship Pairings</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">1</div>
+            <div class="label">is for you</div>
+          </div>
+        </div>
+        <div class="hero-actions" style="margin-top:36px;">
+          <a href="/assessment.html" class="cta-btn">Find Your Parser →</a>
+        </div>
+      </div>
+      <div class="hero-image-box">
+        <!-- IMAGE PLACEHOLDER: Social hero image -->
+        <span class="img-placeholder">Social Parsers · Hero Image</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <div class="container-narrow">
+      <p class="intro-text">You've had friendships where you could finish each other's sentences and friendships where you kept <em>almost</em> connecting. You've walked into rooms where you instantly belonged and rooms where you never quite fit. <em>Your parser explains all of it.</em></p>
+    </div>
+  </div>
+
+  <!-- ═══ WHAT YOU GET ═══ -->
+  <section class="what-section section" id="what-you-get">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">What You Get</div>
+          <h2 class="section-title">Your social<br><em>operating system.</em></h2>
+          <p class="section-sub">How you show up in groups, what you bring to friendships, and why some connections feel like home while others feel like work.</p>
+        </div>
+      </div>
+
+      <div class="what-part-header">
+        <div class="what-part-eyebrow">Your Social Parser Profile</div>
+        <div class="what-part-title">How you <em>actually</em> show up.</div>
+      </div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>In Groups</h3>
+          <p>Where your attention goes in a room full of people. What you track, what you miss, and what role you naturally fall into without trying.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>In Friendships</h3>
+          <p>What you bring to close relationships. How you show up for people, what you need from them, and what makes a friendship feel real to you.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>What Lands</h3>
+          <p>The social inputs that feel good — the kinds of interaction that charge you up instead of draining you.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>What Doesn't</h3>
+          <p>The social dynamics that create friction for your parser — the moments that feel off even when nothing is technically wrong.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">V</div>
+          <h3>Your Social Superpower</h3>
+          <p>What your parser does better than others in social settings. The value you bring that you probably underestimate.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VI</div>
+          <h3>Your Social Blindspot</h3>
+          <p>What your parser misses. The social signals that don't register, the needs you might overlook in others.</p>
+        </div>
+      </div>
+
+      <div class="what-part-header" style="margin-top:48px;">
+        <div class="what-part-eyebrow">Friendship Match Preview</div>
+        <div class="what-part-title">What happens when <em>two parsers</em> become friends.</div>
+      </div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>Natural Alignment</h3>
+          <p>Where your parsers overlap — the coordinates you share that make certain things effortless between you.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>Friction Points</h3>
+          <p>Where your parsers diverge — the structural differences that will create recurring tension unless you name them.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>The Balance</h3>
+          <p>What each of you brings that the other lacks. Why you might need each other more than you realize.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>Translation Guide</h3>
+          <p>How to communicate across the gap. What each of you needs to hear, and how to say it so it lands.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SOCIAL COLLISIONS ═══ -->
+  <section class="collision-section" id="collisions">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">The Geometry</div>
+          <h2 class="section-title">Why some friendships<br><em>feel like work.</em></h2>
+          <p class="section-sub">The friction isn't about compatibility. It's about geometry. Two parsers processing the same friendship through completely different architectures.</p>
+        </div>
+      </div>
+
+      <!-- ENERGY COLLISIONS -->
+      <div class="collision-domain-header" id="collide-energy">
+        <div class="collision-domain-eyebrow">Social Pattern One</div>
+        <h3 class="collision-domain-title">The Initiation<br>Gap</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Initiation Gap · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Initiation collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Future × Present</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One friend is always planning — "We should do this sometime, let's organize that trip." The other lives in the now — they're great when you're together but never initiate.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Future feels like they're doing all the work. Present feels pressured by constant planning. "Why don't you ever reach out?" vs. "Why can't we just be in the moment?"</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Different initiation styles, not different commitment levels.</h4>
+            <p>Future initiates by planning. Present initiates by showing up fully when it happens. Neither is investing less — they're investing differently. Name it and stop keeping score.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Other × Self</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One friend tracks everyone — remembers birthdays, notices when you're off, always checking in. The other is warm when together but doesn't track between hangouts.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Other feels like the friendship is one-sided. Self has no idea anything is wrong — they thought everything was fine. "You never ask about my life" vs. "I didn't know you were going through that."</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Other-oriented friends track automatically. Self-oriented friends track when prompted.</h4>
+            <p>If you're Other, tell Self what you need: "Check in on me sometimes." If you're Self, build the prompt into your system: "I should text them this week."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">When Different Initiation Styles Complete Each Other</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">One friend holds the thread between hangouts. One friend brings full presence when you're together. Both are real investment — just in different currencies.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Future/Other Brings</div>
+              <p>Continuity. The plan that makes it happen. The check-in that keeps the connection alive between moments.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Present/Self Brings</div>
+              <p>Full arrival. No half-presence. When they're there, they're actually there — undistracted, engaged, real.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A friendship with both maintenance and depth.</h4>
+            <p>One keeps it alive. One makes it matter when it happens. Stop tracking who does what and start valuing what each brings.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- DEPTH COLLISIONS -->
+      <div class="collision-domain-header" id="collide-depth" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Social Pattern Two</div>
+        <h3 class="collision-domain-title">The Depth<br>Mismatch</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Depth Mismatch · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Depth collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Abstract × Concrete</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One friend wants to talk about ideas, meaning, the big picture. The other wants to talk about what actually happened — the details, the story, the specific.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>Abstract feels bored by the play-by-play. Concrete feels dismissed by the jump to pattern. "Can we get to the point?" vs. "You're not even listening to what happened."</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Both are real ways of connecting.</h4>
+            <p>Concrete tells the story. Abstract draws the meaning. Take turns: let the details land, then zoom out. Neither is more sophisticated.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Past × Future</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>One friend processes by talking through what happened. The other wants to skip to what's next. Different ways of making sense of things.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Why are we still talking about this?" vs. "Why don't you ever let me finish processing?" Future feels stuck. Past feels rushed.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Let Past complete. Then let Future plan.</h4>
+            <p>Rushing Past creates resentment. Trapping Future creates restlessness. Take turns. "I need to finish this first" / "Okay, then let's talk about what's next."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">When Different Depths Create Range</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">One friend holds the story. One friend sees the arc. Together the friendship has both memory and direction.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Concrete/Past Brings</div>
+              <p>The record. The shared history. "Remember when..." The richness that comes from actually tracking what happened.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Abstract/Future Brings</div>
+              <p>The trajectory. Where the friendship is going. What it could become. The vision that keeps it growing.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A friendship that knows where it's been and where it's going.</h4>
+            <p>History without vision stagnates. Vision without history floats. Together you get both — a friendship with roots and direction.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP DYNAMICS -->
+      <div class="collision-domain-header" id="collide-group" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Social Pattern Three</div>
+        <h3 class="collision-domain-title">Group<br>Dynamics</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Group Dynamics · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Group collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Self × Other in Groups</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Self-oriented shows up as themselves regardless of the room. Other-oriented reads and adapts to the group energy. Both think the other is doing it wrong.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Why do you change who you are depending on who you're with?" vs. "Why don't you ever read the room?" Self seems rigid. Other seems fake. Neither is true.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Consistency isn't stubbornness. Adaptation isn't inauthenticity.</h4>
+            <p>Self brings the same person to every room — that's stability. Other brings the version of themselves that serves the room — that's attunement. Both are real.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">The Spotlight Question</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Some parsers naturally draw attention. Others fade into the background. In groups, this creates dynamics that neither may fully see.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>The spotlight person doesn't notice they're taking all the oxygen. The background person doesn't realize they're retreating. Neither is trying to dominate or disappear.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Make the invisible visible.</h4>
+            <p>If you draw attention, actively redirect it: "What do you think?" If you fade, practice taking space: "I have something to add." Both can learn the other's move.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">When Different Group Styles Create Balance</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">Some friends anchor a group. Others read it. Together you get both — someone to hold the center and someone to track the edges.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Self/Center Brings</div>
+              <p>An anchor. A stable presence people can orient around. Someone who doesn't shift with every wind.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">What Other/Edge Brings</div>
+              <p>Awareness. Who's being left out, what's not being said, where the tension is. The radar that keeps the group healthy.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A friend group with both stability and sensitivity.</h4>
+            <p>The center holds. The edges get watched. No one dominates and no one disappears. That's geometric balance.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="container">
+      <h2>See how <em>you</em> show up.</h2>
+      <p>5 minutes. 15 questions. A complete map of your social architecture — what you bring to friendships, what you need from them, and why some connections click while others don't.</p>
+      <a href="/assessment.html" class="cta-btn">Take the Assessment →</a>
+      <div style="height: 24px;"></div>
+      <a href="/dating.html" class="cta-link">Looking for romantic connections? See Dating</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-inner">
+      <div class="f-brand">
+        <img src="images/cbi-logo.jpg" alt="CBI" class="f-logo">
+        <span class="f-name">J.D. Mercer</span>
+      </div>
+      <div class="f-meta">
+        Parser Frame™ · Social Edition<br>
+        Cognition Blocks Intelligence Framework<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
+        <a href="/assessment.html">Take the Assessment →</a>
+      </div>
+      <div class="f-disclaimer">
+        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
+        U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
+        Non-clinical educational content · Not a psychological assessment<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll reveal -->
+  <script>
+  (function(){
+    var root=document.documentElement;
+    if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
+    var sel='.hero h1,.hero-sub,.hero-eyebrow,.hero-stats,.hero-actions,.section-header,.collision-domain-header,.collision-domain-image,.cta-band h2,.cta-band p,.cta-btn,.intro-text,.section-title,.section-sub,.what-part-header,.what-grid';
+    var els=[].slice.call(document.querySelectorAll(sel));
+    if(!els.length)return;
+    els.forEach(function(el){el.setAttribute('data-reveal','');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var t=e.target,p=t.parentNode,i=p?[].indexOf.call(p.children,t):0;
+          t.style.transitionDelay=(Math.min(i,6)*60)+'ms';
+          t.classList.add('in');io.unobserve(t);
+        }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+  })();
+  </script>
+
+  <!-- Splide carousel -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof Splide === 'undefined') return;
+      document.querySelectorAll('.collision-splide').forEach(function (el) {
+        new Splide(el, {
+          perPage: 1,
+          perMove: 1,
+          gap: '0px'
+        }).mount();
+      });
+    });
+  </script>
+
+  <script src="/mobile-nav.js" defer></script>
+</body>
+</html>
