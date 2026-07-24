@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
   <style>
     :root {
+      /* Editorial Luxury — cream + gold (taste-skill: high-end-visual-design) */
       --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
       --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
       --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
@@ -33,19 +33,9 @@
       border-bottom: 1px solid var(--border); padding: 20px 0;
     }
     .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
-    .mark {
-      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
-      width: var(--w); flex: none;
-      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
-      background-image: url('/27parser.png');
-      background-repeat: no-repeat;
-      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
-      background-position:
-        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
-        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
-    }
-    .logo .mark { --w: 93px; }
+    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
+    .logo .wordmark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; line-height: 1; }
+    .logo .sub { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); }
     nav { display: flex; gap: 20px; align-items: center; }
     nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
     nav a:hover { color: var(--blue-500); }
@@ -76,189 +66,18 @@
     .section { padding: 80px 0; }
     .section.alt { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section-narrow { max-width: 800px; margin: 0 auto; padding: 0 24px; }
     .eyebrow { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-600); margin-bottom: 14px; }
     .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 16px; }
     .section-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 68ch; margin-bottom: 48px; }
 
-    /* WHAT'S INSIDE - Document + TOC */
-    .what-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 72px;
-      align-items: center;
-    }
-    .doc-mockup {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 0;
-    }
-    .doc-includes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .doc-include-tag {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      background: rgba(154,123,46,0.1);
-      border: 1px solid rgba(154,123,46,0.25);
-      padding: 6px 14px;
-      border-radius: 4px;
-    }
-    .doc-stack {
-      position: relative;
-      width: 280px;
-      height: 380px;
-      transform: perspective(1000px) rotateY(-8deg) rotateX(2deg);
-      transform-style: preserve-3d;
-    }
-    .doc-page {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: #FAF7F0;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .doc-page-3 {
-      transform: translateZ(-8px) translateX(12px) translateY(8px);
-      background: #F2ECE0;
-    }
-    .doc-page-2 {
-      transform: translateZ(-4px) translateX(6px) translateY(4px);
-      background: #F5F0E6;
-    }
-    .doc-page-1 {
-      transform: translateZ(0);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    .doc-cover {
-      height: 100%;
-      padding: 32px 28px;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(180deg, #FAF7F0 0%, #F5F0E6 100%);
-      border-left: 3px solid var(--gold);
-    }
-    .doc-logo {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      margin-bottom: auto;
-    }
-    .doc-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.55rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .doc-title {
-      font-family: var(--font-display);
-      font-size: 2.4rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .doc-subtitle {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-    .doc-quote {
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      padding-left: 12px;
-      border-left: 2px solid var(--border);
-      margin-bottom: auto;
-    }
-    .doc-footer {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-      margin-top: 24px;
-    }
-    .doc-badge {
-      position: absolute;
-      bottom: 20px;
-      right: -10px;
-      background: var(--blue-900);
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      padding: 6px 14px;
-      border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .doc-toc {
-      padding: 20px 0;
-    }
-    .doc-toc .section-title {
-      margin-bottom: 32px;
-    }
-    .toc-list {
-      list-style: none;
-      counter-reset: toc;
-    }
-    .toc-list li {
-      counter-increment: toc;
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      color: var(--text-primary);
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-    }
-    .toc-list li::before {
-      content: counter(toc, decimal-leading-zero);
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--gold);
-      letter-spacing: 0.05em;
-      min-width: 20px;
-    }
-    .toc-list li:last-child {
-      border-bottom: none;
-    }
-
-    @media (max-width: 900px) {
-      .what-layout {
-        grid-template-columns: 1fr;
-        gap: 48px;
-      }
-      .doc-mockup {
-        order: -1;
-      }
-      .doc-stack {
-        transform: perspective(1000px) rotateY(-5deg) rotateX(1deg);
-      }
-    }
+    /* WHAT'S IN IT GRID */
+    .what-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 44px 56px; }
+    .what-card { background: transparent; border: none; border-radius: 0; padding: 0; box-shadow: none; }
+    .what-num { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--blue-500); margin-bottom: 12px; }
+    .what-card h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; line-height: 1.25; transition: color 0.2s; }
+    .what-card:hover h3 { color: var(--blue-600); }
+    .what-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; max-width: 36ch; }
 
     /* PRICING */
     .price-block { max-width: 600px; }
@@ -279,14 +98,14 @@
     footer strong { color: #fff; }
     footer a { color: var(--blue-100); text-decoration: none; }
     footer a:hover { color: #fff; }
-    .f-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); line-height: 1.8; text-align: right; }
-    .disclaimer { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); line-height: 1.8; text-align: center; max-width: 820px; margin: 0 auto; }
+    .f-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); line-height: 1.8; }
+    .disclaimer { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); line-height: 1.7; text-align: center; max-width: 760px; margin: 0 auto; }
 
     @media (max-width: 760px) {
+      .what-grid { grid-template-columns: 1fr; }
       .f-top { flex-direction: column; }
-      .f-meta { text-align: left; }
     }
-
+    /* ── MOTION (taste-skill: scroll reveal + button physics) ── */
     @media (prefers-reduced-motion: no-preference) {
       html.js-anim [data-reveal] {
         opacity: 0; transform: translateY(26px); filter: blur(6px);
@@ -296,8 +115,43 @@
         will-change: opacity, transform;
       }
       html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
-      a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
+      a[class*="btn"]:active, .cta-btn:active, .btn-cta:active, nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
     }
+  
+    /* ── BRAND MARK ──
+       27parser.png is a transparent horizontal lockup whose artwork occupies
+       only the middle of its canvas (ink 993x363 at offset 193,294 of
+       1536x1024). Sizing the image directly renders the mark at ~35% of the
+       height asked for, so it is cropped to its ink box here. Set --w to the
+       desired mark width; the asset itself is never modified. */
+    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
+    .mark {
+      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
+      width: var(--w); flex: none;
+      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
+      background-image: url('/27parser.png');
+      background-repeat: no-repeat;
+      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
+      background-position:
+        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
+        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
+    }
+    .logo .mark { --w: 93px; }
+  
+    /* ── LEGAL NOTICE ──
+       Copyright, patent and framework attribution. Palette-agnostic: it
+       inherits the footer's colour and dims itself, so it reads correctly on
+       both the light and dark footers used across the site. */
+    .legal-notice {
+      max-width: 1100px; margin: 22px auto 0;
+      padding: 18px 24px 0;
+      border-top: 1px solid currentColor;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
+      text-align: center; opacity: 0.55;
+    }
+    footer .legal-notice { width: 100%; }
+    .site-legal { padding: 32px 24px; }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
   <link rel="stylesheet" href="/mobile-nav.css">
@@ -346,7 +200,6 @@
             <a href="/collisions.html#billets">Billets</a>
           </div>
         </div>
-        <a href="/assessment.html" class="btn">Take Assessment</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -359,65 +212,68 @@
     <div class="hero-inner">
       <div class="eyebrow-tag">Individual Parser Profile</div>
       <h1>The way you take in the world has <em>a name.</em></h1>
-      <p>This is not a personality test, and it doesn't feel like one. Those are your preferences — they can change. The Parser Profile shows you the layer underneath — how you actually take things in, before you've even formed an opinion.</p>
+      <p>This is not a personality test, and it doesn’t feel like one. Though those are your preferences, they can change. The Parser Profile shows you the layer underneath — how you actually take things in, before you've even formed an opinion.</p>
       <a href="#pricing" class="btn-hero">Get Your Parser Profile →</a>
     </div>
   </section>
 
   <section class="section alt" id="what">
     <div class="section-inner">
-      <div class="what-layout">
-        
-        <!-- Document Mockup -->
-        <div class="doc-mockup">
-          <div class="doc-includes">
-            <span class="doc-include-tag">Parser Assessment</span>
-            <span class="doc-include-tag">Downloadable Profile</span>
-            <span class="doc-include-tag">Weekly Parser Newsletter</span>
-          </div>
-          <div class="doc-stack">
-            <div class="doc-page doc-page-3"></div>
-            <div class="doc-page doc-page-2"></div>
-            <div class="doc-page doc-page-1">
-              <div class="doc-cover">
-                <div class="doc-logo">27 PARSER™</div>
-                <div class="doc-eyebrow">Parser Profile</div>
-                <div class="doc-title">Attuned</div>
-                <div class="doc-subtitle">The Frequency Reader</div>
-                <div class="doc-quote">"You don't just empathize. You perceive."</div>
-                <div class="doc-footer">
-                  <span>Cognition Blocks Intelligence Framework</span>
-                  <span>J.D. Mercer</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="doc-badge">13 pages</div>
-        </div>
+      <div class="eyebrow">What You Receive</div>
+      <h2 class="section-title">Is personal, reflective, and actionable.</h2>
+      <p class="section-sub">A document you'll return to. Not a score. Not a four-letter code. A reading of how your mind actually works — section by section.</p>
 
-        <!-- Table of Contents -->
-        <div class="doc-toc">
-          <div class="eyebrow">What's Inside</div>
-          <h2 class="section-title">Your Parser Profile.</h2>
-          <ol class="toc-list">
-            <li>Profile Overview</li>
-            <li>Cognitive Strengths</li>
-            <li>How You Learn Best</li>
-            <li>How You Communicate</li>
-            <li>Natural Challenges</li>
-            <li>The Secret You've Carried</li>
-            <li>What Others Get Wrong</li>
-            <li>Your Hidden Superpower</li>
-            <li>Your Blind Spot</li>
-            <li>Friction Patterns</li>
-            <li>Energy Patterns</li>
-            <li>Optimal Work Environments</li>
-            <li>Top Three Careers</li>
-            <li>Helpful Suggestions</li>
-            <li>Cognitive Block Indicators</li>
-          </ol>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>The Phrase That Hits Home</h3>
+          <p>One sentence so accurate it stops you mid-read. The line you'll send to someone because it finally explains you.</p>
         </div>
-
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>Your Strengths</h3>
+          <p>The advantages you're built with — named clearly, not inflated.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>How You Learn Best</h3>
+          <p>The conditions and formats that actually work for your mind. And why the standard ones never did.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>How You Communicate</h3>
+          <p>Your natural style, what it does well, and where it creates misreads you didn't know you were making.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">V</div>
+          <h3>Natural Challenges</h3>
+          <p>The specific friction that's just part of how you're wired — not flaws — and each one with a real, usable fix.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VI</div>
+          <h3>The Secret You've Carried</h3>
+          <p>The private truth about how you operate that you've always known but rarely said out loud.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VII</div>
+          <h3>Your Hidden Superpower</h3>
+          <p>The ability you use automatically that produces real value — and that you've probably never treated as a skill.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VIII</div>
+          <h3>Energy Patterns</h3>
+          <p>What drains you and what charges you — and the real reason why, not just the obvious stuff.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IX</div>
+          <h3>Optimal Work Environments</h3>
+          <p>Where you're at your best — and what quietly wears you down.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">X</div>
+          <h3>Where to Grow</h3>
+          <p>A clear map of where your biggest opportunities to grow actually are.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -427,7 +283,7 @@
       <div class="price-block">
         <div class="eyebrow">Pricing</div>
         <h2 class="section-title">Individual Parser Profile</h2>
-        <p class="section-sub" style="margin-bottom:36px;">Parser Assessment · Downloadable Parser Profile · Weekly Newsletter</p>
+        <p class="section-sub" style="margin-bottom:36px;">One time access to Parser Assessment. Downloadable Parser Profile.</p>
 
         <div class="price-tag-badge">
           <span class="price-dot"></span>
@@ -449,28 +305,30 @@
       <div class="f-top">
         <div>
           <strong>J.D. Mercer</strong>
-          <div style="margin-top:6px;font-size:0.85rem;">Cognition Blocks Intelligence Framework</div>
+          <div style="margin-top:6px;font-size:0.85rem;">Cognition Blocks of Intelligence</div>
         </div>
         <div class="f-meta">
           © 2025–2026 Cognition Blocks LLC<br>
           U.S. Copyright TXu 2-497-721<br>
-          Patent Pending (Provisional #63/968,676)
+          <a href="/clinicians.html">For Clinicians →</a>
         </div>
       </div>
       <div class="disclaimer">
-        The Parser Profile is a non-clinical, educational service. It is not therapy, diagnosis, or treatment of any medical or mental health condition. If you are in crisis or need clinical support, please contact a licensed professional.<br><br>
+        The Parser Profile is a non-clinical, educational service. It is not therapy, diagnosis, or treatment of any medical or mental health condition. If you are in crisis or need clinical support, please contact a licensed professional.
+      </div>
+    </div>
+      <div class="legal-notice">
         Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
+        U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
         Non-clinical educational content · Not a psychological assessment<br>
         © 2025–2026 Cognition Blocks LLC. All rights reserved.
       </div>
-    </div>
   </footer>
-
   <script>
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.eyebrow-tag,.hero h1,.hero p,.btn-hero,.section-title,.section-sub,.price-block';
+    var sel='.eyebrow-tag,.hero h1,.hero-sub,.hero p,.hero-actions,.hero-stats,.hero-eyebrow,.btn-hero,.section-header,.group-header,.group-image,.parser-card,.ref-item,.faceoff,.gradient-mismatch,.collision-domain-header,.intro-text,.c-item,.r-item,.step,.pricing-block,.excerpt-block,.tagline-band-inner,.path-card,.cta-band h2,.cta-band p,.cta-btn,.ip-block,.what-card,.section-title,.section-sub';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
