@@ -223,12 +223,18 @@
     }
     .hook-logo-zone {
       background: var(--bg-page);
-      padding: 80px 32px 48px;
-      display: flex; justify-content: center;
+      padding: 80px 32px 0;
+      display: flex; flex-direction: column; align-items: center;
     }
     .hook-logo {
       width: min(440px, 80vw); height: auto;
       border-radius: 8px;
+      margin-bottom: 32px;
+    }
+    .hook-hero-img {
+      width: 100%; max-width: 900px;
+      height: auto;
+      display: block;
     }
     .hook-text-zone {
       background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
@@ -1166,17 +1172,13 @@
   <section class="layer-hook">
     <div class="hook-logo-zone">
       <img src="/27parser.png" alt="27Parser™" class="hook-logo">
+      <img src="/parser.png" alt="" class="hook-hero-img">
     </div>
     <div class="hook-text-zone">
       <div class="hook-text-inner">
         <div class="hook-word">Three questions. One profile.</div>
         <p class="hook-line">The lens your attention defaults to.</p>
         <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
-        <div class="hook-try">
-          <div class="hook-try-label">Try the first question</div>
-          <p class="hook-try-question">"When you walk into a room full of people, what do you notice first?"</p>
-          <a href="/assessment.html" class="hook-try-btn">Answer now &rarr;</a>
-        </div>
       </div>
     </div>
   </section>
