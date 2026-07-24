@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="/site.css">
   <style>
     :root {
       --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
@@ -531,25 +532,6 @@
       .cta-link { display: block; margin: 22px auto 0; width: max-content; }
     }
   
-    /* ── BRAND MARK ──
-       27parser.png is a transparent horizontal lockup whose artwork occupies
-       only the middle of its canvas (ink 993x363 at offset 193,294 of
-       1536x1024). Sizing the image directly renders the mark at ~35% of the
-       height asked for, so it is cropped to its ink box here. Set --w to the
-       desired mark width; the asset itself is never modified. */
-    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
-    .mark {
-      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
-      width: var(--w); flex: none;
-      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
-      background-image: url('/27parser.png');
-      background-repeat: no-repeat;
-      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
-      background-position:
-        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
-        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
-    }
-    .logo .mark { --w: 93px; }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>

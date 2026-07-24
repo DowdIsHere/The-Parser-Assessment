@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Clinicians — Coming Soon | Parser Profile™</title>
-  <meta name="description" content="Clinical licensing and certification for the Parser Framework is coming soon.">
+  <title>Billets — Coming Soon | Parser Profile™</title>
+  <meta name="description" content="Seat analysis for hiring. Billets decodes what a role actually demands architecturally — without asking candidates to take anything.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -21,7 +21,6 @@
       --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
       --font-mono:'IBM Plex Mono',monospace;
     }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth;font-size:112.5%;}
     body{font-family:var(--font-body);background:var(--bg-page);color:var(--text-primary);line-height:1.65;min-height:100dvh;display:flex;flex-direction:column;}
     body::before{content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:0.02;
@@ -29,30 +28,26 @@
 
     header{position:sticky;top:0;z-index:100;background:rgba(250,247,240,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:18px 0;}
     .h-inner{max-width:1160px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;}
-    .logo-lockup{display:flex;align-items:center;gap:14px;text-decoration:none;}
-    .logo-img{width:38px;height:38px;border-radius:6px;object-fit:cover;filter:brightness(0.9) contrast(1.1);}
-    .logo-text .name{font-family:var(--font-display);font-size:1.05rem;font-weight:500;color:var(--text-primary);line-height:1;}
-    .logo-text .sub{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);margin-top:4px;}
     nav{display:flex;gap:28px;align-items:center;}
     nav a{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
     nav a:hover{color:var(--gold);}
-    nav a.cta{background:var(--blue-500);color:#fff;font-weight:600;padding:9px 20px;border-radius:8px;}
-    nav a.cta:hover{background:var(--blue-400);}
 
     main{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 24px;}
-    .coming-soon{text-align:center;max-width:560px;}
+    .coming-soon{text-align:center;max-width:600px;}
     .cs-badge{display:inline-block;font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--gold);background:rgba(154,123,46,0.08);border:1px solid rgba(154,123,46,0.2);padding:6px 16px;border-radius:999px;margin-bottom:24px;}
     .coming-soon h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:500;letter-spacing:-0.02em;color:var(--text-primary);margin-bottom:20px;line-height:1.1;}
     .coming-soon h1 em{font-style:italic;color:var(--gold);}
-    .coming-soon p{font-size:1rem;color:var(--text-secondary);line-height:1.75;margin-bottom:16px;max-width:48ch;margin-left:auto;margin-right:auto;}
+    .coming-soon p{font-size:1rem;color:var(--text-secondary);line-height:1.75;margin-bottom:16px;max-width:52ch;margin-left:auto;margin-right:auto;}
+    .cs-list{list-style:none;margin:28px auto 0;max-width:48ch;text-align:left;}
+    .cs-list li{font-size:0.95rem;color:var(--text-secondary);line-height:1.6;padding:10px 0 10px 22px;border-bottom:1px solid var(--border);position:relative;}
+    .cs-list li:last-child{border-bottom:none;}
+    .cs-list li::before{content:'';position:absolute;left:0;top:19px;width:8px;height:1px;background:var(--gold);}
     .coming-soon .note{font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);letter-spacing:0.04em;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
     .back-btn{display:inline-block;margin-top:28px;background:var(--blue-500);color:#fff;font-weight:600;padding:13px 32px;border-radius:8px;text-decoration:none;font-size:0.95rem;transition:background 0.2s,transform 0.15s;}
     .back-btn:hover{background:var(--blue-400);transform:translateY(-1px);}
 
     footer{padding:32px 0;border-top:1px solid var(--border);background:var(--blue-900);text-align:center;}
     .f-copy{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.06em;color:rgba(255,255,255,0.45);}
-  
-  
   </style>
   <link rel="stylesheet" href="/mobile-nav.css">
 </head>
@@ -110,21 +105,27 @@
   <main>
     <div class="coming-soon">
       <span class="cs-badge">Coming Soon</span>
-      <h1>Clinical <em>Licensing</em></h1>
-      <p>The Parser Framework clinical certification program for therapists, neuropsychologists, and clinical practitioners is currently in development.</p>
-      <p>This program will require proper licensing and credentialing before any clinical application of the framework.</p>
-      <p class="note">The Parser Framework is non-clinical educational content. It is not a psychological or developmental assessment. Clinical licensing details will be announced when the program is ready.</p>
-      <a href="/index.html" class="back-btn">Back to The 27 Parsers</a>
+      <h1>Billets — <em>seat analysis.</em></h1>
+      <p>Billets reads the role, not the person. It decodes what a job actually demands architecturally, so you can see where the seat and the work have drifted apart before you hire into the gap.</p>
+      <ul class="cs-list">
+        <li>Pulls the real architectural requirements out of a job description</li>
+        <li>Surfaces mismatches between stated qualifications and the actual work</li>
+        <li>Generates interview questions that reveal processing style</li>
+        <li>Checks the hiring team's own blind spots</li>
+        <li>Decodes credentials into the architecture behind them</li>
+      </ul>
+      <p class="note">No candidate assessment required. Billets analyses the seat; candidates are never asked to take anything.</p>
+      <a href="/professionals.html" class="back-btn">Professional Teams Analysis</a>
     </div>
   </main>
 
   <footer>
     <div class="f-copy">
-        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
-        U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
-        Non-clinical educational content · Not a psychological assessment<br>
-        © 2025–2026 Cognition Blocks LLC. All rights reserved.
-      </div>
+      Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
+      U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
+      Non-clinical educational content · Not a psychological assessment<br>
+      © 2025–2026 Cognition Blocks LLC. All rights reserved.
+    </div>
   </footer>
 
   <script src="/mobile-nav.js" defer></script>

@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="/site.css">
+  <style>
         :root {
             /* Editorial Luxury — cream + gold */
             --blue-900: #211A12;
@@ -336,20 +337,6 @@
         body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
         @media (prefers-reduced-motion: no-preference) { button:active, a[class*="btn"]:active, .cta-btn:active, .chip:active { transform: translateY(-1px) scale(0.98); } }
     
-    /* ── LEGAL NOTICE ──
-       Copyright, patent and framework attribution. Palette-agnostic: it
-       inherits the footer's colour and dims itself, so it reads correctly on
-       both the light and dark footers used across the site. */
-    .legal-notice {
-      max-width: 1100px; margin: 22px auto 0;
-      padding: 18px 24px 0;
-      border-top: 1px solid currentColor;
-      font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
-      text-align: center; opacity: 0.55;
-    }
-    footer .legal-notice { width: 100%; }
-    .site-legal { padding: 32px 24px; }
   </style>
 </head>
 <body>

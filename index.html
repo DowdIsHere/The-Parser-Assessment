@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="/site.css">
   <style>
     :root {
       /* Editorial Luxury — cream + gold (shared token set) */
@@ -38,23 +39,6 @@
     .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
     .logo { text-decoration: none; display: flex; align-items: center; }
 
-    /* 27parser.png is a transparent horizontal lockup, but its artwork occupies
-       only the middle of a much larger canvas (ink 993x363 at offset 193,294 of
-       1536x1024). Sizing the <img> directly would render the mark at ~35% of the
-       height asked for, so the mark is cropped to its ink box here instead —
-       the asset itself is left untouched. Set --w to the desired mark width. */
-    .mark {
-      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
-      width: var(--w);
-      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
-      background-image: url('/27parser.png');
-      background-repeat: no-repeat;
-      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
-      background-position:
-        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
-        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
-    }
-    .logo .mark { --w: 93px; }
     nav { display: flex; gap: 20px; align-items: center; }
     nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
     nav a:hover { color: var(--blue-500); }
@@ -459,20 +443,6 @@
 
   <noscript>
     <style>.stack[hidden] { display: block; } #gate { display: none; }
-    /* ── LEGAL NOTICE ──
-       Copyright, patent and framework attribution. Palette-agnostic: it
-       inherits the footer's colour and dims itself, so it reads correctly on
-       both the light and dark footers used across the site. */
-    .legal-notice {
-      max-width: 1100px; margin: 22px auto 0;
-      padding: 18px 24px 0;
-      border-top: 1px solid currentColor;
-      font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
-      text-align: center; opacity: 0.55;
-    }
-    footer .legal-notice { width: 100%; }
-    .site-legal { padding: 32px 24px; }
   </style>
   </noscript>
 

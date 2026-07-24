@@ -1,0 +1,123 @@
+/* ============================================================
+   site.css — shared chrome for every 27Parser page.
+
+   Load this BEFORE a page's own <style> block:
+
+     <link rel="stylesheet" href="/site.css">
+     <style> ...page-specific rules... </style>
+
+   Because it loads first, anything a page declares wins. Pages with
+   their own palette (collisions.html runs sand/charcoal) just override
+   the tokens below and inherit the structure unchanged.
+
+   What lives here is the part that must not drift between pages:
+   the brand mark, the nav, and the legal notice. Page layout, heroes
+   and sections stay in the page.
+   ============================================================ */
+
+/* ── TOKENS (defaults; a page may override any of these) ── */
+:root {
+  --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
+  --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
+  --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
+  --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
+  --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
+  --shadow-sm: 0 1px 3px rgba(60,40,15,0.06);
+  --shadow-md: 0 6px 20px rgba(60,40,15,0.08);
+  --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
+  --gold: #9A7B2E; --gold-pale: #D8B45E;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── BRAND MARK ──
+   27parser.png is a transparent horizontal lockup, but its artwork occupies
+   only the middle of its canvas: the ink is 993x363 at offset 193,294 within
+   1536x1024. Sizing the image directly renders the mark at roughly a third of
+   the height asked for, which is why a plain height:36px looked undersized.
+   These rules crop to the ink box, so --w sets the true mark width and the
+   asset is never modified.
+
+   Usage:  <a class="logo"><span class="mark" role="img" aria-label="27Parser™"></span></a>
+   Resize: .some-context .mark { --w: 240px; }                                  */
+.logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
+.mark {
+  --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
+  --w: 93px;
+  width: var(--w); flex: none;
+  height: calc(var(--w) * var(--ink-h) / var(--ink-w));
+  background-image: url('/27parser.png');
+  background-repeat: no-repeat;
+  background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
+  background-position:
+    calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
+    calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
+}
+
+/* ── NAV DROPDOWNS ──
+   Structure only. Pages set their own header background and link colours. */
+.nav-dd { position: relative; display: inline-flex; align-items: center; }
+.nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.nav-dd-caret {
+  width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none;
+  opacity: 0.65; transition: transform 0.25s ease;
+}
+/* keeps the menu reachable while the pointer crosses the gap below the label */
+.nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+.nav-dd-menu {
+  position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 170px;
+  background: var(--bg-card, #fff); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow-md); padding: 7px;
+  display: flex; flex-direction: column; gap: 1px;
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 200;
+}
+.nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+.nav-dd-menu a {
+  font-size: 0.82rem; color: var(--text-muted); padding: 10px 12px;
+  border-radius: 8px; white-space: nowrap;
+  transition: background 0.18s, color 0.18s;
+}
+.nav-dd-menu a:hover { background: rgba(154,123,46,0.08); color: var(--blue-500); }
+/* the rightmost menu anchors right so a long list can't leave the viewport */
+.nav-dd:last-of-type .nav-dd-menu { left: auto; right: -10px; }
+@media (max-width: 860px) {
+  /* inside the mobile drawer it flows normally again */
+  header nav .nav-dd:last-of-type .nav-dd-menu { left: auto; right: auto; }
+}
+
+/* ── LEGAL NOTICE ──
+   Copyright, patent and framework attribution. Inherits the footer's colour
+   and dims itself, so it reads on both the light and dark footers in use. */
+.legal-notice {
+  max-width: 1100px; margin: 22px auto 0;
+  padding: 18px 24px 0;
+  border-top: 1px solid currentColor;
+  font-family: var(--font-mono), 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
+  text-align: center; opacity: 0.55;
+}
+footer .legal-notice { width: 100%; }
+/* wrapper for pages that had no footer of their own */
+.site-legal { padding: 32px 24px; }
+
+/* ── MOTION ──
+   Scroll-reveal and button physics. Pages opt in by adding data-reveal. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js-anim [data-reveal] {
+    opacity: 0; transform: translateY(26px); filter: blur(6px);
+    transition: opacity .85s cubic-bezier(0.22,0.61,0.36,1),
+                transform .85s cubic-bezier(0.22,0.61,0.36,1),
+                filter .85s cubic-bezier(0.22,0.61,0.36,1);
+    will-change: opacity, transform;
+  }
+  html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
+  a[class*="btn"]:active, .cta-btn:active, .btn-cta:active,
+  nav a.cta:active, nav a.btn:active { transform: translateY(-1px) scale(0.97); }
+}

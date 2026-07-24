@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
   <style>
     /* Profile reader — ported from The Cognition Block, rethemed to the Parser
        Profile palette (Editorial Luxury — warm cream + gold, light). */
@@ -96,40 +97,7 @@
     .loading{text-align:center;color:var(--text-muted);padding:80px 24px;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;}
     .hidden{display:none !important;}
   
-    /* ── BRAND MARK ──
-       27parser.png is a transparent horizontal lockup whose artwork occupies
-       only the middle of its canvas (ink 993x363 at offset 193,294 of
-       1536x1024). Sizing the image directly renders the mark at ~35% of the
-       height asked for, so it is cropped to its ink box here. Set --w to the
-       desired mark width; the asset itself is never modified. */
-    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
-    .mark {
-      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
-      width: var(--w); flex: none;
-      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
-      background-image: url('/27parser.png');
-      background-repeat: no-repeat;
-      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
-      background-position:
-        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
-        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
-    }
-    .logo .mark { --w: 93px; }
   
-    /* ── LEGAL NOTICE ──
-       Copyright, patent and framework attribution. Palette-agnostic: it
-       inherits the footer's colour and dims itself, so it reads correctly on
-       both the light and dark footers used across the site. */
-    .legal-notice {
-      max-width: 1100px; margin: 22px auto 0;
-      padding: 18px 24px 0;
-      border-top: 1px solid currentColor;
-      font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
-      text-align: center; opacity: 0.55;
-    }
-    footer .legal-notice { width: 100%; }
-    .site-legal { padding: 32px 24px; }
   </style>
 </head>
 <body>
