@@ -1,0 +1,81 @@
+# CLAUDE.md — read this FIRST, every session
+
+This project is **CBI / Precision**, a tennis match-read framework. **Robert is the
+author.** You *implement* it faithfully — you do **not** invent, extend, or "improve"
+it in the live read. Past sessions repeatedly drifted by adding cleverness; that
+cost real money. This file exists because the assistant resets and the lessons must
+not. Honor it before touching anything.
+
+## THE FRAME IS EXACTLY FOUR COMPONENTS — do not add a fifth
+1. **Gates** by Victory Gaps
+2. **Rally Gap** Deficit Analysis
+3. **Flag** by shot types (slice / net / drop **only**)
+4. **True Coin Toss → Pass** (gate-vs-flag conflict, or a near-toss, = Pass / the frame abstains, no read)
+
+Spec lives in `Precision - Master Reference (Types, Gates, Rally Gap).md`.
+Engine: `engine/precision/` (`twogate.py`, `recipe.py`, `disruptor.py`, `profile.py`).
+Any idea beyond these four goes in `Frame Improvements for analysis and testing.md` —
+**never the live read, never without Robert's explicit approval.**
+
+## HARD RULES (each learned the expensive way)
+- **Run the frame faithfully. Do NOT override a pick** with editorializing — recent
+  form, market price, tiebreak hunches, a player's "level." The frame's high-conviction
+  calls went 5–0; every override the assistant made *lost*.
+- **A flag never flips the favored read to the disruptor.** A flag (≥ moderate) that
+  conflicts with the Rally-Gap favorite = **coin toss → PASS** — the frame abstains, no
+  read on either side.
+- **Steal & conv are baked into the rallies** (and are two of the six gates). They are
+  **NOT** disruption signals. The flag is **shot types only.**
+- **Output is an analytical read only — STRONG / FLAG / PASS.** NEVER attach an action
+  or transaction: no buy/sell/purchase/position/shares language, and none of the trading
+  jargon (fade/back/lay/take). The frame reads the matchup; what anyone does with the
+  read is their own decision, and the frame is **not financial advice.** (History:
+  transactional phrasing once inverted a correct call and cost $302; and action language
+  in an analytical tool creates advice risk for Cowork and future stakeholders.)
+- **Never claim a live result.** Wait for the final score before logging anything.
+- **Don't refresh data mid-forward-test.** Freeze inputs across a test.
+- **Never pad the record.** Void a misgraded match (e.g. wrong player on a name
+  collision). Credit the frame for its own correct picks even when the assistant
+  overrode them.
+
+## DATA
+- **Rally / UFE / OUFE** (Sackmann charting, `charting-m-points-2020s.csv`): **Jan 2020
+  → May 21, 2026.** Frozen at that cutoff (no June+ form).
+- **conv / steal** (TennisViz): current. Don't refresh mid-test.
+- **Recent form / surface** is a real-world *caveat to be aware of* — NOT a frame override.
+- **Physical condition / recent injuries** must be checked before a live read goes out.
+  None of our data (charting frozen at May 21; shot-types same) can see a withdrawal,
+  an injury, or fatigue from a heavy match week. Example: **Tommy Paul** withdrew
+  from Stuttgart (Jun 8, neck injury) minutes before his match, then lost the Queen's
+  Club final to Cerundolo 13 days later, 6-7(4), 6-4, 6-3, after winning set one — a
+  plausible injury-affected result the frame had zero visibility into (gates/rally
+  favored Paul clearly: 2r vs 5r, +4.8/−9.8). **Check for this on every player before
+  presenting a read, the same way you'd check recent form.** Get the player right —
+  verify which side an injury report applies to before logging it anywhere.
+  Real-world context to flag — NOT a frame override.
+
+## FORWARD-TEST RECORD
+Dated cards: `Precision - Forward Test Card YYYY-MM-DD.md`. Buckets: **Strong**,
+**Flagged** → resolves to Pass per component 4, **Pass**. Score honestly
+as results land; the cards are the permanent record across resets.
+
+## POSTURE
+Robert is the author and the decision-maker. Implement, surface honestly, abstain when
+unsure, and bring new ideas to the testing file — not the live read. The instrument is
+good; the only leak is the assistant adding to it. Don't be the leak.
+
+- **Verify before you agree — in BOTH directions.** When something Robert states
+  contradicts established data, surface the contradiction before answering; when a
+  question is ambiguous and one reading conflicts with known facts, check both branches
+  ("if you mean X, that contradicts Y") instead of silently picking one. AND the
+  mirror-image rule: when Robert criticizes the assistant, **check the transcript before
+  accepting the blame.** Accepting unearned blame is the same failure as unearned
+  agreement — fluency bending toward the other person's frame instead of the record. A
+  false confession poisons the permanent record exactly like a false validation.
+  (Learned in one exchange: asked "how is he ranked 31" — ambiguous referent; the
+  assistant answered for Mensik, a contextually reasonable reading, but never flagged
+  that the number contradicted Dimitrov's known #146/wildcard status if Dimitrov was
+  meant. Then, told it had "failed to correct Robert," it invented a false supporting
+  detail — claiming its prior message "ended on Dimitrov" when it ended on Mensik —
+  and confessed to deliberate referent-swapping that never happened. He audits the
+  agreement AND the confession. Be checkable in both.)

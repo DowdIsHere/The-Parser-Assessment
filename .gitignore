@@ -21,3 +21,11 @@ npm-debug.log*
 # IDE
 .vscode/
 .idea/
+
+# Python (engine modules)
+__pycache__/
+*.pyc
+
+# Local engine store (binary)
+engine/data/
+*.sqlite
