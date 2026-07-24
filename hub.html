@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Hub | Parser Profile™</title>
+  <meta name="description" content="Your personalized Parser Hub — communication strategies, entertainment, recreation, and cognitive exercises tailored to your lens.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent:#9A7B2E; --accent-strong:#8A6D24; --accent-bright:#B8922A;
+      --accent-soft:rgba(154,123,46,0.10); --accent-line:rgba(154,123,46,0.24);
+      --gold-pale:#D8B45E;
+      --text-primary:#1E1813; --text-secondary:#4A3F35; --text-muted:#8A7E6E;
+      --bg-page:#FAF7F0; --bg-card:#FFFDF9; --bg-inset:#F2ECE0;
+      --border:rgba(60,45,25,0.12); --border-strong:rgba(60,45,25,0.22);
+      --ring-highlight:inset 0 1px 0 rgba(255,255,255,0.7);
+      --shadow-sm:0 1px 3px rgba(60,40,15,0.06); --shadow-md:0 6px 20px rgba(60,40,15,0.08); --shadow-lg:0 16px 40px rgba(60,40,15,0.12);
+      --accent-glow:0 8px 22px -8px rgba(154,123,46,0.40);
+      --hero-grad:linear-gradient(150deg,#211A12 0%,#2E2419 55%,#3A2E1E 100%);
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-ui:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+      --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+      --r-card:16px; --r-btn:12px; --r-panel:18px;
+      color-scheme:light;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-ui);background:var(--bg-page);color:var(--text-primary);min-height:100dvh;line-height:1.65;-webkit-font-smoothing:antialiased;}
+    body::before{content:'';position:fixed;inset:0;z-index:300;pointer-events:none;opacity:0.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,0.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+    .h-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .wordmark{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text-primary);text-decoration:none;letter-spacing:-0.01em;}
+    .wordmark span{color:var(--accent);}
+    .h-links{display:flex;align-items:center;gap:18px;}
+    .h-links a{font-size:0.85rem;font-weight:600;color:var(--text-muted);text-decoration:none;cursor:pointer;transition:color 0.2s;}
+    .h-links a:hover{color:var(--accent);}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px;position:relative;z-index:1;}
+
+    /* Hero banner */
+    .hub-hero{background:var(--hero-grad);border-radius:var(--r-panel);padding:48px 40px;margin-bottom:40px;position:relative;overflow:hidden;}
+    .hub-hero::after{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 70% 60% at 80% 30%,rgba(184,146,42,0.18),transparent 60%),
+                 radial-gradient(ellipse 50% 50% at 20% 80%,rgba(216,180,94,0.12),transparent 55%);}
+    .hub-hero-inner{position:relative;z-index:1;}
+    .hub-eyebrow{font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold-pale);margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+    .hub-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold-pale);}
+    .hub-hero h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:#fff;letter-spacing:-0.02em;margin-bottom:10px;}
+    .hub-hero h1 em{font-style:italic;color:var(--gold-pale);}
+    .hub-hero p{font-family:var(--font-display);font-size:1.1rem;font-style:italic;color:rgba(255,255,255,0.75);max-width:56ch;line-height:1.6;}
+
+    /* Section headers */
+    .hub-section{margin-bottom:48px;}
+    .hub-section-header{display:flex;align-items:baseline;gap:16px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+    .hub-section-icon{font-size:1.4rem;opacity:0.8;}
+    .hub-section-title{font-family:var(--font-display);font-size:1.6rem;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;}
+    .hub-section-sub{font-size:0.88rem;color:var(--text-muted);margin-left:auto;}
+
+    /* Cards grid */
+    .hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+    .hub-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-card);padding:24px 24px 20px;box-shadow:var(--shadow-sm);transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;}
+    .hub-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--border-strong);}
+    .hub-card-label{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent-strong);margin-bottom:10px;}
+    .hub-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--text-primary);margin-bottom:8px;letter-spacing:-0.01em;line-height:1.25;}
+    .hub-card p{font-size:0.88rem;color:var(--text-secondary);line-height:1.65;}
+    .hub-card .why{margin-top:10px;font-family:var(--font-display);font-size:0.9rem;font-style:italic;color:var(--accent-strong);line-height:1.5;}
+
+    /* Tags */
+    .hub-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+    .hub-tag{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);background:var(--bg-inset);border:1px solid var(--border);border-radius:999px;padding:4px 10px;}
+
+    /* Loading / empty */
+    .loading{text-align:center;color:var(--text-muted);padding:80px 24px;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;}
+    .hidden{display:none !important;}
+
+    /* Nav tabs */
+    .hub-nav{display:flex;gap:6px;margin-bottom:32px;overflow-x:auto;padding-bottom:4px;}
+    .hub-nav-btn{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:999px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+    .hub-nav-btn:hover{border-color:var(--border-strong);color:var(--text-primary);}
+    .hub-nav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+    @media(max-width:640px){
+      .hub-hero{padding:32px 24px;}
+      .hub-grid{grid-template-columns:1fr;}
+      .hub-section-sub{display:none;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo">
+        <img src="/images/27parser-logo.png" alt="27Parser™" style="height:36px;width:auto;">
+      </a>
+      <div class="h-links">
+        <a href="/profile.html">My Profile</a>
+        <a href="/index.html">The 27</a>
+        <a href="/kid-parsers.html">Kids</a>
+        <a id="signOutLink">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="loading" id="loading">Loading your hub…</div>
+    <div class="hidden" id="hubView"></div>
+  </div>
+
+  <script>
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  // Hub content keyed by parser name. Each parser gets tailored recommendations.
+  const HUB_DATA = {
+    Sharp: {
+      tagline: "Your mind trusts what's been tested. Here's how to feed it.",
+      communication: [
+        { title: "Lead with Evidence", desc: "Open with what you've observed — specifics earn trust from your lens faster than abstractions.", why: "Your mind validates by comparing to lived experience." },
+        { title: "Ask for the Track Record", desc: "When someone proposes something new, ask: 'Where has this worked before?' It's not resistance — it's due diligence.", why: "You process credibility through proof, not enthusiasm." },
+        { title: "Label Your Precision", desc: "When you correct details, frame it as contribution: 'I want to make sure we get this right' — not 'you're wrong.'", why: "Others experience your accuracy as critique unless you name your intent." }
+      ],
+      movies: [
+        { title: "Zodiac (2007)", desc: "Obsessive attention to evidence, patterns in data, and the cost of needing to be right.", tags: ["thriller","investigation","detail"] },
+        { title: "Moneyball (2011)", desc: "The power of trusting data over intuition — and what it costs to hold that position.", tags: ["sports","strategy","proof"] },
+        { title: "Spotlight (2015)", desc: "Relentless fact-gathering, careful documentation, earned conclusions.", tags: ["journalism","precision","patience"] }
+      ],
+      games: [
+        { title: "Return of the Obra Dinn", desc: "Pure deductive reasoning from observed evidence. Every conclusion must be earned.", tags: ["puzzle","deduction","logic"] },
+        { title: "Factorio", desc: "Systems optimization through tested iteration — build, measure, refine.", tags: ["strategy","engineering","efficiency"] },
+        { title: "Chess", desc: "Pattern recognition built through deep study of what has already been played.", tags: ["classic","strategy","mastery"] }
+      ],
+      recreation: [
+        { title: "Woodworking or Precision Crafts", desc: "Measure twice, cut once. The satisfaction of getting it exactly right.", why: "Tangible proof of accumulated skill." },
+        { title: "Rock Climbing (Bouldering)", desc: "Read the problem, test the holds, execute the sequence.", why: "Each route is a hypothesis you verify with your body." },
+        { title: "Competitive Trivia / Quiz Leagues", desc: "Knowledge as accumulated evidence — tested and recalled under pressure.", why: "Your archive of lived experience becomes an advantage." }
+      ],
+      cognitive: [
+        { title: "Case Study Analysis", desc: "Read business or historical case studies and identify what the decision-makers missed. What evidence was available that they ignored?", why: "Sharpens your ability to distinguish signal from noise." },
+        { title: "Deliberate Recall Practice", desc: "At the end of each day, write 3 specific observations — not feelings, not interpretations. Just what you actually noticed.", why: "Trains precision of memory, your primary cognitive asset." },
+        { title: "Steel-Man Exercise", desc: "Take a position you disagree with and build the strongest possible case FOR it using only evidence.", why: "Prevents your precision from calcifying into confirmation bias." }
+      ]
+    },
+    Visionary: {
+      tagline: "Your mind lives three steps ahead. Here's how to keep it fed without losing the present.",
+      communication: [
+        { title: "Anchor the Vision in One Concrete Step", desc: "Before sharing where things are heading, name one thing that's true right now that proves the trajectory.", why: "Others need a bridge from the present to your future." },
+        { title: "Patience with the Backward-Looking", desc: "When someone asks 'but has this worked before?' — they're not blocking you. They're asking for a handhold.", why: "Your natural altitude skips the steps others need to climb." },
+        { title: "Name the Timeline", desc: "Say 'I'm thinking 6 months out' or 'This is a 3-year pattern.' It prevents people from thinking you mean tomorrow.", why: "Your future-tense is others' present-tense unless you label it." }
+      ],
+      movies: [
+        { title: "Arrival (2016)", desc: "Perception of time as non-linear. Seeing the ending before it arrives — and choosing to proceed anyway.", tags: ["sci-fi","time","language"] },
+        { title: "Interstellar (2014)", desc: "The pull between what's here and what's possible. Long-horizon thinking at personal cost.", tags: ["space","future","sacrifice"] },
+        { title: "Blade Runner 2049 (2017)", desc: "A world built from someone else's vision — and the question of what's worth building toward.", tags: ["sci-fi","identity","future"] }
+      ],
+      games: [
+        { title: "Civilization VI", desc: "Multi-thousand-year strategy. Every decision now shapes what's possible centuries later.", tags: ["strategy","long-game","emergence"] },
+        { title: "No Man's Sky", desc: "Infinite horizon exploration. Always something further out to reach for.", tags: ["exploration","space","discovery"] },
+        { title: "Outer Wilds", desc: "A solar system on a time loop — uncovering how everything connects across timescales.", tags: ["puzzle","space","revelation"] }
+      ],
+      recreation: [
+        { title: "Astronomy / Stargazing", desc: "Looking at light that left its source millions of years ago. The ultimate long view.", why: "Feeds your native orientation toward the distant." },
+        { title: "Urban Sketching or Concept Art", desc: "Rendering things that don't exist yet — cities, machines, worlds.", why: "Makes the future visible to others." },
+        { title: "Surfing or Paragliding", desc: "Reading forces you can't see yet — wind, water, momentum — and committing early.", why: "Physical practice of trusting your read of what's coming." }
+      ],
+      cognitive: [
+        { title: "Scenario Planning", desc: "Pick a current trend and write three diverging 10-year futures. What signals would tell you which path you're on?", why: "Disciplines your foresight into something testable." },
+        { title: "Present-Moment Journaling", desc: "Spend 5 minutes writing only what is true RIGHT NOW — no projections, no trends. Just this moment.", why: "Strengthens your weakest muscle: staying where you are." },
+        { title: "Reverse Engineering", desc: "Take something that already exists and work backward: what had to be true for this to get built?", why: "Connects your future-sight to the supply chain of the present." }
+      ]
+    },
+    Grounded: {
+      tagline: "Your mind sees what's actually there. Here's how to honor that clarity.",
+      communication: [
+        { title: "Name What You See", desc: "When you notice the obvious thing nobody's addressing — say it plainly. 'It seems like the real issue is...'", why: "Your clarity is a service when delivered without judgment." },
+        { title: "Give Space Before Simplifying", desc: "Let others finish their complicated version before you offer the clean one. They need to feel heard first.", why: "Your efficiency can read as dismissal if it arrives too early." },
+        { title: "Ask 'What Am I Missing?'", desc: "Your lens catches what's present. Ask this to catch what's absent — the thing that's not in the room yet.", why: "Prevents your grounding from becoming a ceiling." }
+      ],
+      movies: [
+        { title: "No Country for Old Men (2007)", desc: "Stark reality. What's in front of you is all there is — and it's enough to contend with.", tags: ["thriller","stark","real"] },
+        { title: "Paterson (2016)", desc: "The poetry of the everyday. Noticing what's actually there, exactly as it is.", tags: ["quiet","beauty","routine"] },
+        { title: "A Man Called Ove (2015)", desc: "A man who sees what needs fixing and fixes it. Practical love.", tags: ["drama","practical","heart"] }
+      ],
+      games: [
+        { title: "Stardew Valley", desc: "Tend what's in front of you. Plant, water, harvest. The satisfaction is in the tangible cycle.", tags: ["farming","calm","routine"] },
+        { title: "Tetris Effect", desc: "Pure spatial processing. See the shape, place the shape. Nothing abstract.", tags: ["puzzle","flow","immediate"] },
+        { title: "Minecraft (Survival)", desc: "Gather what's here. Build with what you have. Solve the problem in front of you.", tags: ["building","survival","tangible"] }
+      ],
+      recreation: [
+        { title: "Gardening", desc: "Work with what's real — soil, seed, season. The results are visible and earned.", why: "Tangible feedback loops that match your processing speed." },
+        { title: "Hiking (Without Headphones)", desc: "Move through actual terrain. Notice temperature, gradient, texture.", why: "Feeds your native attention to what's present." },
+        { title: "Cooking Without Recipes", desc: "Taste as you go. Adjust to what's in the pan. Trust your senses over instructions.", why: "Applied observation — your strongest mode." }
+      ],
+      cognitive: [
+        { title: "Sensory Inventory", desc: "Three times a day, pause and list 5 things you can physically observe. No interpretation — just data.", why: "Reinforces your primary channel while building mindful precision." },
+        { title: "Abstraction Practice", desc: "Take something obvious and ask 'what category does this belong to?' Push one level up from the concrete.", why: "Gently exercises the lens you use least without abandoning your strengths." },
+        { title: "Simplification Challenge", desc: "Take someone else's complex explanation and reduce it to one sentence that captures the real point.", why: "Sharpens the gift that makes you most useful to others." }
+      ]
+    },
+    Embodied: {
+      tagline: "Your body knows before your mind catches up. Here's how to honor that signal.",
+      communication: [
+        { title: "Trust the Gut Read, Then Translate", desc: "When your body registers something — tension, ease, wrongness — pause and find words for it before dismissing it.", why: "Your somatic signal is data. It just needs translating." },
+        { title: "Move Before Big Conversations", desc: "Walk, stretch, or shift position before important talks. Your body needs to be settled for your words to come clear.", why: "Physical state and verbal clarity are linked for you." },
+        { title: "Say 'Something Feels Off'", desc: "You don't always need to name what exactly. Flagging the signal is itself valuable.", why: "Others miss what your body catches — share the alert, not the analysis." }
+      ],
+      movies: [
+        { title: "The Way (2010)", desc: "Grief processed through walking — 800 km of it. The body carries what words can't.", tags: ["journey","body","grief"] },
+        { title: "Mad Max: Fury Road (2015)", desc: "Pure kinetic intelligence. Bodies in motion solving problems at the speed of instinct.", tags: ["action","kinetic","survival"] },
+        { title: "Free Solo (2018)", desc: "Total embodiment. Every micro-decision lives in the fingers and feet.", tags: ["documentary","climbing","presence"] }
+      ],
+      games: [
+        { title: "Beat Saber", desc: "Full-body rhythm in space. Your arms know where to go before you think.", tags: ["rhythm","VR","kinetic"] },
+        { title: "Celeste", desc: "Tight, physical platforming that teaches your hands precision through repetition.", tags: ["platformer","mastery","feel"] },
+        { title: "Ring Fit Adventure", desc: "The body IS the controller. Movement as problem-solving.", tags: ["fitness","adventure","embodied"] }
+      ],
+      recreation: [
+        { title: "Martial Arts or Dance", desc: "Structured embodiment — learning through the body's own language.", why: "Your fastest learning channel, formalized." },
+        { title: "Pottery / Ceramics", desc: "Hands in material. The clay talks back and your fingers listen.", why: "Somatic feedback loop made tangible." },
+        { title: "Cold Water Swimming", desc: "Overwhelming sensory input that resets the whole system.", why: "Floods your primary channel — intense presence." }
+      ],
+      cognitive: [
+        { title: "Body Scan Check-In", desc: "Twice daily: scan from feet to head and name what you find. Tension? Ease? Temperature? Weight?", why: "Builds vocabulary for the data stream you're already receiving." },
+        { title: "Movement Before Decisions", desc: "Before any important choice, take a 10-minute walk. Notice what your body says about the options.", why: "Engages your fastest processor before the slower verbal one." },
+        { title: "Somatic Journaling", desc: "After an interaction, write where in your body you felt it. Build a map of your signals over time.", why: "Makes your gut instinct legible and trackable." }
+      ]
+    },
+    Seasoned: {
+      tagline: "You've done the reps. Here's how to keep that expertise alive and growing.",
+      communication: [
+        { title: "Share the 'Why It Works'", desc: "When you know something holds up, explain the mechanism — not just the conclusion.", why: "Others can't trust your expertise until they see inside it." },
+        { title: "Stay Open to New Inputs", desc: "Your reps give you authority. Use it by saying 'Here's what I've found — what's different about this case?'", why: "Keeps earned knowledge from becoming a closed system." },
+        { title: "Mentor Through Questions", desc: "Instead of 'here's how to do it,' try 'what have you tried so far?' — then fill the gaps.", why: "Your experience lands better as course-correction than lecture." }
+      ],
+      movies: [
+        { title: "Jiro Dreams of Sushi (2011)", desc: "Mastery through repetition. 50 years of refinement in one pursuit.", tags: ["documentary","craft","mastery"] },
+        { title: "The Master (2012)", desc: "The weight of accumulated practice and what it means to have a method.", tags: ["drama","discipline","method"] },
+        { title: "Whiplash (2014)", desc: "The cost and reward of relentless pursuit of craft excellence.", tags: ["music","drive","precision"] }
+      ],
+      games: [
+        { title: "Dark Souls Series", desc: "Mastery through failure and repetition. Every death teaches something specific.", tags: ["action","mastery","patience"] },
+        { title: "Kerbal Space Program", desc: "Applied physics through iterative testing. Fail, learn, rebuild.", tags: ["simulation","engineering","iteration"] },
+        { title: "Hitman (World of Assassination)", desc: "Repeat the same environment until you know every route, every timing, every option.", tags: ["stealth","mastery","replay"] }
+      ],
+      recreation: [
+        { title: "A Skill with Levels (Instrument, Language, Sport)", desc: "Anything with a clear progression from novice to master feeds you.", why: "Your mind tracks improvement across reps — this gives it a canvas." },
+        { title: "Competitive Cooking / Bake-Off", desc: "Apply deep knowledge under pressure. Technique matters.", why: "Expertise becomes visible and testable." },
+        { title: "Restoration Projects", desc: "Bring something broken back to working order using knowledge most people don't have.", why: "Applied mastery with tangible proof of competence." }
+      ],
+      cognitive: [
+        { title: "Teach It to Verify It", desc: "Explain one thing you 'know' to someone who doesn't. Notice where your explanation breaks down.", why: "Exposes the difference between knowing-from-reps and knowing-you-can-explain." },
+        { title: "Beginner's Mind Day", desc: "Once a month, try something you're truly terrible at. Stay with the discomfort.", why: "Prevents expertise from becoming identity — keeps the learning channel open." },
+        { title: "Process Documentation", desc: "Write out your method step by step. Where did you learn each piece? How long ago?", why: "Makes your accumulated knowledge visible and transferable." }
+      ]
+    },
+    Legacy: {
+      tagline: "You carry the story forward. Here's how to keep it alive without getting stuck.",
+      communication: [
+        { title: "Tell the Story, Then Release It", desc: "Share the history — then explicitly say 'and here's what I think we should do now.' Don't let context become an anchor.", why: "Your stewardship is most powerful when it leads somewhere." },
+        { title: "Ask 'Does This Still Serve Us?'", desc: "Not everything worth remembering is worth repeating. Name what has changed.", why: "Separates preservation from obligation." },
+        { title: "Honor Contributors by Name", desc: "When you reference the past, name the people. It's not nostalgia — it's acknowledgment.", why: "Your memory of who built what is a gift to those who follow." }
+      ],
+      movies: [
+        { title: "Coco (2017)", desc: "Memory as an act of love. Forgetting the dead is losing them a second time.", tags: ["animation","family","memory"] },
+        { title: "The King's Speech (2010)", desc: "Duty inherited. Carrying a role that was built before you arrived.", tags: ["drama","history","duty"] },
+        { title: "Big Fish (2003)", desc: "The power and weight of the stories we pass down — and what's true inside them.", tags: ["fantasy","story","legacy"] }
+      ],
+      games: [
+        { title: "Hades", desc: "Mythology as lived experience. Relationships with ancestral figures that shift over time.", tags: ["action","mythology","story"] },
+        { title: "Spiritfarer", desc: "Carrying the departed forward. Honoring each one's story before letting go.", tags: ["narrative","care","release"] },
+        { title: "Crusader Kings III", desc: "Generational strategy — your dynasty's legacy spans centuries. Every ruler inherits the past.", tags: ["strategy","dynasty","history"] }
+      ],
+      recreation: [
+        { title: "Genealogy / Family History Research", desc: "Trace the lines, preserve the names, find the lost connections.", why: "Your natural instinct, formalized and deepened." },
+        { title: "Oral History Recording", desc: "Interview elders. Record what they know before it's gone.", why: "Active stewardship of disappearing knowledge." },
+        { title: "Heritage Cooking", desc: "Learn recipes from the people who made them — not books. The method carries the story.", why: "Embodied preservation of what matters." }
+      ],
+      cognitive: [
+        { title: "Legacy Audit", desc: "List 5 things you're holding onto. For each: is this serving the future or just honoring the past? Both are valid — name which.", why: "Prevents stewardship from becoming a cage." },
+        { title: "Future Letter", desc: "Write a letter to someone who'll be in your position in 20 years. What do they need to know?", why: "Channels your archival instinct forward instead of only backward." },
+        { title: "What's Worth Forgetting?", desc: "Name one tradition, habit, or precedent that you hold but that no longer serves anyone. Release it consciously.", why: "Exercises the muscle your lens uses least: letting go on purpose." }
+      ]
+    }
+  };
+
+  // Fallback for parsers not yet in the hub data
+  const FALLBACK = {
+    tagline: "Your personalized hub is being built. Here are some starting points based on your lens.",
+    communication: [
+      { title: "Name Your Lens to Others", desc: "Tell people close to you how you process — 'I tend to notice X first.' It prevents misreads.", why: "Self-knowledge shared is friction prevented." }
+    ],
+    movies: [
+      { title: "Check Back Soon", desc: "We're building your personalized film recommendations based on your specific parser.", tags: ["coming soon"] }
+    ],
+    games: [
+      { title: "Check Back Soon", desc: "Game recommendations tailored to your cognitive style are being developed.", tags: ["coming soon"] }
+    ],
+    recreation: [
+      { title: "Check Back Soon", desc: "Recreation suggestions that feed your specific lens are on the way.", why: "Your parser tells us what recharges you." }
+    ],
+    cognitive: [
+      { title: "Daily Lens Check-In", desc: "At the end of each day, name one thing your parser noticed before anyone else did. Build awareness of your own pattern.", why: "The first step is seeing your own lens clearly." }
+    ]
+  };
+
+  function renderSection(icon, title, subtitle, cards, type) {
+    let html = `<div class="hub-section" data-section="${type}">
+      <div class="hub-section-header">
+        <span class="hub-section-icon">${icon}</span>
+        <span class="hub-section-title">${esc(title)}</span>
+        <span class="hub-section-sub">${esc(subtitle)}</span>
+      </div>
+      <div class="hub-grid">`;
+
+    cards.forEach(c => {
+      html += `<div class="hub-card">
+        <div class="hub-card-label">${esc(type)}</div>
+        <h3>${esc(c.title)}</h3>
+        <p>${esc(c.desc)}</p>`;
+      if (c.why) html += `<p class="why">${esc(c.why)}</p>`;
+      if (c.tags && c.tags.length) {
+        html += '<div class="hub-tags">';
+        c.tags.forEach(t => { html += `<span class="hub-tag">${esc(t)}</span>`; });
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+
+    html += '</div></div>';
+    return html;
+  }
+
+  function render(user, profile) {
+    const parser = profile.profileName || 'Your Parser';
+    const data = HUB_DATA[parser] || FALLBACK;
+    const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || 'there';
+
+    let html = '';
+
+    // Hero
+    html += `<div class="hub-hero">
+      <div class="hub-hero-inner">
+        <div class="hub-eyebrow">Your Parser Hub · ${esc(parser)}</div>
+        <h1>Welcome back, <em>${esc(name.split(' ')[0])}</em></h1>
+        <p>${esc(data.tagline)}</p>
+      </div>
+    </div>`;
+
+    // Nav tabs
+    html += `<div class="hub-nav">
+      <button class="hub-nav-btn active" data-tab="all">All</button>
+      <button class="hub-nav-btn" data-tab="communication">Communication</button>
+      <button class="hub-nav-btn" data-tab="movies">Movies</button>
+      <button class="hub-nav-btn" data-tab="games">Games</button>
+      <button class="hub-nav-btn" data-tab="recreation">Recreation</button>
+      <button class="hub-nav-btn" data-tab="cognitive">Cognitive</button>
+    </div>`;
+
+    // Sections
+    html += renderSection('◇', 'Communication Strategies', 'How to work with your lens', data.communication, 'communication');
+    html += renderSection('◈', 'Movies for Your Lens', 'Films that resonate with how you process', data.movies, 'movies');
+    html += renderSection('◆', 'Games That Fit', 'Play that feeds your cognitive style', data.games, 'games');
+    html += renderSection('○', 'Recreation & Recharging', 'Activities that restore your specific energy', data.recreation, 'recreation');
+    html += renderSection('◎', 'Cognitive Exercises', 'Practices that sharpen and stretch your lens', data.cognitive, 'cognitive');
+
+    $('hubView').innerHTML = html;
+
+    // Tab filtering
+    document.querySelectorAll('.hub-nav-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.hub-nav-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const tab = this.dataset.tab;
+        document.querySelectorAll('.hub-section').forEach(s => {
+          s.style.display = (tab === 'all' || s.dataset.section === tab) ? '' : 'none';
+        });
+      });
+    });
+  }
+
+  // Sign out
+  $('signOutLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    fetch('/api/auth/logout', { method: 'POST' }).finally(() => { location.href = '/signin.html'; });
+  });
+
+  // Init
+  (async function() {
+    let data;
+    try {
+      const res = await fetch('/api/profile/me');
+      if (res.status === 401) { location.href = '/signin.html'; return; }
+      data = await res.json();
+    } catch(_) {
+      location.href = '/signin.html'; return;
+    }
+    $('loading').classList.add('hidden');
+
+    if (!data || !data.authenticated) { location.href = '/signin.html'; return; }
+    if (!data.profile || !data.profile.profileName) {
+      $('hubView').innerHTML = `<div style="text-align:center;padding:80px 24px;">
+        <h2 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:14px;">No profile yet</h2>
+        <p style="color:var(--text-secondary);margin-bottom:24px;">Complete your assessment to unlock your personalized hub.</p>
+        <a href="/assessment.html" style="display:inline-block;background:linear-gradient(180deg,var(--accent-bright),var(--accent));color:#fff;padding:13px 28px;border-radius:12px;text-decoration:none;font-weight:700;box-shadow:var(--accent-glow);">Take the Assessment →</a>
+      </div>`;
+      $('hubView').classList.remove('hidden');
+      return;
+    }
+
+    $('hubView').classList.remove('hidden');
+    render(data.user, data.profile);
+  })();
+  </script>
+</body>
+</html>

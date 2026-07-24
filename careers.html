@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers by Parser | 27Parser™</title>
+  <meta name="description" content="Every mind parses differently — and every parser belongs somewhere. Find the career environments where your cognitive wiring thrives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
+      --blue-500: #9A7B2E; --blue-400: #B8922A; --blue-100: #E8D9B0; --blue-50: #F3ECD9;
+      --text-primary: #1E1813; --text-secondary: #4A3F35; --text-muted: #8A7E6E;
+      --bg-page: #FAF7F0; --bg-card: #FFFDF9; --bg-inset: #F2ECE0;
+      --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
+      --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
+      --gold: #9A7B2E; --gold-pale: #D8B45E;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 112.5%; }
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.6; font-size: 1rem; letter-spacing: 0.01em; }
+    body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 20px 0; }
+    .h-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { text-decoration: none; display: flex; flex-direction: column; gap: 3px; }
+    .logo .wordmark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; line-height: 1; }
+    .logo .sub { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); }
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    nav a:hover { color: var(--blue-500); }
+    .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .nav-dd-caret { width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none; opacity: 0.65; transition: transform 0.25s ease; }
+    .nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-dd-menu { position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 170px; background: var(--bg-card, #fff); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(60,40,15,0.08); padding: 7px; display: flex; flex-direction: column; gap: 1px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; z-index: 200; }
+    .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .nav-dd-menu a { font-size: 0.82rem; color: var(--text-muted); padding: 10px 12px; border-radius: 8px; white-space: nowrap; transition: background 0.18s, color 0.18s; }
+    .nav-dd-menu a:hover { background: rgba(154,123,46,0.08); color: var(--blue-500); }
+
+    .hero { background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(184,146,42,0.16) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(216,180,94,0.10) 0%, transparent 50%); pointer-events: none; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; padding: 96px 24px 80px; position: relative; z-index: 1; }
+    .eyebrow-tag { display: inline-block; background: rgba(216,180,94,0.10); border: 1px solid rgba(216,180,94,0.24); color: rgba(245,238,224,0.9); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 100px; margin-bottom: 24px; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; color: #fff; margin-bottom: 24px; max-width: 820px; }
+    .hero h1 em { font-style: italic; font-weight: 400; color: var(--gold-pale); }
+    .hero p { font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.6; color: rgba(255,255,255,0.75); max-width: 58ch; font-style: italic; }
+
+    .filter-bar { max-width: 1100px; margin: 0 auto; padding: 32px 24px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+    .filter-btn:hover { border-color: var(--blue-500); color: var(--blue-500); }
+    .filter-btn.active { background: var(--blue-900); color: #fff; border-color: var(--blue-900); }
+
+    .parsers-grid { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; display: grid; grid-template-columns: 1fr; gap: 24px; }
+
+    .parser-career { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: box-shadow 0.3s; }
+    .parser-career:hover { box-shadow: var(--shadow-md); }
+    .pc-header { padding: 28px 32px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+    .pc-header h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; color: var(--text-primary); }
+    .pc-header h2 span { color: var(--text-muted); font-weight: 400; font-size: 0.9rem; margin-left: 12px; font-family: var(--font-body); }
+    .pc-toggle { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.25s; flex-shrink: 0; }
+    .pc-toggle svg { width: 14px; height: 14px; stroke: var(--text-muted); stroke-width: 2; fill: none; transition: transform 0.3s; }
+    .parser-career.open .pc-toggle { background: var(--blue-900); border-color: var(--blue-900); }
+    .parser-career.open .pc-toggle svg { stroke: #fff; transform: rotate(180deg); }
+    .pc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .parser-career.open .pc-body { max-height: 2000px; }
+    .pc-content { padding: 0 32px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .pc-section h3 { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 10px; }
+    .pc-section p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .pc-section ul { list-style: none; padding: 0; }
+    .pc-section ul li { font-size: 0.88rem; color: var(--text-secondary); padding: 5px 0; padding-left: 16px; position: relative; }
+    .pc-section ul li::before { content: ''; position: absolute; left: 0; top: 12px; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-pale); }
+    .pc-tagline { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--text-muted); padding: 0 32px 8px; border-top: 1px solid var(--border); padding-top: 16px; margin: 0 32px 24px; }
+
+    @media (max-width: 700px) {
+      .pc-content { grid-template-columns: 1fr; }
+      .pc-header { padding: 20px; }
+      .pc-content { padding: 0 20px 24px; }
+      .pc-tagline { margin: 0 20px 20px; padding: 0 20px 8px; }
+    }
+
+    footer { background: var(--blue-900); color: rgba(255,255,255,0.5); padding: 48px 24px; text-align: center; font-size: 0.78rem; }
+    footer a { color: var(--gold-pale); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="h-inner">
+      <a href="/index.html" class="logo">
+        <img src="/images/27parser-logo.png" alt="27Parser™" style="height:36px;width:auto;">
+      </a>
+      <nav id="siteNav">
+        <div class="nav-dd">
+          <a href="/individual.html" class="nav-dd-top">Individual <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/individual.html">Adult</a>
+            <a href="/kids-individual.html">Kids</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/couples.html" class="nav-dd-top">Team <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/couples.html">Couples</a>
+            <a href="/parent-login.html">Family</a>
+            <a href="/couples.html#social">Social</a>
+            <a href="/professionals.html">Teams</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/professionals.html" class="nav-dd-top">Professional <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/professionals.html">Working Group</a>
+            <a href="/professionals.html#line">Billet</a>
+            <a href="/clinicians.html">Clinical</a>
+            <a href="/careers.html">Careers</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow-tag">Professional · Career Mapping</div>
+      <h1>Your parser doesn't predict <em>what</em> you do. It predicts <em>where you'll thrive.</em></h1>
+      <p>Every mind parses differently. The right career isn't about skills on a resume — it's about whether the environment feeds or starves the way you take things in.</p>
+    </div>
+  </section>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All 27</button>
+    <button class="filter-btn" data-filter="a-g">A – G</button>
+    <button class="filter-btn" data-filter="h-m">H – M</button>
+    <button class="filter-btn" data-filter="n-s">N – S</button>
+    <button class="filter-btn" data-filter="t-z">T – Z</button>
+  </div>
+
+  <div class="parsers-grid">
+
+    <!-- ACTUALIZED -->
+    <div class="parser-career" data-parser="Actualized">
+      <div class="pc-header"><h2>Actualized <span>The Self-Made System</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Builds from the inside out. Needs ownership, not oversight.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Founder / startup leadership</li><li>Independent consulting</li><li>Creative direction</li><li>Executive coaching</li><li>Product ownership</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Self-directed, high autonomy. Builds systems around personal standards. Functions best when given an outcome and left alone to architect the path. Micromanagement is lethal.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Leads by example and expects the same self-governance from their team. Sets high bars, gives wide latitude. Can seem detached — they're not; they just trust competence over closeness.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Bureaucratic approval chains</li><li>Roles requiring constant collaboration without solo execution time</li><li>Environments that reward face-time over output</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Can take a vague mandate and turn it into a functioning operation without needing to be told how. The rare person who genuinely doesn't need a playbook.</p></div>
+      </div></div>
+    </div>
+
+    <!-- ALTRUISTIC -->
+    <div class="parser-career" data-parser="Altruistic">
+      <div class="pc-header"><h2>Altruistic <span>The Quiet Architect of Others</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Builds around other people's needs before their own. The work has to matter to someone.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Nonprofit leadership</li><li>Social work / case management</li><li>Community organizing</li><li>Healthcare administration</li><li>Education program design</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Service-driven. Takes on the emotional load of the room without being asked. Needs to see impact — abstract metrics won't sustain them. Quietly holds more than anyone realizes.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Leads through care. People follow because they feel genuinely seen. Risks burnout by absorbing too much of the team's weight. Needs a second-in-command who can enforce boundaries they won't set for themselves.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Profit-first cultures with no mission</li><li>Competitive, zero-sum team dynamics</li><li>Roles where empathy is treated as weakness</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Reads room dynamics before anyone else does. Can de-escalate a conflict most people haven't even noticed yet. Institutional memory for who needs what.</p></div>
+      </div></div>
+    </div>
+
+    <!-- ATTUNED -->
+    <div class="parser-career" data-parser="Attuned">
+      <div class="pc-header"><h2>Attuned <span>The Frequency Reader</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Picks up what others broadcast without knowing it. Reads the signal, not just the words.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>UX research / user interviews</li><li>Therapy / counseling</li><li>Mediation / conflict resolution</li><li>Talent acquisition</li><li>Hospitality management</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Relational. Processes through interpersonal cues — tone, body language, what was left unsaid. Thrives when the work requires understanding people, not just processing information.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Intuitive manager. Knows who on the team is struggling before they say anything. Builds loyalty through attentiveness. Can over-index on harmony at the expense of direct feedback.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Data-only environments with no human interface</li><li>Roles requiring emotional detachment</li><li>High-volume, low-touch transactional work</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Catches the lie in the room. Senses when a client is about to churn, when a team member is checked out, when a deal is dead before the numbers say so.</p></div>
+      </div></div>
+    </div>
+
+    <!-- CENTERED -->
+    <div class="parser-career" data-parser="Centered">
+      <div class="pc-header"><h2>Centered <span>The Ballast</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Stays level when everything around them tilts. The calm others borrow from.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Air traffic control / dispatch</li><li>Crisis management</li><li>Surgical teams / operating rooms</li><li>Senior program management</li><li>Judicial / arbitration roles</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Measured. Doesn't spike under pressure — processes at the same speed whether things are calm or on fire. Prefers clarity of role and chain of command but adapts easily when the plan changes.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Stabilizing presence. Teams calibrate their own anxiety against this person's composure. Doesn't inspire through charisma — inspires through reliability. The leader you want when things go sideways.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Chaotic environments with no decision authority</li><li>Roles requiring performative enthusiasm</li><li>Cultures that mistake calm for disengagement</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Makes everyone around them better under pressure. Their steadiness is contagious — teams with a Centered parser make fewer unforced errors.</p></div>
+      </div></div>
+    </div>
+
+    <!-- COHERENT -->
+    <div class="parser-career" data-parser="Coherent">
+      <div class="pc-header"><h2>Coherent <span>The Systems Integrator</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Sees how the pieces connect. Won't move until the whole picture makes sense.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Systems architecture / engineering</li><li>Policy analysis</li><li>Data science / analytics</li><li>Curriculum design</li><li>Supply chain optimization</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Methodical. Maps dependencies before acting. Needs to understand the full system — can't operate on a fragment. Produces work that is internally consistent and rarely needs revision.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Designs teams like systems. Everyone has a clear function. Communication paths are intentional. Can frustrate fast-movers who want to ship before the architecture is clean.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>"Move fast and break things" cultures</li><li>Roles with constant context-switching</li><li>Environments where decisions are made without data</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Finds the bug in the process that nobody else can see. When something keeps breaking, this is the person who traces it back to the root — three layers deeper than anyone looked.</p></div>
+      </div></div>
+    </div>
+
+    <!-- COLLABORATIVE -->
+    <div class="parser-career" data-parser="Collaborative">
+      <div class="pc-header"><h2>Collaborative <span>The Force Multiplier</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Thinks best in tandem. The room gets smarter when they're in it.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Product management</li><li>Agency / studio creative teams</li><li>Cross-functional program leads</li><li>Partnerships / business development</li><li>Workshop facilitation</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Thinks out loud. Ideas sharpen through dialogue — solo deep-work is draining without a collaborative bookend. Naturally synthesizes input from multiple people into a coherent direction.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Consensus-builder who actually gets things done. Doesn't just poll the room — integrates perspectives and moves forward. Teams feel heard. Risk: can over-consult and slow down decisions that should be unilateral.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Isolated, siloed roles</li><li>Cultures with rigid hierarchy and one-way communication</li><li>Work that requires long solo execution with no check-ins</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Makes other people's ideas better. The rare collaborator who elevates without competing — they don't need the credit, they need the outcome.</p></div>
+      </div></div>
+    </div>
+
+    <!-- EMBODIED -->
+    <div class="parser-career" data-parser="Embodied">
+      <div class="pc-header"><h2>Embodied <span>The Hands-On Intelligence</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Learns by doing. The body knows before the mind catches up.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Skilled trades / craftsmanship</li><li>Athletic coaching / sports science</li><li>Emergency response / first responder</li><li>Physical therapy / kinesiology</li><li>Culinary arts / brewing / distilling</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Kinesthetic processor. Absorbs through experience, not instruction manuals. Retains by doing, not by reading. Needs physical engagement with the work — a desk-only role will atrophy this person.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Apprenticeship model. Leads by showing, not telling. Earns trust through demonstrated competence. Can struggle to delegate because they know what "right" feels like in their hands.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Sedentary, abstract knowledge work</li><li>Roles requiring extensive written documentation</li><li>Environments that devalue physical intelligence</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Spatial reasoning that doesn't show up on tests. Solves mechanical, physical, and logistical problems by instinct. The person you want when the blueprint doesn't match the build.</p></div>
+      </div></div>
+    </div>
+
+    <!-- EMPATHETIC -->
+    <div class="parser-career" data-parser="Empathetic">
+      <div class="pc-header"><h2>Empathetic <span>The Emotional Translator</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Feels what others can't articulate. Translates emotional data into actionable clarity.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Clinical psychology / therapy</li><li>Palliative care / hospice</li><li>Human resources (people ops)</li><li>Victim advocacy</li><li>Documentary filmmaking / journalism</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Absorbs emotional context as primary data. Processes situations through how people feel, not just what they say. Needs decompression time built into the schedule — emotional bandwidth is finite.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Creates psychological safety. Teams share things with this leader they'd never say elsewhere. Risk: carrying everyone's weight without distributing the emotional load.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>High-churn transactional environments</li><li>Roles where emotional expression is seen as unprofessional</li><li>Cultures that operate purely on metrics</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Retention. People stay for leaders and colleagues who make them feel understood. This parser reduces turnover in any team they join — measurably.</p></div>
+      </div></div>
+    </div>
+
+    <!-- EQUANIMOUS -->
+    <div class="parser-career" data-parser="Equanimous">
+      <div class="pc-header"><h2>Equanimous <span>The Even Keel</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Takes in the highs and lows at the same frequency. Nothing is a crisis until it actually is.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Diplomacy / international relations</li><li>Compliance / regulatory oversight</li><li>Investment management (long-term)</li><li>Judicial clerkships / legal analysis</li><li>Quality assurance leadership</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Steady throughput regardless of external noise. Doesn't get swept up in urgency theater. Evaluates before reacting. Produces consistent, reliable output that rarely swings in quality.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Impartial. Makes decisions based on principle, not pressure. Teams trust their fairness even when they disagree with the call. Can be perceived as detached when the team wants emotional validation.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Hype-driven startup cultures</li><li>Roles requiring visible emotional investment as a performance metric</li><li>Environments that punish measured responses as "not caring enough"</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Doesn't make bad decisions under pressure. When everyone else panics and overreacts, this parser holds the line. The decisions they make at 2am and 2pm are the same quality.</p></div>
+      </div></div>
+    </div>
+
+    <!-- FORESIGHTED -->
+    <div class="parser-career" data-parser="Foresighted">
+      <div class="pc-header"><h2>Foresighted <span>The Horizon Scanner</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Already living in the version of the future most people haven't considered yet.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Strategic planning / corporate strategy</li><li>Venture capital / emerging markets</li><li>Urban planning / infrastructure</li><li>Climate / sustainability policy</li><li>Futurism / scenario planning</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Long-arc thinker. Bored by immediate execution — needs to see the 3-to-10-year consequence of today's decisions. Produces strategy that ages well. Needs patient leadership above them.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Visionary without the ego. Paints a picture of where the team is going that makes the daily grind feel purposeful. Risk: can be so far ahead that the team can't follow the reasoning.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Quarter-to-quarter performance cultures</li><li>Roles with no latitude for long-term thinking</li><li>Environments that only value what's measurable this month</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Sees the second-order consequence. While others solve today's problem, this parser is already solving the problem that today's solution will create.</p></div>
+      </div></div>
+    </div>
+
+    <!-- GROUNDED -->
+    <div class="parser-career" data-parser="Grounded">
+      <div class="pc-header"><h2>Grounded <span>The Bedrock</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">The floor doesn't move when this person is standing on it.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Operations management</li><li>Project management (construction, infrastructure)</li><li>Logistics / supply chain</li><li>Accounting / financial controls</li><li>Manufacturing leadership</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Pragmatic. Deals with what's real, not what's theoretical. Builds reliable processes and follows through without reminding. The person who actually ships — on time, on spec.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Steady-hand operator. No surprises. The team knows what to expect and trusts the consistency. Doesn't inspire through speeches — inspires through follow-through. The promise kept.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Environments with constant pivots and no execution</li><li>Roles that are all strategy with no building</li><li>Cultures that value "ideas" over "done"</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Institutional gravity. This person keeps the org from floating away on its own ambitions. Every visionary team needs a Grounded parser to turn the dream into a schedule.</p></div>
+      </div></div>
+    </div>
+
+    <!-- HARMONIOUS -->
+    <div class="parser-career" data-parser="Harmonious">
+      <div class="pc-header"><h2>Harmonious <span>The Climate Controller</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Keeps the ecosystem balanced. Notices when the temperature in the room shifts before anyone speaks.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Organizational development</li><li>Team coaching / facilitation</li><li>Mediation / labor relations</li><li>Event production / experience design</li><li>Interior design / space planning</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Environment-sensitive. Performance is directly tied to the quality of the workspace — noise, lighting, team dynamics, tone of communication. Creates order out of chaos aesthetically and interpersonally.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Cultivates culture intentionally. The team feels different — better — because of the environment this person shapes. Risk: avoids necessary conflict to preserve harmony, letting problems fester.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Hostile, aggressive work cultures</li><li>Roles where aesthetics and environment are dismissed</li><li>Chaotic environments with no regard for team dynamics</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Culture design. Most orgs hire for culture fit — this parser builds the culture itself. Put them in charge of the environment and watch retention, engagement, and output all climb.</p></div>
+      </div></div>
+    </div>
+
+    <!-- IDEALIZED -->
+    <div class="parser-career" data-parser="Idealized">
+      <div class="pc-header"><h2>Idealized <span>The Standard Bearer</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Holds a picture of how things should be — and measures everything against it.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Brand strategy / creative direction</li><li>Architecture / design</li><li>Editorial / publishing</li><li>Luxury goods / high-end retail</li><li>Academic research</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Standard-driven. Has an internal benchmark that most people can't see. Produces exceptional work but takes longer because "good enough" doesn't register. Needs environments that value craft over speed.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Sets a bar that elevates everyone. Teams produce their best work under this leader because mediocrity isn't accepted. Risk: perfectionism that creates bottlenecks and demoralizes fast shippers.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>MVP / "just ship it" cultures</li><li>Roles where quality is deprioritized for volume</li><li>Environments with no editorial or craft standards</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Taste. Can't be taught, can't be faked. This parser knows what "right" looks like — and in industries where quality is the product (design, luxury, editorial), they're irreplaceable.</p></div>
+      </div></div>
+    </div>
+
+    <!-- INTEGRATED -->
+    <div class="parser-career" data-parser="Integrated">
+      <div class="pc-header"><h2>Integrated <span>The Whole-System Thinker</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Doesn't think in departments. Thinks in ecosystems.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Chief of staff / operations strategy</li><li>Management consulting</li><li>Public health systems</li><li>Cross-functional program management</li><li>Mergers & acquisitions integration</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Connects silos. Naturally sees how marketing affects engineering, how HR policy shapes product quality, how a supply chain hiccup reaches the customer. Thinks in feedback loops, not flowcharts.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Breaks down walls between teams. Runs the kind of cross-functional meetings that actually produce alignment. The translator between departments who speak different languages.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Deeply siloed organizations resistant to cross-pollination</li><li>Narrow specialist roles with no system-level visibility</li><li>Cultures that punish stepping outside your lane</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Finds the leverage point. When a system is stuck, this parser identifies the one change that unlocks five downstream improvements. Efficiency through integration, not brute force.</p></div>
+      </div></div>
+    </div>
+
+    <!-- INTENTIONAL -->
+    <div class="parser-career" data-parser="Intentional">
+      <div class="pc-header"><h2>Intentional <span>The Deliberate Mover</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Every action has a reason. Nothing is accidental, nothing is wasted.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Strategic operations</li><li>Contract negotiation / procurement</li><li>Clinical research / trials management</li><li>Risk assessment / insurance underwriting</li><li>Estate planning / wealth management</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Precise. Thinks three moves ahead. Doesn't start work until the purpose is clear. Produces lean, purposeful output with no wasted motion. Slow to begin, fast to finish.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Strategic deployer of resources. Never over-staffs, never under-plans. Teams feel like every assignment has a reason — because it does. Can frustrate people who want to explore before committing.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Chaotic, reactive environments</li><li>Roles requiring constant improvisation</li><li>"Ready, fire, aim" cultures</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Resource efficiency. This parser does more with less than anyone on the team. When budgets tighten, they don't panic — they've been operating lean the whole time.</p></div>
+      </div></div>
+    </div>
+
+    <!-- INTROSPECTIVE -->
+    <div class="parser-career" data-parser="Introspective">
+      <div class="pc-header"><h2>Introspective <span>The Inner Cartographer</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Knows their own mind with unusual precision. Processes inward before acting outward.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Writing / authorship</li><li>Research (pure / theoretical)</li><li>Philosophy / ethics advisory</li><li>Psychoanalysis / depth psychology</li><li>Independent scholarship</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Deep, slow, internal. Needs significant processing time between input and output. Produces insight that others can't reach because they sit with information longer than most people can tolerate.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Thoughtful and deliberate. Asks questions no one else thinks to ask. Teams learn to wait for their input because it's consistently the most considered take in the room. Not built for high-frequency decision cycles.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Open office, high-stimulation environments</li><li>Roles requiring instant verbal processing</li><li>Cultures that equate speed with competence</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Self-awareness that prevents organizational blind spots. This parser catches their own biases before they become decisions — a skill most leaders claim and almost none actually have.</p></div>
+      </div></div>
+    </div>
+
+    <!-- INTUITIVE -->
+    <div class="parser-career" data-parser="Intuitive">
+      <div class="pc-header"><h2>Intuitive <span>The Pattern Jumper</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Arrives at the answer before the logic catches up. Knows, then proves.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Venture capital / angel investing</li><li>Creative direction / art direction</li><li>Emergency medicine triage</li><li>Investigative work / intelligence analysis</li><li>Early-stage product design</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Non-linear. Makes connections that aren't obvious. Struggles to explain their reasoning step-by-step because the insight arrived whole. Needs environments that trust intuition and validate after, not before.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Instinct-driven decision maker. Right more often than they should be. Teams either deeply trust them or deeply distrust them — there's no middle ground. Needs a Coherent or Grounded second to show the work.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Environments requiring documented justification for every decision</li><li>Cultures that only move on consensus</li><li>Roles where intuition is treated as guessing</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Speed to insight. In domains where pattern recognition beats analysis (trading, triage, threat detection), this parser outperforms analytical thinkers by a wide margin.</p></div>
+      </div></div>
+    </div>
+
+    <!-- LEGACY -->
+    <div class="parser-career" data-parser="Legacy">
+      <div class="pc-header"><h2>Legacy <span>The Institution Builder</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Builds things meant to outlast the builder. Thinks in generations, not quarters.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Family business leadership</li><li>Endowment / foundation management</li><li>University administration</li><li>Land conservation / trust management</li><li>Constitutional / policy architecture</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Long-horizon. Every decision is measured by whether it will hold in 20 years. Patient, methodical, and deeply committed to durability. Doesn't chase trends — builds foundations.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Steward, not a disruptor. Inherits something and makes it stronger. The person you want running the thing that has to survive leadership transitions. Succession planning is instinct, not homework.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Short-cycle, disposable-output cultures</li><li>Environments that tear down and rebuild constantly</li><li>Roles with no institutional memory or continuity</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Builds things people rely on without knowing who built them. The infrastructure, the policy, the culture that "just works" — a Legacy parser put it there.</p></div>
+      </div></div>
+    </div>
+
+    <!-- MINDFUL -->
+    <div class="parser-career" data-parser="Mindful">
+      <div class="pc-header"><h2>Mindful <span>The Present-Tense Operator</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Fully in the moment. Catches what others miss because they're actually paying attention.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Quality control / inspection</li><li>Surgical nursing / anesthesiology</li><li>Air traffic safety / aviation safety</li><li>Mindfulness / executive coaching</li><li>Precision agriculture / viticulture</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Present-state awareness. Notices the detail everyone else skips. Doesn't multitask well — not because of limitation, but because splitting attention degrades the quality they bring to any single task.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Attentive. Notices when quality is slipping before the metrics show it. Teams feel the standard without it being enforced — it's modeled. Risk: can struggle with pace in high-velocity environments.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>High-volume, low-attention roles</li><li>Environments that reward multitasking</li><li>Cultures where "fast" always beats "right"</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Error prevention. This parser catches the thing that would have cost the company six figures. Once. Quietly. And nobody knows it happened except them.</p></div>
+      </div></div>
+    </div>
+
+    <!-- RECONCILED -->
+    <div class="parser-career" data-parser="Reconciled">
+      <div class="pc-header"><h2>Reconciled <span>The Bridge Between Opposites</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Holds contradictions without breaking. Finds the third option between two absolutes.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Diplomacy / peace negotiations</li><li>Restorative justice programs</li><li>Interfaith / intercultural work</li><li>Change management consulting</li><li>Family law mediation</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Dialectical. Comfortable with ambiguity and paradox. Doesn't need to resolve tension to function in it. Produces solutions that honor multiple perspectives without compromising into mush.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Reunifier. Heals team fractures. When two factions have dug in, this parser finds the shared ground neither side could see. Risk: can be slow to take sides when a clear stand is needed.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Binary, "pick a side" cultures</li><li>Environments with no tolerance for nuance</li><li>Roles requiring rigid ideological alignment</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Post-conflict reconstruction. After the blowup, after the reorg, after the merger — this parser rebuilds the relational infrastructure that makes an organization functional again.</p></div>
+      </div></div>
+    </div>
+
+    <!-- REFLECTIVE -->
+    <div class="parser-career" data-parser="Reflective">
+      <div class="pc-header"><h2>Reflective <span>The After-Action Mind</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Learns backward. Extracts the lesson from what already happened and applies it forward.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Post-incident review / root cause analysis</li><li>Historiography / archival work</li><li>Process improvement / lean methodology</li><li>Investment post-mortem / portfolio review</li><li>Journalism / long-form nonfiction</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Retrospective processor. Gets smarter over time, not in the moment. Needs debrief cycles built into the workflow. First draft is never the best — the revision is where the insight lives.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Learns from failure better than anyone. Teams under this leader don't repeat mistakes. Builds institutional memory that survives turnover. Risk: can over-analyze past decisions and slow future ones.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Environments that never look back</li><li>Cultures that treat post-mortems as blame sessions</li><li>Roles requiring real-time decision-making with no review</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Organizational learning. Most companies repeat the same failures every 18 months because nobody documents the lesson. This parser does — automatically, instinctively.</p></div>
+      </div></div>
+    </div>
+
+    <!-- RELIABLE -->
+    <div class="parser-career" data-parser="Reliable">
+      <div class="pc-header"><h2>Reliable <span>The Guarantee</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Does what they said they'd do. Every time. Without being reminded.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Regulatory compliance</li><li>Military / government operations</li><li>Infrastructure maintenance engineering</li><li>Payroll / benefits administration</li><li>Pharmacy / medical dispensing</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Consistent output, predictable cadence. The variance on their deliverables is near-zero. Doesn't need novelty to stay engaged — finds meaning in doing the important thing well, repeatedly.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Trust-based. People know exactly what they'll get. Promises are kept, deadlines are met, standards are maintained. The least exciting leader — and the one teams value most over time.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Environments that constantly change the rules</li><li>Roles with unpredictable scope and shifting goals</li><li>Cultures that celebrate flash over substance</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Trust accumulation. In any profession where trust is the product (medicine, law, finance), this parser builds a reputation that compounds. Referrals come from reliability, not charisma.</p></div>
+      </div></div>
+    </div>
+
+    <!-- RESILIENT -->
+    <div class="parser-career" data-parser="Resilient">
+      <div class="pc-header"><h2>Resilient <span>The Rebuild Engine</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Gets knocked down and comes back with a better version. Failure is data, not identity.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Turnaround management / restructuring</li><li>Emergency management / disaster recovery</li><li>Sales (enterprise / high-rejection)</li><li>Startup founding (serial)</li><li>Competitive athletics coaching</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Adaptive under pressure. Doesn't just survive setbacks — metabolizes them into fuel. High tolerance for ambiguity, rejection, and uncertainty. Gets stronger in conditions that break other people.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Rally captain. When the org is demoralized, this parser is the one who stands up and says "here's what we do next." Doesn't dwell — rebuilds. Risk: can normalize crisis as a permanent operating mode.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Stable, unchanging environments (boredom kills them)</li><li>Roles with no adversity or challenge</li><li>Cultures that avoid risk entirely</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Anti-fragility. Most people survive disruption. This parser gets better because of it. Put them in charge of the thing that's failing — they'll rebuild it into something the original version couldn't have been.</p></div>
+      </div></div>
+    </div>
+
+    <!-- SEASONED -->
+    <div class="parser-career" data-parser="Seasoned">
+      <div class="pc-header"><h2>Seasoned <span>The Earned Perspective</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Doesn't need to Google it. Has been through it. Judgment forged by mileage, not theory.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Advisory boards / board of directors</li><li>Mentorship programs</li><li>Executive coaching</li><li>Master craftsmanship / artisan trades</li><li>Senior diplomatic roles</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Experience-weighted judgment. Doesn't need to build the model — they've lived it. Efficient because they've already made the mistakes and know which shortcuts actually work. Pattern library is lived, not learned.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Sage. People seek their counsel before making big moves. Doesn't need positional authority — influence comes from demonstrated wisdom. Risk: can dismiss novel approaches because "we tried that before."</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Youth-obsessed cultures that dismiss experience</li><li>Environments that value credentials over track record</li><li>Roles requiring constant proof of relevance</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Judgment speed. Where a less experienced person needs a committee and a deck, this parser needs five minutes and one question. The cost savings of good judgment are invisible and enormous.</p></div>
+      </div></div>
+    </div>
+
+    <!-- SENTIMENTAL -->
+    <div class="parser-career" data-parser="Sentimental">
+      <div class="pc-header"><h2>Sentimental <span>The Meaning Keeper</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Holds onto the meaning of things long after others have moved on. Memory as compass.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Museum curation / cultural preservation</li><li>Brand storytelling / heritage marketing</li><li>Memorial / commemoration design</li><li>Family therapy / generational work</li><li>Estate administration / personal archiving</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Context-rich. Every decision is informed by what came before. Strong relational memory — remembers who said what, when, and why it mattered. Produces work that resonates because it's emotionally grounded in history.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Keeper of the story. Reminds the team why they started, what they've survived, who they are. Builds culture through narrative. Risk: can hold onto the past when the org needs to evolve.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Cultures that constantly reinvent without honoring what came before</li><li>Roles requiring emotional detachment from outcomes</li><li>Environments that treat history as irrelevant</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Brand soul. Companies spend millions trying to manufacture authenticity. This parser carries it naturally. They know the story, they feel the story, and they tell it in a way that makes other people feel it too.</p></div>
+      </div></div>
+    </div>
+
+    <!-- SHARP -->
+    <div class="parser-career" data-parser="Sharp">
+      <div class="pc-header"><h2>Sharp <span>The First-Read Closer</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Processes fast, decides faster. The first one to see it and the first one to act on it.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Trading floors / market making</li><li>ER medicine / trauma surgery</li><li>Trial litigation</li><li>Live broadcast / breaking news</li><li>Crisis communications</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Rapid intake, rapid output. Thrives in time-compressed environments where delay costs money or lives. Bored in slow-paced roles. Needs a pipeline of hard problems — easy work doesn't just bore them, it degrades their edge.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Decisive. Makes the call when everyone else is still gathering data. Right often enough that the speed advantage compounds. Risk: can steamroll deliberative thinkers and miss the nuance that slower processing would catch.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Bureaucratic, approval-heavy environments</li><li>Roles with no urgency or time pressure</li><li>Cultures that penalize quick decisions</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Triage. In any environment with more inputs than bandwidth — ER, newsroom, trading desk, incident response — this parser instantly ranks what matters and discards what doesn't. That skill alone is worth the hire.</p></div>
+      </div></div>
+    </div>
+
+    <!-- VISIONARY -->
+    <div class="parser-career" data-parser="Visionary">
+      <div class="pc-header"><h2>Visionary <span>The Architect of What's Next</span></h2><div class="pc-toggle"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="pc-body"><div class="pc-tagline">Sees the building before the blueprint exists. Lives in the version after next.</div><div class="pc-content">
+        <div class="pc-section"><h3>Best-Fit Environments</h3><ul>
+          <li>Product strategy / R&D leadership</li><li>Venture building / incubation</li><li>Film / game direction</li><li>Urban design / city planning</li><li>Research lab leadership</li></ul></div>
+        <div class="pc-section"><h3>Work Style</h3><p>Big-picture, future-state. Generates ideas at a rate that exceeds any team's capacity to execute. Needs a strong operational counterpart (Grounded, Reliable, Intentional) to translate vision into deliverables.</p></div>
+        <div class="pc-section"><h3>Leadership Style</h3><p>Inspiring. People follow because the future they describe is compelling. Builds teams that punch above their weight because everyone believes in where they're going. Risk: vision without execution is just a TED talk.</p></div>
+        <div class="pc-section"><h3>Collision Points</h3><ul>
+          <li>Maintenance-mode organizations with no growth</li><li>Roles limited to execution of someone else's vision</li><li>Cultures that penalize unconventional thinking</li></ul></div>
+        <div class="pc-section"><h3>Underrated Strength</h3><p>Recruitment. The best people want to work on the most interesting problems. A Visionary parser attracts talent that no compensation package could buy — because people want to build something that matters.</p></div>
+      </div></div>
+    </div>
+
+  </div><!-- /parsers-grid -->
+
+  <footer>
+    <p>&copy; 2024 27Parser™ · <a href="/index.html">Home</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.pc-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        this.closest('.parser-career').classList.toggle('open');
+      });
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+        this.classList.add('active');
+        var f=this.dataset.filter;
+        document.querySelectorAll('.parser-career').forEach(function(card){
+          var name=card.dataset.parser.charAt(0).toUpperCase();
+          if(f==='all'){card.style.display='';}
+          else if(f==='a-g'){card.style.display=(name>='A'&&name<='G')?'':'none';}
+          else if(f==='h-m'){card.style.display=(name>='H'&&name<='M')?'':'none';}
+          else if(f==='n-s'){card.style.display=(name>='N'&&name<='S')?'':'none';}
+          else if(f==='t-z'){card.style.display=(name>='T'&&name<='Z')?'':'none';}
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

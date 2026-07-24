@@ -61,6 +61,17 @@
     nav { display: flex; gap: 30px; align-items: center; }
     nav a { font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.25s var(--ease-drawer); }
     nav a:hover { color: var(--ink); }
+
+    .nav-dd { position: relative; display: inline-flex; align-items: center; }
+    .nav-dd-top { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .nav-dd-caret { width: 9px; height: 9px; stroke: currentColor; stroke-width: 2.4; fill: none; opacity: 0.65; transition: transform 0.25s ease; }
+    .nav-dd::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-dd-menu { position: absolute; top: 100%; left: -10px; margin-top: 12px; min-width: 170px; background: var(--surface, #fff); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 6px 20px rgba(17,17,20,0.08); padding: 7px; display: flex; flex-direction: column; gap: 1px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; z-index: 200; }
+    .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
+    .nav-dd-menu a { font-size: 0.82rem; color: var(--muted); padding: 10px 12px; border-radius: 8px; white-space: nowrap; transition: background 0.18s, color 0.18s; }
+    .nav-dd-menu a:hover { background: var(--accent-soft); color: var(--accent); }
+
     .nav-cta {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--ink); color: #fff !important; border-radius: 999px;
@@ -281,14 +292,34 @@
   <header>
     <div class="h-inner">
       <a href="/index.html" class="logo">
-        <span class="wordmark">J.D. Mercer</span>
-        <span class="sub">Cognition Blocks of Intelligence</span>
+        <img src="/images/27parser-logo.png" alt="27Parser™" style="height:36px;width:auto;">
       </a>
       <nav id="siteNav">
-        <a href="/index.html">Home</a>
-        <a href="#line">The Line</a>
-        <a href="/clinicians.html">For Clinicians</a>
-        <a href="#inquire" class="nav-cta">Inquire <span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <div class="nav-dd">
+          <a href="/individual.html" class="nav-dd-top">Individual <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/individual.html">Adult</a>
+            <a href="/kids-individual.html">Kids</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/couples.html" class="nav-dd-top">Team <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/couples.html">Couples</a>
+            <a href="/parent-login.html">Family</a>
+            <a href="/couples.html#social">Social</a>
+            <a href="/professionals.html">Teams</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/professionals.html" class="nav-dd-top">Professional <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/professionals.html">Working Group</a>
+            <a href="/professionals.html#line">Billet</a>
+            <a href="/clinicians.html">Clinical</a>
+          </div>
+        </div>
+        <a href="/assessment.html" class="nav-cta">Assessment <span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -665,7 +696,7 @@
     <div class="wrap">
       <div class="f-top">
         <div>
-          <div class="wordmark">J.D. Mercer</div>
+          <div class="wordmark">27 Parser</div>
           <div class="sub">Cognition Blocks of Intelligence</div>
         </div>
         <div class="f-meta">

@@ -356,6 +356,257 @@
       line-height: 1.7;
     }
 
+    /* ── WHAT YOU GET GRID ── */
+    .what-section { padding: 96px 0; border-top: 1px solid var(--rule); }
+    .what-part-header {
+      margin-bottom: 40px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .what-part-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .what-part-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.01em; line-height: 1.15;
+    }
+    .what-part-title em { font-style: italic; color: var(--gold-pale); }
+    .what-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 36px 48px; margin-bottom: 64px;
+    }
+    .what-grid:last-child { margin-bottom: 0; }
+    .what-card { background: transparent; border: none; padding: 0; }
+    .what-num {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .what-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 8px; line-height: 1.25;
+    }
+    .what-card p {
+      font-size: 0.875rem; color: var(--text-soft); line-height: 1.7;
+    }
+
+    /* ── COLLISION SECTION ── */
+    .collision-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--rule);
+      background: var(--ink-soft);
+    }
+    .collision-domain-header { margin-bottom: 56px; }
+    .collision-domain-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .collision-domain-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.025em; line-height: 1.05;
+    }
+    .collision-domain-image {
+      aspect-ratio: 21/6; background: var(--ink-card);
+      border: 1px solid var(--rule); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 40px 0; position: relative; overflow: hidden;
+    }
+    .collision-domain-image::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent 0, transparent 14px,
+        rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
+      );
+    }
+    .faceoff {
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      border-radius: 6px; overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .faceoff-header {
+      background: var(--blue-50);
+      border-bottom: 1px solid var(--rule);
+      padding: 20px 28px;
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .faceoff-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--blue-600);
+      background: var(--blue-100);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .faceoff-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .faceoff-body {
+      padding: 28px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px;
+    }
+    .faceoff-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--text-muted); margin-bottom: 10px;
+    }
+    .faceoff-col h4 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .faceoff-col p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+    .faceoff-col.through { border-left: 1px solid var(--rule); padding-left: 28px; }
+    .faceoff-col.through h4 { color: var(--gold-pale); }
+
+    .gradient-mismatch {
+      background: var(--ink);
+      border: 1px solid var(--rule); border-radius: 6px;
+      overflow: hidden; margin-bottom: 24px;
+    }
+    .gm-header {
+      padding: 20px 28px; border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .gm-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      background: rgba(0,0,0,0.04);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .gm-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+    }
+    .gm-body { padding: 28px; }
+    .gm-setup { font-size: 0.9rem; color: var(--text-soft); line-height: 1.7; margin-bottom: 24px; }
+    .gm-voices { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .gm-voice {
+      background: var(--ink-card);
+      border: 1px solid var(--rule-soft);
+      border-radius: 4px; padding: 18px;
+    }
+    .gm-voice-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold); margin-bottom: 8px;
+    }
+    .gm-voice p {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-style: italic;
+      color: var(--text); line-height: 1.6;
+    }
+    .gm-nav { border-top: 1px solid var(--rule-soft); padding-top: 20px; }
+    .gm-nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 8px;
+    }
+    .gm-nav p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+
+    .synergy {
+      background:
+        linear-gradient(160deg, rgba(184,146,42,0.12) 0%, rgba(184,146,42,0.03) 55%, transparent 100%),
+        var(--ink-card);
+      border: 1px solid rgba(184,146,42,0.32);
+      border-radius: 6px; overflow: hidden; margin-bottom: 24px;
+    }
+    .synergy-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(184,146,42,0.22);
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .synergy-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: #1c1608;
+      background: var(--gold);
+      padding: 4px 10px; border-radius: 3px; flex-shrink: 0;
+    }
+    .synergy-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .synergy-body { padding: 28px; }
+    .synergy-setup { font-size: 0.9rem; color: var(--text-soft); line-height: 1.7; margin-bottom: 24px; }
+    .synergy-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 24px; }
+    .synergy-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 10px;
+    }
+    .synergy-col p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+    .synergy-payoff { border-top: 1px solid rgba(184,146,42,0.22); padding-top: 20px; }
+    .synergy-payoff-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--gold); margin-bottom: 10px;
+    }
+    .synergy-payoff h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--gold-pale); margin-bottom: 10px;
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .synergy-payoff p { font-size: 0.875rem; color: var(--text-soft); line-height: 1.7; }
+
+    .collision-splide { position: relative; padding-bottom: 60px; margin-bottom: 8px; }
+    .collision-splide .splide__slide { height: auto; }
+    .collision-splide .faceoff,
+    .collision-splide .gradient-mismatch,
+    .collision-splide .synergy { margin-bottom: 0; }
+    .collision-splide .splide__arrow {
+      top: auto; bottom: 0; transform: none;
+      width: 42px; height: 42px;
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.28); opacity: 1;
+    }
+    .collision-splide .splide__arrow svg { width: 16px; height: 16px; fill: var(--gold); }
+    .collision-splide .splide__arrow:disabled { opacity: 0.32; }
+    .collision-splide .splide__arrow--prev { left: auto; right: 54px; }
+    .collision-splide .splide__arrow--next { right: 0; }
+    .collision-splide .splide__pagination {
+      bottom: 14px; left: 2px; right: auto;
+      justify-content: flex-start; padding: 0;
+    }
+    .collision-splide .splide__pagination__page { background: rgba(255,255,255,0.22); margin: 0 5px; }
+    .collision-splide .splide__pagination__page.is-active { background: var(--gold); transform: scale(1.5); }
+
+    /* Family mismatch table */
+    .mismatch-table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    .mismatch-table th, .mismatch-table td {
+      padding: 14px 18px; text-align: left;
+      border-bottom: 1px solid var(--rule-soft);
+      font-size: 0.875rem; line-height: 1.6;
+    }
+    .mismatch-table th {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold);
+      background: var(--ink-soft);
+    }
+    .mismatch-table td { color: var(--text-soft); }
+    .mismatch-table td:first-child {
+      font-family: var(--font-display);
+      font-weight: 500; color: var(--cream);
+    }
+
     /* ── CTA BAND ── */
     .cta-band {
       padding: 96px 0;
@@ -458,10 +709,17 @@
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
       .hero-image-box { aspect-ratio: 16/9; }
       .group-header { grid-template-columns: 1fr; gap: 20px; }
+      .faceoff-body { grid-template-columns: 1fr; }
+      .faceoff-col.through { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 20px; }
+      .gm-voices { grid-template-columns: 1fr; }
+      .synergy-cols { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .container { padding: 0 20px; }
       .container-narrow { padding: 0 20px; }
+      .what-grid { grid-template-columns: 1fr; }
+      .mismatch-table { font-size: 0.8rem; }
+      .mismatch-table th, .mismatch-table td { padding: 10px 12px; }
     }
     @media (max-width: 560px) {
       .cta-link { display: block; margin: 22px auto 0; width: max-content; }
@@ -477,34 +735,34 @@
   <!-- HEADER -->
   <header>
     <div class="h-inner">
-      <a href="/index.html" class="logo-lockup">
-        <img src="images/cbi-logo.jpg" alt="CBI" class="logo-img">
-        <div class="logo-text">
-          <div class="name">J.D. Mercer</div>
-          <div class="sub">Cognition Blocks Intelligence</div>
-        </div>
+      <a href="/index.html" class="logo">
+        <img src="/images/27parser-logo.png" alt="27Parser™" style="height:36px;width:auto;">
       </a>
       <nav id="siteNav">
         <div class="nav-dd">
-          <a href="/index.html" class="nav-dd-top">The 27 <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a href="/individual.html" class="nav-dd-top">Individual <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
           <div class="nav-dd-menu">
-            <a href="/index.html#group-closeup">Close-Up</a>
-            <a href="/index.html#group-adjustable">Adjustable</a>
-            <a href="/index.html#group-wideangle">Wide-Angle</a>
-            <a href="/kid-parsers.html">Kid Parsers</a>
+            <a href="/individual.html">Adult</a>
+            <a href="/kids-individual.html">Kids</a>
           </div>
         </div>
-        <a href="/individual.html">Individual</a>
         <div class="nav-dd">
-          <a href="/couples.html" class="nav-dd-top">Relationships <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a href="/couples.html" class="nav-dd-top">Team <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
           <div class="nav-dd-menu">
             <a href="/couples.html">Couples</a>
-            <a href="/couples.html">Social</a>
-            <a href="/parent-login.html">Children</a>
+            <a href="/parent-login.html">Family</a>
+            <a href="/couples.html#social">Social</a>
+            <a href="/professionals.html">Teams</a>
           </div>
         </div>
-        <a href="/signin.html">Sign In</a>
-        <a href="/kids-assessment.html" class="cta">Kid Assessment</a>
+        <div class="nav-dd">
+          <a href="/professionals.html" class="nav-dd-top">Professional <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/professionals.html">Working Group</a>
+            <a href="/professionals.html#line">Billet</a>
+            <a href="/clinicians.html">Clinical</a>
+          </div>
+        </div>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -815,6 +1073,642 @@
     </div>
   </section>
 
+  <!-- ═══ WHAT YOU GET ═══ -->
+  <section class="what-section section" id="what-you-get">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">What You Get</div>
+          <h2 class="section-title">A two-part report.<br><em>One for them. One for you.</em></h2>
+          <p class="section-sub">The Kid Parser Profile is built in two halves — one written directly to your child, one written directly to you. Together they give you a complete picture of how your kid's mind actually works.</p>
+        </div>
+      </div>
+
+      <!-- Part One -->
+      <div class="what-part-header">
+        <div class="what-part-eyebrow">Part One · For Your Child</div>
+        <div class="what-part-title">Written <em>to</em> them — in language they can hear.</div>
+      </div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>Your Amazing Mind</h3>
+          <p>A plain-language explanation of how their specific lens works — what they notice first, why certain things come easily, and why that's not a mistake.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>Your Superpowers</h3>
+          <p>The specific abilities their parser gives them — named clearly, with examples they'll recognize from their own life.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>Things That Help You</h3>
+          <p>The environments, habits, and conditions where their mind does its best work — so they can start seeking those out on purpose.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>Things That Are Hard</h3>
+          <p>The genuine friction their wiring creates — named honestly, without shame, with real strategies that actually fit how they think.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">V</div>
+          <h3>The One Thing to Know About You</h3>
+          <p>One sentence that captures the essential truth of how their mind works. The line they'll carry with them.</p>
+        </div>
+      </div>
+
+      <!-- Part Two -->
+      <div class="what-part-header" style="margin-top:48px;">
+        <div class="what-part-eyebrow">Part Two · For You, the Parent</div>
+        <div class="what-part-title">Written <em>to you</em> — with everything you need to know.</div>
+      </div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>What You're Looking At</h3>
+          <p>A parent-level explanation of your child's parser — what it means in practice, day to day, at the dinner table and in the classroom.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>The Gift</h3>
+          <p>What this parser gives your child that others don't have — the real advantage, named so you can protect and encourage it.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>The Friction</h3>
+          <p>What looks like misbehavior but isn't — and what actually is. The distinction changes everything about how you respond.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>How to Discipline</h3>
+          <p>What works, what doesn't, the phrase that stops them, and the phrase that makes it worse. Specific to their parser, not generic parenting advice.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">V</div>
+          <h3>How to Teach</h3>
+          <p>The learning conditions, formats, and approaches that actually work for this specific mind — and why the standard ones may not.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VI</div>
+          <h3>Parent-Specific Guidance</h3>
+          <p>How your own parser interacts with theirs — where you'll naturally connect and where you'll accidentally create friction you didn't intend.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VII</div>
+          <h3>Cognitive Block Pattern</h3>
+          <p>What happens when your child shuts down — the specific pattern, the trigger, and the way back through it.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">VIII</div>
+          <h3>One Thing to Remember</h3>
+          <p>The single most important thing to keep in mind about your child's mind. The anchor for everything else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHEN KID PARSERS COLLIDE ═══ -->
+  <section class="collision-section" id="collisions">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">Where Kids Clash</div>
+          <h2 class="section-title">When Kid Parsers<br><em>Collide.</em></h2>
+          <p class="section-sub">A lot of friction between kids isn't about personality or behavior — it's about two children processing the same moment through completely different lenses. Once you see the geometry, the fights start making sense.</p>
+        </div>
+      </div>
+
+      <!-- SIBLING COLLISIONS -->
+      <div class="collision-domain-header" id="collide-sibling">
+        <div class="collision-domain-eyebrow">Domain One</div>
+        <h3 class="collision-domain-title">Sibling<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Sibling Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Sibling collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Sharp vs. Visionary</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Sharp remembers exactly what happened last time — and has proof. Visionary is already imagining what they could build next. Both trust their own read of the situation completely.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You always make stuff up!" vs. "You never want to try anything new!" Sharp feels dismissed when their evidence is ignored. Visionary feels trapped when the past is used to block the future.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>They need different roles, not the same one.</h4>
+            <p>Let Sharp be the quality checker and Visionary be the idea starter. When both positions are honored, the fight over who's "right" dissolves.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Grounded vs. Sentimental</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Grounded sees what's right in front of them — the obvious, practical reality. Sentimental carries the emotional weight of everything that's happened before.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Why are you still upset about that?" vs. "Why don't you care about anything?" Grounded can't understand why feelings from the past keep showing up. Sentimental can't understand how you can just move on.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Neither is overreacting or underreacting.</h4>
+            <p>Help Grounded understand that some kids carry feelings longer — it's not drama. Help Sentimental see that Grounded's calm isn't coldness — it's just a different lens.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #3</span>
+          <div><div class="faceoff-title">Attuned vs. Introspective</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Attuned reads the room and knows how everyone is feeling. Introspective goes inward, mapping their own internal landscape. Both are sensitive — in opposite directions.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Talk to me! I can tell something's wrong!" vs. "Leave me alone, I'm thinking!" Attuned feels shut out. Introspective feels invaded. Both feel unseen.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>One reaches out, the other reaches in — both are connecting.</h4>
+            <p>Teach Attuned that silence doesn't mean rejection. Teach Introspective that check-ins aren't intrusions. Give them a signal system: "I need space" and "I'm here when you're ready."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #4</span>
+          <div><div class="faceoff-title">Reliable vs. Actualized</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Reliable tracks promises and follows through on commitments. Actualized is always evolving, outgrowing agreements almost as fast as they make them.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You said you'd do it!" vs. "I changed my mind — I'm different now!" Reliable feels betrayed when commitments shift. Actualized feels chained when held to a version of themselves that no longer fits.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Growth doesn't have to break trust.</h4>
+            <p>Help Actualized understand that changing plans affects other people. Help Reliable understand that growing isn't the same as breaking a promise. Build renegotiation into the family vocabulary.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Siblings Who Cover Each Other's Blind Spots</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">The same differences that cause sibling fights are exactly what make siblings complete. One holds the facts; the other holds the feelings. One plans ahead; the other stays present. A family with every lens type isn't chaotic — it's covered.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">Anchored · Sharp + Grounded + Reliable</div>
+              <p>These kids hold the family to what's real, what's proven, and what was promised. When things get chaotic, they're the ground under everyone's feet.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">Reaching · Visionary + Sentimental + Actualized</div>
+              <p>These kids keep the family connected to what matters, what's possible, and what's worth growing toward. When things get rigid, they're the stretch.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A family that can hold its ground and still grow.</h4>
+            <p>When siblings stop trying to make each other process the same way and start appreciating what each one brings, the fights don't disappear — but they start making sense. And that changes everything.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- FRIEND COLLISIONS -->
+      <div class="collision-domain-header" id="collide-friend" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Domain Two</div>
+        <h3 class="collision-domain-title">Friend<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Friend Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Friend collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Embodied vs. Reflective</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Embodied wants to do something — run, build, play, move. Reflective wants to sit with what just happened and figure out what it meant.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Come on, let's GO!" vs. "Wait, I'm still thinking about what happened." Embodied feels dragged down. Reflective feels rushed and unheard.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Activity and reflection aren't competing — they're taking turns.</h4>
+            <p>Give them a rhythm: do something together, then talk about it after. Embodied processes through action; Reflective processes through meaning. Both are working — at different speeds.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Collaborative vs. Intentional</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Collaborative wants everyone involved — the more friends contributing, the better the project. Intentional already has a plan and knows exactly where it's going.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Let everyone help!" vs. "They'll mess it up — I have a system." Collaborative feels excluded. Intentional feels derailed. Both think the other is ruining the thing they care about.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Inclusion and vision can coexist with clear roles.</h4>
+            <p>Let Intentional set the direction, let Collaborative bring in the team. "You decide what we're building; I'll help us build it together." Structure prevents the collision.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #3</span>
+          <div><div class="faceoff-title">Legacy vs. Visionary</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Legacy remembers the rules, the traditions, the way things have always been done in the friend group. Visionary wants to try something completely new.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"But we always do it this way!" vs. "That's boring — let's change it!" Legacy feels disrespected. Visionary feels suffocated. The friend group splits along the line.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Tradition and invention aren't enemies — they're a creative pair.</h4>
+            <p>Keep the core of the tradition but let Visionary remix the edges. "We still do pizza Friday — but this time we make the pizza." Honoring what was while reaching for what could be.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Friend Group That Holds Together</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">The best friend groups aren't made of kids who think the same way. They're made of kids whose different lenses complement each other — the doer, the thinker, the keeper, the dreamer, the includer, the planner.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">The Glue · Collaborative + Legacy</div>
+              <p>Collaborative makes sure everyone belongs. Legacy makes sure the group remembers what makes it special. Together they create a friend group with both openness and identity.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">The Spark · Visionary + Embodied</div>
+              <p>Visionary dreams up what to do next. Embodied gets everyone actually doing it. Together they keep the friend group alive and in motion.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A friend group with roots and wings.</h4>
+            <p>When every kid's lens has a role, nobody gets left out and nobody gets bored. The group can remember where it's been and still try new things — because different kids are holding different pieces.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CLASSROOM COLLISIONS -->
+      <div class="collision-domain-header" id="collide-classroom" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Domain Three</div>
+        <h3 class="collision-domain-title">Classroom<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Classroom Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Classroom collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #1</span>
+          <div><div class="faceoff-title">Resilient vs. Empathetic</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Resilient has already thought through what could go wrong and has a plan. Empathetic feels the emotional weight of the room and is processing everyone's stress at once.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Just stick to the plan!" vs. "Can't you see everyone's upset?" Resilient sees the Empathetic kid as derailing the group with feelings. Empathetic sees Resilient as ignoring people who are struggling.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Tasks and feelings both need attention — in sequence.</h4>
+            <p>Let Empathetic acknowledge the room first, then let Resilient's plan take over. "Okay, this is hard — and here's what we're going to do." When feelings are honored, plans work better.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #2</span>
+          <div><div class="faceoff-title">Harmonious vs. Seasoned</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Harmonious sees a better way to organize the group project — more efficient, fairer, clearly better. Seasoned knows the way that already works and has done the reps to prove it.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"We should change how we're doing this." vs. "It works fine — I've done it before." Harmonious feels frustrated that nobody will improve. Seasoned feels their experience is being dismissed by someone with a theory.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Experience and optimization aren't enemies.</h4>
+            <p>Let Seasoned explain what works and why. Let Harmonious propose improvements that build on what's proven rather than replacing it. Earned expertise plus fresh perspective equals the strongest solution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Face-Off #3</span>
+          <div><div class="faceoff-title">Coherent vs. Equanimous</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>Coherent needs to understand why things are the way they are — the story, the context, the thread from past to present. Equanimous just wants to deal with what's in front of them without the backstory.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"But you have to understand WHY!" vs. "Who cares why? Let's just handle it." Coherent feels the other kid is being shallow. Equanimous feels Coherent is overthinking everything and slowing the group down.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Context and action serve different phases of the same work.</h4>
+            <p>Give Coherent space to explain the background first — it takes less time than they think. Then let Equanimous drive the execution. Understanding why before acting prevents mistakes; acting without overanalyzing prevents paralysis.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="synergy splide__slide">
+        <div class="synergy-header">
+          <span class="synergy-badge">Finding Synergy</span>
+          <div class="synergy-title">The Classroom That Works for Everyone</div>
+        </div>
+        <div class="synergy-body">
+          <p class="synergy-setup">The best classrooms don't run on a single mode — they rotate between feeling, planning, doing, and understanding. When different lenses are recognized instead of corrected, the whole room gets smarter.</p>
+          <div class="synergy-cols">
+            <div class="synergy-col">
+              <div class="synergy-col-label">The Compass · Empathetic + Coherent</div>
+              <p>Empathetic keeps the group human. Coherent keeps the group oriented. Together they make sure no one's feelings get steamrolled and no one loses the thread.</p>
+            </div>
+            <div class="synergy-col">
+              <div class="synergy-col-label">The Engine · Resilient + Harmonious + Seasoned</div>
+              <p>Resilient has the contingency plan. Harmonious sees the optimization. Seasoned knows the proven method. Together they get things done — well, efficiently, and with a backup plan.</p>
+            </div>
+          </div>
+          <div class="synergy-payoff">
+            <div class="synergy-payoff-label">The Combined Effect</div>
+            <h4>A classroom where every lens has a job.</h4>
+            <p>When kids stop being told to "pay attention the right way" and start being given roles that fit their actual lens, group work transforms from friction into flow.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- FAMILY COLLISIONS -->
+      <div class="collision-domain-header" id="collide-family" style="margin-top:80px;">
+        <div class="collision-domain-eyebrow">Domain Four</div>
+        <h3 class="collision-domain-title">Family<br>Collisions</h3>
+      </div>
+      <div class="collision-domain-image">
+        <span class="img-placeholder">Family Collisions · Domain Image</span>
+      </div>
+
+      <div class="splide collision-splide" aria-label="Family collisions">
+        <div class="splide__track">
+          <div class="splide__list">
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Axis Mismatch #1</span>
+          <div><div class="faceoff-title">Self-Oriented Kid · Other-Oriented Parent</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>The child processes experience through their own internal reference — what they think, what they've lived, what makes sense to them. The parent's lens is tuned outward — to the group, the family, the social fabric.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Why are you so selfish?" — but the child isn't selfish. They're self-referential. They're building their understanding from the inside out. The parent reads independence as disconnection.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Self-reference isn't selfishness.</h4>
+            <p>This child still cares — they just process caring differently. Invite them in rather than demanding they arrive pre-connected. "Tell me what you think" works better than "Think about others."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Axis Mismatch #2</span>
+          <div><div class="faceoff-title">Other-Oriented Kid · Self-Oriented Parent</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>The child is tuned to what everyone around them is feeling and needing. The parent processes through their own experience and expects the child to do the same.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Stop worrying about everyone else" — but this child can't not notice. Their lens is pointed outward. The parent reads attunement as anxiety or people-pleasing.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Attunement isn't weakness.</h4>
+            <p>This child's radar for others is a genuine cognitive strength. Help them learn boundaries without telling them their wiring is wrong. "You noticed that — what do you want to do about it?" honors the signal without drowning in it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Axis Mismatch #3</span>
+          <div><div class="faceoff-title">Future-Oriented Kid · Past-Oriented Parent</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>The child lives three steps ahead — always imagining, projecting, building toward what's next. The parent processes through what they've already experienced, what's been tested, what's been earned.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You need to appreciate what you have!" vs. a child who can't stop reaching for what's next. The parent feels the child is ungrateful. The child feels the parent is holding them back.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Forward-reaching isn't ingratitude.</h4>
+            <p>This child's default is anticipation, not dissatisfaction. Connect future goals to past lessons: "You're right that there's more ahead — and here's what you've already learned that will get you there."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Axis Mismatch #4</span>
+          <div><div class="faceoff-title">Past-Oriented Kid · Future-Oriented Parent</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>The child holds on to what's happened — traditions, memories, the way things have been. The parent is constantly pushing forward, planning, optimizing for what's coming.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Let it go — move forward!" vs. a child who needs to hold what matters. The parent sees a child stuck in the past. The child feels like their memories are being erased.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Honoring the past isn't being stuck.</h4>
+            <p>This child's relationship with what's happened is how they make sense of the world. Don't rush them forward — walk them there. "That mattered. And here's where we go from here."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Axis Mismatch #5</span>
+          <div><div class="faceoff-title">Concrete Kid · Abstract Parent</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>The child needs to see it, touch it, try it. The parent thinks in concepts, patterns, and big-picture frameworks.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"You're not getting the point!" — but the child needs the point to arrive through experience, not explanation. Abstract advice lands as noise. The parent feels the child is being intentionally obtuse.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Concrete isn't slow — it's grounded.</h4>
+            <p>Translate the concept into an example. Show, don't explain. "Watch this" teaches this child more than "Think about it." The understanding comes after the experience, not before.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faceoff splide__slide">
+        <div class="faceoff-header">
+          <span class="faceoff-badge">Axis Mismatch #6</span>
+          <div><div class="faceoff-title">Abstract Kid · Concrete Parent</div></div>
+        </div>
+        <div class="faceoff-body">
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Setup</div>
+            <p>The child is already in the meta-level — seeing patterns, asking why, connecting things that seem unrelated. The parent deals in what's practical, immediate, and proven.</p>
+          </div>
+          <div class="faceoff-col">
+            <div class="faceoff-col-label">The Collision</div>
+            <p>"Stop overcomplicating everything!" — but the child isn't overcomplicating. They're seeing at a different altitude. The parent feels exhausted by conversations that never seem to land. The child feels flattened.</p>
+          </div>
+          <div class="faceoff-col through">
+            <div class="faceoff-col-label">The Way Through</div>
+            <h4>Abstract isn't impractical — it's a different floor of the building.</h4>
+            <p>Ask the child to walk you down from their idea to a concrete example. "That's interesting — show me what that would look like." Bridges the altitude gap without dismissing either floor.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Six Big Mismatches -->
+      <div class="gradient-mismatch splide__slide">
+        <div class="gm-header">
+          <span class="gm-badge">The Six Big Mismatches</span>
+          <span class="gm-title">Parent–Child Axis Collisions at a Glance</span>
+        </div>
+        <div class="gm-body">
+          <p class="gm-setup">Every parent–child collision above maps to one of six fundamental mismatches. These aren't personality conflicts — they're geometric: two lenses pointed at different parts of the same reality.</p>
+          <div style="overflow-x:auto;">
+            <table class="mismatch-table">
+              <thead>
+                <tr><th>Mismatch</th><th>What the Parent Sees</th><th>What the Child Experiences</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Spatial</td><td>Self-focused or overly sensitive to others</td><td>"I'm just noticing what I notice — why is that wrong?"</td></tr>
+                <tr><td>Temporal (Future)</td><td>Ungrateful, never satisfied</td><td>"I'm excited about what's next — why does that upset you?"</td></tr>
+                <tr><td>Temporal (Past)</td><td>Stuck, resistant to change</td><td>"I'm holding what matters — why do you want me to forget?"</td></tr>
+                <tr><td>Reference</td><td>Selfish or anxiously attached to others</td><td>"This is just how I process — from the inside out or the outside in."</td></tr>
+                <tr><td>Processing</td><td>Overthinking or too simplistic</td><td>"My mind works at this level — I can't just switch floors."</td></tr>
+                <tr><td>Expression</td><td>Too quiet or too dramatic</td><td>"This is how my feelings come out — it's not a performance."</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="gm-nav" style="margin-top:24px;">
+            <div class="gm-nav-label">The Main Thing to Remember</div>
+            <p>Your child's lens isn't a problem to fix — it's a position to understand. The friction between your parser and theirs isn't a sign that something is wrong. It's a sign that you're looking at the same world from two different angles. Once you see the geometry, the frustration turns into navigation.</p>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- CTA -->
   <div class="cta-band">
     <div class="container">
@@ -849,7 +1743,7 @@
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.hero h1,.hero-sub,.hero-eyebrow,.hero-stats,.hero-actions,.section-header,.group-header,.group-image,.cta-band h2,.cta-band p,.cta-btn,.intro-text,.section-title,.section-sub';
+    var sel='.hero h1,.hero-sub,.hero-eyebrow,.hero-stats,.hero-actions,.section-header,.group-header,.group-image,.cta-band h2,.cta-band p,.cta-btn,.intro-text,.section-title,.section-sub,.what-part-header,.what-grid,.collision-domain-header,.collision-domain-image';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
@@ -879,6 +1773,13 @@
           breakpoints: {
             768: { perPage: 1 }
           }
+        }).mount();
+      });
+      document.querySelectorAll('.collision-splide').forEach(function (el) {
+        new Splide(el, {
+          perPage: 1,
+          perMove: 1,
+          gap: '0px'
         }).mount();
       });
     });
