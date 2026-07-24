@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kid Parser Profile | J.D. Mercer</title>
-  <meta name="description" content="A personal profile of how your child actually takes things in — what they notice first, what they hold onto, and how that shapes everything they do.">
+  <title>The 27 Kid Parsers™ | Parser Profile — Kid Edition</title>
+  <meta name="description" content="Every child takes in the world through their own lens — defined by three gradients. Find your kid's parser.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --blue-900: #211A12; --blue-700: #2E2419; --blue-600: #8A6D24;
@@ -17,19 +18,38 @@
       --border: rgba(60,45,25,0.12); --border-strong: rgba(60,45,25,0.22);
       --shadow-sm: 0 1px 3px rgba(60,40,15,0.06); --shadow-md: 0 6px 20px rgba(60,40,15,0.08); --shadow-lg: 0 16px 40px rgba(60,40,15,0.12);
       --amber: #D8B45E;
-      --gold: #9A7B2E; --gold-pale: #D8B45E;
       --ink: #FAF7F0; --ink-soft: #F2ECE0; --ink-card: #FFFDF9;
-      --gold-bright: #B8922A;
-      --cream: #1E1813; --text-soft: #4A3F35;
-      --rule: rgba(60,45,25,0.12);
+      --gold: #9A7B2E; --gold-bright: #B8922A; --gold-pale: #8A6D24;
+      --cream: #1E1813; --cream-dim: #4A3F35;
+      --rule: rgba(60,45,25,0.12); --rule-soft: rgba(60,45,25,0.07);
+      --text: #1E1813; --text-soft: #4A3F35;
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; font-size: 112.5%; }
-    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.6; font-size: 1rem; letter-spacing: 0.01em; }
-    body::before { content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+    body {
+      font-family: var(--font-body);
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 1rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .container-narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
 
     /* ── HEADER ── */
     header {
@@ -40,28 +60,8 @@
       padding: 18px 0;
     }
     .h-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 32px;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
       display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo-lockup {
-      display: flex; align-items: center; gap: 14px;
-      text-decoration: none;
-    }
-    .logo-img {
-      width: 38px; height: 38px;
-      border-radius: 6px; object-fit: cover;
-      filter: brightness(0.9) contrast(1.1);
-    }
-    .logo-text .name {
-      font-family: var(--font-display);
-      font-size: 1.05rem; font-weight: 500;
-      color: var(--cream); letter-spacing: 0.01em; line-height: 1;
-    }
-    .logo-text .sub {
-      font-family: var(--font-mono);
-      font-size: 0.58rem; text-transform: uppercase;
-      letter-spacing: 0.18em; color: var(--text-muted);
-      margin-top: 4px;
     }
     nav { display: flex; gap: 28px; align-items: center; }
     nav a {
@@ -72,7 +72,8 @@
     }
     nav a:hover { color: var(--gold-bright); }
     nav a.cta {
-      background: var(--blue-500); color: #fff; font-weight: 600;
+      background: var(--blue-500);
+      color: #fff; font-weight: 600;
       padding: 9px 20px; border-radius: 8px;
       box-shadow: var(--shadow-sm);
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
@@ -98,127 +99,365 @@
       color: var(--text-soft); padding: 10px 12px; border-radius: 8px; white-space: nowrap;
       transition: background 0.18s, color 0.18s;
     }
-    .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold); }
+    .nav-dd-menu a:hover { background: var(--blue-50); color: var(--gold-pale); }
 
     /* ── HERO ── */
-    .hero { background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%); position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(184,146,42,0.16) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(216,180,94,0.10) 0%, transparent 50%); pointer-events: none; }
-    .hero-inner {
-      max-width: 1100px; margin: 0 auto; padding: 96px 32px 80px;
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    .hero {
+      padding: 120px 0 96px;
+      position: relative;
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
     }
-    .eyebrow-tag { display: inline-block; background: rgba(216,180,94,0.10); border: 1px solid rgba(216,180,94,0.24); color: rgba(245,238,224,0.9); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 100px; margin-bottom: 24px; }
-    .hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; color: #fff; margin-bottom: 24px; max-width: 820px; }
-    .hero h1 em { font-style: italic; font-weight: 400; color: var(--gold-pale); }
-    .hero p { font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.6; color: rgba(255,255,255,0.75); max-width: 58ch; font-style: italic; margin-bottom: 44px; }
-    .btn-hero { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue-900); font-family: var(--font-body); font-size: 1rem; font-weight: 600; padding: 14px 36px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-    .btn-hero:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-    .hero-image-box {
-      aspect-ratio: 4/3;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .hero-image-box::before {
+    .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        -45deg, transparent 0, transparent 18px,
-        rgba(255,255,255,0.035) 18px, rgba(255,255,255,0.035) 36px
-      );
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.10) 0%, transparent 60%);
+      pointer-events: none;
     }
-    .hero-image-box img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block; position: relative; z-index: 1;
+    .hero-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 32px;
+      position: relative; z-index: 1;
+      text-align: center;
     }
-    .img-placeholder {
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--amber);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 500; line-height: 1.0;
+      letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic; font-weight: 500; color: var(--amber);
+    }
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: 1.25rem; line-height: 1.7;
+      color: rgba(255,255,255,0.78); max-width: 54ch;
+      font-style: italic; margin: 0 auto 40px;
+    }
+    .hero-stats {
+      display: flex; gap: 48px; justify-content: center;
+    }
+    .stat-item .num {
+      font-family: var(--font-display);
+      font-size: 2.8rem; font-weight: 500;
+      color: #fff; line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-item .label {
       font-family: var(--font-mono);
       font-size: 0.62rem; text-transform: uppercase;
-      letter-spacing: 0.18em; color: rgba(255,255,255,0.5);
-      position: relative;
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.55);
+      margin-top: 4px;
     }
 
-    /* ── TWO-PART BAND ── */
-    .two-part-band {
+    /* ── INTRO BAND ── */
+    .intro-band {
       background: var(--ink-soft);
-      border-bottom: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule-soft);
       padding: 64px 0;
     }
-    .two-part-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 32px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    .intro-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 500; line-height: 1.55;
+      color: var(--cream); max-width: 72ch;
+      letter-spacing: -0.01em;
+      margin: 0 auto;
+      text-align: center;
     }
-    .two-part-label {
+    .intro-text em { font-style: italic; color: var(--gold-pale); }
+
+    /* ── SECTION STRUCTURE ── */
+    .section { padding: 96px 0; }
+    .section-header {
+      display: flex; align-items: baseline;
+      gap: 24px; margin-bottom: 64px;
+    }
+    .section-num {
+      font-family: var(--font-display);
+      font-size: 5rem; font-weight: 500;
+      color: rgba(184,146,42,0.22);
+      line-height: 1; letter-spacing: -0.04em;
+      flex-shrink: 0;
+    }
+    .section-eyebrow {
       font-family: var(--font-mono);
       font-size: 0.65rem; text-transform: uppercase;
       letter-spacing: 0.22em; color: var(--gold);
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
-    .two-part-title {
+    .section-title {
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      font-weight: 500; line-height: 1.3;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 500; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--cream);
+    }
+    .section-title em { font-style: italic; color: var(--gold-pale); }
+    .section-sub {
+      font-size: 1rem; color: var(--text-soft);
+      line-height: 1.75; max-width: 62ch;
+      margin-top: 16px;
+    }
+
+    /* ── THREE LENSES ── */
+    .lenses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .lens-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 28px;
+      position: relative;
+    }
+    .lens-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    }
+    .lens-num {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .lens-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem; font-weight: 500;
       color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 20px; line-height: 1.15;
+    }
+    .lens-question {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-style: italic;
+      color: var(--gold-pale); margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .lens-poles {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .lens-pole {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .pole-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-muted);
+      min-width: 72px; padding-top: 2px;
+    }
+    .pole-desc {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.6;
+    }
+    .lens-balanced {
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .lens-balanced .pole-label { color: var(--gold); }
+
+    /* ── 27 PROFILES GRID ── */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .profile-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 24px;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .profile-card:hover {
+      background: var(--blue-50);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .profile-num {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.12em;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 8px; line-height: 1.15;
+    }
+    .profile-coords {
+      font-family: var(--font-mono);
+      font-size: 0.68rem; letter-spacing: 0.06em;
+      color: var(--gold);
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .profile-coords span {
+      background: rgba(154,123,46,0.12);
+      padding: 4px 10px; border-radius: 4px;
+    }
+
+    /* ── WHAT YOU GET ── */
+    .what-section { padding: 96px 0; border-top: 1px solid var(--rule); }
+    .what-part-header {
+      margin-bottom: 40px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .what-part-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .what-part-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 500; color: var(--cream);
+      letter-spacing: -0.01em; line-height: 1.15;
+    }
+    .what-part-title em { font-style: italic; color: var(--gold-pale); }
+    .what-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 36px 48px; margin-bottom: 64px;
+    }
+    .what-grid:last-child { margin-bottom: 0; }
+    .what-card { background: transparent; border: none; padding: 0; }
+    .what-num {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .what-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+      margin-bottom: 8px; line-height: 1.25;
+    }
+    .what-card p {
+      font-size: 0.875rem; color: var(--text-soft); line-height: 1.7;
+    }
+
+    /* ── COLLISIONS ── */
+    .collision-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--rule);
+      background: var(--ink-soft);
+    }
+    .collision-intro {
+      max-width: 680px;
+      margin-bottom: 64px;
+    }
+    .collision-intro p {
+      font-size: 1rem; color: var(--text-soft);
+      line-height: 1.75; margin-top: 20px;
+    }
+    .axes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+    .axis-card {
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 28px 24px;
+    }
+    .axis-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--gold);
       margin-bottom: 12px;
     }
-    .two-part-title em { font-style: italic; color: var(--gold); }
-    .two-part-desc {
-      font-size: 0.95rem; color: var(--text-soft);
-      line-height: 1.7; max-width: 48ch;
+    .axis-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 16px;
     }
-
-    /* ── SECTIONS ── */
-    .section { padding: 80px 0; }
-    .section.alt { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
-    .eyebrow { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--blue-600); margin-bottom: 14px; }
-    .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 16px; }
-    .section-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 68ch; margin-bottom: 48px; }
-
-    /* ── WHAT'S IN IT GRID ── */
-    .what-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 44px 56px; }
-    .what-card { background: transparent; border: none; border-radius: 0; padding: 0; box-shadow: none; }
-    .what-num { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--blue-500); margin-bottom: 12px; }
-    .what-card h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; line-height: 1.25; transition: color 0.2s; }
-    .what-card:hover h3 { color: var(--blue-600); }
-    .what-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; max-width: 36ch; }
-    .what-label { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--gold); margin-bottom: 6px; }
-
-    /* ── SAMPLE IMAGE ── */
-    .sample-image {
-      aspect-ratio: 16/7; background: var(--ink-card);
-      border: 1px solid var(--rule); border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 48px 0; position: relative; overflow: hidden;
+    .axis-example {
+      font-size: 0.875rem; color: var(--text-soft);
+      line-height: 1.7;
     }
-    .sample-image::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        -45deg, transparent 0, transparent 14px,
-        rgba(0,0,0,0.025) 14px, rgba(0,0,0,0.025) 28px
-      );
-    }
-    .sample-image .img-placeholder { color: var(--text-muted); }
-    .sample-image img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block; position: relative; z-index: 1;
-    }
+    .axis-example strong { color: var(--cream); font-weight: 600; }
 
-    /* ── PRICING ── */
-    .price-block { max-width: 600px; }
-    .price-tag-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-900); color: var(--blue-100); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 7px 16px; border-radius: 4px; margin-bottom: 28px; }
-    .price-dot { width: 6px; height: 6px; background: var(--blue-400); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .price-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 10px; }
-    .price-main { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 600; color: var(--text-primary); line-height: 1; letter-spacing: -0.03em; }
-    .price-was { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-muted); text-decoration: line-through; font-style: italic; }
-    .price-note { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 32px; }
-    .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-500); color: #fff; font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; padding: 16px 40px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
-    .btn-cta:hover { background: var(--blue-400); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .collision-domain {
+      margin-bottom: 56px;
+    }
+    .collision-domain:last-child { margin-bottom: 0; }
+    .collision-domain-header {
+      margin-bottom: 28px;
+    }
+    .collision-domain-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .collision-domain-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem; font-weight: 500;
+      color: var(--cream); letter-spacing: -0.01em;
+    }
+    .mismatch-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .mismatch-card {
+      background: var(--ink-card);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .mismatch-axis {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .mismatch-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--cream); margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .mismatch-voices {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .mismatch-voice {
+      background: rgba(154,123,46,0.06);
+      border-radius: 6px; padding: 12px;
+    }
+    .mismatch-voice-label {
+      font-family: var(--font-mono);
+      font-size: 0.52rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .mismatch-voice p {
+      font-family: var(--font-display);
+      font-size: 0.88rem; font-style: italic;
+      color: var(--text); line-height: 1.5;
+    }
+    .mismatch-nav {
+      font-size: 0.85rem; color: var(--text-soft);
+      line-height: 1.7; padding-top: 12px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .mismatch-nav strong { color: var(--gold-pale); font-weight: 600; }
 
     /* ── CTA BAND ── */
     .cta-band {
@@ -226,7 +465,8 @@
       background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
       border-top: 1px solid var(--border);
       text-align: center;
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
     .cta-band::before {
       content: '';
@@ -238,7 +478,8 @@
       font-family: var(--font-display);
       font-size: clamp(2rem, 4.5vw, 3.5rem);
       font-weight: 500; letter-spacing: -0.025em;
-      color: #fff; margin-bottom: 20px; position: relative;
+      color: #fff; margin-bottom: 20px;
+      position: relative;
     }
     .cta-band h2 em { font-style: italic; color: var(--amber); }
     .cta-band p {
@@ -247,18 +488,20 @@
       line-height: 1.7; max-width: 52ch; font-style: italic;
       margin: 0 auto 40px; position: relative;
     }
-    .cta-btn-white {
+    .cta-btn {
       display: inline-flex; align-items: center; gap: 10px;
-      background: #fff; color: var(--blue-900);
-      font-family: var(--font-body); font-size: 1rem; font-weight: 600;
-      padding: 16px 40px; border-radius: 8px; text-decoration: none;
+      background: #fff;
+      color: var(--blue-900); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 40px; border-radius: 8px;
+      text-decoration: none;
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
       position: relative;
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
-    .cta-btn-white:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+    .cta-btn:hover { background: var(--blue-50); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+    .cta-actions { display: flex; gap: 24px; justify-content: center; align-items: center; flex-wrap: wrap; }
     .cta-link {
-      display: inline-block; margin-left: 22px;
       color: rgba(255,255,255,0.82); font-family: var(--font-body);
       font-size: 0.98rem; font-weight: 500; text-decoration: none;
       border-bottom: 1px solid rgba(255,255,255,0.35);
@@ -274,13 +517,16 @@
       color: rgba(255,255,255,0.6);
     }
     .f-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 32px;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
       display: flex; justify-content: space-between;
       align-items: flex-start; gap: 24px; flex-wrap: wrap;
     }
     .f-brand { display: flex; align-items: center; gap: 12px; }
     .f-logo { width: 32px; height: 32px; border-radius: 5px; object-fit: cover; }
-    .f-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: #fff; }
+    .f-name {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600; color: #fff;
+    }
     .f-meta {
       font-family: var(--font-mono);
       font-size: 0.62rem; letter-spacing: 0.06em;
@@ -307,25 +553,20 @@
         will-change: opacity, transform;
       }
       html.js-anim [data-reveal].in { opacity: 1; transform: none; filter: none; }
-      a[class*="btn"]:active, .btn-cta:active, .btn-hero:active, .cta-btn-white:active, nav a.cta:active { transform: translateY(-1px) scale(0.97); }
     }
 
     /* ── MOBILE ── */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-image-box { aspect-ratio: 16/9; }
-      .two-part-inner { grid-template-columns: 1fr; gap: 32px; }
-    }
-    @media (max-width: 760px) {
-      .what-grid { grid-template-columns: 1fr; }
-      .f-inner { flex-direction: column; }
+      .lenses-grid { grid-template-columns: 1fr; }
+      .axes-grid { grid-template-columns: 1fr; }
+      .mismatch-voices { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .section-inner { padding: 0 20px; }
-      .h-inner { padding: 0 20px; }
-    }
-    @media (max-width: 560px) {
-      .cta-link { display: block; margin: 22px auto 0; width: max-content; }
+      .container { padding: 0 20px; }
+      .container-narrow { padding: 0 20px; }
+      .hero-stats { flex-direction: column; gap: 28px; }
+      .profiles-grid { grid-template-columns: 1fr; }
+      .mismatch-cards { grid-template-columns: 1fr; }
     }
   
     /* ── BRAND MARK ──
@@ -347,25 +588,11 @@
         calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
     }
     .logo .mark { --w: 93px; }
-  
-    /* ── LEGAL NOTICE ──
-       Copyright, patent and framework attribution. Palette-agnostic: it
-       inherits the footer's colour and dims itself, so it reads correctly on
-       both the light and dark footers used across the site. */
-    .legal-notice {
-      max-width: 1100px; margin: 22px auto 0;
-      padding: 18px 24px 0;
-      border-top: 1px solid currentColor;
-      font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
-      text-align: center; opacity: 0.55;
-    }
-    footer .legal-notice { width: 100%; }
-    .site-legal { padding: 32px 24px; }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
   <link rel="stylesheet" href="/mobile-nav.css">
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -394,6 +621,7 @@
             <a href="/family.html">Family</a>
             <a href="/professionals.html">Professional Teams</a>
             <a href="/billets.html">Billets</a>
+            <a href="/careers.html">Careers</a>
           </div>
         </div>
         <div class="nav-dd">
@@ -410,6 +638,7 @@
             <a href="/collisions.html#billets">Billets</a>
           </div>
         </div>
+        <a href="/kids-assessment.html" class="cta">Take Assessment</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -421,164 +650,715 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
-      <div>
-        <div class="eyebrow-tag">Kid Parser Profile</div>
-        <h1>The way your child takes in the world has <em>a name.</em></h1>
-        <p>This isn't a personality quiz. It's a profile of how your child actually processes information — what they notice first, what they hold onto, and how that shapes everything they do. Two parts: one written for them, one written for you.</p>
-        <a href="#pricing" class="btn-hero">Get Your Kid's Profile →</a>
-      </div>
-      <div class="hero-image-box">
-        <!-- IMAGE PLACEHOLDER: Kid Profile hero image -->
-        <span class="img-placeholder">Kid Profile · Hero Image</span>
+      <div class="hero-eyebrow">Parser Frame™ · Kid Edition</div>
+      <h1>The <em>27</em> Kid Parsers.</h1>
+      <p class="hero-sub">Every child takes in the world through their own lens. Three gradients. Twenty-seven positions. One is your kid.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="num">3</div>
+          <div class="label">Gradients</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">27</div>
+          <div class="label">Parsers</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">1</div>
+          <div class="label">Is Your Kid</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TWO-PART BAND -->
-  <div class="two-part-band">
-    <div class="two-part-inner">
-      <div>
-        <div class="two-part-label">Part One · For Your Child</div>
-        <div class="two-part-title">Written <em>to</em> them.</div>
-        <p class="two-part-desc">A section your child can read themselves — their amazing mind, their superpowers, what helps them, what's hard, and the one thing they should know about how they see the world.</p>
-      </div>
-      <div>
-        <div class="two-part-label">Part Two · For You</div>
-        <div class="two-part-title">Written <em>for</em> the parent.</div>
-        <p class="two-part-desc">The real manual. What you're looking at, the gift, the friction, how to discipline this specific architecture, how to teach them, and guidance tailored to each parent's own Parser.</p>
-      </div>
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <div class="container-narrow">
+      <p class="intro-text">Your child's parser isn't a personality type or a learning style. It's the <em>angle</em> from which they take in reality — what they notice first, before thinking even begins.</p>
     </div>
   </div>
 
-  <!-- PART ONE: FOR THE CHILD -->
-  <section class="section alt" id="child-section">
-    <div class="section-inner">
-      <div class="eyebrow">Part One · For Your Child</div>
-      <h2 class="section-title">Their mind, in their language.</h2>
-      <p class="section-sub">Written so your child can read it and feel seen — not tested. Every section speaks directly to them about how their mind works.</p>
-
-      <div class="sample-image">
-        <!-- IMAGE PLACEHOLDER: Sample kid report page -->
-        <span class="img-placeholder">Sample Report · Child Section</span>
+  <!-- ═══ THE THREE LENSES ═══ -->
+  <section class="section" id="lenses">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">The Three Gradients</div>
+          <h2 class="section-title">Three questions.<br><em>Three positions.</em></h2>
+          <p class="section-sub">Every parser is defined by where a child sits on three independent gradients. Each gradient has two poles and a balanced middle. 3 × 3 × 3 = 27 unique combinations.</p>
+        </div>
       </div>
 
-      <div class="what-grid">
-        <div class="what-card">
-          <div class="what-num">I</div>
-          <h3>Your Amazing Mind</h3>
-          <p>What makes their way of seeing the world special — written so they feel proud of it, not different because of it.</p>
+      <div class="lenses-grid">
+
+        <!-- SPATIAL -->
+        <div class="lens-card">
+          <div class="lens-num">Gradient 01</div>
+          <h3 class="lens-name">Spatial</h3>
+          <p class="lens-question">Does this child trust what they can see — or what they perceive and imagine?</p>
+          <div class="lens-poles">
+            <div class="lens-pole">
+              <span class="pole-label">Concrete</span>
+              <span class="pole-desc">What they can see. What's right in front of them. Real, touchable, provable.</span>
+            </div>
+            <div class="lens-pole">
+              <span class="pole-label">Abstract</span>
+              <span class="pole-desc">What they perceive or imagine. Patterns, possibilities, the bigger picture.</span>
+            </div>
+            <div class="lens-pole lens-balanced">
+              <span class="pole-label">Balanced</span>
+              <span class="pole-desc">Moves between both depending on what the moment needs.</span>
+            </div>
+          </div>
         </div>
-        <div class="what-card">
-          <div class="what-num">II</div>
-          <h3>Your Superpowers</h3>
-          <p>The real advantages their architecture gives them — named clearly, in language a kid can own.</p>
+
+        <!-- TEMPORAL -->
+        <div class="lens-card">
+          <div class="lens-num">Gradient 02</div>
+          <h3 class="lens-name">Temporal</h3>
+          <p class="lens-question">Does this child orient toward what happened before — or what's going to happen?</p>
+          <div class="lens-poles">
+            <div class="lens-pole">
+              <span class="pole-label">Past</span>
+              <span class="pole-desc">What happened before. Experience, memory, tradition, proof.</span>
+            </div>
+            <div class="lens-pole">
+              <span class="pole-label">Future</span>
+              <span class="pole-desc">What's going to happen. Anticipation, planning, possibility.</span>
+            </div>
+            <div class="lens-pole lens-balanced">
+              <span class="pole-label">Present</span>
+              <span class="pole-desc">What's happening right now. The moment itself.</span>
+            </div>
+          </div>
         </div>
-        <div class="what-card">
-          <div class="what-num">III</div>
-          <h3>Things That Help You</h3>
-          <p>The specific conditions, environments, and approaches that let their mind work the way it's built to.</p>
+
+        <!-- REFERENCE -->
+        <div class="lens-card">
+          <div class="lens-num">Gradient 03</div>
+          <h3 class="lens-name">Reference</h3>
+          <p class="lens-question">Does this child process from inside themselves — or from reading others?</p>
+          <div class="lens-poles">
+            <div class="lens-pole">
+              <span class="pole-label">Self</span>
+              <span class="pole-desc">Themselves. Their own experience, their own logic, their own anchor.</span>
+            </div>
+            <div class="lens-pole">
+              <span class="pole-label">Other</span>
+              <span class="pole-desc">Others. The room, the group, the people around them.</span>
+            </div>
+            <div class="lens-pole lens-balanced">
+              <span class="pole-label">Balanced</span>
+              <span class="pole-desc">Draws from both sources, neither dominant.</span>
+            </div>
+          </div>
         </div>
-        <div class="what-card">
-          <div class="what-num">IV</div>
-          <h3>Things That Are Hard</h3>
-          <p>The friction that comes with their wiring — not flaws, not failures, just the cost of the architecture. With real ways through.</p>
-        </div>
-        <div class="what-card">
-          <div class="what-num">V</div>
-          <h3>One Thing to Know</h3>
-          <p>The single most important thing about how they take in the world — the line they'll remember.</p>
-        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- PART TWO: FOR THE PARENT -->
-  <section class="section" id="parent-section">
-    <div class="section-inner">
-      <div class="eyebrow">Part Two · For You</div>
-      <h2 class="section-title">The parent manual their architecture deserves.</h2>
-      <p class="section-sub">Not generic parenting advice. A profile derived from your child's coordinates and your own — so the guidance is specific to your actual family, not a type.</p>
-
-      <div class="sample-image">
-        <!-- IMAGE PLACEHOLDER: Sample parent report page -->
-        <span class="img-placeholder">Sample Report · Parent Section</span>
+  <!-- ═══ THE 27 PROFILES ═══ -->
+  <section class="section" id="profiles" style="padding-top:0;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">The 27 Kid Parsers</div>
+          <h2 class="section-title">Every combination.<br><em>One is your kid.</em></h2>
+          <p class="section-sub">Each parser is a unique position on all three gradients. There's no better or worse — just different angles on the same reality.</p>
+        </div>
       </div>
 
+      <div class="profiles-grid">
+
+        <div class="profile-card">
+          <div class="profile-num">01</div>
+          <h3 class="profile-name">Actualized</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Future</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">02</div>
+          <h3 class="profile-name">Altruistic</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Future</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">03</div>
+          <h3 class="profile-name">Attuned</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Present</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">04</div>
+          <h3 class="profile-name">Centered</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Present</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">05</div>
+          <h3 class="profile-name">Coherent</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Past</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">06</div>
+          <h3 class="profile-name">Collaborative</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Future</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">07</div>
+          <h3 class="profile-name">Embodied</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Present</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">08</div>
+          <h3 class="profile-name">Empathetic</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Present</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">09</div>
+          <h3 class="profile-name">Equanimous</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Present</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">10</div>
+          <h3 class="profile-name">Foresighted</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Future</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">11</div>
+          <h3 class="profile-name">Grounded</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Present</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">12</div>
+          <h3 class="profile-name">Harmonious</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Future</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">13</div>
+          <h3 class="profile-name">Idealized</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Past</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">14</div>
+          <h3 class="profile-name">Integrated</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Past</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">15</div>
+          <h3 class="profile-name">Intentional</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Future</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">16</div>
+          <h3 class="profile-name">Introspective</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Present</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">17</div>
+          <h3 class="profile-name">Intuitive</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Present</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">18</div>
+          <h3 class="profile-name">Legacy</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Past</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">19</div>
+          <h3 class="profile-name">Mindful</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Present</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">20</div>
+          <h3 class="profile-name">Reconciled</h3>
+          <div class="profile-coords">
+            <span>Balanced</span><span>Past</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">21</div>
+          <h3 class="profile-name">Reflective</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Past</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">22</div>
+          <h3 class="profile-name">Reliable</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Future</span><span>Other</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">23</div>
+          <h3 class="profile-name">Resilient</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Future</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">24</div>
+          <h3 class="profile-name">Seasoned</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Past</span><span>Balanced</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">25</div>
+          <h3 class="profile-name">Sentimental</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Past</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">26</div>
+          <h3 class="profile-name">Sharp</h3>
+          <div class="profile-coords">
+            <span>Concrete</span><span>Past</span><span>Self</span>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-num">27</div>
+          <h3 class="profile-name">Visionary</h3>
+          <div class="profile-coords">
+            <span>Abstract</span><span>Future</span><span>Self</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT YOU GET ═══ -->
+  <section class="what-section section" id="what-you-get">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">What You Get</div>
+          <h2 class="section-title">A two-part report.<br><em>One for them. One for you.</em></h2>
+          <p class="section-sub">The Kid Parser Profile is built in two halves — one written directly to your child, one written directly to you.</p>
+        </div>
+      </div>
+
+      <!-- Part One -->
+      <div class="what-part-header">
+        <div class="what-part-eyebrow">Part One · For Your Child</div>
+        <div class="what-part-title">Written <em>to</em> them — in language they can hear.</div>
+      </div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-num">I</div>
+          <h3>Your Mind</h3>
+          <p>A plain-language explanation of how their specific lens works — what they notice first, why certain things come easily, and why that's not a mistake.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">II</div>
+          <h3>Your Strengths</h3>
+          <p>The specific abilities their parser gives them — named clearly, with examples they'll recognize from their own life.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">III</div>
+          <h3>What Helps You</h3>
+          <p>The environments, habits, and conditions where their mind does its best work.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">IV</div>
+          <h3>What's Hard</h3>
+          <p>The genuine friction their wiring creates — named honestly, without shame, with strategies that actually fit how they think.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-num">V</div>
+          <h3>The One Thing</h3>
+          <p>One sentence that captures the essential truth of how their mind works.</p>
+        </div>
+      </div>
+
+      <!-- Part Two -->
+      <div class="what-part-header" style="margin-top:48px;">
+        <div class="what-part-eyebrow">Part Two · For You, the Parent</div>
+        <div class="what-part-title">Written <em>to you</em> — with everything you need.</div>
+      </div>
       <div class="what-grid">
         <div class="what-card">
           <div class="what-num">I</div>
           <h3>What You're Looking At</h3>
-          <p>Your child's cognitive architecture explained in adult language — what the coordinates actually mean for how they process the world.</p>
+          <p>A parent-level explanation of your child's parser — what it means in practice, day to day.</p>
         </div>
         <div class="what-card">
           <div class="what-num">II</div>
           <h3>The Gift</h3>
-          <p>The genuine advantage their wiring produces — not inflated praise, but what their architecture makes possible that others can't do as naturally.</p>
+          <p>What this parser gives your child that others don't have — the real advantage, named so you can protect it.</p>
         </div>
         <div class="what-card">
           <div class="what-num">III</div>
           <h3>The Friction</h3>
-          <p>Where their architecture creates real challenges — and why those challenges are structural, not behavioral.</p>
+          <p>What looks like misbehavior but isn't — and what actually is. The distinction changes how you respond.</p>
         </div>
         <div class="what-card">
           <div class="what-num">IV</div>
           <h3>How to Discipline</h3>
-          <p>What works and what backfires — specific to their architecture, not a one-size-fits-all approach.</p>
+          <p>What works, what doesn't, the phrase that stops them, and the phrase that makes it worse.</p>
         </div>
         <div class="what-card">
           <div class="what-num">V</div>
           <h3>How to Teach</h3>
-          <p>The formats, environments, and conditions where they actually learn — and why the standard ones may not fit.</p>
+          <p>The learning conditions and approaches that actually work for this specific mind.</p>
         </div>
         <div class="what-card">
           <div class="what-num">VI</div>
-          <h3>Parent-Specific Guidance</h3>
-          <p>Where your Parser and your child's Parser create gaps — the specific friction between your architecture and theirs, and how to bridge it.</p>
+          <h3>Your Parser vs. Theirs</h3>
+          <p>How your own parser interacts with theirs — where you'll connect and where you'll accidentally create friction.</p>
         </div>
         <div class="what-card">
           <div class="what-num">VII</div>
-          <h3>The Cognitive Block Pattern</h3>
-          <p>What happens when their architecture hits its limits — the pattern of shutdown or misbehavior, and what it actually means.</p>
+          <h3>When They Shut Down</h3>
+          <p>What happens when your child blocks — the specific pattern, the trigger, and the way back through.</p>
         </div>
         <div class="what-card">
           <div class="what-num">VIII</div>
-          <h3>One Thing to Remember</h3>
-          <p>The single insight that changes how you see your child — the line you'll come back to on the hard days.</p>
+          <h3>The One Thing</h3>
+          <p>The single most important thing to keep in mind about your child's mind.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="section alt" id="pricing">
-    <div class="section-inner">
-      <div class="price-block">
-        <div class="eyebrow">Pricing</div>
-        <h2 class="section-title">Kid Parser Profile</h2>
-        <p class="section-sub" style="margin-bottom:36px;">Kid Assessment for your child. Two-part downloadable report: one for them, one for you.</p>
+  <!-- ═══ WHEN KID PARSERS COLLIDE ═══ -->
+  <section class="collision-section" id="collisions">
+    <div class="container">
 
-        <div class="price-tag-badge">
-          <span class="price-dot"></span>
-          Limited-Time Launch Price · Early Bird
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div class="section-label-block">
+          <div class="section-eyebrow">When Kid Parsers Collide</div>
+          <h2 class="section-title">The geometry of<br><em>kid friction.</em></h2>
         </div>
-
-        <div class="price-row">
-          <span class="price-main">$20</span><span class="price-was">$49</span>
-        </div>
-        <p class="price-note">Kid Assessment + Two-Part Profile</p>
-
-        <a href="/kids-assessment.html" class="btn-cta">Begin the Kid Assessment →</a>
       </div>
+
+      <div class="collision-intro">
+        <p>Most friction between kids and parents, siblings, or classmates isn't about behavior. It's about two people processing the same moment from different positions on the same three gradients.</p>
+      </div>
+
+      <!-- The Three Axes -->
+      <div class="axes-grid">
+        <div class="axis-card">
+          <div class="axis-label">Spatial Mismatch</div>
+          <h4 class="axis-name">Concrete vs. Abstract</h4>
+          <p class="axis-example"><strong>Parent:</strong> "You're not getting the point!"<br><strong>Child:</strong> "Show me what you mean."<br><br>One speaks in principles. One needs examples. Neither is wrong.</p>
+        </div>
+        <div class="axis-card">
+          <div class="axis-label">Temporal Mismatch</div>
+          <h4 class="axis-name">Past vs. Future</h4>
+          <p class="axis-example"><strong>Parent:</strong> "You never appreciate what you have!"<br><strong>Child:</strong> "I'm excited about what's next."<br><br>One honors what was. One reaches for what's coming. Neither is ungrateful.</p>
+        </div>
+        <div class="axis-card">
+          <div class="axis-label">Reference Mismatch</div>
+          <h4 class="axis-name">Self vs. Other</h4>
+          <p class="axis-example"><strong>Parent:</strong> "Why are you so selfish?"<br><strong>Child:</strong> "I'm just figuring out what I think."<br><br>One processes outward. One processes inward. Neither is uncaring.</p>
+        </div>
+      </div>
+
+      <!-- PARENT-CHILD COLLISIONS -->
+      <div class="collision-domain">
+        <div class="collision-domain-header">
+          <div class="collision-domain-eyebrow">Domain One</div>
+          <h3 class="collision-domain-title">Parent–Child Collisions</h3>
+        </div>
+        <div class="mismatch-cards">
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Spatial Mismatch</div>
+            <h4 class="mismatch-title">Concrete Parent · Abstract Child</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Parent</div>
+                <p>"Stop overcomplicating everything!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Child</div>
+                <p>"I'm seeing patterns you're missing."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Ask the child to walk you down to an example. "Show me what that would look like." Bridge the altitude without dismissing either floor.</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Spatial Mismatch</div>
+            <h4 class="mismatch-title">Abstract Parent · Concrete Child</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Parent</div>
+                <p>"You're not getting the point!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Child</div>
+                <p>"Just show me what to do."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Translate the concept into an example. Show, don't explain. The understanding comes after the experience, not before.</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Temporal Mismatch</div>
+            <h4 class="mismatch-title">Past Parent · Future Child</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Parent</div>
+                <p>"You never appreciate what you have!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Child</div>
+                <p>"I'm excited about what's next!"</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Connect future goals to past lessons. "You're right that there's more ahead — and here's what you've already learned that will help."</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Temporal Mismatch</div>
+            <h4 class="mismatch-title">Future Parent · Past Child</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Parent</div>
+                <p>"Let it go — move forward!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Child</div>
+                <p>"Why do you want me to forget?"</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Don't rush them forward — walk them there. "That mattered. And here's where we go from here."</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Reference Mismatch</div>
+            <h4 class="mismatch-title">Other Parent · Self Child</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Parent</div>
+                <p>"Why are you so selfish?"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Child</div>
+                <p>"I'm figuring out what I think."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Self-reference isn't selfishness. Invite them in rather than demanding they arrive pre-connected. "Tell me what you think" works better than "Think about others."</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Reference Mismatch</div>
+            <h4 class="mismatch-title">Self Parent · Other Child</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Parent</div>
+                <p>"Stop worrying about everyone else."</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Child</div>
+                <p>"I can't not notice."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Attunement isn't weakness. Help them learn boundaries without telling them their wiring is wrong. "You noticed that — what do you want to do about it?"</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SIBLING COLLISIONS -->
+      <div class="collision-domain">
+        <div class="collision-domain-header">
+          <div class="collision-domain-eyebrow">Domain Two</div>
+          <h3 class="collision-domain-title">Sibling Collisions</h3>
+        </div>
+        <div class="mismatch-cards">
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Spatial Mismatch</div>
+            <h4 class="mismatch-title">Concrete Sibling · Abstract Sibling</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Concrete</div>
+                <p>"You always make stuff up!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Abstract</div>
+                <p>"You never want to try anything new!"</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Give them different roles. Let the concrete kid be the quality checker, the abstract kid be the idea starter. Both positions are honored.</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Temporal Mismatch</div>
+            <h4 class="mismatch-title">Past Sibling · Future Sibling</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Past</div>
+                <p>"We always do it this way!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Future</div>
+                <p>"That's boring — let's change it!"</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Keep the core of the tradition but let the future sibling remix the edges. Honor what was while reaching for what could be.</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Reference Mismatch</div>
+            <h4 class="mismatch-title">Self Sibling · Other Sibling</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Self</div>
+                <p>"Leave me alone, I'm thinking!"</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Other</div>
+                <p>"Talk to me! I can tell something's wrong!"</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Give them a signal system. "I need space" and "I'm here when you're ready." One reaches out, the other reaches in — both are connecting.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CLASSROOM COLLISIONS -->
+      <div class="collision-domain">
+        <div class="collision-domain-header">
+          <div class="collision-domain-eyebrow">Domain Three</div>
+          <h3 class="collision-domain-title">Classroom Collisions</h3>
+        </div>
+        <div class="mismatch-cards">
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Spatial Mismatch</div>
+            <h4 class="mismatch-title">Abstract Teacher · Concrete Student</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Teacher</div>
+                <p>"Think about the concept."</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Student</div>
+                <p>"I need to see an example."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> This child isn't slow — they're grounded. They'll understand the concept after they've seen it work three times, not before.</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Temporal Mismatch</div>
+            <h4 class="mismatch-title">Present Teacher · Past Student</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Teacher</div>
+                <p>"Focus on what we're doing now."</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Student</div>
+                <p>"But you have to understand why."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Give this student the backstory first. They need to know how this connects to what came before — then the present makes sense.</p>
+          </div>
+
+          <div class="mismatch-card">
+            <div class="mismatch-axis">Reference Mismatch</div>
+            <h4 class="mismatch-title">Group Work · Self Student</h4>
+            <div class="mismatch-voices">
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Teacher</div>
+                <p>"Collaborate with your group."</p>
+              </div>
+              <div class="mismatch-voice">
+                <div class="mismatch-voice-label">Student</div>
+                <p>"I think better alone."</p>
+              </div>
+            </div>
+            <p class="mismatch-nav"><strong>The fix:</strong> Let them think first, then share. Self-processing students contribute more when they've had solo time before the group converges.</p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- CTA BAND -->
+  <!-- CTA -->
   <div class="cta-band">
-    <div class="section-inner" style="text-align:center;">
-      <h2>See the lens<br><em>your kid</em> is using.</h2>
-      <p>The Kid Parser Profile gives you language for the way they see, learn, and grow — and shows you how to parent the architecture they actually have.</p>
-      <a href="/kids-assessment.html" class="cta-btn-white">Start the Kid Assessment →</a>
-      <a href="/kid-parsers.html" class="cta-link">See All 27 Kid Parsers</a>
+    <div class="container">
+      <h2>Which Parser is<br><em>your kid?</em></h2>
+      <p>Five minutes. Fifteen questions. No signup required.</p>
+      <div class="cta-actions">
+        <a href="/kids-assessment.html" class="cta-btn">Start the Kid Assessment →</a>
+        <a href="/parents.html" class="cta-link">See Sample Report</a>
+      </div>
     </div>
   </div>
 
@@ -592,19 +1372,15 @@
       <div class="f-meta">
         Parser Frame™ · Kid Edition<br>
         Cognition Blocks Intelligence Framework<br>
-        © 2025–2026 Cognition Blocks LLC. All rights reserved.<br>
-        <a href="/kids-assessment.html">Kid Assessment →</a>
+        <a href="/kids-assessment.html">Take the Assessment →</a>
       </div>
       <div class="f-disclaimer">
-        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework · Non-clinical educational content · Not a psychological or developmental assessment · © 2025–2026 Cognition Blocks LLC
-      </div>
-    </div>
-      <div class="legal-notice">
         Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
         U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
         Non-clinical educational content · Not a psychological assessment<br>
         © 2025–2026 Cognition Blocks LLC. All rights reserved.
       </div>
+    </div>
   </footer>
 
   <!-- Scroll reveal -->
@@ -612,7 +1388,7 @@
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.eyebrow-tag,.hero h1,.hero p,.btn-hero,.section-title,.section-sub,.what-card,.price-block,.sample-image,.two-part-title,.two-part-desc,.cta-band h2,.cta-band p,.cta-btn-white';
+    var sel='.hero h1,.hero-sub,.hero-eyebrow,.hero-stats,.section-header,.lens-card,.profile-card,.cta-band h2,.cta-band p,.cta-btn,.intro-text,.what-part-header,.what-grid,.collision-domain-header,.mismatch-card,.axis-card';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
