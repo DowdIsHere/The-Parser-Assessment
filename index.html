@@ -231,14 +231,22 @@
       border-radius: 8px;
     }
     .hook-text-zone {
-      background: var(--gold);
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
       padding: 48px 32px 60px;
+      position: relative; overflow: hidden;
     }
+    .hook-text-zone::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,146,42,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hook-text-inner { position: relative; z-index: 1; }
     .hook-word {
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 3.5vw, 2.6rem);
       font-weight: 400;
-      color: var(--blue-900);
+      color: var(--gold);
       font-style: italic;
       letter-spacing: -0.02em;
       margin-bottom: 10px;
@@ -246,7 +254,7 @@
     .hook-line {
       font-family: var(--font-display);
       font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-      color: var(--blue-700);
+      color: var(--blue-100);
       font-style: italic;
       max-width: 48ch;
       margin: 0 auto 28px;
@@ -255,30 +263,30 @@
     .hook-try {
       margin-top: 32px;
       padding-top: 28px;
-      border-top: 1px solid rgba(33,26,18,0.15);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
     .hook-try-label {
       font-family: var(--font-mono);
       font-size: 0.62rem; text-transform: uppercase;
-      letter-spacing: 0.22em; color: var(--blue-900);
+      letter-spacing: 0.22em; color: var(--gold);
       margin-bottom: 12px;
     }
     .hook-try-question {
       font-family: var(--font-display);
       font-size: clamp(1rem, 2.2vw, 1.35rem);
-      font-style: italic; color: var(--blue-900);
+      font-style: italic; color: var(--blue-100);
       max-width: 52ch; margin: 0 auto 20px; line-height: 1.55;
     }
     .hook-try-btn {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: var(--font-mono); font-size: 0.7rem;
       text-transform: uppercase; letter-spacing: 0.14em;
-      color: var(--blue-900); text-decoration: none;
-      border: 1px solid rgba(33,26,18,0.3);
+      color: var(--gold); text-decoration: none;
+      border: 1px solid rgba(154,123,46,0.35);
       padding: 10px 24px; border-radius: 6px;
       transition: all 0.2s;
     }
-    .hook-try-btn:hover { background: rgba(33,26,18,0.08); border-color: var(--blue-900); }
+    .hook-try-btn:hover { background: rgba(154,123,46,0.1); border-color: var(--gold); }
 
     /* ── HOW IT WORKS (Tier 4 — Balanced parsers) ── */
     .layer-how {
@@ -1163,7 +1171,7 @@
       <div class="hook-text-inner">
         <div class="hook-word">Three questions. One profile.</div>
         <p class="hook-line">The lens your attention defaults to.</p>
-        <a href="/assessment.html" class="layer-cta layer-cta-dark">Begin Assessment &rarr;</a>
+        <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
         <div class="hook-try">
           <div class="hook-try-label">Try the first question</div>
           <p class="hook-try-question">"When you walk into a room full of people, what do you notice first?"</p>
