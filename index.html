@@ -137,6 +137,45 @@
       background: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 5px);
     }
 
+    /* ── PROGRESSIVE DISCLOSURE ── */
+    .disclosure-layer {
+      display: none;
+    }
+    .disclosure-layer.revealed {
+      display: block;
+      animation: layerReveal 0.6s ease-out;
+    }
+    @keyframes layerReveal {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .layer-gate {
+      text-align: center;
+      padding: 48px 32px 64px;
+      background: var(--bg-inset);
+      border-top: 1px solid var(--border);
+    }
+    .layer-gate-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--gold);
+      background: none; border: 1px solid var(--gold);
+      padding: 14px 32px; border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .layer-gate-btn:hover {
+      background: var(--gold); color: #fff;
+    }
+    .layer-gate-btn svg {
+      width: 14px; height: 14px; stroke: currentColor;
+      stroke-width: 2; fill: none;
+      transition: transform 0.25s;
+    }
+    .layer-gate-btn:hover svg { transform: translateY(3px); }
+    .layer-gate.hidden { display: none; }
+
     /* ── LAYER CTA BUTTON ── */
     .layer-cta {
       display: inline-flex; align-items: center; gap: 10px;
@@ -1120,6 +1159,14 @@
     </div>
   </section>
 
+  <!-- Gate 1: after hook -->
+  <div class="layer-gate" id="gate-1">
+    <button class="layer-gate-btn" onclick="revealLayer('layer-2','gate-1','gate-2')">
+      How does it work? <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-2">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1183,6 +1230,16 @@
     </div>
   </section>
 
+  </div><!-- /layer-2 -->
+
+  <!-- Gate 2: after spec + how-it-works -->
+  <div class="layer-gate hidden" id="gate-2">
+    <button class="layer-gate-btn" onclick="revealLayer('layer-3','gate-2','gate-3')">
+      Why was it built? <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-3">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1201,6 +1258,16 @@
     </div>
   </section>
 
+  </div><!-- /layer-3 -->
+
+  <!-- Gate 3: after story -->
+  <div class="layer-gate hidden" id="gate-3">
+    <button class="layer-gate-btn" onclick="revealLayer('layer-4','gate-3','gate-4')">
+      What else can it do? <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-4">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1251,6 +1318,16 @@
     </div>
   </section>
 
+  </div><!-- /layer-4 -->
+
+  <!-- Gate 4: after system -->
+  <div class="layer-gate hidden" id="gate-4">
+    <button class="layer-gate-btn" onclick="revealLayer('layer-5','gate-4','gate-5')">
+      Show me a preview <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-5">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -1288,6 +1365,16 @@
     </div>
   </section>
 
+  </div><!-- /layer-5 -->
+
+  <!-- Gate 5: after proof -->
+  <div class="layer-gate hidden" id="gate-5">
+    <button class="layer-gate-btn" onclick="revealLayer('layer-6','gate-5')">
+      Meet all 27 Parsers <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="disclosure-layer" id="layer-6">
   <div class="milled-divider"></div>
 
   <!-- ═══════════════════════════════════════
@@ -2011,6 +2098,8 @@
     </div>
   </div>
 
+  </div><!-- /layer-6 -->
+
   <!-- FOOTER -->
   <footer>
     <div class="f-inner">
@@ -2030,12 +2119,47 @@
     </div>
   </footer>
 
+  <!-- PROGRESSIVE DISCLOSURE -->
+  <script>
+  function revealLayer(layerId, gateId, nextGateId) {
+    var layer = document.getElementById(layerId);
+    var gate = document.getElementById(gateId);
+    if (layer) {
+      layer.classList.add('revealed');
+      // Re-init any Splide carousels inside the newly revealed layer
+      if (typeof Splide !== 'undefined') {
+        layer.querySelectorAll('.parser-splide').forEach(function(el) {
+          if (!el.classList.contains('is-initialized')) {
+            new Splide(el, { perPage: 3, perMove: 1, gap: '20px', breakpoints: { 768: { perPage: 1 } } }).mount();
+          }
+        });
+        layer.querySelectorAll('.collision-splide').forEach(function(el) {
+          if (!el.classList.contains('is-initialized')) {
+            new Splide(el, { perPage: 1, perMove: 1, gap: '24px', autoHeight: true, arrows: true, pagination: true }).mount();
+          }
+        });
+      }
+    }
+    if (gate) gate.classList.add('hidden');
+    if (nextGateId) {
+      var next = document.getElementById(nextGateId);
+      if (next) next.classList.remove('hidden');
+    }
+    // Smooth scroll to the revealed content
+    if (layer) {
+      setTimeout(function() {
+        layer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+  </script>
+
   <!-- SCROLL REVEAL -->
   <script>
   (function(){
     var root=document.documentElement;
     if(!root.classList.contains('js-anim')||!('IntersectionObserver' in window))return;
-    var sel='.hook-logo,.hook-number,.hook-word,.hook-line,.hook-inner .layer-cta,.spec-grid,.spec-copy,.layer-spec .layer-cta,.story-panel,.story-hook,.layer-story .layer-cta,.system-title,.system-subtitle,.product-card,.system-framework,.layer-system .layer-cta,.report-preview,.proof-quote,.proof-guarantee,.layer-proof .layer-cta,.section-header,.group-header,.group-image,.collision-domain-header,.cta-band h2,.cta-band p,.cta-btn,.section-title,.section-sub';
+    var sel='.spec-grid,.spec-copy,.layer-spec .layer-cta,.story-panel,.story-hook,.layer-story .layer-cta,.system-title,.system-subtitle,.product-card,.system-framework,.layer-system .layer-cta,.report-preview,.proof-quote,.proof-guarantee,.layer-proof .layer-cta,.section-header,.group-header,.group-image,.collision-domain-header,.cta-band h2,.cta-band p,.cta-btn,.section-title,.section-sub';
     var els=[].slice.call(document.querySelectorAll(sel));
     if(!els.length)return;
     els.forEach(function(el){el.setAttribute('data-reveal','');});
