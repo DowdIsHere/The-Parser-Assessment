@@ -171,6 +171,21 @@
         calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
     }
     .logo .mark { --w: 93px; }
+  
+    /* ── LEGAL NOTICE ──
+       Copyright, patent and framework attribution. Palette-agnostic: it
+       inherits the footer's colour and dims itself, so it reads correctly on
+       both the light and dark footers used across the site. */
+    .legal-notice {
+      max-width: 1100px; margin: 22px auto 0;
+      padding: 18px 24px 0;
+      border-top: 1px solid currentColor;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: 0.62rem; line-height: 1.9; letter-spacing: 0.04em;
+      text-align: center; opacity: 0.55;
+    }
+    footer .legal-notice { width: 100%; }
+    .site-legal { padding: 32px 24px; }
   </style>
   <script>(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-anim');}}catch(e){}})();</script>
   <link rel="stylesheet" href="/mobile-nav.css">
@@ -409,7 +424,7 @@
           <div style="margin-top:6px;font-size:0.85rem;">Cognition Blocks of Intelligence</div>
         </div>
         <div class="f-meta">
-          © 2026 Cognition Blocks LLC<br>
+          © 2025–2026 Cognition Blocks LLC<br>
           U.S. Copyright TXu 2-497-721<br>
           <a href="/clinicians.html">For Clinicians →</a>
         </div>
@@ -418,6 +433,12 @@
         The Parser Profile and Couples Parser Analysis are non-clinical, educational services. They are not therapy, diagnosis, treatment of any medical or mental health condition, nor does it collect any personnal information. If you are in crisis please call 988, or a licensed professional if you need clinical support.
       </div>
     </div>
+      <div class="legal-notice">
+        Parser Frame™ developed by J.D. Mercer · Based on the Cognition Blocks Intelligence (CBI) Framework<br>
+        U.S. Copyright Registration TXu 2-497-721 · Patent Pending (Provisional #63/968,676)<br>
+        Non-clinical educational content · Not a psychological assessment<br>
+        © 2025–2026 Cognition Blocks LLC. All rights reserved.
+      </div>
   </footer>
   <script>
   (function(){
