@@ -87,45 +87,80 @@
 
     footer { background: var(--blue-900); color: rgba(255,255,255,0.5); padding: 48px 24px; text-align: center; font-size: 0.78rem; }
     footer a { color: var(--gold-pale); text-decoration: none; }
+  
+    /* ── BRAND MARK ──
+       27parser.png is a transparent horizontal lockup whose artwork occupies
+       only the middle of its canvas (ink 993x363 at offset 193,294 of
+       1536x1024). Sizing the image directly renders the mark at ~35% of the
+       height asked for, so it is cropped to its ink box here. Set --w to the
+       desired mark width; the asset itself is never modified. */
+    .logo { display: inline-flex; align-items: center; flex-direction: row; gap: 0; text-decoration: none; }
+    .mark {
+      --ink-w: 993; --ink-h: 363; --ink-x: 193; --ink-y: 294; --canvas-w: 1536;
+      width: var(--w); flex: none;
+      height: calc(var(--w) * var(--ink-h) / var(--ink-w));
+      background-image: url('/27parser.png');
+      background-repeat: no-repeat;
+      background-size: calc(var(--w) * var(--canvas-w) / var(--ink-w)) auto;
+      background-position:
+        calc(-1 * var(--w) * var(--ink-x) / var(--ink-w))
+        calc(-1 * var(--w) * var(--ink-y) / var(--ink-w));
+    }
+    .logo .mark { --w: 93px; }
   </style>
+  <link rel="stylesheet" href="/mobile-nav.css">
 </head>
 <body>
 
   <header>
     <div class="h-inner">
       <a href="/index.html" class="logo">
-        <img src="/images/27parser-logo.png" alt="27Parser™" style="height:36px;width:auto;">
+        <span class="mark" role="img" aria-label="27Parser™"></span>
       </a>
       <nav id="siteNav">
         <div class="nav-dd">
-          <a href="/individual.html" class="nav-dd-top">Individual <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a href="/assessment.html" class="nav-dd-top">Assessments <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
           <div class="nav-dd-menu">
-            <a href="/individual.html">Adult</a>
+            <a href="/assessment.html">Individual</a>
+            <a href="/kids-assessment.html">Kids</a>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/individual.html" class="nav-dd-top">Analysis <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="/individual.html">Individual</a>
             <a href="/kids-individual.html">Kids</a>
-          </div>
-        </div>
-        <div class="nav-dd">
-          <a href="/couples.html" class="nav-dd-top">Team <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
-          <div class="nav-dd-menu">
             <a href="/couples.html">Couples</a>
-            <a href="/parent-login.html">Family</a>
-            <a href="/couples.html#social">Social</a>
-            <a href="/professionals.html">Teams</a>
+            <a href="/dating.html">Dating</a>
+            <a href="/social.html">Social</a>
+            <a href="/siblings.html">Siblings</a>
+            <a href="/family.html">Family</a>
+            <a href="/professionals.html">Professional Teams</a>
+            <a href="/billets.html">Billets</a>
           </div>
         </div>
         <div class="nav-dd">
-          <a href="/professionals.html" class="nav-dd-top">Professional <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a href="/collisions.html" class="nav-dd-top">Parser Collisions <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
           <div class="nav-dd-menu">
-            <a href="/professionals.html">Working Group</a>
-            <a href="/professionals.html#line">Billet</a>
-            <a href="/clinicians.html">Clinical</a>
-            <a href="/careers.html">Careers</a>
+            <a href="/collisions.html#individual">Individual</a>
+            <a href="/collisions.html#kids">Kids</a>
+            <a href="/collisions.html#couples">Couples</a>
+            <a href="/collisions.html#dating">Dating</a>
+            <a href="/collisions.html#social">Social</a>
+            <a href="/collisions.html#siblings">Siblings</a>
+            <a href="/collisions.html#family">Family</a>
+            <a href="/collisions.html#teams">Professional Teams</a>
+            <a href="/collisions.html#billets">Billets</a>
           </div>
         </div>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
 
+  <div class="nav-scrim"></div>
   <section class="hero">
     <div class="hero-inner">
       <div class="eyebrow-tag">Professional · Career Mapping</div>
@@ -552,5 +587,6 @@
     });
   </script>
 
+  <script src="/mobile-nav.js" defer></script>
 </body>
 </html>

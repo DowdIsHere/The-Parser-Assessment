@@ -71,8 +71,6 @@
     .nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret { transform: rotate(180deg); }
     .nav-dd-menu a { font-size: 0.82rem; color: var(--text-muted); padding: 10px 12px; border-radius: 8px; white-space: nowrap; transition: background 0.18s, color 0.18s; }
     .nav-dd-menu a:hover { background: rgba(154,123,46,0.08); color: var(--blue-500); }
-    /* the long menus run two columns so they don't spill down the page */
-    .nav-dd-menu.nav-dd-wide { display: grid; grid-template-columns: repeat(2, minmax(158px, 1fr)); gap: 1px 4px; }
     /* the rightmost menu anchors to its right edge so it can't leave the viewport */
     .nav-dd:last-of-type .nav-dd-menu { left: auto; right: -10px; }
 
@@ -216,10 +214,8 @@
     .disclaimer { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.35); line-height: 1.7; text-align: center; max-width: 760px; margin: 0 auto; }
 
     /* ── RESPONSIVE ── */
-    /* inside the mobile drawer the long menus flatten back to one column
-       (mobile-nav.css takes over at 860px) */
+    /* the rightmost menu flips back to left-anchored inside the drawer */
     @media (max-width: 860px) {
-      header nav .nav-dd-menu.nav-dd-wide { grid-template-columns: 1fr; min-width: 0; }
       header nav .nav-dd:last-of-type .nav-dd-menu { left: auto; right: auto; }
     }
     @media (max-width: 900px) {
@@ -270,7 +266,7 @@
         </div>
         <div class="nav-dd">
           <a href="/individual.html" class="nav-dd-top">Analysis <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
-          <div class="nav-dd-menu nav-dd-wide">
+          <div class="nav-dd-menu">
             <a href="/individual.html">Individual</a>
             <a href="/kids-individual.html">Kids</a>
             <a href="/couples.html">Couples</a>
@@ -284,16 +280,16 @@
         </div>
         <div class="nav-dd">
           <a href="/collisions.html" class="nav-dd-top">Parser Collisions <svg class="nav-dd-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
-          <div class="nav-dd-menu nav-dd-wide">
-            <a href="/collisions-individual.html">Individual</a>
-            <a href="/collisions-kids.html">Kids</a>
-            <a href="/collisions-couples.html">Couples</a>
-            <a href="/collisions-dating.html">Dating</a>
-            <a href="/collisions-social.html">Social</a>
-            <a href="/collisions-siblings.html">Siblings</a>
-            <a href="/collisions-family.html">Family</a>
-            <a href="/collisions-teams.html">Professional Teams</a>
-            <a href="/collisions-billets.html">Billets</a>
+          <div class="nav-dd-menu">
+            <a href="/collisions.html#individual">Individual</a>
+            <a href="/collisions.html#kids">Kids</a>
+            <a href="/collisions.html#couples">Couples</a>
+            <a href="/collisions.html#dating">Dating</a>
+            <a href="/collisions.html#social">Social</a>
+            <a href="/collisions.html#siblings">Siblings</a>
+            <a href="/collisions.html#family">Family</a>
+            <a href="/collisions.html#teams">Professional Teams</a>
+            <a href="/collisions.html#billets">Billets</a>
           </div>
         </div>
         <a href="/assessment.html" class="btn">Begin Assessment</a>
