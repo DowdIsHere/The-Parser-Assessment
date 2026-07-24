@@ -60,9 +60,9 @@
     /* ── HEADER ── */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(250,247,240,0.85);
+      background: rgba(33,26,18,0.92);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       padding: 18px 0;
     }
     .h-inner {
@@ -95,10 +95,10 @@
     nav a {
       font-family: var(--font-mono);
       font-size: 0.68rem; text-transform: uppercase;
-      letter-spacing: 0.14em; color: var(--text-muted);
+      letter-spacing: 0.14em; color: rgba(255,255,255,0.65);
       text-decoration: none; transition: color 0.2s;
     }
-    nav a:hover { color: var(--gold-bright); }
+    nav a:hover { color: var(--amber); }
     nav a.cta {
       background: var(--blue-500);
       color: #fff; font-weight: 600;
@@ -213,14 +213,23 @@
        LAYER 1: THE HOOK
        ══════════════════════════════ */
     .layer-hook {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
       text-align: center;
-      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
-      position: relative;
-      overflow: hidden;
     }
-    .layer-hook::before {
+    .hook-logo-zone {
+      background: var(--bg-page);
+      padding: 80px 32px 48px;
+      display: flex; justify-content: center;
+    }
+    .hook-logo {
+      width: min(440px, 80vw); height: auto;
+      border-radius: 8px;
+    }
+    .hook-text-zone {
+      background: linear-gradient(170deg, #211A12 0%, #2E2419 55%, #3A2E1E 100%);
+      padding: 48px 32px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hook-text-zone::before {
       content: '';
       position: absolute; inset: 0;
       background:
@@ -228,14 +237,8 @@
         radial-gradient(ellipse 40% 40% at 80% 50%, rgba(216,180,94,0.08) 0%, transparent 60%);
       pointer-events: none;
     }
-    .hook-inner {
+    .hook-text-inner {
       position: relative; z-index: 1;
-      padding: 60px 32px;
-    }
-    .hook-logo {
-      width: min(440px, 80vw); height: auto;
-      margin-bottom: 20px;
-      border-radius: 8px;
     }
     .hook-word {
       font-family: var(--font-display);
@@ -1159,15 +1162,19 @@
        LAYER 1: THE HOOK
        ═══════════════════════════════════════ -->
   <section class="layer-hook">
-    <div class="hook-inner">
+    <div class="hook-logo-zone">
       <img src="/27parser.png" alt="27Parser™" class="hook-logo">
-      <div class="hook-word">Three questions. One profile.</div>
-      <p class="hook-line">The lens your attention defaults to.</p>
-      <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
-      <div class="hook-try">
-        <div class="hook-try-label">Try the first question</div>
-        <p class="hook-try-question">"When you walk into a room full of people, what do you notice first?"</p>
-        <a href="/assessment.html" class="hook-try-btn">Answer now &rarr;</a>
+    </div>
+    <div class="hook-text-zone">
+      <div class="hook-text-inner">
+        <div class="hook-word">Three questions. One profile.</div>
+        <p class="hook-line">The lens your attention defaults to.</p>
+        <a href="/assessment.html" class="layer-cta layer-cta-light">Begin Assessment &rarr;</a>
+        <div class="hook-try">
+          <div class="hook-try-label">Try the first question</div>
+          <p class="hook-try-question">"When you walk into a room full of people, what do you notice first?"</p>
+          <a href="/assessment.html" class="hook-try-btn">Answer now &rarr;</a>
+        </div>
       </div>
     </div>
   </section>
